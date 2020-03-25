@@ -15,7 +15,7 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('/static/landing/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/static/landing/css/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('/static/landing/css/style.css').date('YmdHis') }}">
+    <link rel="stylesheet" href="{{ asset('/static/landing/css/style.css?').date('YmdHis') }}">
 
 
 </head>
@@ -28,7 +28,7 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <a href="{{ url('/') }}" class="logo">
-                        <img src="{{ asset('assets/img/elearning.png').date('YmdHis') }}" class="logoimg" alt="Standard E-Learning"/>
+                        <img src="{{ asset('assets/img/elearning.png?').date('YmdHis') }}" class="logoimg" alt="Standard E-Learning"/>
                     </a>
                     <ul class="nav pb-3 p-md-0">
 
