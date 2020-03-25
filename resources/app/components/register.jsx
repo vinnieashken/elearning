@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {DIR, ENV, PUBLIC_URL} from "../common/constants";
-import {ClipLoader} from "react-spinners";
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
+import {DIR, ENV} from "../common/constants";
 
-
-export default function Login(props) {
+export default function (props) {
     const oldState = props.history.location.state;
 
     const [processing, setProcessing] = useState(false);
@@ -13,11 +11,6 @@ export default function Login(props) {
     const [messageType, setMessageType] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('messageType') ? oldState.messageType : '');
     const [response, setResponse] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('response') ? oldState.response : '');
     const [passwordType, setPasswordType] = useState('password');
-
-    useEffect(() => {
-        localStorage.clear();
-        console.log(`${JSON.stringify(env)}`)
-    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -54,9 +47,6 @@ export default function Login(props) {
         // })
     };
 
-    const togglePasswordType = (toggle, e) => {
-        setPasswordType(toggle ? 'text' : 'password')
-    };
     return (
         <React.Fragment>
             <div className='application application-offset ready'>
@@ -66,13 +56,13 @@ export default function Login(props) {
                             <div className="min-vh-100 py-5 d-flex align-items-center">
                                 <div className="w-100">
                                     <div className="row justify-content-center">
-                                        <div className="col-sm-8 col-lg-4">
+                                        <div className="col-sm-8 col-lg-5">
                                             <div className="card shadow zindex-100 mb-0">
                                                 <div className="card-body px-md-5 py-5">
                                                     <div className="mb-5">
-                                                        <h6 className="h3">Login</h6>
-                                                        <p className="text-muted mb-0">Sign in to your account to
-                                                            continue.</p>
+                                                        <h6 className="h3">Create account</h6>
+                                                        <p className="text-muted mb-0">Made with love by developers for
+                                                            developers.</p>
                                                     </div>
                                                     <span className="clearfix" />
                                                     <form role="form" onSubmit={handleSubmit}>
@@ -81,55 +71,72 @@ export default function Login(props) {
                                                             <div className="input-group input-group-merge">
                                                                 <div className="input-group-prepend">
                                                                 <span className="input-group-text">
-                                                                    <i className="fa fa-user" />
-                                                                </span>
+                                                                    <i className="fa fa-user" /></span>
                                                                 </div>
                                                                 <input type="email" className="form-control"
                                                                        id="input-email" placeholder="name@example.com" />
                                                             </div>
                                                         </div>
                                                         <div className="form-group mb-4">
-                                                            <div
-                                                                className="d-flex align-items-center justify-content-between">
-                                                                <div>
-                                                                    <label className="form-control-label">Password</label>
-                                                                </div>
-                                                                <div className="mb-2">
-                                                                    <a href="#!"
-                                                                       className="small text-muted text-underline--dashed border-primary">Lost
-                                                                        password?</a>
-                                                                </div>
-                                                            </div>
+                                                            <label className="form-control-label">Password</label>
                                                             <div className="input-group input-group-merge">
                                                                 <div className="input-group-prepend">
                                                                 <span className="input-group-text">
-                                                                    <i className="fa fa-key" />
-                                                                </span>
+                                                                    <i className="fa fa-key" /></span>
                                                                 </div>
                                                                 <input type="password" className="form-control"
-                                                                       id="input-password" placeholder="Password" />
-                                                                    <div className="input-group-append">
-                                                                        <span className="input-group-text">
-                                                                            <a href="#" data-toggle="password-text" data-target="#input-password">
-                                                                                <i className="fa fa-eye" />
-                                                                            </a>
-                                                                        </span>
-                                                                    </div>
+                                                                       id="input-password" placeholder="********" />
+                                                                <div className="input-group-append">
+                                                                    <span className="input-group-text">
+                                                                        <a href="#" data-toggle="password-text" data-target="#input-password">
+                                                                            <i className="fa fa-eye" />
+                                                                        </a>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label className="form-control-label">Confirm password</label>
+                                                            <div className="input-group input-group-merge">
+                                                                <div className="input-group-prepend">
+                                                                <span className="input-group-text">
+                                                                    <i className="fa fa-key" /></span>
+                                                                </div>
+                                                                <input type="password" className="form-control"
+                                                                       id="input-password-confirm" placeholder="********" />
+                                                            </div>
+                                                        </div>
+                                                        <div className="my-4">
+                                                            <div className="custom-control custom-checkbox mb-3">
+                                                                <input type="checkbox" className="custom-control-input"
+                                                                       id="check-terms" required={true} />
+                                                                <label className="custom-control-label"
+                                                                       htmlFor="check-terms">I agree to the <a href="#">terms
+                                                                    and conditions</a>
+                                                                </label>
+                                                            </div>
+                                                            <div className="custom-control custom-checkbox">
+                                                                <input type="checkbox" className="custom-control-input"
+                                                                       id="check-privacy" required={true} />
+                                                                <label className="custom-control-label"
+                                                                       htmlFor="check-privacy">I agree to the <a
+                                                                    href="#">privacy policy</a>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                         <div className="mt-4">
                                                             <button type="submit"
                                                                     className="btn btn-sm btn-primary btn-icon rounded-pill">
-                                                                <span className="btn-inner--text">Sign in</span>
+                                                                <span className="btn-inner--text">Create my account</span>
                                                                 <span className="btn-inner--icon">
-                                                                    <i className="fa fa-long-arrow-alt-right" />
-                                                                </span>
+                                                                <i className="fa fa-long-arrow-alt-right" />
+                                                            </span>
                                                             </button>
                                                         </div>
                                                     </form>
                                                 </div>
-                                                <div className="card-footer px-md-5"><small>Not registered?</small>
-                                                    <Link to={`${ENV}register`} className="small font-weight-bold">Create account</Link></div>
+                                                <div className="card-footer px-md-5"><small>Already have an acocunt?</small>
+                                                    <Link to={`${ENV}login`} className="small font-weight-bold">Sign in</Link></div>
                                             </div>
                                         </div>
                                     </div>

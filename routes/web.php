@@ -27,6 +27,7 @@ Route::get('/register', function() {
 Route::get('/app/{path?}', [
     'uses' => function() {return view('app');},
     'as' => '*',
+    'where' => ['path' => '^((?!api|static).)*$']
 ]);
 Route::get('/add-question','Cms@setQ');
 Route::post('logout','Cms@logout');

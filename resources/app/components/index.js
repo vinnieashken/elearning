@@ -12,6 +12,11 @@ const Login = Loadable({
     loading: Loading
 });
 
+const Register = Loadable({
+    loader: () => import('./register'),
+    loading: Loading
+});
+
 const Menu = Loadable({
     loader: () => import('./menu'),
     loading: Loading
@@ -21,6 +26,7 @@ ReactDOM.render(
     (
     <BrowserRouter >
     <Route exact={true} path={`${ENV}login`} component={Login} />
+    <Route exact={true} path={`${ENV}register`} component={Register} />
 <Route path={`${ENV}app`} component={Menu} />
 </BrowserRouter>
 ),
