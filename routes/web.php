@@ -14,7 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
+Route::get('/login', function() {
+    return view('app');
+});
+
+Route::get('/register', function() {
+    return view('app');
+});
+
+Route::get('/app/{path?}', [
+    'uses' => function() {return view('app');},
+    'as' => '*',
+]);
 Route::get('/add-question','Cms@setQ');
 Route::post('logout','Cms@logout');
