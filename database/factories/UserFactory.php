@@ -6,6 +6,12 @@ use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
+<<<<<<< HEAD
+=======
+use App\Models\Level;
+use App\Models\Subject;
+
+>>>>>>> saved my code
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -26,3 +32,21 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+<<<<<<< HEAD
+=======
+
+
+$factory->define(Level::class, function (Faker $faker){
+
+   return [
+       'class' => $faker->numberBetween(1,20)
+   ];
+});
+
+$factory->define(Subject::class, function (Faker $faker){
+    return [
+        'subject'=> $faker->text,
+        'class_id' => $faker->numberBetween(1,8)
+    ];
+});
+>>>>>>> saved my code
