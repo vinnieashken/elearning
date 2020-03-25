@@ -683,7 +683,7 @@ header
         float: none!important;
     }
     .logoimg {
-        width: 50% !important;
+        /*width: 50% !important;*/
         margin-left: -50%;
     }
     .header-area {
@@ -803,7 +803,7 @@ welcome
 
 .logoimg {
     /*width: 20%;*/
-    height:60px;
+    height:70px;
 }
 
 .welcome-area .header-text h1 {
