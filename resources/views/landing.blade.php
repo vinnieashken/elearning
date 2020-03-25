@@ -28,7 +28,7 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <a href="{{ url('/') }}" class="logo">
-                        <img src="https://vas.standardmedia.co.ke/front-end/images/logo.png" class="logoimg" alt="Standard E-Learning"/>
+                        <img src="{{ asset('assets/img/elearning.png') }}" class="logoimg" alt="Standard E-Learning"/>
                     </a>
                     <ul class="nav pb-3 p-md-0">
 
