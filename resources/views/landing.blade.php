@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
-                    <a href="{{ url('/') }}" class="logo">
+                    <a href="{{ url('/') }}" >
                         <img src="{{ asset('assets/img/elearning.png') }}" class="logoimg" alt="Standard E-Learning"/>
                     </a>
                     <ul class="nav pb-3 p-md-0">
