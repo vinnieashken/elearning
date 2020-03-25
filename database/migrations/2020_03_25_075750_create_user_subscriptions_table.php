@@ -16,7 +16,7 @@ class CreateUserSubscriptionsTable extends Migration
         Schema::create('user_subscriptions', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('subscription_id');
+            $table->integer('subscription_id')->unsigned();
             $table->string('ordernumber');
             $table->string('paymentchannel');
             $table->string('transactionid');

@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/add-question','Cms@setQ');
-Route::post('logout','Cms@logout');
+Route::get('/', 'Login@index');
+Route::get('/cms/question','Cms@question');
+Route::get('/cms/dashboard','Cms@index');
+Route::get('/cms/class','Cms@classes');
+Route::get('/cms/subject','Cms@subject');
+Route::get('/cms/modules','Cms@modules');
+

@@ -9,25 +9,38 @@
                 Main
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('dashboard') }}">
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/dashboard') }}">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('add-question') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Add Question</span>
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/class') }}">
+                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Class</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/subject') }}">
+                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Subject</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/modules') }}">
+                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Modules</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/question') }}">
+                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Question</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="#dashboards" data-toggle="collapse" class="font-weight-bold sidebar-link collapsed">
                     <i class="align-middle" data-feather="shield"></i>
-                    <span class="align-middle">Financial Services</span>
+                    <span class="align-middle">Student</span>
                 </a>
                 <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse ">
-                    <li class="sidebar-item"><a class="sidebar-link" href="">Bulk Dispersment</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="">Refund</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="">Account Balance</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="">B2B</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="">Manage Students</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="">Results</a></li>
                 </ul>
             </li>
 

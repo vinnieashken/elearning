@@ -15,10 +15,11 @@ class CreateAnswerSheetsTable extends Migration
     {
         Schema::create('user_answers', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('question_id');
-            $table->integer('option_id');
-            $table->integer('module_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('question_id')->unsigned();
+            $table->integer('option_id')->unsigned();
+            $table->integer('module_id')->unsigned();
+            $table->integer('exam_id')->unsigned();
             $table->timestamps();
         });
     }
