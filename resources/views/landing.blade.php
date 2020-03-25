@@ -15,7 +15,7 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('/static/landing/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/static/landing/css/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('/static/landing/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/static/landing/css/style.css').date('YmdHis') }}">
 
 
 </head>
