@@ -802,7 +802,8 @@ welcome
 }
 
 .logoimg {
-    width: 20%;
+    /*width: 20%;*/
+    height:60px;
 }
 
 .welcome-area .header-text h1 {
