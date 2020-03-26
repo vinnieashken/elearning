@@ -14,6 +14,8 @@ class QuestionSeeder extends Seeder
         $this->options = ['A','B','C','D'];
         $this->faker = $faker;
 
+        $app = factory(App\Models\Application::class)->create(['name'=>'elearning']);
+
 //        foreach (range(0,9) as $optionnum)
 //        {
 //            $subject = (object)['id'=>20];
@@ -27,7 +29,7 @@ class QuestionSeeder extends Seeder
 
         foreach (range(1,8) as $num) {
 
-            $class = factory(App\Models\Level::class)->create(['class' => $num]);
+            $class = factory(App\Models\Level::class)->create(['class' => "class ".$num]);
 
             factory(App\Models\Subject::class, 10)->create(['class_id' => $class->id])->each(function ($subject) {
 

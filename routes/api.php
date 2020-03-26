@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/app/login','Api\LoginController@login');
 
-Route::get('/classes/list','Api\ClassesController@list');
+Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 
 Route::get('/subjects/list','Api\SubjectsController@list');
 Route::get('/subjects/class/{id}','Api\SubjectsController@getClassSubjects');
