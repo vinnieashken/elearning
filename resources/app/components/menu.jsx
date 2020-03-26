@@ -52,7 +52,7 @@ const Subscription = Loadable({
 
 export default function (props) {
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
     const [sideBar, setSideBar] = useState(true);
 
     useEffect((e) => {
