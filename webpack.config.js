@@ -32,7 +32,7 @@ const target_envs = {
             entry: './resources/app/components/index',
             path: path.resolve('./public/static/bundles'),
             chunkFilename: '[name].bundle.js',
-            publicPath: '/static/bundles/'
+            publicPath: '/elearning/public/static/bundles/'
         }
     }
 };

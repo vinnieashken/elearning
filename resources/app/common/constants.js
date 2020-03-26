@@ -2,10 +2,10 @@
 const ORIGIN  = `${window.origin}`;
 
 export const environment = env.environment;
-export const PUBLIC_URL = (environment === `production`) ? "http://www.sde.co.ke/events/public" : ORIGIN;
+export const PUBLIC_URL = (environment === `production`) ? "https://www.standardmedia.co.ke/elearning/public" : ORIGIN;
 export const PORTAL = `${PUBLIC_URL}/app`;
-export const DIR = (environment === `production`) ? '/events/public/app' : '/app';
-export const ENV = (environment === `production`) ? '/events/public/' : '/';
+export const DIR = (environment === `production`) ? '/elearning/public/app' : '/app';
+export const ENV = (environment === `production`) ? '/elearning/public/' : '/';
 
 // VAS
 export const API = `${PUBLIC_URL}/api`;
