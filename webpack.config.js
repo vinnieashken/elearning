@@ -22,17 +22,17 @@ const target_envs = {
     development : {
         app: {
             entry: './resources/app/components/index',
-            path: path.resolve('./public/static/bundles'),
-            chunkFilename: '[name].[chunkhash].js',
-            publicPath: '/static/bundles/'
+            path: path.resolve('./public/static/bundless'),
+            chunkFilename: '[name].bundle.js',
+            publicPath: '/static/bundless/'
         }
     },
     production : {
         app: {
             entry: './resources/app/components/index',
-            path: path.resolve('./public/static/bundles'),
-            chunkFilename: '[name].[chunkhash].js',
-            publicPath: '/elearning/public/static/bundles/'
+            path: path.resolve('./public/static/bundless'),
+            chunkFilename: '[name].bundle.js',
+            publicPath: '/elearning/public/static/bundless/'
         }
     }
 };
