@@ -97,9 +97,7 @@ ol.stats-list li {
     visibility: hidden;
 }
 footer.footer {
-    bottom: 0;
-    width: 100%;
-    position: sticky;
+
 }
 #api-key-area {
     font-size: 18px;
