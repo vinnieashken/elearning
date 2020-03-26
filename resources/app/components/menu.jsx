@@ -3,7 +3,7 @@ import {Link, Switch, Route} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
-import {DIR, ENV} from "../common/constants";
+import {DIR, ENV, PUBLIC_URL} from "../common/constants";
 
 const Home = Loadable({
     loader: () => import('./home'),
@@ -62,9 +62,8 @@ export default function (props) {
             <div className="container-fluid container-application">
                 <div className={`sidenav ${sideBar ? 'show' : ''}`} id="sidenav-main">
                     <div className="sidenav-header d-flex align-items-center">
-                        <a className="navbar-brand" href="/">
-                            <h4 style={{color: '#fff'}}>E-Learning</h4>
-                            {/*<img src="../assets/img/brand/white.png" className="navbar-brand-img" alt="..." />*/}
+                        <a className="navbar-brand" href={`${PUBLIC_URL}`}>
+                            <img src={`${PUBLIC_URL}/assets/img/elearning.png?20200326114313`} className="navbar-brand-img" alt="..." />
                         </a>
                         <div className="ml-auto">
                             <div className="sidenav-toggler sidenav-toggler-dark d-md-none active"
