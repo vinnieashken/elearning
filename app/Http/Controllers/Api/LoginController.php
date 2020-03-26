@@ -21,9 +21,6 @@ class LoginController extends Controller
         $username = $request->username;
         $password = $request->password;
 
-        $username = "vmutune@standardmedia.co.ke";
-        $password = "Ashken33";
-
 //        $params = [
 //            'form_params'=>['email'=> $email, 'password'=>$password],
 //        ];
