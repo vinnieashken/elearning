@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {DIR, ENV, PUBLIC_URL} from "../common/constants";
+import {API, DIR, ENV, PUBLIC_URL} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 
@@ -26,7 +26,7 @@ export default function Login(props) {
         let email = $('#email').val();
         let password = $('#password').val();
         $.ajax({
-            url: `${PUBLIC_URL}/api/login`,
+            url: `${API}/app/login`,
             method: 'post',
             data: {
                 username: email,
@@ -113,13 +113,18 @@ export default function Login(props) {
                                                             </div>
                                                         </div>
                                                         <div className="mt-4">
-                                                            <button type="submit"
-                                                                    className="btn btn-sm btn-primary btn-icon rounded-pill">
-                                                                <span className="btn-inner--text">Sign in</span>
-                                                                <span className="btn-inner--icon">
+                                                            {
+                                                                processing ?  <div className="text-center">
+                                                                        <ClipLoader color={'#6e00ff'}/>
+                                                                    </div> :
+                                                                    <button type="submit"
+                                                                            className="btn btn-sm btn-primary btn-icon rounded-pill">
+                                                                        <span className="btn-inner--text">Sign in</span>
+                                                                        <span className="btn-inner--icon">
                                                                     <i className="fa fa-long-arrow-alt-right" />
                                                                 </span>
-                                                            </button>
+                                                                    </button>
+                                                            }
                                                         </div>
                                                     </form>
                                                 </div>

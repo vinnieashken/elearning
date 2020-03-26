@@ -23,6 +23,6 @@
 <script>
 
 </script>
-<script type="text/javascript" src="{{ asset('static/bundless/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('static/bundlesss/main.js') }}"></script>
 
 </html>
