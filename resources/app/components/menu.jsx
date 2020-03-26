@@ -45,12 +45,24 @@ const Modules = Loadable({
     loading: LoadingWhite
 });
 
+const Subscription = Loadable({
+    loader: () => import('./subscription'),
+    loading: LoadingWhite
+});
+
 export default function (props) {
-    const [user, setUser] = useState({name: "Dennis Karimi", school: "Strathmore"});
+
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [sideBar, setSideBar] = useState(true);
 
     useEffect((e) => {
-        console.log(props);
+        if (!user.hasOwnProperty('name'))
+            props.history.push({
+                pathname: `${ENV}login`,
+            });
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            setSideBar(false)
+        }
     }, []);
     const toggleSideBar = (e) => {
         setSideBar(!sideBar)
@@ -89,12 +101,12 @@ export default function (props) {
                             </a>
                             <div className="mt-4">
                                 <h5 className="mb-0 text-white">{user.name}</h5>
-                                <span className="d-block text-sm text-white opacity-8 mb-3">{user.school}</span>
-                                <a href="#"
+                                <span className="d-block text-sm text-white opacity-8 mb-3">{user.email}</span>
+                                <Link to={`${DIR}/subscribe`}
                                    className="btn btn-sm btn-white btn-icon rounded-pill shadow hover-translate-y-n3">
                                     <span className="btn-inner--icon"><i className="fa fa-coins" /></span>
                                     <span className="btn-inner--text">$2.300</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -220,6 +232,7 @@ export default function (props) {
                             <Route  exact={true} path={`${props.match.url}/exams/subjects/:subject/modules`} render={(props) => <Modules {...props} user={user}/>}/>
                             <Route  exact={true} path={`${props.match.url}/exams/done`} render={(props) => <CompletedExams {...props} user={user}/>}/>
                             <Route  exact={true} path={`${props.match.url}/exams/exam/:module`} render={(props) => <Exam {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/subscribe`} render={(props) => <Subscription {...props} user={user}/>}/>
                         </Switch>
                     </div>
                 </div>

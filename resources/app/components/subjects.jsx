@@ -131,7 +131,7 @@ export default function (props) {
                                                     <React.Fragment>
                                                         <div className='row  mb-3'>
                                                             <div className='col-md-12'>
-                                                                <SearchBar className='col-md-4 float-right mb-3' { ...props.searchProps } />
+                                                                <SearchBar className='col-md-4 form-control form-control-sm float-right mb-3' { ...props.searchProps } />
                                                             </div>
                                                         </div>
                                                         <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>

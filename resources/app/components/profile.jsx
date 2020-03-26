@@ -35,7 +35,8 @@ export default function (props) {
                                 </div>
                                 <div className="col ml-md-n2">
                                     <a href="#!" className="d-block h6 mb-0">{props.user.name}</a>
-                                    <small className="d-block text-muted">{props.user.school}</small>
+                                    <small className="d-block text-muted">{props.user.email}</small>
+                                    <small className="d-block text-muted">{props.user.phone}</small>
                                 </div>
                                 <div className="col-auto">
                                     <button type="button" className="btn btn-xs btn-primary btn-icon rounded-pill">
@@ -51,31 +52,12 @@ export default function (props) {
                             <div className="row">
                                 <div className="col-4 text-center">
                                     <span className="h5 mb-0">86</span>
-                                    <span className="d-block text-sm">Images</span>
-                                </div>
-                                <div className="col-4 text-center">
-                                    <span className="h5 mb-0">8</span>
-                                    <span className="d-block text-sm">Products</span>
-                                </div>
-                                <div className="col-4 text-center">
-                                    <span className="h5 mb-0">1578</span>
-                                    <span className="d-block text-sm">Followers</span>
+                                    <span className="d-block text-sm">Finished Exams</span>
                                 </div>
                             </div>
                         </div>
                         <div className="card-footer">
-                            <div className="row align-items-center">
-                                <div className="col-6">
-                                    <button type="button"
-                                            className="btn btn-sm px-0 font-weight-bold btn-link text-primary btn-icon">
-                                        Message
-                                    </button>
-                                </div>
-                                <div className="col-6 text-right">
-                                    <button type="button" className="btn btn-xs btn-secondary rounded-pill">Follow
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

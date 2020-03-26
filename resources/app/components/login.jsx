@@ -43,9 +43,10 @@ export default function Login(props) {
             }.bind(this),
             success: function (res) {
                 setProcessing(false);
-                localStorage.setItem('token', res.access_token);
+                localStorage.setItem('user', res);
                 props.history.push({
-                    pathname: `${next}`
+                    pathname: `${next}`,
+                    state: {user: JSON.parse(res)},
                 })
             }.bind(this)
         })
