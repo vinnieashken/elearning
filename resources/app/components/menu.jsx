@@ -20,6 +20,11 @@ const Exams = Loadable({
     loading: LoadingWhite
 });
 
+const Exam = Loadable({
+    loader: () => import('./exam'),
+    loading: LoadingWhite
+});
+
 const CompletedExams = Loadable({
     loader: () => import('./completedExams'),
     loading: LoadingWhite
@@ -42,7 +47,7 @@ const Modules = Loadable({
 
 export default function (props) {
     const [user, setUser] = useState({name: "Dennis Karimi", school: "Strathmore"});
-    const [sideBar, setSideBar] = useState(false);
+    const [sideBar, setSideBar] = useState(true);
 
     useEffect((e) => {
         console.log(props);
@@ -214,7 +219,7 @@ export default function (props) {
                             <Route  exact={true} path={`${props.match.url}/exams/modules`} render={(props) => <Modules {...props} user={user}/>}/>
                             <Route  exact={true} path={`${props.match.url}/exams/subjects/:subject/modules`} render={(props) => <Modules {...props} user={user}/>}/>
                             <Route  exact={true} path={`${props.match.url}/exams/done`} render={(props) => <CompletedExams {...props} user={user}/>}/>
-                            <Route  exact={true} path={`${props.match.url}/exams/exam/:module`} render={(props) => <Exams {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/exam/:module`} render={(props) => <Exam {...props} user={user}/>}/>
                         </Switch>
                     </div>
                 </div>

@@ -1,16 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import {API, DIR, PUBLIC_URL} from "../common/constants";
-import Loading from "../common/loading";
+import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
+import moment from "moment";
+import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+import BootstrapTable from "react-bootstrap-table-next";
+const { SearchBar } = Search;
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
+    const [subjects, setSubjects] = useState([]);
     const [modules, setModules] = useState([]);
 
     useEffect(() => {
-        getModules();
+        getSubjects();
     }, []);
 
+    const getSubjects = () => {
+        $.ajax({
+            url: `${API}/subjects/${props.match.params.hasOwnProperty('class') ? `class/${props.match.params.class}` : 'list'}`,
+            // url: `${API}/subjects/class/{class_id}`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr['responseText'])['message'];
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setSubjects(res);
+                getModules();
+            }.bind(this)
+        })
+    };
     const getModules = () => {
         $.ajax({
             url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}`,
@@ -32,6 +57,35 @@ export default function (props) {
         })
     };
 
+    const dateFormatter= (cell, row) => {
+        return moment(cell, 'Y-MM-DD HH:mm:ss').fromNow()
+    };
+
+    const formatSubjectName = (cell, row) => {
+        let subject = subjects.filter((el) => {
+            return parseInt(el.id) === parseInt(row.subject_id);
+        });
+        return subject.length > 0 ? subject[0]['subject'] : '';
+    };
+
+    const actionButton = (cell, row) => {
+        return (
+            <div className="actions ml-3">
+                <Link to={`${DIR}/exams/exam/${row.id}`} className="action-item mr-2" data-toggle="tooltip" title=""
+                      data-original-title="Take Exam">
+                    <i className="fa fa-external-link-alt" />
+                </Link>
+                {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
+                {/*    <i className="fa fa-pencil-alt"></i>*/}
+                {/*</a>*/}
+                {/*<a href="#" className="action-item text-danger mr-2" data-toggle="tooltip" title=""*/}
+                {/*   data-original-title="Move to trash">*/}
+                {/*    <i className="fa fa-trash"></i>*/}
+                {/*</a>*/}
+            </div>
+        )
+    };
+
     return (
         <React.Fragment>
             <div className="page-title">
@@ -39,67 +93,58 @@ export default function (props) {
                     <div
                         className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
                         <div className="d-inline-block">
-                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">Select Module</h5>
+                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">Modules</h5>
                         </div>
-                    </div>
-                    <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
-                        <div className="actions actions-dark d-inline-block">
-                            <a href="#" className="action-item ml-md-4">
-                                <i className="fa fa-file-export mr-2" />Export
-                            </a>
-                        </div>
+                        {/*<div className="align-items-center ml-4 d-inline-flex">*/}
+                        {/*    <span className="h4 text-info mb-0 mr-2">9</span>*/}
+                        {/*    <span className="text-sm opacity-7 text-white">New products</span>*/}
+                        {/*</div>*/}
+                        {/*<a href="card-listing.html" className="text-sm text-info d-none d-lg-inline-block ml-4">See*/}
+                        {/*    cards</a>*/}
                     </div>
                 </div>
             </div>
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="card card-fluid">
-                        <div className="card-header">
-                            <div className="row align-items-center">
-                                <div className="col-auto">
-                                    <a href="#" className="avatar rounded-circle">
-                                        {/*<img alt="Image placeholder" src="../../assets/img/theme/light/team-3-800x800.jpg" className="" />*/}
-                                    </a>
-                                </div>
-                                <div className="col ml-md-n2">
-                                    <a href="#!" className="d-block h6 mb-0">{props.user.name}</a>
-                                    <small className="d-block text-muted">{props.user.school}</small>
-                                </div>
-                                <div className="col-auto">
-                                    {/*<button type="button" className="btn btn-xs btn-primary btn-icon rounded-pill">*/}
-                                    {/*    <span className="btn-inner--icon">*/}
-                                    {/*        <i className="far fa-edit" />*/}
-                                    {/*    </span>*/}
-                                    {/*    /!*<span className="btn-inner--text">Edit</span>*!/*/}
-                                    {/*</button>*/}
+            <div className='card'>
+                <div className="mt-3">
+                    {
+
+                        loading ?
+                            <div className="text-center mt-4">
+                                <ClipLoader color={'#cf2027'} />
+                            </div> :
+
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <ToolkitProvider
+                                        keyField="id"
+                                        data={ modules }
+                                        columns={
+                                            [
+                                                {dataField: 'module',      text: 'Module',    sort: true},
+                                                {dataField: 'class',        text: 'Subject',      sort: true, formatter: formatSubjectName},
+                                                {dataField: 'created_at',   text: 'Added',      sort: true, formatter: dateFormatter},
+                                                {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
+                                            ]
+                                        } search={true}>
+                                        {
+                                            props =>
+                                                (
+                                                    <React.Fragment>
+                                                        <div className='row  mb-3'>
+                                                            <div className='col-md-12'>
+                                                                <SearchBar className='col-md-4 float-right mb-3' { ...props.searchProps } />
+                                                            </div>
+                                                        </div>
+                                                        <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
+
+                                                    </React.Fragment>
+                                                )
+                                        }
+                                    </ToolkitProvider>
                                 </div>
                             </div>
-                        </div>
-                        {
-                            loading ? <Loading/> :
-                                <React.Fragment>
-                                    <div className="card-body">
-                                        <div className='row'>
-                                            {
-                                                modules.map((el) => {
-                                                    return (
-                                                        <Link className="btn btn-square text-sm " to={`${DIR}/exams/exam/${el.id}`}>
-                                                        <span className="btn-inner--icon d-block">
-                                                            <i className="fa fa-tasks fa-2x" />
-                                                        </span>
-                                                            <span className="btn-inner--icon d-block pt-2">{el.module}</span>
-                                                        </Link>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="card-footer">
 
-                                    </div>
-                                </React.Fragment>
-                        }
-                    </div>
+                    }
                 </div>
             </div>
         </React.Fragment>
