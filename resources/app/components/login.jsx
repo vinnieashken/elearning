@@ -21,37 +21,34 @@ export default function Login(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.history.push({
-            pathname: `${next}`
+        setProcessing(true);
+        setMessage(false);
+        let email = $('#email').val();
+        let password = $('#password').val();
+        $.ajax({
+            url: `${PUBLIC_URL}/api/login`,
+            method: 'post',
+            data: {
+                username: email,
+                password: password,
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr['responseText'])['message'];
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setProcessing(false);
+                localStorage.setItem('token', res.access_token);
+                props.history.push({
+                    pathname: `${next}`
+                })
+            }.bind(this)
         })
-        // setProcessing(true);
-        // setMessage(false);
-        // let email = $('#email').val();
-        // let password = $('#password').val();
-        // $.ajax({
-        //     url: `${PUBLIC_URL}/api/login`,
-        //     method: 'post',
-        //     data: {
-        //         username: email,
-        //         password: password,
-        //     },
-        //     error: function (xhr, status, error) {
-        //         var response = JSON.parse(xhr['responseText'])['message'];
-        //         if (xhr.status === 405)
-        //             response = "Sorry an error has occurred. We are working on it. (405)";
-        //         setProcessing(false);
-        //         setMessage(true);
-        //         setMessageType('alert alert-danger');
-        //         setResponse(response);
-        //     }.bind(this),
-        //     success: function (res) {
-        //         setProcessing(false);
-        //         localStorage.setItem('token', res.access_token);
-        //         props.history.push({
-        //             pathname: `${next}`
-        //         })
-        //     }.bind(this)
-        // })
     };
 
     const togglePasswordType = (toggle, e) => {
@@ -85,7 +82,7 @@ export default function Login(props) {
                                                                 </span>
                                                                 </div>
                                                                 <input type="email" className="form-control"
-                                                                       id="input-email" placeholder="name@example.com" />
+                                                                       id="email"  />
                                                             </div>
                                                         </div>
                                                         <div className="form-group mb-4">
@@ -94,11 +91,11 @@ export default function Login(props) {
                                                                 <div>
                                                                     <label className="form-control-label">Password</label>
                                                                 </div>
-                                                                <div className="mb-2">
-                                                                    <a href="#!"
-                                                                       className="small text-muted text-underline--dashed border-primary">Lost
-                                                                        password?</a>
-                                                                </div>
+                                                                {/*<div className="mb-2">*/}
+                                                                {/*    <a href="#!"*/}
+                                                                {/*       className="small text-muted text-underline--dashed border-primary">Lost*/}
+                                                                {/*        password?</a>*/}
+                                                                {/*</div>*/}
                                                             </div>
                                                             <div className="input-group input-group-merge">
                                                                 <div className="input-group-prepend">
@@ -106,13 +103,11 @@ export default function Login(props) {
                                                                     <i className="fa fa-key" />
                                                                 </span>
                                                                 </div>
-                                                                <input type="password" className="form-control"
-                                                                       id="input-password" placeholder="Password" />
+                                                                <input type={passwordType} className="form-control"
+                                                                       id="password" placeholder="Password" />
                                                                     <div className="input-group-append">
-                                                                        <span className="input-group-text">
-                                                                            <a href="#" data-toggle="password-text" data-target="#input-password">
+                                                                        <span className="input-group-text" onMouseUp={togglePasswordType.bind(this, false)} onMouseDown={togglePasswordType.bind(this, true)} onMouseLeave={togglePasswordType.bind(this, false)}>
                                                                                 <i className="fa fa-eye" />
-                                                                            </a>
                                                                         </span>
                                                                     </div>
                                                             </div>
