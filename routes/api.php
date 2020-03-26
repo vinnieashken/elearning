@@ -28,4 +28,4 @@ Route::get('/subjects/class/{id}','Api\SubjectsController@getClassSubjects');
 Route::get('/modules/list','Api\ModulesController@list');
 Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
 
-Route::get('/modules//{id}');
+Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
