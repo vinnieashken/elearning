@@ -205,8 +205,8 @@
                 </ul>
                 <ul class="navbar-nav mr-auto w-100 text-black justify-content-end ">
                     <li class="btn-group fl-right ">
-                        <a href="{{ url('/register') }}" class="btn btn-default btnlogin "> <i class="fa fa-lock "></i> Login </a>
-                        <a href="{{ url('/login') }}" class="btn btn-default btnlogin "> <i class="fa fa-user "></i> Register </a>
+                        <a href="{{ url('/login') }}" class="btn btn-default btnlogin "> <i class="fa fa-lock "></i> Login </a>
+                        <a href="{{ url('/register') }}" class="btn btn-default btnlogin "> <i class="fa fa-user "></i> Register </a>
                     </li>
 
                 </ul>
