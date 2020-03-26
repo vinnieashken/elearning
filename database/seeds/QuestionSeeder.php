@@ -27,7 +27,7 @@ class QuestionSeeder extends Seeder
 
         foreach (range(1,8) as $num) {
 
-            $class = factory(App\Models\Level::class)->create(['class' => $num]);
+            $class = factory(App\Models\Level::class)->create(['class' => "class ".$num]);
 
             factory(App\Models\Subject::class, 10)->create(['class_id' => $class->id])->each(function ($subject) {
 
