@@ -24,6 +24,7 @@ Route::get('/cms/modules','Cms@modules');
 Route::post('get_classes','Datatable@get_classes');
 Route::post('get_subjects','Datatable@get_subjects');
 Route::post('get_modules','Datatable@get_modules');
+Route::post('get_questions','Datatable@get_questions');
 
 Route::post('/cms/addsubject','Cms@addsubject');
 Route::post('/cms/editsubject','Cms@editsubject');
@@ -33,6 +34,11 @@ Route::post('/cms/addclass','Cms@addlevel');
 Route::post('/cms/editclass','Cms@editlevel');
 Route::post('/cms/addquestion','Cms@addquestion');
 Route::post('/cms/editquestion','Cms@editquestion');
+Route::post('/subjectfromclass','Cms@getmodules');
+Route::post('choices','Cms@choices');
+Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
+    return view('cms.modules.setquestion',['module_id'=>$postId,'title'=>$title]);
+});
 
 Route::get('/', function () {
     return view('landing');

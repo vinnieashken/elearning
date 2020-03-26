@@ -14,17 +14,19 @@
             <table class="table table-hover table-striped" id="module">
                 <thead>
                 <tr>
+                    <th>id</th>
                     <th>Class</th>
-                    <th>Date Created</th>
-                    <th>Created By</th>
+                    <th>Subject</th>
+                    <th>Module</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
+                    <th>id</th>
                     <th>Class</th>
-                    <th>Date Created</th>
-                    <th>Created By</th>
+                    <th>Subject</th>
+                    <th>Module</th>
                     <th>Action</th>
                 </tr>
                 </tfoot>
@@ -42,13 +44,19 @@
                     <form action="{{ url('cms/addmodule') }}" method="post" class="form form-horizontal create-form" data-modal="#addModal">
                 </div>
                 <div class="modal-body">
-                    @csrf
+                    <div class="form-group">
+                        <label for="add-classroom" class="control-label">Class</label>
+                        <select name="class" id="add-classroom" class="custom-select m-class">
+                            @foreach(App\Models\Level::all() as $value)
+                                <option value="{{ $value->id }}">{{ $value->class }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="add-subject" class="control-label">Subject</label>
-                        <select name="subject" id="add-subject" class="custom-select">
-                            @foreach(App\Models\Subject::all() as $value)
-                                <option value="{{ $value->id }}">{{ $value->subject }}</option>
-                            @endforeach
+                        <select name="subject" id="add-subject" class="custom-select m-subject">
+                            <option value="all">All</option>
+
                         </select>
                     </div>
                     <div class="form-group">
@@ -77,11 +85,18 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" id="edit-id">
                     <div class="form-group">
-                        <label for="edit-subject" class="control-label">Subject</label>
-                        <select name="subject" id="edit-subject" class="custom-select">
-                            @foreach(App\Models\Subject::all() as $value)
-                                <option value="{{ $value->id }}">{{ $value->subject }}</option>
+                        <label for="edit-classroom" class="control-label">Class</label>
+                        <select name="class" id="edit-classroom" class="custom-select m-class">
+                            @foreach(App\Models\Level::all() as $value)
+                                <option value="{{ $value->id }}">{{ $value->class }}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-subject" class="control-label">Subject</label>
+                        <select name="subject" id="edit-subject" class="custom-select m-subject">
+                            <option value="all">All</option>
+
                         </select>
                     </div>
                     <div class="form-group">

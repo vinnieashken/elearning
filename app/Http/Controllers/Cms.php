@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Module;
 use App\Models\Level;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class Cms extends Controller
@@ -146,5 +147,91 @@ class Cms extends Controller
         public function subject()
             {
                 return view('cms/modules/subject');
+            }
+        public function addsubject(Request $request)
+            {
+                $validatedData = $request->validate([
+                    'class'         =>  'required',
+                    'subject'       =>  'required'
+                ]);
+
+                if($validatedData)
+                    {
+                        $subject           =   new Subject();
+                        $subject->subject  =   $request->subject;
+                        $subject->class_id =   $request->class;
+                        $req               =   $subject->save();
+                        if($req)
+                            {
+                                return array('status'=>TRUE,'msg'=>'Subject added successful','header'=>'Subject');
+                            }
+                        else
+                            {
+                                return array('status'=>False,'msg'=>'Subject addition failed','header'=>'Subject');
+                            }
+                    }
+                else
+                    {
+                        return array('status'=>FALSE,'msg'=>$validatedData->errors());
+                    }
+            }
+        public function editsubject(Request $request)
+            {
+                $validatedData = $request->validate([
+                    'class'         =>  'required',
+                    'subject'       =>  'required'
+                ]);
+
+                if($validatedData)
+                    {
+                        $subject           =   Subject::find($request->id);
+                        $subject->subject  =   $request->subject;
+                        $subject->class_id =   $request->class;
+                        $req               =   $subject->save();
+                        if($req)
+                            {
+                                return array('status'=>TRUE,'msg'=>'Subject added successful','header'=>'Subject');
+                            }
+                        else
+                            {
+                                return array('status'=>False,'msg'=>'Subject addition failed','header'=>'Subject');
+                            }
+                    }
+                else
+                    {
+                        return array('status'=>FALSE,'msg'=>$validatedData->errors());
+                    }
+            }
+        public function getmodules(Request $request)
+            {
+                $option = "";
+                $data   =   Subject::where('class_id',$request->class_id)->get();
+                foreach($data as $value)
+                    {
+                        $option .= '<option value="'.$value->id.'">'.$value->subject.'</option>';
+                    }
+                echo $option;
+            }
+        public function choices(Request $request)
+            {
+                $choice = "";
+                $size = (int)$request->choices + 65;
+                for($i=65; $i<$size; $i++)
+                    {
+                        $choice .='<div class="form-group form-row">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">'.chr($i).'</div>
+                                            </div>
+                                            <input type="text" class="form-control" name="option['.chr($i).']" >
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">
+                                                    <input type="radio" name="correctanswer" value="'.chr($i).'">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>';
+                    }
+                echo $choice;
             }
     }

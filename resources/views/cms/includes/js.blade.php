@@ -81,13 +81,71 @@
         $(document).on('click','.edit-module',function(e){
             e.preventDefault();
             var module = $(this).data('module');
-            console.log(module);
+
             $('#edit-id').val(module.id);
             $('#edit-module').val(module.module);
             $('#edit-subject option[value="'+module.subject_id+'"]').attr("selected","selected");
 
             $('#editModal').modal('toggle');
         });
+        $(document).on('click','.edit-subject',function(e){
+            e.preventDefault();
+            var subject = $(this).data('subject');
+            $("#edit-id").val(subject.id);
+            $('#edit-class option[value="'+subject.class_id+'"]').attr("selected","selected");
+            $('#edit-subject').val(subject.subject);
+
+            $('#editModal').modal('toggle');
+        });
+        var str = $( ".m-class option:selected" ).val();
+        $.ajax({
+            type: 'POST',
+            url: '<?=url('subjectfromclass'); ?>',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{'class_id':str},
+            success: function (Mess) {
+                $('.m-subject').append(Mess);
+            },
+            error: function (f) {
+                console.log(f);
+            }
+        });
+        $(document).on('change','.m-class',function() {
+            var str = $( "select option:selected" ).val();
+            $.ajax({
+                type: 'POST',
+                url: '<?=url('subjectfromclass'); ?>',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{'class_id':str},
+                success: function (Mess) {
+                    $('.m-subject').append(Mess);
+                },
+                error: function (f) {
+                    console.log(f);
+                }
+            });
+
+        });
+        $(document).on('click','.choicebtn',function(e){
+            e.preventDefault();
+            var choices = $('#noc').val();
+            $.ajax({
+                type: 'POST',
+                url: '<?=url('choices'); ?>',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{'choices':choices},
+                success: function (Mess) {
+                    $('.choices').html(Mess);
+                },
+                error: function (f) {
+                    console.log(f);
+                }
+            });
+
+        });
+
+
+
         $('#classes').DataTable({
             "processing": true,
             "serverSide": true,
@@ -116,6 +174,7 @@
             },
             "columns": [
                 { "data": "id" },
+                { "data": "level"},
                 { "data": "subject" },
                 { "data": "module" },
                 { "data": "action"}
@@ -139,7 +198,23 @@
             ]
 
         });
+        $('#questions').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+                "url": "{{ url('get_questions') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data":{ _token: "{{csrf_token()}}"}
+            },
+            "columns": [
+                { "data": "*" },
+                { "data": "module" },
+                { "data": "question" },
+                { "data": "action"}
+            ]
 
+        });
 
     });
 </script>

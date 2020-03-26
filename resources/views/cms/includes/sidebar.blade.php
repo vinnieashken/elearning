@@ -29,11 +29,6 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('cms/question') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Question</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
                 <a href="#dashboards" data-toggle="collapse" class="font-weight-bold sidebar-link collapsed">
                     <i class="align-middle" data-feather="shield"></i>
                     <span class="align-middle">Student</span>
