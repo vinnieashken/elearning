@@ -17,37 +17,212 @@
     <link rel="stylesheet" href="{{ asset('/static/landing/css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('/static/landing/css/style.css?').date('YmdHis') }}">
 
+    <style>
+        .topnav .nav-link {
+            color: #000000 !important;
+        }
+
+        footer .nav-link {
+            color: rgb(15, 15, 15);
+            font-weight: 500;
+        }
+
+        footer .nav {
+            justify-content: space-around;
+        }
+
+        footer .nav-item {
+            border-right: 1px solid #808080b8;
+            font-size: 11px;
+        }
+
+        footer .card-body {
+            color: #fff;
+            background: #0f5ca8;
+        }
+
+        .navbar-brand {
+            width: 100px;
+            height: auto;
+        }
+
+        .from {
+            justify-content: center !important;
+        }
+
+        .from .nav-item {
+            border: none;
+        }
+
+        .from a {
+            font-size: .9rem;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .fl-right {
+            padding: 0;
+        }
+
+        .btnlogin {
+            padding: 5px 7px;
+            border: 1px solid #00000052;
+            border-radius: 0;
+            color: rgb(24, 24, 24);
+            margin-right: 4px;
+        }
+        .navbar {
+            padding: 0rem;
+        }
+
+        .dropdown .dropdown-menu {
+            border-radius: 0;
+        }
+
+        @media (min-width: 768px) {
+            .dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0;
+                border-radius: 0;
+            }
+        }
+
+        footer {
+            padding-top: 0;
+            background-image: url(../images/footer-bg.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            width: 100%;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 991px) {
+            .logoimg {
+                width: 36% !important;
+                margin-left: 0;
+            }
+            .header-area {
+                background-color: #f7f7f7;
+                padding: 0px 15px;
+                min-height: 60px !important;
+                height: 60px !important;
+                box-shadow: none;
+                text-align: center;
+            }
+            .h1 {
+                color: #0f5ca8;
+                font: 35px sans-serif !important;
+                font-weight: 800 !important;
+                line-height: 1;
+            }
+            footer {
+                padding-top: 0!important;
+                background-image: url(../images/footer-bg.png);
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+                width: 100%;
+                margin-top: 60px;
+            }
+            .nav-link {
+                display: block;
+                padding: .2rem .2rem;
+                font-size: 9px;
+            }
+            footer span {
+                font-size: 12px;
+            }
+            p {
+                font-size: 14px;
+                line-height: 1.5;
+                color: #797979;
+            }
+            .features-item {
+                border-radius: 5px;
+                padding: 22px 11px;
+                text-align: center;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            }
+            .icons,
+            .icon {
+                margin-top: 6%;
+                height: 62px;
+                width: 62px !important;
+                object-fit: cover;
+            }
+            .icons {
+                height: 84px !important;
+                margin-top: -22px;
+                width: 84px;
+            }
+        }
+
+        .sender {
+            padding: 14px 15px !important;
+        }
+    </style>
+
 
 </head>
 
 <body>
 
-<header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <a href="{{ url('/') }}" class="logo">
-                        <img src="{{ asset('assets/img/elearning.png?').date('YmdHis') }}" class="logoimg" alt="Standard E-Learning"/>
-                    </a>
-                    <ul class="nav pb-3 p-md-0">
+<nav class="navbar navbar-expand-md bg-white sticky-top pb-3">
+    <!-- One of the primary actions on mobile is to call a business - This displays a phone button on mobile only -->
 
-                        <li class="scroll-to-section"><a href="#about" class="menu-item">Home</a></li>
-                        <li class="scroll-to-section"><a href="#contact-us" class="menu-item">Contact Us</a></li>
-                        <li class="scroll-to-section"><a href="{{ url('/register') }}" class="">Register</a></li>
-                        <li class="scroll-to-section"><a href="{{ url('/login') }}" class="">Login</a></li>
 
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
+
+
+    <div class="collapse navbar-collapse flex-column  text-center" id="navbar">
+
+        <ul class="navbar-nav w-100 justify-content-center px-3 ">
+
+            <li>
+                <a href="{{ url('/') }}" class="logo">
+                    <img src="{{ asset('assets/img/elearning.png?').date('YmdHis') }}" class="logoimg" alt="Standard E-Learning"/>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav justify-content-center w-100 bg-white px-3 ">
+            <ul class="navbar-nav topnav justify-content-end w-100 px-3 container pt-0 ">
+
+                <ul class="navbar-nav mr-auto w-100 text-black justify-content-space-between ">
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#slider-area ">
+                            <i class="lni-search "></i>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#about "> Home</a></li>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#contact-us ">Contact Us</a>
+                    </li>
+
+                    <div class="span2 lwrap ">
+
+                </ul>
+                <ul class="navbar-nav mr-auto w-100 text-black justify-content-end ">
+                    <li class="btn-group fl-right ">
+                        <a href="{{ url('/register') }}" class="btn btn-default btnlogin "> <i class="fa fa-lock "></i> Login </a>
+                        <a href="{{ url('/login') }}" class="btn btn-default btnlogin "> <i class="fa fa-user "></i> Register </a>
+                    </li>
+
+                </ul>
+
+            </ul>
+
+
     </div>
-</header>
+    <div class="fixed-top d-flex  mx-2">
+        <a class="float-left " href="index.html ">
+            <img src="{{ asset('assets/img/elearning.png?').date('YmdHis') }}" class="logoimg mt-2 d-block d-md-none d-lg-none "></a>
+        <button class="navbar-toggler float-right " type="button " data-toggle="collapse " data-target="#navbar " aria-controls="navbarTogglerDemo02 " aria-expanded="false " aria-label="Toggle navigation ">
+            <i class="fa fa-bars "></i>
+        </button></div>
 
+</nav>
 
 <div class="right-image-decor" id="about"></div>
 <section class="section">
@@ -68,39 +243,59 @@
     </div>
 </section>
 
-<footer id="contact-us">
-    <div class="container ">
-        <div class="footer-content ">
-            <div class="row ">
-                <div class="col-lg-12 ">
-                    <div class="sub-footer row ">
-                        <div class="col-md-4 text-white mb-2 text-left ">
-                            <h2 style=" font-size: 35px; font-weight: 600; ">Contact
-                                <font style="color: #0f5ca8; ">Us</font>
-                            </h2>
-                            <ol>
-                                <li>P.O Box 30080, 00100 Nairobi Kenya.</li>
-                                <li>Tel: 0719012111, 3222111</li>
-                            </ol>
-                        </div>
-                        <div class="col-md-4 mt-5 pt-3 ">
-                            <p>Copyright &copy; 2020 Standard Group PLC
-                                <a rel="nofollow " href="https://templatemo.com "></a>
-                            </p>
-                        </div>
-                        <div class="col-md-4 mt-4 ">
+<footer style="color: #000000; background: linear-gradient(to bottom right, #510812, #bf1e2d); ">
+    <ul class="nav from text-center bg-light ">
+        <li class="nav-item mt-2 mr-1 ">
+            <a class="nav-link px-0 " href="# ">VAS from </a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link px-0 " href="# "><img src="{{asset('static/landing/images/STANDARD-REDESIGN-LOGO.png')}}" class="navbar-brand "></a>
+        </li>
+    </ul>
 
-                            <ul class="social ">
-                                <li><a href="https://fb.com/templatemo "><i class="fa fa-facebook "></i></a></li>
-                                <li><a href="# "><i class="fa fa-twitter "></i></a></li>
-                                <li><a href="# "><i class="fa fa-instagram "></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    <div class="card text-center ">
+        <div class="card-header p-2 ">
+            <div class="container ">
+                <ul class="nav text-center ">
+                    <li class="nav-item ">
+                        <a class="nav-link " href="# ">DIGGER</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="# ">BTV</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="# ">TRAVELOG</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#slider-area ">PULSER</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#services ">FARMERS</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#slider-area ">EVE WOMAN</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#services ">FM VYBEZ</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#slider-area ">SPICE RADIO</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link page-scroll " href="#services ">RADIO MAISHA</a>
+                    </li>
+                    <li class="nav-item border-0 ">
+                        <a class="nav-link page-scroll " href="#slider-area ">CORPORATE</a>
+                    </li>
+                </ul>
             </div>
         </div>
+        <div class="card-body p-2 ">
+            <span>&copy; Copyright 2020 - Standard Group PLC</span>
+
+        </div>
     </div>
+
 </footer>
 
 <!-- jQuery -->
