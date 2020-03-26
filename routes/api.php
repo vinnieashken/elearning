@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::get('/app/login','Api\LoginController@login');
+Route::post('/app/login','Api\LoginController@login');
 
 Route::get('/classes/list','Api\ClassesController@list');
 
@@ -29,3 +29,7 @@ Route::get('/modules/list','Api\ModulesController@list');
 Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
 
 Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
+
+
+
+
