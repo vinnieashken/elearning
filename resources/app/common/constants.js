@@ -8,7 +8,4 @@ export const DIR = (environment === `production`) ? '/elearning/public/app' : '/
 export const ENV = (environment === `production`) ? '/elearning/public/' : '/';
 
 // VAS
-export const API = `${PUBLIC_URL}/api`;
-export const GRAPH = `${PUBLIC_URL}/graphql`;
-export const VAS_API = `https://vas.standardmedia.co.ke`;
-
+export const API = `https://www.standardmedia.co.ke/elearning/public/api`;

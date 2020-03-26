@@ -2,26 +2,47 @@ import React , {useState, useEffect} from 'react';
 import {Link, Switch, Route} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
-import {DIR} from "../common/constants";
+import LoadingWhite from "../common/loadingWhite";
+import {DIR, ENV} from "../common/constants";
 
 const Home = Loadable({
     loader: () => import('./home'),
-    loading: Loading
+    loading: LoadingWhite
 });
 
 const Profile = Loadable({
     loader: () => import('./profile'),
-    loading: Loading
+    loading: LoadingWhite
 });
 
 const Exams = Loadable({
     loader: () => import('./exams'),
-    loading: Loading
+    loading: LoadingWhite
+});
+
+const CompletedExams = Loadable({
+    loader: () => import('./completedExams'),
+    loading: LoadingWhite
+});
+
+const Classes = Loadable({
+    loader: () => import('./classes'),
+    loading: LoadingWhite
+});
+
+const Subjects = Loadable({
+    loader: () => import('./subjects'),
+    loading: LoadingWhite
+});
+
+const Modules = Loadable({
+    loader: () => import('./modules'),
+    loading: LoadingWhite
 });
 
 export default function (props) {
     const [user, setUser] = useState({name: "Dennis Karimi", school: "Strathmore"});
-    const [sideBar, setSideBar] = useState(true);
+    const [sideBar, setSideBar] = useState(false);
 
     useEffect((e) => {
         console.log(props);
@@ -81,19 +102,32 @@ export default function (props) {
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Home</span>
                         </Link>
-                        <Link to={`${DIR}/exams/new`} className={`btn btn-square text-sm ${isActive('/exams/new')}`}>
+                        <Link to={`${DIR}/exams/classes`} className={`btn btn-square text-sm ${isActive('/exams/classes')}`}>
                             <span className="btn-inner--icon d-block">
                                 <i className="fa fa-project-diagram fa-2x" />
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Take Test</span>
                         </Link>
+
+                        <Link to={`${DIR}/exams/subjects`} className={`btn btn-square text-sm ${isActive('/exams/subjects')}`}>
+                            <span className="btn-inner--icon d-block">
+                                <i className="fa fa-columns fa-2x" />
+                            </span>
+                            <span className="btn-inner--icon d-block pt-2">Subjects</span>
+                        </Link>
+                        <Link to={`${DIR}/exams/modules`} className={`btn btn-square text-sm ${isActive('/exams/modules')}`}>
+                            <span className="btn-inner--icon d-block">
+                                <i className="fa fa-receipt fa-2x" />
+                            </span>
+                            <span className="btn-inner--icon d-block pt-2">Modules</span>
+                        </Link>
+
                         <Link to={`${DIR}/exams/done`} className={`btn btn-square text-sm ${isActive('/exams/done')}`}>
                             <span className="btn-inner--icon d-block">
                                 <i className="fa fa-tasks fa-2x" />
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Completed Exams</span>
                         </Link>
-
                         <Link to={`${DIR}/profile`} className={`btn btn-square text-sm ${isActive('/profile')}`}>
                             <span className="btn-inner--icon d-block">
                                 <i className="fa fa-user-ninja fa-2x" /></span>
@@ -122,6 +156,12 @@ export default function (props) {
                             </button>
                             <div className="collapse navbar-collapse navbar-collapse-fade" id="navbar-main-collapse">
                                 <ul className="navbar-nav ml-lg-auto align-items-center d-none d-lg-flex">
+                                    <li className="nav-item">
+                                        <a href="#" className="nav-link nav-link-icon sidenav-toggler active"
+                                           data-action="sidenav-pin" data-target="#sidenav-main" onClick={toggleSideBar}>
+                                            <i className="fa fa-bars" />
+                                        </a>
+                                    </li>
                                     <li className="nav-item dropdown dropdown-animate">
                                         <a className="nav-link pr-lg-0" href="#" role="button" data-toggle="dropdown"
                                            aria-haspopup="true" aria-expanded="false">
@@ -137,27 +177,27 @@ export default function (props) {
                                         <div
                                             className="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
                                             <h6 className="dropdown-header px-0">Hi, {user.name}!</h6>
-                                            <a href="#!" className="dropdown-item">
+                                            <Link to={`${DIR}/profile`} className="dropdown-item">
                                                 <i className="fa fa-user" />
                                                 <span>My profile</span>
-                                            </a>
-                                            <a href="#!" className="dropdown-item">
+                                            </Link>
+                                            <Link to={`${DIR}`} className="dropdown-item">
                                                 <i className="fa fa-cog" />
                                                 <span>Settings</span>
-                                            </a>
-                                            <a href="#!" className="dropdown-item">
+                                            </Link>
+                                            <Link to={`${DIR}`} className="dropdown-item">
                                                 <i className="fa fa-credit-card" />
                                                 <span>Billing</span>
-                                            </a>
-                                            <a href="#!" className="dropdown-item">
+                                            </Link>
+                                            <Link to={`${DIR}`} href="#!" className="dropdown-item">
                                                 <i className="fa fa-tasks" />
                                                 <span>Activity</span>
-                                            </a>
+                                            </Link>
                                             <div className="dropdown-divider" />
-                                            <a href="#!" className="dropdown-item">
+                                            <Link to={`${ENV}login`} className="dropdown-item">
                                                 <i className="fa fa-sign-out-alt" />
                                                 <span>Logout</span>
-                                            </a>
+                                            </Link>
                                         </div>
                                     </li>
                                 </ul>
@@ -169,8 +209,13 @@ export default function (props) {
                             <Route  exact={true} path={props.match.url} render={(props) => <Home {...props} user={user}/>}/>
                             <Route  exact={true} path={`${props.match.url}/profile`} render={(props) => <Profile {...props} user={user}/>}/>
                             <Route  exact={true} path={`${props.match.url}/exams`} render={(props) => <Exams {...props} user={user}/>}/>
-                            <Route  exact={true} path={`${props.match.url}/exams`} render={(props) => <Exams {...props} user={user}/>}/>
-                            <Route  exact={true} path={`${props.match.url}/exams/done`} render={(props) => <Exams {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/classes`} render={(props) => <Classes {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/subjects`} render={(props) => <Subjects {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/classes/:class/subjects`} render={(props) => <Subjects {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/modules`} render={(props) => <Modules {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/subjects/:subject/modules`} render={(props) => <Modules {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/done`} render={(props) => <CompletedExams {...props} user={user}/>}/>
+                            <Route  exact={true} path={`${props.match.url}/exams/exam/:module`} render={(props) => <Exams {...props} user={user}/>}/>
                         </Switch>
                     </div>
                 </div>

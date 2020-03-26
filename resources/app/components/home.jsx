@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function (props) {
+
     return (
         <React.Fragment>
             <div className="page-title">
