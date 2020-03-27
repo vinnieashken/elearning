@@ -171,6 +171,6 @@
 <script>
 
 </script>
-<script type="text/javascript" src="{{ asset('static/bundlessssss/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('static/bundleessssss/main.js') }}"></script>
 
 </html>

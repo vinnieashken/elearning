@@ -44,8 +44,8 @@ export default function (props) {
                                 <div className="mb-4"><h5>Daily</h5><span className="display-4">KES 30</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li className="mb-2">Daily bulletins for each e-paper addition</li>
-                                    <li className="mb-2">Free access to The Standard all in one e-paper platform.</li>
+                                    <li type='disc' >Daily bulletins for each e-paper addition</li>
+                                    <li type='disc' >Free access to The Standard all in one e-paper platform.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -60,8 +60,8 @@ export default function (props) {
                                     className="display-4">KES 220</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li className="mb-2">Daily bulletins for each e-paper addition</li>
-                                    <li className="mb-2">Free access to The Standard all in one e-paper platform.</li>
+                                    <li type='disc'>Daily bulletins for each e-paper addition</li>
+                                    <li type='disc'>Free access to The Standard all in one e-paper platform.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -76,8 +76,8 @@ export default function (props) {
                                     className="display-4">KES 3,640</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li className="mb-2">Daily bulletins for each e-paper addition</li>
-                                    <li className="mb-2">Free access to The Standard all in one e-paper platform.</li>
+                                    <li type='disc'>Daily bulletins for each e-paper addition</li>
+                                    <li type='disc'>Free access to The Standard all in one e-paper platform.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -92,9 +92,9 @@ export default function (props) {
                                     className="display-4">KES 10,000</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li className="mb-2">Daily bulletins for each e-paper addition</li>
-                                    <li className="mb-2">Free access to The Standard all in one e-paper platform.</li>
-                                    <li className="mb-2">Set your own exam.</li>
+                                    <li type='disc'>Daily bulletins for each e-paper addition</li>
+                                    <li type='disc'>Free access to The Standard all in one e-paper platform.</li>
+                                    <li type='disc'>Set your own exam.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
