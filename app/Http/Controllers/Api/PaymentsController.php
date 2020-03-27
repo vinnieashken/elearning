@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\UserSubscription;
-use App\Utils\MPesa;
+use App\Utils\Mpesa;
 use Illuminate\Http\Request;
 
 class PaymentsController extends Controller
@@ -46,10 +46,12 @@ class PaymentsController extends Controller
         $phone = $request->phone;
         $amount = $request->amount;
 
-        $mpesa = new MPesa();
-        //return url('api/payments/mpesa/callback');
+        $mpesa = new Mpesa();
 
-        $mpesa->processRequest($amount,$phone,url('api/payments/mpesa/callback'));
+        $url = url('api/payments/mpesa/callback');
+        //$url = "https://www.standardmedia.co.ke/api/payments/mpesa/callback";
+
+        $mpesa-> pushStk($amount,$phone,$url,"ELE");
 
     }
 
