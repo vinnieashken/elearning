@@ -9,12 +9,39 @@ class QuestionSeeder extends Seeder
     private $faker;
     private $options;
     private $answer;
+    private $subscriptions;
+
     public function run(Faker $faker)
     {
         $this->options = ['A','B','C','D'];
         $this->faker = $faker;
 
+        $this->subscriptions = [
+            [
+                'subscription' => 'DAILY',
+                'cost' => 1,
+                'days' => 1,
+                'description'=> ''
+            ],
+            [
+                'subscription' => 'MONTHLY',
+                'days' => 30,
+                'cost' => 400,
+                'description'=> ''
+            ],
+            [
+                'subscription' => 'PREMIUM',
+                'days' => 365,
+                'cost' => 4000,
+                'description'=> ''
+            ]
+        ];
         $app = factory(App\Models\Application::class)->create(['name'=>'elearning']);
+
+        foreach ($this->subscriptions as $package)
+        {
+            factory(App\Models\Subscription::class)->create($package);
+        }
 
 //        foreach (range(0,9) as $optionnum)
 //        {
