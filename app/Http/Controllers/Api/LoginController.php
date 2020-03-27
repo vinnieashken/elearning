@@ -41,6 +41,12 @@ class LoginController extends Controller
 
         $headers = $response->getHeaders();
         $body = $response->getBody()->getContents();
+        $objbody = json_decode($body);
+
+        if(property_exists($objbody ,'message'))
+        {
+            return response()->json($objbody , 400);
+        }
         //$body = json_decode($body);
         return $body;
     }
