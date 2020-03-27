@@ -59,7 +59,7 @@
             e.preventDefault();
             var frm = $(this);
             frm.append($('.choices'));
-            console.log(frm);
+
             $.ajax({
                 type: 'POST',
                 url: frm.attr('action'),
@@ -139,7 +139,7 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'question_id':question.id},
                 success: function (Mess) {
-                    $('.choices').append(Mess);
+                    $('.choices').html(Mess);
                 },
                 error: function (f) {
                     console.log(f);
@@ -164,7 +164,7 @@
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{'class_id':str},
             success: function (Mess) {
-                $('.m-subject').append(Mess);
+                $('.m-subject').html(Mess);
             },
             error: function (f) {
                 console.log(f);
@@ -178,7 +178,7 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'class_id':str},
                 success: function (Mess) {
-                    $('.m-subject').append(Mess);
+                    $('.m-subject').html(Mess);
                 },
                 error: function (f) {
                     console.log(f);

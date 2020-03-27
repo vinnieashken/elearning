@@ -24,8 +24,8 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('cms/modules') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Modules</span>
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/exams') }}">
+                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Exams</span>
                 </a>
             </li>
             {{--<li class="sidebar-item">

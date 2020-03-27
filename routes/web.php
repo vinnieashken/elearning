@@ -19,7 +19,7 @@ Route::get('/cms','Cms@index');
 Route::get('/cms/question','Cms@question');
 Route::get('/cms/class','Cms@classes');
 Route::get('/cms/subject','Cms@subject');
-Route::get('/cms/modules','Cms@modules');
+Route::get('/cms/exams','Cms@modules');
 //Datatables
 Route::post('get_classes','Datatable@get_classes');
 Route::post('get_subjects','Datatable@get_subjects');
