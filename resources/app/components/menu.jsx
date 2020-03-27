@@ -117,14 +117,14 @@ export default function (props) {
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Home</span>
                         </Link>
-                        <Link to={`${DIR}/exams/modules`} className={`btn btn-square text-sm ${isActive('/exams/classes')}`}>
+                        <Link to={`${DIR}/exams/modules`} className={`btn btn-square text-sm ${isActive('/exams/modules')}`}>
                             <span className="btn-inner--icon d-block">
                                 <i className="fa fa-project-diagram fa-2x" />
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Take Test</span>
                         </Link>
 
-                        <Link to={`${DIR}/exams/classes`} className={`btn btn-square text-sm ${isActive('/exams/modules')}`}>
+                        <Link to={`${DIR}/exams/classes`} className={`btn btn-square text-sm ${isActive('/exams/classes')}`}>
                             <span className="btn-inner--icon d-block">
                                 <i className="fa fa-receipt fa-2x" />
                             </span>
