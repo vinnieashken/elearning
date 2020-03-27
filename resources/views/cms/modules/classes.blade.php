@@ -1,6 +1,6 @@
 @extends('cms.includes.body')
-@section('title', 'Class')
-@section('subtitle','class')
+@section('title', 'Educational Level')
+@section('subtitle','Educational Level')
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -15,7 +15,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Class</th>
+                        <th>Class/Level</th>
                         <th>Date Created</th>
                         <th>Action</th>
                     </tr>
@@ -23,7 +23,7 @@
                 <tfoot>
                     <tr>
                         <th>ID</th>
-                        <th>Class</th>
+                        <th>Class/Level</th>
                         <th>Date Created</th>
                         <th>Action</th>
                     </tr>
@@ -45,7 +45,7 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="classroom" class="control-label">Class</label>
+                        <label for="classroom" class="control-label">Class/Level</label>
                         <input type="text" name="class" id="classroom" class="form-control">
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" id="edit-id">
                     <div class="form-group">
-                        <label for="edit-classroom" class="control-label">Class</label>
+                        <label for="edit-classroom" class="control-label">Class/Level</label>
                         <input type="text" name="class" id="edit-classroom" class="form-control">
                     </div>
                 </div>

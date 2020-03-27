@@ -59,7 +59,7 @@
             e.preventDefault();
             var frm = $(this);
             frm.append($('.choices'));
-            console.log(frm);
+
             $.ajax({
                 type: 'POST',
                 url: frm.attr('action'),

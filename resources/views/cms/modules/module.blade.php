@@ -1,12 +1,12 @@
 @extends('cms.includes.body')
-@section('title', 'Class')
-@section('subtitle','class')
+@section('title', 'Exam')
+@section('subtitle','Exam')
 @section('content')
     <div class="card">
         <div class="card-header">
             <div class="text-right">
                 <button class="btn btn-default" data-toggle="modal" data-target="#addModal">
-                    <i class="align-middle" data-feather="plus"></i> Add Module
+                    <i class="align-middle" data-feather="plus"></i> Add Exam
                 </button>
             </div>
         </div>
@@ -15,18 +15,18 @@
                 <thead>
                 <tr>
                     <th>id</th>
-                    <th>Class</th>
+                    <th>Class/Level</th>
                     <th>Subject</th>
-                    <th>Module</th>
+                    <th>Exam</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
                     <th>id</th>
-                    <th>Class</th>
+                    <th>Class/Level</th>
                     <th>Subject</th>
-                    <th>Module</th>
+                    <th>Exam</th>
                     <th>Action</th>
                 </tr>
                 </tfoot>
@@ -37,7 +37,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Module</h5>
+                    <h5 class="modal-title">Add Exam</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -76,7 +76,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Module</h5>
+                    <h5 class="modal-title">Edit Exam</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -86,7 +86,7 @@
                     <input type="hidden" name="id" id="edit-id">
                     <div class="form-group">
                         <label for="edit-classroom" class="control-label">Class</label>
-                        <select name="class" id="edit-classroom" class="custom-select m-class">
+                        <select name="class" id="edit-classroom" readonly="true" class="custom-select m-class">
                             @foreach(App\Models\Level::all() as $value)
                                 <option value="{{ $value->id }}">{{ $value->class }}</option>
                             @endforeach
@@ -95,7 +95,6 @@
                     <div class="form-group">
                         <label for="edit-subject" class="control-label">Subject</label>
                         <select name="subject" id="edit-subject" class="custom-select m-subject">
-                            <option value="all">All</option>
 
                         </select>
                     </div>
