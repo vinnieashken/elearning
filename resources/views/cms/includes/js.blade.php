@@ -164,7 +164,7 @@
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{'class_id':str},
             success: function (Mess) {
-                $('.m-subject').append(Mess);
+                $('.m-subject').html(Mess);
             },
             error: function (f) {
                 console.log(f);
@@ -178,7 +178,7 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'class_id':str},
                 success: function (Mess) {
-                    $('.m-subject').append(Mess);
+                    $('.m-subject').html(Mess);
                 },
                 error: function (f) {
                     console.log(f);
