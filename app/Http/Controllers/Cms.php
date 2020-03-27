@@ -245,7 +245,6 @@ class Cms extends Controller
                 $answer = Answer::where('question_id',$request->question_id)->first();
                 foreach(Option::where('question_id',$request->question_id)->get() as $value)
                     {
-                        var_dump($value);
                         $t = ($answer->option_id == $value->id)?'checked':NULL;
                         $choice .='<div class="form-group form-row">
                                             <div class="input-group">
