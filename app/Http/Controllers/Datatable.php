@@ -221,7 +221,8 @@ class Datatable extends Controller
         public function get_questions(Request $request)
             {
                 $columns = array(
-                    0   =>  'question'
+                    0   =>  'id',
+                    1   =>  'question'
 
                 );
 
