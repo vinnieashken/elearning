@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-header">
             <div class="text-right">
-                <button class="btn btn-default" data-toggle="modal" data-target="#addModal">
+                <button class="btn btn-default qbtn" data-toggle="modal" data-target="#addModal" >
                     <i class="align-middle" data-feather="plus"></i> Add Question
                 </button>
             </div>
@@ -37,7 +37,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <form action="{{ url('cms/addquestion') }}" method="post" class="form form-horizontal add-question" enctype="multipart/form-data">
+                    <form action="{{ url('cms/addquestion') }}" method="post" class="form form-horizontal add-question" data-modal="#addModal">
                 </div>
                 <div class="modal-body">
                         <input type="hidden" name="module" value="{{ $module_id }}">
@@ -80,7 +80,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <form action="{{ url('cms/editquestion') }}" method="post" class="form form-horizontal add-question" enctype="multipart/form-data">
+                    <form action="{{ url('cms/editquestion') }}" method="post" class="form form-horizontal add-question" enctype="multipart/form-data" data-modal="#editModal">
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="id" id="edit-id">

@@ -17,7 +17,7 @@ class CreateUserSubscriptionsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('subscription_id')->unsigned();
-            $table->string('ordernumber');
+            $table->string('ordernumber')->nullable();
             $table->string('paymentchannel');
             $table->string('transactionid');
             $table->string('startdate');
