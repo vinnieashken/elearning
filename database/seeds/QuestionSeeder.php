@@ -27,13 +27,13 @@ class QuestionSeeder extends Seeder
                 'subscription' => 'MONTHLY',
                 'days' => 30,
                 'cost' => 400,
-                'description'=> ''
+                'description'=> 'Includes free daily email subscriptions for our news paper'
             ],
             [
                 'subscription' => 'PREMIUM',
                 'days' => 365,
                 'cost' => 4000,
-                'description'=> ''
+                'description'=> 'Includes with free e-paper subscription for the standard and the nairobian news papers for one year'
             ]
         ];
         $app = factory(App\Models\Application::class)->create(['name'=>'elearning']);
