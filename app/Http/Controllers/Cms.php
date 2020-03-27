@@ -8,6 +8,7 @@ use App\Models\Level;
 use App\Models\Option;
 use App\Models\Question;
 use App\Models\Subject;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 
@@ -363,5 +364,66 @@ class Cms extends Controller
                         return array('status'=>FALSE,'msg'=>$validatedData->errors());
                     }
 
+            }
+        public function rates()
+            {
+                return view('cms/modules/rates');
+            }
+        public function addrates(Request $request)
+            {
+
+                $validatedData = $request->validate([
+                                                        'subscription'  =>  'required',
+                                                        'cost'          =>  'required'
+
+                                                    ]);
+                if($validatedData)
+                    {
+                        $subscription                   =   new Subscription();
+                        $subscription->subscription     =   $request->subscription;
+                        $subscription->cost             =   $request->cost;
+                        $res                            =   $subscription->save();
+
+                        if($res)
+                            {
+                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                            }
+                        else
+                            {
+                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                            }
+                    }
+                else
+                    {
+                        return array('status'=>FALSE,'msg'=>$validatedData->errors());
+                    }
+
+            }
+        public function editrates(Request $request)
+            {
+                $validatedData = $request->validate([
+                                                        'subscription'  =>  'required',
+                                                        'cost'          =>  'required'
+                                                    ]);
+                if($validatedData)
+                    {
+                        $subscription                   =   Subscription::find($request->id);
+                        $subscription->subscription     =   $request->subscription;
+                        $subscription->cost             =   $request->cost;
+                        $res                            =   $subscription->save();
+
+                        if($res)
+                            {
+                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                            }
+                        else
+                            {
+                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                            }
+                    }
+                else
+                    {
+                        return array('status'=>FALSE,'msg'=>$validatedData->errors());
+                    }
             }
     }

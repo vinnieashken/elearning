@@ -120,22 +120,30 @@
             });
 
         });
+
+       $(document).on('click','.edit-rate',function(e){
+           e.preventDefault();
+           var rate = $(this).data('rate');
+           $('#edit-id').val(rate.id);
+           $('#edit-subscription').val(rate.subscription);
+           $('#edit-cost').val(rate.cost);
+           $('#editModal').modal('toggle');
+       });
+
         $(document).on('click','.edit-class',function(e){
             e.preventDefault();
             var level = $(this).data('level');
-
             $('#edit-id').val(level.id);
             $('#edit-classroom').val(level.class);
             $('#editModal').modal('toggle');
         });
+
         $(document).on('click','.edit-module',function(e){
             e.preventDefault();
             var module = $(this).data('module');
-
             $('#edit-id').val(module.id);
             $('#edit-module').val(module.module);
             $('#edit-subject option[value="'+module.subject_id+'"]').attr("selected","selected");
-
             $('#editModal').modal('toggle');
         });
         $(document).on('click','.edit-question',function(e){
@@ -155,9 +163,9 @@
                     console.log(f);
                 }
             });
-
             $('#editModal').modal('toggle');
         });
+
         $(document).on('click','.edit-subject',function(e){
             e.preventDefault();
             var subject = $(this).data('subject');
@@ -167,6 +175,7 @@
 
             $('#editModal').modal('toggle');
         });
+
         var str = $( ".m-class option:selected" ).val();
         $.ajax({
             type: 'POST',
@@ -194,8 +203,8 @@
                     console.log(f);
                 }
             });
-
         });
+
         $(document).on('click','.choicebtn',function(e){
             e.preventDefault();
             var choices = $('#noc').val();
@@ -212,7 +221,6 @@
                     console.log(f);
                 }
             });
-
         });
 
         $(document).ready(function() {
@@ -251,6 +259,23 @@
                         ]
 
         });
+        $('#rates').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax":{
+                    "url": "{{ url('get_rates') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                    "data":{ _token: "{{csrf_token()}}"}
+                },
+                "columns": [
+                    { "data": "*" },
+                    { "data": "subscription" },
+                    { "data": "cost" },
+                    { "data": "action"}
+                ]
+
+            });
         $('#module').DataTable({
             "processing": true,
             "serverSide": true,

@@ -39,7 +39,7 @@
                             </div>
                         </a>
                         <a class="nav-link nav-link-user dropdown-toggle d-none d-sm-inline-block" href="#" id="userDropdown" data-toggle="dropdown">
-                            <img src="{{ ($userimg)?? asset('assets/img/avatar.png') }}" class="avatar img-fluid rounded-circle mr-1" alt="{{ Auth::user()->name??'' }}" />
+                            <img src="{{  asset('assets/img/avatar.png') }}" class="avatar img-fluid rounded-circle mr-1" alt="{{ Auth::user()->name??'' }}" />
                             <span class="text-dark">{{ Auth::user()->name??'' }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
