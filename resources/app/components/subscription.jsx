@@ -27,40 +27,50 @@ export default function (props) {
                                 </div>
                                 <div className="form-group">
                                     <label className="form-control-label">
-                                        Project privacy
+                                        Packages
                                     </label>
                                     <div className="row">
-                                        <div className="col-4">
+                                        <div className="col-md-3 col-sm-6">
                                             <div className="custom-control custom-checkbox">
                                                 <input type="radio" className="custom-control-input"
                                                        name="project-privacy" id="radio-project-1" />
                                                 <label
                                                     className="custom-control-label form-control-label text-muted"
-                                                    htmlFor="radio-project-1">Daily (100/=)</label>
+                                                    htmlFor="radio-project-1">Daily (30/=)</label>
                                             </div>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-md-3 col-sm-6">
                                             <div className="custom-control custom-checkbox">
                                                 <input type="radio" className="custom-control-input"
                                                        name="project-privacy" id="radio-project-2" defaultChecked={false} />
                                                 <label
                                                     className="custom-control-label form-control-label text-muted"
-                                                    htmlFor="radio-project-2">Weekly (300/=)</label>
+                                                    htmlFor="radio-project-2">Monthly (220/=)</label>
                                             </div>
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-md-3 col-sm-6">
                                             <div className="custom-control custom-checkbox">
                                                 <input type="radio" className="custom-control-input"
                                                        name="project-privacy" id="radio-project-3" defaultChecked={false} />
                                                 <label
                                                     className="custom-control-label form-control-label text-muted"
-                                                    htmlFor="radio-project-3">Monthly (500/=)</label>
+                                                    htmlFor="radio-project-3">Annual (3640/=)</label>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-3 col-sm-6">
+                                            <div className="custom-control custom-checkbox">
+                                                <input type="radio" className="custom-control-input"
+                                                       name="project-privacy" id="radio-project-3" disabled={true} />
+                                                <label
+                                                    className="custom-control-label form-control-label text-muted"
+                                                    htmlFor="radio-project-3">Gold (Coming Soon)</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className='col-md-12'>
-                                        <img className='mt-5 mb-5' style={{display: 'block', margin:'auto'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>
+                                        <img className='mt-5 mb-5' style={{display: 'block', margin:'auto', width: '70%'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>
                                     </div>
 
                                 </div>
