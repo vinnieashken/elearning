@@ -21,7 +21,7 @@
                             newestOnTop: true,
                             onHidden: function () {
                                 frm.trigger("reset");
-                                // window.location.reload();
+                                window.location.reload();
                             }
                         });
 
@@ -44,7 +44,7 @@
                             progressBar: true,
                             newestOnTop: true,
                             onHidden: function () {
-                                // window.location.reload();
+                                 window.location.reload();
                             }
                         });
 
