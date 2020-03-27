@@ -14,9 +14,32 @@ class QuestionsController extends Controller
 
     }
 
-    public function getModuleQuestions($moduleid)
+    public function getModuleQuestions(Request $request,$moduleid)
     {
         $model = new Question();
-        return $model->with('options')->where('module_id',$moduleid)->get();
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results =  $model->with('options')->where('module_id',$moduleid)->paginate($size,['id','module_id','question'])->items();
+
+            $totalrecords = $model->with('options')->where('module_id',$moduleid)->count();
+
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $data ["rows"] = $results;
+
+            return $data;
+        }
+        return $model->with('options')->where('module_id',$moduleid)->get(['id','module_id','question']);
     }
 }
