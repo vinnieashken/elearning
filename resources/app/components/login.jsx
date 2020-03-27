@@ -57,11 +57,29 @@ export default function Login(props) {
     };
     return (
         <React.Fragment>
-            <div className='application application-offset ready'>
+            <div className=''>
+                <nav className="navbar navbar-expand-md bg-white sticky-top pb-3">
+
+                    <div className="collapse navbar-collapse flex-column  text-center" id="navbar">
+
+                        <ul className="navbar-nav w-100 justify-content-center px-3 ">
+
+                            <li>
+                                <a href={`${PUBLIC_URL}`} className="logo">
+                                    <img src={`${PUBLIC_URL}/static/landing/images/STANDARD-REDESIGN-LOGO.png`}
+                                         className="logoimg" alt="Standard E-Learning"/>
+                                </a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+
+                </nav>
                 <div className="container-fluid container-application">
                     <div className="main-content position-relative">
                         <div className="page-content">
-                            <div className="min-vh-100 py-5 d-flex align-items-center">
+                            <div className=" py-5 d-flex align-items-center">
                                 <div className="w-100">
                                     <div className="row justify-content-center">
                                         <div className="col-sm-8 col-lg-4">
@@ -74,6 +92,14 @@ export default function Login(props) {
                                                     </div>
                                                     <span className="clearfix" />
                                                     <form role="form" onSubmit={handleSubmit}>
+                                                        {
+                                                            message &&
+                                                            <div className={messageType} role="alert">
+                                                                <div className="alert-message">
+                                                                    {response}
+                                                                </div>
+                                                            </div>
+                                                        }
                                                         <div className="form-group">
                                                             <label className="form-control-label">Email address</label>
                                                             <div className="input-group input-group-merge">
@@ -139,6 +165,60 @@ export default function Login(props) {
                         </div>
                     </div>
                 </div>
+                <footer style={{color: "#000000", background: "linear-gradient(to bottom right, #510812, #bf1e2d)"}}
+                        className="">
+                    <ul className="nav from text-center bg-light ">
+                        <li className="nav-item mt-2 mr-1 ">
+                            <a className="nav-link px-0 " href="# ">VAS from </a>
+                        </li>
+                        <li className="nav-item ">
+                            <a className="nav-link px-0 " href="# "><img
+                                src="https://vas.standardmedia.co.ke/front-end/images/STANDARD-REDESIGN-LOGO.png"
+                                className="navbar-brand " /></a>
+                        </li>
+                    </ul>
+                    <div className="card text-center ">
+                        <div className="card-header p-2 ">
+                            <div className="container ">
+                                <ul className="nav text-center ">
+                                    <li className="nav-item ">
+                                        <a className="nav-link " href="# ">DIGGER</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link " href="# ">BTV</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link " href="# ">TRAVELOG</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link page-scroll " href="#slider-area ">PULSER</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link page-scroll " href="#services ">FARMERS</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link page-scroll " href="#slider-area ">EVE WOMAN</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link page-scroll " href="#services ">FM VYBEZ</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link page-scroll " href="#slider-area ">SPICE RADIO</a>
+                                    </li>
+                                    <li className="nav-item ">
+                                        <a className="nav-link page-scroll " href="#services ">RADIO MAISHA</a>
+                                    </li>
+                                    <li className="nav-item border-0 ">
+                                        <a className="nav-link page-scroll " href="#slider-area ">CORPORATE</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="card-body p-2 ">
+                            <span>© Copyright 2020 - Standard Group PLC</span>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </React.Fragment>
     )
