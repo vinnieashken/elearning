@@ -238,6 +238,32 @@ class Cms extends Controller
                     }
                 return $choice;
             }
+        public function questionanswers(Request $request)
+            {
+                $choice = "";
+                $i=65;
+                $answer = Answer::where('question_id',$request->question_id)->first();
+                foreach(Option::where('question_id',$request->question_id)->get() as $value)
+                    {
+                        $t = ($answer->option_id == $value->id)?'checked':NULL;
+                        $choice .='<div class="form-group form-row">
+                                            <div class="input-group">
+                                                 <div class="input-group-prepend">
+                                                    <div class="input-group-text">'.chr($i).'</div>
+                                                </div>
+                                                <input type="text" class="form-control" name="option['.$value->id.']"  value="'.str_replace(chr($i).') ','',$value->option).'">
+                                                <input type="hidden" name="correct_id" value="'.$answer->id.'" >
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <input type="radio" name="correctanswer" '.$t.' value="'.$value->id.'">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>';
+                        $i++;
+                    }
+                return $choice;
+            }
         public function addquestion(Request $request)
             {
                 $validatedData = $request->validate([
@@ -269,7 +295,58 @@ class Cms extends Controller
                                                 $correct->option_id     =   $option->id;
                                                 $corstatus              =   $correct->save();
                                             }
+
                                     }
+                            }
+                        if($queststatus & $optstatus & $corstatus)
+                            {
+                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                            }
+                        else
+                            {
+                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                            }
+                    }
+                else
+                    {
+                        return array('status'=>FALSE,'msg'=>$validatedData->errors());
+                    }
+
+            }
+        public function editquestion(Request $request)
+            {
+                $validatedData = $request->validate([
+                                                        'correctanswer'   =>  'required',
+                                                        'question'        =>  'required',
+                                                        'module'          =>   'required',
+                                                        'option'          =>   'required'
+                                                    ]);
+                if($validatedData)
+                    {
+                        $question               =   Question::find($request->id);
+                        $question->module_id    =   $request->module;
+                        $question->question     =   $request->question;
+                        $queststatus            =   $question->save();
+                        if($queststatus)
+                            {
+                                $i = 65;
+                                foreach ($request->option as $key => $value)
+                                    {
+                                        $option                 =   Option::find($key);
+                                        $option->question_id    =   $question->id;
+                                        $option->option         =   chr($i).') '.$value;
+                                        $optstatus              =   $option->save();
+
+                                        if($request->correctanswer == $key)
+                                            {
+                                                $correct                =   Answer::find($request->correct_id);
+                                                $correct->question_id   =   $question->id;
+                                                $correct->option_id     =   $option->id;
+                                                $corstatus              =   $correct->save();
+                                            }
+                                        $i++;
+                                    }
+
                             }
                         if($queststatus & $optstatus & $corstatus)
                             {

@@ -35,7 +35,8 @@ Route::post('/cms/editclass','Cms@editlevel');
 Route::post('/cms/addquestion','Cms@addquestion');
 Route::post('/cms/editquestion','Cms@editquestion');
 Route::post('/subjectfromclass','Cms@getmodules');
-Route::post('choices','Cms@choices');
+Route::post('/choices','Cms@choices');
+Route::post('/questionanswers','Cms@questionanswers');
 Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
     return view('cms.modules.setquestion',['module_id'=>$postId,'title'=>$title]);
 });

@@ -1,23 +1,6 @@
 <script !src="">
-    $(document).ready(function() {
-        $(".summernote").summernote({
-            height:150,
-            tabsize: 2,
-            lineHeight:1.5,
-            toolbar: [
-                // [groupName, [list of button]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript','fontname']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph','style']],
-                ['height', ['height']],
-                ['insert',['picture','link','video','table','hr']],
-                ['misc',['codeview','undo','redo']]
-            ]
-        }).on('summernote.change', function(we, contents, $editable) {
-            $(this).val(contents);
-        });
+
+
 
         $(document).on('submit', '.create-form', function (e) {
             e.preventDefault();
@@ -38,7 +21,7 @@
                             newestOnTop: true,
                             onHidden: function () {
                                 frm.trigger("reset");
-                                window.location.reload();
+                                // window.location.reload();
                             }
                         });
 
@@ -61,7 +44,7 @@
                             progressBar: true,
                             newestOnTop: true,
                             onHidden: function () {
-                                window.location.reload();
+                                // window.location.reload();
                             }
                         });
 
@@ -145,6 +128,26 @@
 
             $('#editModal').modal('toggle');
         });
+        $(document).on('click','.edit-question',function(e){
+            e.preventDefault();
+            var question = $(this).data('question');
+            $('#edit-id').val(question.id);
+            $('#edit-question').summernote('code',question.question);
+            $.ajax({
+                type: 'POST',
+                url: '<?=url('questionanswers'); ?>',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{'question_id':question.id},
+                success: function (Mess) {
+                    $('.choices').append(Mess);
+                },
+                error: function (f) {
+                    console.log(f);
+                }
+            });
+
+            $('#editModal').modal('toggle');
+        });
         $(document).on('click','.edit-subject',function(e){
             e.preventDefault();
             var subject = $(this).data('subject');
@@ -202,8 +205,25 @@
 
         });
 
-
-
+        $(document).ready(function() {
+            $(".summernote").summernote({
+                height:150,
+                tabsize: 2,
+                lineHeight:1.5,
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript','fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph','style']],
+                    ['height', ['height']],
+                    ['insert',['picture','link','video','table','hr']],
+                    ['misc',['codeview','undo','redo']]
+                ]
+            }).on('summernote.change', function(we, contents, $editable) {
+                $(this).val(contents);
+            });
         $('#classes').DataTable({
             "processing": true,
             "serverSide": true,

@@ -72,5 +72,36 @@
             </div>
         </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="editModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Question</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form action="{{ url('cms/editquestion') }}" method="post" class="form form-horizontal add-question" enctype="multipart/form-data">
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="edit-id">
+                    <input type="hidden" name="module" value="{{ $module_id }}">
+                    <div class="form-group">
+                        <label for="edit-question" class="control-label">Question</label>
+                        <input type="text" name="question" id="edit-question" class="form-control summernote">
+                    </div>
+                    <div class="choices">
 
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
