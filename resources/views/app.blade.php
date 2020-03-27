@@ -10,7 +10,7 @@
     <title>Standard E-Learning</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="{{ asset('static/app/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/app.css?').date('YmdHis') }}" rel="stylesheet">
 
     <style>
         .topnav .nav-link {
@@ -171,6 +171,6 @@
 <script>
 
 </script>
-<script type="text/javascript" src="{{ asset('static/bundleessssss/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('static/bundles/main.js?').date('YmdHis') }}"></script>
 
 </html>
