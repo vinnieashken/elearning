@@ -93,19 +93,18 @@ export default function (props) {
                             </div>
                         </div>
                     </div>
-                    <div
-                        className="sidenav-user d-flex flex-column align-items-center justify-content-between text-center">
+                    <div className="sidenav-user d-flex flex-column align-items-center justify-content-between text-center">
                         <div>
                             <a href="#" className="avatar rounded-circle avatar-xl">
                                 {/*<img alt="Image placeholder" src="../assets/img/theme/light/team-1-800x800.jpg" className="" />*/}
                             </a>
                             <div className="mt-4">
-                                <h5 className="mb-0 text-white">{user.name}</h5>
-                                <span className="d-block text-sm text-white opacity-8 mb-3">{user.email}</span>
+                                <h5 className="mb-0 text-white">{"Avarege Score For The Last 300 Days"}</h5>
+                                {/*<span className="d-block text-sm text-white opacity-8 mb-3">{user.email}</span>*/}
                                 <Link to={`${DIR}/subscribe`}
                                    className="btn btn-sm btn-white btn-icon rounded-pill shadow hover-translate-y-n3">
-                                    <span className="btn-inner--icon"><i className="fa fa-coins" /></span>
-                                    <span className="btn-inner--text">$2.300</span>
+                                    <span className="btn-inner--icon"><i className="fa fa-magic" /></span>
+                                    <span className="btn-inner--text">84</span>
                                 </Link>
                             </div>
                         </div>
@@ -118,24 +117,24 @@ export default function (props) {
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Home</span>
                         </Link>
-                        <Link to={`${DIR}/exams/classes`} className={`btn btn-square text-sm ${isActive('/exams/classes')}`}>
+                        <Link to={`${DIR}/exams/modules`} className={`btn btn-square text-sm ${isActive('/exams/modules')}`}>
                             <span className="btn-inner--icon d-block">
                                 <i className="fa fa-project-diagram fa-2x" />
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Take Test</span>
                         </Link>
 
+                        <Link to={`${DIR}/exams/classes`} className={`btn btn-square text-sm ${isActive('/exams/classes')}`}>
+                            <span className="btn-inner--icon d-block">
+                                <i className="fa fa-receipt fa-2x" />
+                            </span>
+                            <span className="btn-inner--icon d-block pt-2">Classes</span>
+                        </Link>
                         <Link to={`${DIR}/exams/subjects`} className={`btn btn-square text-sm ${isActive('/exams/subjects')}`}>
                             <span className="btn-inner--icon d-block">
                                 <i className="fa fa-columns fa-2x" />
                             </span>
                             <span className="btn-inner--icon d-block pt-2">Subjects</span>
-                        </Link>
-                        <Link to={`${DIR}/exams/modules`} className={`btn btn-square text-sm ${isActive('/exams/modules')}`}>
-                            <span className="btn-inner--icon d-block">
-                                <i className="fa fa-receipt fa-2x" />
-                            </span>
-                            <span className="btn-inner--icon d-block pt-2">Modules</span>
                         </Link>
 
                         <Link to={`${DIR}/exams/done`} className={`btn btn-square text-sm ${isActive('/exams/done')}`}>

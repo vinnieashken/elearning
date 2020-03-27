@@ -246,7 +246,7 @@
 <footer style="color: #000000; background: linear-gradient(to bottom right, #510812, #bf1e2d); " class="fixed-bottom">
     <ul class="nav from text-center bg-light ">
         <li class="nav-item mt-2 mr-1 ">
-            <a class="nav-link px-0 " href="# ">VAS from </a>
+            <a class="nav-link px-0 " href="# ">E-Learning from </a>
         </li>
         <li class="nav-item ">
             <a class="nav-link px-0 " href="# "><img src="{{asset('static/landing/images/STANDARD-REDESIGN-LOGO.png')}}" class="navbar-brand "></a>

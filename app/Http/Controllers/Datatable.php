@@ -202,7 +202,7 @@ class Datatable extends Controller
                                 $nestedData['action']       =   '<a href="#" class="edit-module text-dark" data-module=\''.$post.'\' >
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
                                                                  </a>
-                                                                 <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark">
+                                                                 <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark" title="Questions">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                                                                 </a>';
                                 $data[] = $nestedData;
@@ -221,7 +221,8 @@ class Datatable extends Controller
         public function get_questions(Request $request)
             {
                 $columns = array(
-                    0   =>  'question'
+                    0   =>  'id',
+                    1   =>  'question'
 
                 );
 

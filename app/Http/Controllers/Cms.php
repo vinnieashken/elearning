@@ -227,7 +227,7 @@ class Cms extends Controller
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">'.chr($i).'</div>
                                             </div>
-                                            <input type="text" class="form-control" name="option['.chr($i).']" >
+                                            <input type="text" class="form-control" name="option['.chr($i).'][]" >
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
                                                     <input type="radio" name="correctanswer" value="'.chr($i).'">
@@ -266,6 +266,7 @@ class Cms extends Controller
             }
         public function addquestion(Request $request)
             {
+
                 $validatedData = $request->validate([
                                                         'correctanswer'  =>  'required',
                                                         'question'       =>  'required',
@@ -285,7 +286,7 @@ class Cms extends Controller
                                     {
                                         $option                 =   new Option();
                                         $option->question_id    =   $question->id;
-                                        $option->option         =   $key.') '.$value;
+                                        $option->option         =   $key.') '.$value[0];
                                         $optstatus              =   $option->save();
 
                                         if($request->correctanswer == $key)
