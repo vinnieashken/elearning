@@ -32,7 +32,7 @@ class Mpesa
     {
         $credentials = ($this->consumer_key . ':' . $this->consumer_secret);
         try{
-<<<<<<< HEAD:app/Utils/MPesa.php
+
                 $response = $this->client->request(
                     'GET',
                     'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
@@ -46,20 +46,7 @@ class Mpesa
 		{
 			return $e->getMessage();
 		}
-=======
-            $response = $this->client->request(
-                'GET',
-                'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
-                [
-                    'accept' => 'application/json',
-                    'auth' => [$credentials, null]
-                ]
-            );
-        }catch (GuzzleHttp\Exception\ConnectException $e)
-        {
-            return;
-        }
->>>>>>> added payments code:app/Utils/Mpesa.php
+
         $headers = $response->getHeaders();
         $body = $response->getBody()->getContents();
         $object = json_decode($body);
@@ -71,17 +58,13 @@ class Mpesa
 
     public function pushStk($amount,$phone,$callbackurl,$refno="ELE")
     {
-<<<<<<< HEAD:app/Utils/MPesa.php
 
-		$phone = '254'.substr($phone_number,-9);
-=======
         $matches = [];
         preg_match_all("!(7[0-9]{8})!",$phone,$matches);
         $phone = '254'.$matches[0][0];
-        echo "hello world ".$amount." phone ".$phone." url=".$callbackurl;
+        //echo "hello world ".$amount." phone ".$phone." url=".$callbackurl;
 
         //return;
->>>>>>> added payments code:app/Utils/Mpesa.php
 
         $token = $this->authorize();
 
@@ -103,7 +86,7 @@ class Mpesa
         ];
 
         try{
-<<<<<<< HEAD:app/Utils/MPesa.php
+
 			//'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $response = $this->client->post(
 			'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
@@ -120,34 +103,12 @@ class Mpesa
 		{
 			return $e->getMessage();
 		}
-=======
-            //'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-            $response = $this->client->post(
-                'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
-                ,
-                [
-                    'headers' => [
-                        'Authorization' => ' Bearer '.$token,
-                        'Content-Type' => ' application/json',
-                    ],
-                    'body' => json_encode($data),
-                ]
-            );
-        }catch (GuzzleHttp\Exception\ConnectException $e)
-        {
-            return;
-        }
->>>>>>> added payments code:app/Utils/Mpesa.php
 
         $headers = $response->getHeaders();
         $body = $response->getBody();
         $body_array = json_decode($body);
-<<<<<<< HEAD:app/Utils/MPesa.php
-        return $headers;
-        //dump($body_array);
-=======
+
         return $body_array;
->>>>>>> added payments code:app/Utils/Mpesa.php
     }
 
 }
