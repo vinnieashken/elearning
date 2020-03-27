@@ -139,7 +139,7 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'question_id':question.id},
                 success: function (Mess) {
-                    $('.choices').append(Mess);
+                    $('.choices').html(Mess);
                 },
                 error: function (f) {
                     console.log(f);
