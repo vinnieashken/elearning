@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
 import {DIR} from "../common/constants";
+import moment from "moment";
 
 export default function (props) {
+
+    useEffect(() => {
+        console.log(moment().startOf('day'));
+        console.log(moment().startOf('day').add('12', 'hours'))
+    }, []);
+
+    const getSalutation = () => {
+        const now = moment();
+        const startOfDay = moment().startOf('day');
+        const noon = moment().startOf('day').add('12', "hours");
+        const evening = moment().startOf('day').add('18', "hours");
+
+        return now.isAfter(evening, 'time') ? 'Evening' : now.isAfter(noon, 'time') ? 'Afternoon' : 'Morning'
+    };
 
     return (
         <React.Fragment>
             <div className="page-title">
                 <div className="row justify-content-between align-items-center">
                     <div className="col-md-6 mb-3 mb-md-0">
-                        <h5 className="h3 font-weight-400 mb-0 text-white">Moning, {props.user.name}!</h5>
+                        <h5 className="h3 font-weight-400 mb-0 text-white">{getSalutation()}, {props.user.name}!</h5>
                         <span className="text-sm text-white opacity-8">Have a nice day!</span>
                     </div>
                 </div>

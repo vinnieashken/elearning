@@ -42,12 +42,13 @@ export default function Login(props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setProcessing(false);
                 localStorage.setItem('user', res);
                 props.history.push({
                     pathname: `${next}`,
                     state: {user: JSON.parse(res)},
-                })
+                });
+                setProcessing(false);
+
             }.bind(this)
         })
     };
