@@ -1,6 +1,9 @@
 <script !src="">
 
+       $(document).on('click','.qbtn',function(){
+           $(".choices").html("");
 
+       });
 
         $(document).on('submit', '.create-form', function (e) {
             e.preventDefault();
@@ -60,11 +63,12 @@
             var frm = $(this);
             frm.append($('.choices'));
 
+
             $.ajax({
                 type: 'POST',
                 url: frm.attr('action'),
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: $(e.target).serialize(),
+                data: frm.serialize(),
                 success: function (Mess) {
                     if (Mess.status == true) {
                         $($(this).data('modal')).modal('toggle');
@@ -76,6 +80,7 @@
                             newestOnTop: true,
                             onHidden: function () {
                                 frm.trigger("reset");
+                                $('.choices').html("");
                                 window.location.reload();
                             }
                         });
@@ -86,7 +91,10 @@
                             timeOut: 1000,
                             closeButton: true,
                             progressBar: true,
-                            newestOnTop: true
+                            newestOnTop: true,
+                            onHidden: function () {
+                                frm.remove($('.choices'));
+                            }
                         });
                     }
                 },
@@ -99,6 +107,7 @@
                             progressBar: true,
                             newestOnTop: true,
                             onHidden: function () {
+                                frm.remove($('.choices'));
                                 window.location.reload();
                             }
                         });
@@ -107,6 +116,7 @@
 
 
                 }
+
             });
 
         });

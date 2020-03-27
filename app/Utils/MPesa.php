@@ -34,17 +34,18 @@ class MPesa
     {
         $credentials = ($this->consumer_key . ':' . $this->consumer_secret);
         try{
-        $response = $this->client->request(
-            'GET',
-            'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
-            [
-                'accept' => 'application/json',
-                'auth' => [$credentials, null]
-            ]
-        );
-		}catch (GuzzleHttp\Exception\ConnectException $e)
+                $response = $this->client->request(
+                    'GET',
+                    'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
+                    [
+                        'accept' => 'application/json',
+                        'auth' => [$credentials, null]
+                    ]
+                );
+		}
+		catch (GuzzleHttp\Exception\ConnectException $e)
 		{
-			return;
+			return $e->getMessage();
 		}
         $headers = $response->getHeaders();
         $body = $response->getBody()->getContents();
@@ -56,8 +57,8 @@ class MPesa
 
     public function processRequest($amount, $phone_number,$callbackurl,$refno='ELE')
     {
-		preg_match_all("!(7[0-9]{8})!",$phone_number,$matches);
-		$phone = '254'.$matches[0][0];
+
+		$phone = '254'.substr($phone_number,-9);
 
         $token = $this->authorize();
 
@@ -94,13 +95,13 @@ class MPesa
         );
 		}catch (GuzzleHttp\Exception\ConnectException $e)
 		{
-			return;
+			return $e->getMessage();
 		}
 
         $headers = $response->getHeaders();
         $body = $response->getBody();
         $body_array = json_decode($body);
-        return $body_array;
+        return $headers;
         //dump($body_array);
     }
 
