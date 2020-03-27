@@ -59,8 +59,9 @@ export default function (props) {
                                             {
                                                 exam.map((el) => {
                                                     return (
-                                                        <div className="form-group">
-                                                            <label className="form-control-label"><b>{el.id}. </b>{el.question}</label>
+                                                        <div className="form-group col-md-12">
+
+                                                            <p><label className="form-control-label"><b>{el.id}. </b> <span dangerouslySetInnerHTML={ {__html: `${el.question}`} } /></label></p>
                                                             {
                                                                 el.options.map((ans) => {
                                                                     return (
