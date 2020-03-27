@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Module;
 use App\Models\Level;
+use App\Models\Option;
+use App\Models\Question;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+
 
 class Cms extends Controller
     {
@@ -232,6 +236,54 @@ class Cms extends Controller
                                         </div>
                                     </div>';
                     }
-                echo $choice;
+                return $choice;
+            }
+        public function addquestion(Request $request)
+            {
+                $validatedData = $request->validate([
+                                                        'correctanswer'  =>  'required',
+                                                        'question'       =>  'required',
+                                                        'module'        =>   'required',
+                                                        'option'        =>   'required'
+                                                    ]);
+                if($validatedData)
+                    {
+                        $question               =   new Question();
+                        $question->module_id    =   $request->module;
+                        $question->question     =   $request->question;
+                        $queststatus            =   $question->save();
+                        if($queststatus)
+                            {
+
+                                foreach ($request->option as $key => $value)
+                                    {
+                                        $option                 =   new Option();
+                                        $option->question_id    =   $question->id;
+                                        $option->option         =   $key.') '.$value;
+                                        $optstatus              =   $option->save();
+
+                                        if($request->correctanswer == $key)
+                                            {
+                                                $correct                =   new Answer();
+                                                $correct->question_id   =   $question->id;
+                                                $correct->option_id     =   $option->id;
+                                                $corstatus              =   $correct->save();
+                                            }
+                                    }
+                            }
+                        if($queststatus & $optstatus & $corstatus)
+                            {
+                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                            }
+                        else
+                            {
+                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                            }
+                    }
+                else
+                    {
+                        return array('status'=>FALSE,'msg'=>$validatedData->errors());
+                    }
+
             }
     }

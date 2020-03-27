@@ -15,6 +15,8 @@
                 ['insert',['picture','link','video','table','hr']],
                 ['misc',['codeview','undo','redo']]
             ]
+        }).on('summernote.change', function(we, contents, $editable) {
+            $(this).val(contents);
         });
 
         $(document).on('submit', '.create-form', function (e) {
@@ -24,7 +26,62 @@
                 type: 'POST',
                 url: frm.attr('action'),
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: $(this).serialize(),
+                data: $(e.target).serialize(),
+                success: function (Mess) {
+                    if (Mess.status == true) {
+                        $($(this).data('modal')).modal('toggle');
+
+                        toastr.success(Mess.msg, Mess.header, {
+                            timeOut: 1000,
+                            closeButton: true,
+                            progressBar: true,
+                            newestOnTop: true,
+                            onHidden: function () {
+                                frm.trigger("reset");
+                                window.location.reload();
+                            }
+                        });
+
+
+                    } else {
+                        toastr.error(Mess.msg, Mess.header, {
+                            timeOut: 1000,
+                            closeButton: true,
+                            progressBar: true,
+                            newestOnTop: true
+                        });
+                    }
+                },
+                error: function (f) {
+                    console.log(f);
+                    $.each(f.responseJSON.errors, function (key, val) {
+                        toastr.error(val[0], f.responseJSON.message, {
+                            timeOut: 1000,
+                            closeButton: true,
+                            progressBar: true,
+                            newestOnTop: true,
+                            onHidden: function () {
+                                window.location.reload();
+                            }
+                        });
+
+                    });
+
+
+                }
+            });
+
+        });
+        $(document).on('submit', '.add-question', function (e) {
+            e.preventDefault();
+            var frm = $(this);
+            frm.append($('.choices'));
+            console.log(frm);
+            $.ajax({
+                type: 'POST',
+                url: frm.attr('action'),
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: $(e.target).serialize(),
                 success: function (Mess) {
                     if (Mess.status == true) {
                         $($(this).data('modal')).modal('toggle');
@@ -129,13 +186,14 @@
         $(document).on('click','.choicebtn',function(e){
             e.preventDefault();
             var choices = $('#noc').val();
+            $(this).parent().parent().parent().remove();
             $.ajax({
                 type: 'POST',
                 url: '<?=url('choices'); ?>',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'choices':choices},
                 success: function (Mess) {
-                    $('.choices').html(Mess);
+                    $('.choices').append(Mess);
                 },
                 error: function (f) {
                     console.log(f);
@@ -209,7 +267,6 @@
             },
             "columns": [
                 { "data": "*" },
-                { "data": "module" },
                 { "data": "question" },
                 { "data": "action"}
             ]

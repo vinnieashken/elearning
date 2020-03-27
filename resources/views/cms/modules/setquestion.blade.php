@@ -6,7 +6,7 @@
         <div class="card-header">
             <div class="text-right">
                 <button class="btn btn-default" data-toggle="modal" data-target="#addModal">
-                    <i class="align-middle" data-feather="plus"></i> Add Module
+                    <i class="align-middle" data-feather="plus"></i> Add Question
                 </button>
             </div>
         </div>
@@ -14,20 +14,16 @@
             <table class="table table-horizontal" id="questions">
                 <thead>
                     <tr>
-                        <td>*</td>
-
-                        <td>Module</td>
-                        <td>Question</td>
-                        <td>Action</td>
+                        <th>*</th>
+                        <th>Question</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <td>*</td>
-
-                        <td>Module</td>
-                        <td>Question</td>
-                        <td>Action</td>
+                        <th>*</th>
+                        <th>Question</th>
+                        <th>Action</th>
                     </tr>
                 </tfoot>
             </table>
@@ -41,13 +37,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <form action="" method="post" class="form form-horizontal">
+                    <form action="{{ url('cms/addquestion') }}" method="post" class="form form-horizontal add-question" enctype="multipart/form-data">
                 </div>
                 <div class="modal-body">
                         <input type="hidden" name="module" value="{{ $module_id }}">
                         <div class="form-group">
-                            <label for="" class="control-label">Question</label>
-                            <input type="text" name="" id="" class="form-control summernote">
+                            <label for="add-question" class="control-label">Question</label>
+                            <input type="text" name="question" id="add-question" class="form-control summernote">
                         </div>
                         <div class="form-group form-row">
                             <div class="col-3">
@@ -61,8 +57,6 @@
                             </div>
 
                         </div>
-
-                        <legend>Choices</legend>
                         <div class="choices">
 
                         </div>
@@ -70,7 +64,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
