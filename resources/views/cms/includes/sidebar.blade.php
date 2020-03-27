@@ -9,7 +9,7 @@
                 Main
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('cms/dashboard') }}">
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/') }}">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
@@ -28,12 +28,7 @@
                     <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Modules</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('cms/question') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Question</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
+            {{--<li class="sidebar-item">
                 <a href="#dashboards" data-toggle="collapse" class="font-weight-bold sidebar-link collapsed">
                     <i class="align-middle" data-feather="shield"></i>
                     <span class="align-middle">Student</span>
@@ -43,7 +38,7 @@
                     <li class="sidebar-item"><a class="sidebar-link" href="">Results</a></li>
                 </ul>
             </li>
-
+--}}
         </ul>
     </div>
 </nav>
