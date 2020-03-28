@@ -128,9 +128,6 @@ class ModulesController extends Controller
             if($result->user_option == $result->answer)
                 $score = $score + 1;
         }
-        if(!is_null($module))
-            $mname = $module->module;
-
 
         $data = [
             "moduleid" => $module->id,
