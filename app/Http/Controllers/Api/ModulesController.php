@@ -130,7 +130,7 @@ class ModulesController extends Controller
         }
 
         $data = [
-            "moduleid" => $module->id,
+            "moduleid" => (!is_null($module)  ? $module->id :''),
             "Module" => (!is_null($module)  ? $module->module :''),
             "Score" => $score,
             "Questions" => $totalquestions,
