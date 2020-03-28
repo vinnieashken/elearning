@@ -24,9 +24,13 @@ class PaymentsController extends Controller
     {
         $userid = $request->user_id;
         $packageid = $request->package_id;
+        $phone = $request->mobile;
 
         $packagemodel = new Subscription();
         $package = $packagemodel->find((int)$packageid);
+
+        $mpesa = new Mpesa();
+        $url = url('api/payments/mpesa/callback');
 
         $payment = new Payment();
         $existing = $payment->where('user_id',$userid)->where('status',1)->first();
@@ -39,6 +43,7 @@ class PaymentsController extends Controller
             $existing->packageid = $package->id;
             $existing->save();
 
+            $result = $mpesa-> pushStk($package->cost,$phone,$url,'ELE'.$existing->id);
             $transaction = [
                 'id'=> 'ELE'.$existing->id,
                 'amount' => $existing->amount,
@@ -51,6 +56,8 @@ class PaymentsController extends Controller
         $payment->channel = 'MPESA';
         $payment->amount = $package->cost;
         $payment->save();
+
+        $result = $mpesa-> pushStk($package->cost,$phone,$url,"ELE");
 
         $transaction = [
             'id'=> 'ELE'.$payment->id,

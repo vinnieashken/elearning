@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\AnswerSheet;
 use App\Models\Module;
 use Illuminate\Http\Request;
 
@@ -72,4 +73,39 @@ class ModulesController extends Controller
             ->leftJoin('classes','subjects.class_id','=','classes.id')
             ->select('modules.id','modules.module','modules.subject_id','subjects.subject','classes.class')->get();
     }
+
+    public function getUserModuleAnswers(Request $request,$moduleid,$userid)
+    {
+        $model = new AnswerSheet();
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results =  $model->where('module_id',$moduleid)->where('user_id',$userid)
+                ->leftJoin('answers','answers.question_id','=','user_answers.question_id')
+                ->select('user_answers.question_id','user_answers.option_id as user_option','answers.option_id as answer')->paginate($size)->items();
+
+            $totalrecords = $model->where('user_id',$userid)->where('module_id',$moduleid)->count();
+
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $data ["rows"] = $results;
+
+            return $data;
+        }
+
+        return $model->where('module_id',$moduleid)->where('user_id',$userid)
+            ->leftJoin('answers','answers.question_id','=','user_answers.question_id')
+            ->select('user_answers.question_id','user_answers.option_id as user_option','answers.option_id as answer')->get();
+    }
+
 }
