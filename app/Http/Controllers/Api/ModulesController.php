@@ -123,6 +123,11 @@ class ModulesController extends Controller
         $results = $model->where('module_id',$moduleid)->where('user_id',$userid)
             ->leftJoin('answers','answers.question_id','=','user_answers.question_id')
             ->select('user_answers.user_id','user_answers.question_id','user_answers.option_id as user_option','answers.option_id as answer')->get();
+
+        if($results->isEmpty())
+        {
+            return response()->json(["message"=> "Test not taken"] , 400);
+        }
         foreach ($results as $result)
         {
             if($result->user_option == $result->answer)

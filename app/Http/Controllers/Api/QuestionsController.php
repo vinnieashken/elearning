@@ -58,13 +58,19 @@ class QuestionsController extends Controller
 
         foreach ($answers as $answer)
         {
-               //echo $answer->questionid;
             $answerSheet = new AnswerSheet();
+            $exists = $answerSheet ->where('question_id',$answer['questionid'])->where('user_id',$userid)->where('module_id',$moduleid)->first();
             $answerSheet->user_id = $userid;
             $answerSheet->module_id = $moduleid;
             $answerSheet->question_id = $answer['questionid'];
             $answerSheet->option_id = $answer['optionid'];
-            $answerSheet->save();
+
+            if(is_null($exists))
+                $answerSheet->save();
+            else{
+                $exists->option_id = $answer['optionid'];
+                $exists->save();
+            }
         }
 
     }
