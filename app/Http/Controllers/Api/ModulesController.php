@@ -137,9 +137,38 @@ class ModulesController extends Controller
             "Percentage" => (($score / $totalquestions) * 100)
         ];
 
-
-
         return $data;
+    }
+
+    public function getUserModules(Request $request,$userid)
+    {
+        $sheetsmodel = new AnswerSheet();
+        $size = 10;
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->paginate($size,['module_id'])->items();
+
+            $totalrecords = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->count();
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $data ["rows"] = $results;
+
+            return $data;
+        }
+
+        $sheets = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->get(['module_id']);
+
+        return $sheets;
     }
 
 }
