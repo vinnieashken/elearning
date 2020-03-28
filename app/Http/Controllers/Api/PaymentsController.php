@@ -24,9 +24,25 @@ class PaymentsController extends Controller
     {
         $userid = $request->user_id;
         $packageid = $request->package_id;
+        $phone = $request->mobile;
+        $digit = substr($phone,0,1);
+
+        if($digit !== "0")
+        {
+            return response()->json(["message"=> "Incorrect Mobile number format"] , 400);
+        }
 
         $packagemodel = new Subscription();
         $package = $packagemodel->find((int)$packageid);
+
+        if(is_null($package ))
+        {
+            return response()->json(["message"=> "package not found"] , 400);
+        }
+
+        $mpesa = new Mpesa();
+        $url = url('api/payments/mpesa/callbacks');
+        //$url = "https://www.standardmedia.co.ke";
 
         $payment = new Payment();
         $existing = $payment->where('user_id',$userid)->where('status',1)->first();
@@ -39,6 +55,7 @@ class PaymentsController extends Controller
             $existing->packageid = $package->id;
             $existing->save();
 
+            $result = $mpesa-> pushStk($package->cost,$phone,$url,'ELE'.$existing->id);
             $transaction = [
                 'id'=> 'ELE'.$existing->id,
                 'amount' => $existing->amount,
@@ -51,6 +68,8 @@ class PaymentsController extends Controller
         $payment->channel = 'MPESA';
         $payment->amount = $package->cost;
         $payment->save();
+
+        $result = $mpesa-> pushStk($package->cost,$phone,$url,"ELE");
 
         $transaction = [
             'id'=> 'ELE'.$payment->id,

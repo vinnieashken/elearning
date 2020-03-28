@@ -27,8 +27,13 @@ Route::get('/subjects/class/{id}','Api\SubjectsController@getClassSubjects');
 
 Route::get('/modules/list','Api\ModulesController@list');
 Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
+Route::get('/modules/{id}/user/{user_id}','Api\ModulesController@getUserModuleAnswers');
+Route::get('/modules/{id}/marks/user/{user_id}','Api\ModulesController@getUserModuleMarks');
+Route::get('/modules/user/{user_id}','Api\ModulesController@getUserModules');
 
 Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
+Route::post('/questions/module/user/answers','Api\QuestionsController@saveUserAnswers');
+
 
 Route::get('/payments/subscriptions','Api\PaymentsController@getSubscriptions');
 Route::post('/payments/subscribe','Api\PaymentsController@startTransaction'); //post

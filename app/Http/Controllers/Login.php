@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,7 @@ class Login extends Controller
             }
         public function login(Request $request)
             {
-                $username = $request->username;
+                $username = $request->login;
                 $password = $request->password;
 
                 $params = ["body"=>json_encode(['username'=> $username, 'password'=>$password])];
@@ -41,10 +42,12 @@ class Login extends Controller
 
                 $headers = $response->getHeaders();
                 $body = $response->getBody()->getContents();
-                $objbody = json_decode($body);
-                if (Auth::attempt($objbody)) {
-                    // Authentication passed...
-                    return redirect()->intended('cms');
-                }
+                $objbody = json_decode($body,true);
+                if(!isset($objbody['message']))
+                    {
+                        Auth::login((object)$objbody)->middleware('auth');
+                        redirect('cms');
+                    }
+
             }
     }
