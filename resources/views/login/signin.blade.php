@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <div class="m-sm-4">
 
-                                <form method="post" action="">
+                                <form method="post" action="{{ url('signin') }}">
                                     @csrf
                                     <div class="form-group">
                                         <label> {{ __('Username/Email') }}</label>

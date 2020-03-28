@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ashken
- * Date: 11/12/2017
- * Time: 12:11 PM
- */
+
+
 namespace App\Utils;
+
+
 use GuzzleHttp\Client;
 
-class MPesa
+class Mpesa
 {
     protected $consumer_key;
     protected $consumer_secret;
@@ -34,6 +32,7 @@ class MPesa
     {
         $credentials = ($this->consumer_key . ':' . $this->consumer_secret);
         try{
+
                 $response = $this->client->request(
                     'GET',
                     'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
@@ -47,6 +46,7 @@ class MPesa
 		{
 			return $e->getMessage();
 		}
+
         $headers = $response->getHeaders();
         $body = $response->getBody()->getContents();
         $object = json_decode($body);
@@ -55,15 +55,20 @@ class MPesa
         return $object->access_token;
     }
 
-    public function processRequest($amount, $phone_number,$callbackurl,$refno='ELE')
+
+    public function pushStk($amount,$phone,$callbackurl,$refno="ELE")
     {
 
-		$phone = '254'.substr($phone_number,-9);
+        $matches = [];
+        preg_match_all("!(7[0-9]{8})!",$phone,$matches);
+        $phone = '254'.$matches[0][0];
+        //echo "hello world ".$amount." phone ".$phone." url=".$callbackurl;
+
+        //return;
 
         $token = $this->authorize();
 
         //Log::info("ACCESS TOKEN: ".$token);
-        //return;
         $timestamp = date("YmdHis", time());
         $password = base64_encode($this->shortcode . $this->passkey . $timestamp);
         $data = [
@@ -81,6 +86,7 @@ class MPesa
         ];
 
         try{
+
 			//'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $response = $this->client->post(
 			'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
@@ -101,12 +107,8 @@ class MPesa
         $headers = $response->getHeaders();
         $body = $response->getBody();
         $body_array = json_decode($body);
-        return $headers;
-        //dump($body_array);
+
+        return $body_array;
     }
 
-    public function checkTransactionStatus($transactionId, $phone)
-    {
-
-    }
 }

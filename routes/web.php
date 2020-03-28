@@ -14,18 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
+Route::get('/admin','Login@index');
+Route::post('/signin','Login@login')->middleware('auth');
 Route::get('/cms','Cms@index');
 Route::get('/cms/question','Cms@question');
 Route::get('/cms/class','Cms@classes');
 Route::get('/cms/subject','Cms@subject');
 Route::get('/cms/exams','Cms@modules');
+Route::get('/cms/rates','Cms@rates');
 //Datatables
 Route::post('get_classes','Datatable@get_classes');
 Route::post('get_subjects','Datatable@get_subjects');
 Route::post('get_modules','Datatable@get_modules');
 Route::post('get_questions','Datatable@get_questions');
-
+Route::post('get_rates','Datatable@get_rates');
 Route::post('/cms/addsubject','Cms@addsubject');
 Route::post('/cms/editsubject','Cms@editsubject');
 Route::post('/cms/addmodule','Cms@addmodule');
@@ -34,6 +36,8 @@ Route::post('/cms/addclass','Cms@addlevel');
 Route::post('/cms/editclass','Cms@editlevel');
 Route::post('/cms/addquestion','Cms@addquestion');
 Route::post('/cms/editquestion','Cms@editquestion');
+Route::post('/cms/addrates','Cms@addrates');
+Route::post('/cms/editrates','Cms@editrates');
 Route::post('/subjectfromclass','Cms@getmodules');
 Route::post('/choices','Cms@choices');
 Route::post('/questionanswers','Cms@questionanswers');

@@ -18,7 +18,9 @@ class ModulesController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results =  $model->paginate($size,['id','subject_id','module'])->items();
+            $results =  $model->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->select('modules.id','modules.module','modules.subject_id','subjects.subject','classes.class')->paginate($size)->items();
 
             $totalrecords = $model->count();
             $totalpages = ceil($totalrecords / $size);
@@ -34,7 +36,9 @@ class ModulesController extends Controller
 
             return $data;
         }
-        return $model->all();
+        return $model->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            ->leftJoin('classes','subjects.class_id','=','classes.id')
+            ->select('modules.id','modules.module','modules.subject_id','subjects.subject','classes.class')->get();
     }
 
     public function getSubjectModules(Request $request,$subjectid)
@@ -46,7 +50,9 @@ class ModulesController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results =  $model->where('subject_id',$subjectid)->paginate($size,['id','subject_id','module'])->items();
+            $results =  $model->where('subject_id',$subjectid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->select('modules.id','modules.module','modules.subject_id','subjects.subject','classes.class')->paginate($size)->items();
 
             $totalrecords = $model->where('subject_id',$subjectid)->count();
             $totalpages = ceil($totalrecords / $size);
@@ -62,6 +68,8 @@ class ModulesController extends Controller
 
             return $data;
         }
-        return $model->where('subject_id',$subjectid)->get(['id','subject_id','module']);
+        return $model->where('subject_id',$subjectid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            ->leftJoin('classes','subjects.class_id','=','classes.id')
+            ->select('modules.id','modules.module','modules.subject_id','subjects.subject','classes.class')->get();
     }
 }

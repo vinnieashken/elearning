@@ -6,6 +6,7 @@ use App\Models\Level;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Module;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -218,6 +219,7 @@ class Datatable extends Controller
 
                 echo json_encode($json_data);
             }
+
         public function get_questions(Request $request)
             {
                 $columns = array(
@@ -283,6 +285,77 @@ class Datatable extends Controller
                                     "recordsFiltered" => intval($totalFiltered),
                                     "data"            => $data
                                 );
+
+                echo json_encode($json_data);
+            }
+
+        public function get_rates(Request $request)
+            {
+                $columns = array(
+                    0   =>  'subscription',
+                    1   =>  'cost'
+
+                );
+
+                $totalData      = Subscription::count();
+
+                $totalFiltered  = $totalData;
+
+                $limit  =   $request->input('length');
+                $start  =   $request->input('start');
+                $order  =   $columns[$request->input('order.0.column')];
+                $dir    =   $request->input('order.0.dir');
+
+                if(empty($request->input('search.value')))
+                    {
+                        $posts = Subscription::offset($start)
+                                         ->limit($limit)
+                                         ->orderBy($order,$dir)
+                                         ->get();
+                    }
+                else
+                    {
+                        $search     =   $request->input('search.value');
+
+                        //
+
+                        $posts      =   Subscription::where('subscription','LIKE',"%{$search}%")
+                                                ->orwhere('cost','LIKE',"%{$search}%")
+                                                ->offset($start)
+                                                ->limit($limit)
+                                                ->orderBy($order,$dir)
+                                                ->get();
+
+                        $totalFiltered = Subscription::where('subscription','LIKE',"%{$search}%")
+                                                    ->orwhere('cost','LIKE',"%{$search}%")
+                                                    ->count();
+                    }
+
+                $data = array();
+                if(!empty($posts))
+                    {
+                        $x= $start + 1;
+                        foreach ($posts as $post)
+                            {
+
+                                $nestedData['*']            =   $x;
+                                $nestedData['subscription'] =   $post->subscription;
+                                $nestedData['cost']         =   $post->cost;
+                                $nestedData['action']       =   '<a href="#" class="edit-rate text-dark" data-rate=\''.$post.'\' >
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
+                                                                 </a>';
+
+                                $data[] = $nestedData;
+                                $x++;
+                            }
+                    }
+
+                $json_data = array(
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData),
+                    "recordsFiltered" => intval($totalFiltered),
+                    "data"            => $data
+                );
 
                 echo json_encode($json_data);
             }
