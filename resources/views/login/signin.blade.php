@@ -68,8 +68,8 @@
                                         </div>
                                     </div>
                                     <div class="text-center mt-3">
-                                        <a href="{{ url('cms/dashboard') }}" class="btn btn-lg btn-library">Sign in</a>
-                                        {{--<button type="submit" class="btn btn-lg btn-primary">Sign in</button>--}}
+                                        {{--<a href="{{ url('cms/dashboard') }}" class="btn btn-lg btn-library">Sign in</a>--}}
+                                        <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
                                     </div>
                                 </form>
                             </div>

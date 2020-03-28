@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/admin','Login@index');
-Route::post('/signin','Login@login')->middleware('auth');
+Route::post('/signin','Login@login');
 Route::get('/cms','Cms@index');
 Route::get('/cms/question','Cms@question');
 Route::get('/cms/class','Cms@classes');
