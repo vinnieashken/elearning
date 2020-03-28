@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSheet;
 use App\Models\Module;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class ModulesController extends Controller
@@ -106,6 +107,42 @@ class ModulesController extends Controller
         return $model->where('module_id',$moduleid)->where('user_id',$userid)
             ->leftJoin('answers','answers.question_id','=','user_answers.question_id')
             ->select('user_answers.question_id','user_answers.option_id as user_option','answers.option_id as answer')->get();
+    }
+
+    public function getUserModuleMarks(Request $request,$moduleid,$userid)
+    {
+        $model = new AnswerSheet();
+        $qmodel = new Question();
+        $modulemodel = new Module();
+
+        $module = $modulemodel->where('id',$moduleid)->first();
+
+        $totalquestions = $qmodel->where('module_id',$moduleid)->count();
+        $score = 0;
+
+        $results = $model->where('module_id',$moduleid)->where('user_id',$userid)
+            ->leftJoin('answers','answers.question_id','=','user_answers.question_id')
+            ->select('user_answers.user_id','user_answers.question_id','user_answers.option_id as user_option','answers.option_id as answer')->get();
+        foreach ($results as $result)
+        {
+            if($result->user_option == $result->answer)
+                $score = $score + 1;
+        }
+        if(!is_null($module))
+            $mname = $module->module;
+
+
+        $data = [
+            "moduleid" => $module->id,
+            "Module" => (!is_null($module)  ? $module->module :''),
+            "Score" => $score,
+            "Questions" => $totalquestions,
+            "Percentage" => (($score / $totalquestions) * 100)
+        ];
+
+
+
+        return $data;
     }
 
 }

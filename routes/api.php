@@ -28,6 +28,7 @@ Route::get('/subjects/class/{id}','Api\SubjectsController@getClassSubjects');
 Route::get('/modules/list','Api\ModulesController@list');
 Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
 Route::get('/modules/{id}/user/{user_id}','Api\ModulesController@getUserModuleAnswers');
+Route::get('/modules/{id}/marks/user/{user_id}','Api\ModulesController@getUserModuleMarks');
 
 Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
 Route::post('/questions/module/user/answers','Api\QuestionsController@saveUserAnswers');
