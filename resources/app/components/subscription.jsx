@@ -1,7 +1,71 @@
-import React, { useEffect, useState } from 'react';
-import {PUBLIC_URL} from "../common/constants";
+import React, {useEffect, useState} from 'react';
+import {API, PUBLIC_URL} from "../common/constants";
+import {ClipLoader} from "react-spinners";
 
 export default function (props) {
+    const [subscriptions, setSubscriptions] = useState([]);
+    const [processing, setProcessing] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(false);
+    const [messageType, setMessageType] = useState( '');
+    const [response, setResponse] = useState('');
+
+
+    useEffect(() => {
+        getSubscriptions();
+    }, []);
+
+    const getSubscriptions = () => {
+        $.ajax({
+            url: `${API}/payments/subscriptions`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = "Sorry an error has occurred. We are working on it. ";
+
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                else if (xhr.hasOwnProperty('responseText'))
+                    response = JSON.parse(xhr['responseText'])['message'];
+
+                setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setSubscriptions(res);
+                setLoading(false);
+            }.bind(this)
+        })
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setProcessing(true);
+        setMessage(false);
+        var formData = new FormData($('form#sub')[0]);
+        formData.append('user_id', props.user.id);
+        formData.append('package_id', subscriptions[0]['id']);
+        $.ajax({
+            url: `${API}/payments/subscribe`,
+            data: formData,
+            processData: false,
+            contentType: false,
+            method: 'POST',
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setSubscriptions(res);
+                setProcessing(false);
+            }.bind(this)
+        })
+    };
+
     return(
         <React.Fragment>
             <div className="row justify-content-center">
@@ -16,14 +80,25 @@ export default function (props) {
                             </div>
                         </div>
                     </div>
-                    <form className="mt-4">
+                    <form className="mt-4" onSubmit={handleSubmit} id='sub'>
                         <div className="card">
                             <div className="card-body">
+
+                                {
+                                    message &&
+                                    <div className='row'>
+                                        <div className={messageType} role="alert">
+                                            <div className="alert-message">
+                                                {response}
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                                 <div className="form-group">
                                     <label className="form-control-label">
                                         Phone Number (M-Pesa)
                                     </label>
-                                    <input type="text" className="form-control" />
+                                    <input type="text" name='mobile' className="form-control form-control-sm" />
                                 </div>
                                 <div className="form-group">
                                     <label className="form-control-label">
@@ -75,7 +150,9 @@ export default function (props) {
 
                                 </div>
                                 <div className="text-right">
-                                    <button type="button" className="btn btn-sm btn-primary rounded-pill">Pay </button>
+                                    {
+                                        processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">Pay </button>
+                                    }
                                 </div>
                             </div>
                         </div>
