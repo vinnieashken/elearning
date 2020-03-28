@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {API} from "../common/constants";
 import Loading from "../common/loadingWhite";
+import {ClipLoader} from "react-spinners";
 
 export default function (props) {
-    const [loading, setLoading] = useState(true);
     const [exam, setExam] = useState([]);
+    const [processing, setProcessing] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState(false);
+    const [messageType, setMessageType] = useState( '');
+    const [response, setResponse] = useState('');
 
     useEffect(() => {
         getExam();
@@ -29,6 +34,37 @@ export default function (props) {
             }.bind(this)
         })
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setProcessing(true);
+        setMessage(false);
+        let answers = exam.map((el) => {
+            return {"questionid": el.id, "optionid": parseInt($(`#${el.id}`).val())}
+        });
+        let data = {
+            "moduleid": props.match.params.module,
+            "userid": props.user.id,
+            "answers": answers
+        };
+        $.ajax({
+            url: `${API}/questions/module/user/answers`,
+            data: data,
+            method: 'POST',
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setSubscriptions(res);
+                setProcessing(false);
+            }.bind(this)
+        })
+    };
+
     return (
         <React.Fragment>
             <div className="page-title">
@@ -54,33 +90,47 @@ export default function (props) {
                                     </div>
                                 </div>
                                 <div className="card-body">
-                                    {
-                                        <div className='row'>
-                                            {
-                                                exam.map((el) => {
-                                                    return (
-                                                        <div className="form-group col-md-12">
+                                    <form onSubmit={handleSubmit} id='exam'>
+                                        {
+                                            message &&
+                                            <div className='row'>
+                                                <div className={`col-12 ${messageType}`} role="alert">
+                                                    <div className="alert-message">
+                                                        {response}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        {
+                                            <div className='row'>
+                                                {
+                                                    exam.map((el) => {
+                                                        return (
+                                                            <div className="form-group col-md-12">
 
-                                                            <p><label className="form-control-label"><b>{el.id}. </b> <span dangerouslySetInnerHTML={ {__html: `${el.question}`} } /></label></p>
-                                                            {
-                                                                el.options.map((ans) => {
-                                                                    return (
-                                                                        <React.Fragment>
-                                                                            <input type="radio" id={ans.id} name={el.id} value={ans.id} />
-                                                                            <label htmlFor={ans.option}>{` ${ans.option}`}</label><br />
-                                                                        </React.Fragment>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </div>
-                                                    )
-                                                })
+                                                                <p><label className="form-control-label"><span dangerouslySetInnerHTML={ {__html: `${el.question}`} } /></label></p>
+                                                                {
+                                                                    el.options.map((ans) => {
+                                                                        return (
+                                                                            <React.Fragment>
+                                                                                <input type="radio" id={el.id} name={el.id} value={ans.id} />
+                                                                                <label htmlFor={ans.option}>{` ${ans.option}`}</label><br />
+                                                                            </React.Fragment>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        }
+                                        <div className="text-right">
+                                            {
+                                                processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">Submit</button>
                                             }
                                         </div>
-                                    }
-                                    <div className="text-right">
-                                        <button type="button" className="btn btn-sm btn-primary rounded-pill">Submit</button>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                     }
