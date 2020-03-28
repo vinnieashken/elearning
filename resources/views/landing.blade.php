@@ -258,34 +258,34 @@
             <div class="container ">
                 <ul class="nav text-center ">
                     <li class="nav-item ">
-                        <a class="nav-link " href="# ">DIGGER</a>
+                        <a class="nav-link " href="https://digger.co.ke/">DIGGER</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link " href="# ">BTV</a>
+                        <a class="nav-link " href="http://www.btvkenya.ke/">BTV</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link " href="# ">TRAVELOG</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#slider-area ">PULSER</a>
+                        <a class="nav-link page-scroll " href="https://www.pulser.co.ke/">PULSER</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#services ">FARMERS</a>
+                        <a class="nav-link page-scroll " href="https://www.farmers.co.ke/">FARMERS</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#slider-area ">EVE WOMAN</a>
+                        <a class="nav-link page-scroll " href="http://www.evewoman.co.ke/">EVE WOMAN</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#services ">FM VYBEZ</a>
+                        <a class="nav-link page-scroll " href="http://www.vybezradio.co.ke/">FM VYBEZ</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#slider-area ">SPICE RADIO</a>
+                        <a class="nav-link page-scroll " href="http://www.spicefm.co.ke/">SPICE RADIO</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#services ">RADIO MAISHA</a>
+                        <a class="nav-link page-scroll " href="https://www.standardmedia.co.ke/radiomaisha">RADIO MAISHA</a>
                     </li>
                     <li class="nav-item border-0 ">
-                        <a class="nav-link page-scroll " href="#slider-area ">CORPORATE</a>
+                        <a class="nav-link page-scroll " href="https://www.standardmedia.co.ke/corporate">CORPORATE</a>
                     </li>
                 </ul>
             </div>

@@ -1,22 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
-import {DIR} from "../common/constants";
+import {API, DIR} from "../common/constants";
 import moment from "moment";
 
 export default function (props) {
+    const [subscriptions, setSubscriptions] = useState([]);
 
     useEffect(() => {
-        console.log(moment().startOf('day'));
-        console.log(moment().startOf('day').add('12', 'hours'))
+        getSubscriptions();
     }, []);
 
     const getSalutation = () => {
         const now = moment();
         const startOfDay = moment().startOf('day');
-        const noon = moment().startOf('day').add('12', "hours");
-        const evening = moment().startOf('day').add('18', "hours");
+        const noon = startOfDay.add('12', "hours");
+        const evening = startOfDay.add('18', "hours");
 
         return now.isAfter(evening, 'time') ? 'Evening' : now.isAfter(noon, 'time') ? 'Afternoon' : 'Morning'
+    };
+
+    const getSubscriptions = () => {
+        $.ajax({
+            url: `${API}/payments/subscriptions`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr['responseText'])['message'];
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setSubscriptions(res);
+                setLoading(false);
+            }.bind(this)
+        })
     };
 
     return (
@@ -44,8 +64,8 @@ export default function (props) {
                                 <div className="mb-4"><h5>Daily</h5><span className="display-4">KES 30</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li type='disc' >Daily bulletins for each e-paper addition</li>
-                                    <li type='disc' >Free access to The Standard all in one e-paper platform.</li>
+                                    <li >- Additional one day complimentary e-paper.</li>
+                                    <li >- Regular email bulletins from the Standard Insider.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -60,8 +80,8 @@ export default function (props) {
                                     className="display-4">KES 220</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li type='disc'>Daily bulletins for each e-paper addition</li>
-                                    <li type='disc'>Free access to The Standard all in one e-paper platform.</li>
+                                    <li >- Additional one month complimentary e-paper.</li>
+                                    <li >- Regular email bulletins from the Standard Insider.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -76,8 +96,8 @@ export default function (props) {
                                     className="display-4">KES 3,640</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li type='disc'>Daily bulletins for each e-paper addition</li>
-                                    <li type='disc'>Free access to The Standard all in one e-paper platform.</li>
+                                    <li >- Additional one year complimentary e-paper.</li>
+                                    <li >- Regular email bulletins from the Standard Insider.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -92,9 +112,9 @@ export default function (props) {
                                     className="display-4">KES 10,000</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li type='disc'>Daily bulletins for each e-paper addition</li>
-                                    <li type='disc'>Free access to The Standard all in one e-paper platform.</li>
-                                    <li type='disc'>Set your own exam.</li>
+                                    <li >- Additional one year complimentary e-paper.</li>
+                                    <li >- Regular email bulletins from the Standard Insider.</li>
+                                    <li >- Set your own exam.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>

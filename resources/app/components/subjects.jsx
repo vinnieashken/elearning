@@ -120,8 +120,8 @@ export default function (props) {
                                         columns={
                                             [
                                                 {dataField: 'subject',      text: 'Subject',    sort: true},
-                                                {dataField: 'class',        text: 'Class',      sort: true, formatter: formatClassName},
-                                                {dataField: 'created_at',   text: 'Added',      sort: true, formatter: dateFormatter},
+                                                {dataField: 'class',        text: 'Class',      sort: true},
+                                                // {dataField: 'created_at',   text: 'Added',      sort: true, formatter: dateFormatter},
                                                 {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
                                             ]
                                         } search={true}>
