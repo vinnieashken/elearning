@@ -173,7 +173,7 @@ export default function (props) {
                                 </div>
                                 <div className="text-right">
                                     {
-                                        processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">Pay </button>
+                                        processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">{payment.hasOwnProperty('id') ? 'Confirm Payment' : 'Pay'} </button>
                                     }
                                 </div>
                             </div>
