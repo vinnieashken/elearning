@@ -19,7 +19,7 @@ class CreateAnswerSheetsTable extends Migration
             $table->integer('question_id')->unsigned();
             $table->integer('option_id')->unsigned();
             $table->integer('module_id')->unsigned();
-            $table->integer('exam_id')->unsigned();
+            $table->integer('exam_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
