@@ -69,7 +69,7 @@ class PaymentsController extends Controller
         $payment->amount = $package->cost;
         $payment->save();
 
-        $result = $mpesa-> pushStk($package->cost,$phone,$url,"ELE");
+        $result = $mpesa-> pushStk($package->cost,$phone,$url,"ELE".$payment->id);
 
         $transaction = [
             'id'=> 'ELE'.$payment->id,
@@ -142,5 +142,11 @@ class PaymentsController extends Controller
             return response()->json(["message"=>"No valid subscriptions found"] , 400);
         }
         return $subscription;
+    }
+
+    public function listSubscriptions()
+    {
+        $subscription = new UserSubscription();
+        return $subscription->all();
     }
 }
