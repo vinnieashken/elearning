@@ -9,6 +9,7 @@ use App\Models\UserSubscription;
 use App\Utils\Mpesa;
 use DateInterval;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaymentsController extends Controller
 {
@@ -109,6 +110,7 @@ class PaymentsController extends Controller
         $payment = $paymodel->find($paymentid);
         $payment->transactioncode = $mpesacode;
         $payment->amount_received = $amount;
+        $payment->channel = "MPESA";
         $payment->phone = $phone;
         if($payment->amount_received > $payment->amount)
             $payment->status = 0;
@@ -117,7 +119,11 @@ class PaymentsController extends Controller
         $packagemodel = new Subscription();
         $package = $packagemodel->find($payment->packageid);
 
-        if($payment->status !== 0) {
+        if(!is_null($package))
+            Log::info("package found of id".$package->id);
+
+        if($payment->status == 0) {
+            Log::info("status == 0");
             $subscription = new UserSubscription();
             $subscription->user_id = $payment->user_id;
             $subscription->package_id = $payment->packageid;
@@ -128,6 +134,7 @@ class PaymentsController extends Controller
             $subscription->enddate = date_create('now')->add(new DateInterval('P' . $package->days . 'D'));
             $subscription->status = 1;
             $subscription->save();
+            //Log::info("subscription saved");
         }
         //return $payment;
     }
