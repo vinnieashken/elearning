@@ -68,11 +68,12 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
+                const score = JSON.parse(res);
                 setShowAns(true);
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-success');
-                setResponse(<h3>Congratulations, you have scored {marks}%. <Link to={`${DIR}/exams/modules`}>You can do another paper here</Link></h3>);
+                setResponse(<h4>Congratulations, you have scored {score['Percentage']}%. <Link to={`${DIR}/exams/modules`}>You can do another paper here</Link></h4>);
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this)
         })

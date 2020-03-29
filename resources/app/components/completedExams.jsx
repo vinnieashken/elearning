@@ -96,7 +96,7 @@ export default function (props) {
                                                 {dataField: 'class',        text: 'Class',      sort: true},
                                                 {dataField: 'subject',        text: 'Subject',      sort: true},
                                                 {dataField: 'marks',        text: 'Marks',      sort: true},
-                                                {dataField: 'created_at',   text: 'Added',      sort: true, formatter: dateFormatter},
+
                                                 {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
                                             ]
                                         } search={true}>
