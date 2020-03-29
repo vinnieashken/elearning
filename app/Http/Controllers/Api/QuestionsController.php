@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSheet;
 use App\Models\Question;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
@@ -55,7 +56,6 @@ class QuestionsController extends Controller
         $userid = $data['userid'];
         $answers = $data['answers'];
 
-
         foreach ($answers as $answer)
         {
             $answerSheet = new AnswerSheet();
@@ -72,6 +72,23 @@ class QuestionsController extends Controller
                 $exists->save();
             }
         }
+
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
+        try {
+
+            $path = url('/api/modules/'.$moduleid.'/marks/user/'.$userid);
+            $response = $client->request('GET', $path);
+
+        }catch (Exception $e)
+        {
+
+        }
+
+        $headers = $response->getHeaders();
+        $body = $response->getBody()->getContents();
+        $objbody = json_decode($body);
+
+        return $body;
 
     }
 }
