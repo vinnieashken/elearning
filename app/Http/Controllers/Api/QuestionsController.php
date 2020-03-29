@@ -86,7 +86,6 @@ class QuestionsController extends Controller
 
         $headers = $response->getHeaders();
         $body = $response->getBody()->getContents();
-        $objbody = json_decode($body);
 
         return $body;
 
