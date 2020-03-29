@@ -5,6 +5,10 @@ import moment from "moment";
 
 export default function (props) {
     const [subscriptions, setSubscriptions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState(false);
+    const [messageType, setMessageType] = useState( '');
+    const [response, setResponse] = useState('');
 
     useEffect(() => {
         getSubscriptions();

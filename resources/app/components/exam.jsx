@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {API} from "../common/constants";
+import {API, DIR} from "../common/constants";
 import Loading from "../common/loadingWhite";
 import {ClipLoader} from "react-spinners";
+import {Link} from "react-router-dom";
 
 export default function (props) {
     const [exam, setExam] = useState([]);
+    const [showAns, setShowAns] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(false);
@@ -39,14 +41,21 @@ export default function (props) {
         e.preventDefault();
         setProcessing(true);
         setMessage(false);
-        let answers = exam.map((el) => {
-            return {"questionid": el.id, "optionid": parseInt($(`#${el.id}`).val())}
+        let marks = 0;
+        let answers = [];
+        exam.forEach((el) => {
+            const ans = $(`input[name="${el.id}"]:checked`).val();
+            if (parseInt(el.answer) === parseInt(ans)) {
+                marks += 1;
+            }
+            answers.push({"questionid": el.id, "optionid": parseInt(ans)})
         });
         let data = {
             "moduleid": props.match.params.module,
             "userid": props.user.id,
             "answers": answers
         };
+        marks = (marks / exam.length) * 100;
         $.ajax({
             url: `${API}/questions/module/user/answers`,
             data: data,
@@ -59,8 +68,12 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setSubscriptions(res);
+                setShowAns(true);
                 setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-success');
+                setResponse(<h3>Congratulations, you have scored {marks}%. <Link to={`${DIR}/exams/modules`}>You can do another paper here</Link></h3>);
+                $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this)
         })
     };
@@ -111,10 +124,11 @@ export default function (props) {
                                                                 <p><label className="form-control-label"><span dangerouslySetInnerHTML={ {__html: `${el.question}`} } /></label></p>
                                                                 {
                                                                     el.options.map((ans) => {
+                                                                        const isAns = parseInt(el.answer) === parseInt(ans.id);
                                                                         return (
                                                                             <React.Fragment>
-                                                                                <input type="radio" id={el.id} name={el.id} value={ans.id} />
-                                                                                <label htmlFor={ans.option}>{` ${ans.option}`}</label><br />
+                                                                                <input type="radio" id={el.id} name={el.id} value={ans.id} required={true} />
+                                                                                <label htmlFor={ans.option}>{` ${ans.option}`}</label> {(isAns && showAns) ? <span className='fa fa-check alert-success'/> : ''}<br />
                                                                             </React.Fragment>
                                                                         )
                                                                     })
@@ -127,7 +141,8 @@ export default function (props) {
                                         }
                                         <div className="text-right">
                                             {
-                                                processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">Submit</button>
+                                                processing ? <ClipLoader /> : showAns ? <Link to={`${DIR}/exams/modules`} className="btn btn-sm btn-primary rounded-pill">Select New Paper</Link>
+                                                    : <button type="submit" className="btn btn-sm btn-primary rounded-pill">Submit</button>
                                             }
                                         </div>
                                     </form>
