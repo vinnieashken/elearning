@@ -119,11 +119,11 @@ class PaymentsController extends Controller
         $packagemodel = new Subscription();
         $package = $packagemodel->find($payment->packageid);
 
-        if(!is_null($package))
-            Log::info("package found of id".$package->id);
+        //if(!is_null($package))
+            //Log::info("package found of id".$package->id);
 
         if($payment->status == 0) {
-            Log::info("status == 0");
+            //Log::info("status == 0");
             $subscription = new UserSubscription();
             $subscription->user_id = $payment->user_id;
             $subscription->package_id = $payment->packageid;
