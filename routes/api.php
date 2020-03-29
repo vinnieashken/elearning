@@ -40,7 +40,7 @@ Route::post('/payments/subscribe','Api\PaymentsController@startTransaction'); //
 Route::post('/payments/mpesa/stk','Api\PaymentsController@startMpesaStkPush');
 Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 Route::get('/payments/subscription/user/{id}','Api\PaymentsController@checkSubscription');
-
+//for testing only
 Route::get('/payments/subscriptions/list','Api\PaymentsController@listSubscriptions');
 Route::get('/payments/list','Api\PaymentsController@listPayments');
 

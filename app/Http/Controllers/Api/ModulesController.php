@@ -154,7 +154,12 @@ class ModulesController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->paginate($size,['module_id'])->items();
+            $results = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
+                ->leftJoin('modules','modules.id','=','user_answers.module_id')
+                ->leftJoin('subjects','subjects.id','=','modules.id')
+                ->leftJoin('classes','classes.id','=','subjects.id')
+                ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
+                ->paginate($size)->items();
 
             $totalrecords = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->count();
             $totalpages = ceil($totalrecords / $size);
@@ -171,7 +176,12 @@ class ModulesController extends Controller
             return $data;
         }
 
-        $sheets = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->get(['module_id']);
+        $sheets = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
+            ->leftJoin('modules','modules.id','=','user_answers.module_id')
+            ->leftJoin('subjects','subjects.id','=','modules.id')
+            ->leftJoin('classes','classes.id','=','subjects.id')
+            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
+            ->get();
 
         return $sheets;
     }
