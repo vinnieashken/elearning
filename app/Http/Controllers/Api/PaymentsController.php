@@ -142,7 +142,7 @@ class PaymentsController extends Controller
     public function checkSubscription(Request $request,$userid)
     {
         $subscription = new UserSubscription();
-        $subscription = $subscription->orderby('id','DESC')->where('user_id',$userid)->where('status',1 )->where('enddate','>',date_create('now'))->first();
+        $subscription = $subscription->orderby('id','DESC')->where('user_id',$userid)->where('status',1 )->where('enddate','>=',date_create('now'))->first();
 
         if(is_null($subscription))
         {
