@@ -149,4 +149,10 @@ class PaymentsController extends Controller
         $subscription = new UserSubscription();
         return $subscription->all();
     }
+
+    public function listPayments()
+    {
+        $payments = new Payment();
+        return $payments->all();
+    }
 }

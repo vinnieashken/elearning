@@ -42,6 +42,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 Route::get('/payments/subscription/user/{id}','Api\PaymentsController@checkSubscription');
 
 Route::get('/payments/subscriptions/list','Api\PaymentsController@listSubscriptions');
+Route::get('/payments/list','Api\PaymentsController@listPayments');
 
 
 
