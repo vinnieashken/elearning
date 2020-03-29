@@ -112,7 +112,7 @@ class PaymentsController extends Controller
         $payment->amount_received = $amount;
         $payment->channel = "MPESA";
         $payment->phone = $phone;
-        if($payment->amount_received > $payment->amount)
+        if($payment->amount_received >= $payment->amount)
             $payment->status = 0;
         $payment->save();
 
