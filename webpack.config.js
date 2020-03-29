@@ -23,7 +23,7 @@ const target_envs = {
         app: {
             entry: './resources/app/components/index',
             path: path.resolve('./public/static/bundles'),
-            chunkFilename: '[name].bundle.js',
+            chunkFilename: '[name].[chunkhash].js',
             publicPath: '/static/bundles/'
         }
     },
@@ -31,7 +31,7 @@ const target_envs = {
         app: {
             entry: './resources/app/components/index',
             path: path.resolve('./public/static/bundles'),
-            chunkFilename: '[name].bundle.js',
+            chunkFilename: '[name].[chunkhash].js',
             publicPath: '/elearning/public/static/bundles/'
         }
     }

@@ -4,6 +4,7 @@ import {ClipLoader} from "react-spinners";
 
 export default function (props) {
     const [subscriptions, setSubscriptions] = useState([]);
+    const [payment, setPayment] = useState({});
     const [processing, setProcessing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(false);
@@ -60,7 +61,7 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setSubscriptions(res);
+                setPayment(res);
                 setProcessing(false);
             }.bind(this)
         })
@@ -143,15 +144,36 @@ export default function (props) {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div className='col-md-12'>
-                                        <img className='mt-5 mb-5' style={{display: 'block', margin:'auto', width: '70%'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>
-                                    </div>
-
+                                    {
+                                        payment.hasOwnProperty('id') ? <div className='row'>
+                                                <div className='col-md-6 col-sm-6'>
+                                                    <img className='mt-5 mb-5' style={{display: 'block', margin:'auto', width: '70%'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>
+                                                </div>
+                                                <div className='col-md-6 col-sm-12'>
+                                                    <b>Pay via MPESA</b><br />
+                                                    <ol>
+                                                        <li>Go to M-PESA on your phone.</li>
+                                                        <li>Select Lipa na MPESA.</li>
+                                                        <li> Pay Bill.</li>
+                                                        <li>Enter Business Number:<span
+                                                            style={{fontSize: "20px"}}><b>505604</b></span>.
+                                                        </li>
+                                                        <li>Enter Account Number:<span
+                                                            style={{fontSize: '20px'}}><b>{payment.id}</b></span>.
+                                                        </li>
+                                                        <li> Enter the Amount. i.e<span
+                                                            style={{fontSize: "20px"}}><b>Ksh.{payment.amount}</b></span></li>
+                                                        <li>Enter your M-PESA PIN and Send.</li>
+                                                        <li>You will receive a confirmation via SMS.</li>
+                                                        <li>Get Us Payment Ref No.</li>
+                                                    </ol>
+                                                </div>
+                                            </div> : ''
+                                    }
                                 </div>
                                 <div className="text-right">
                                     {
-                                        processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">Pay </button>
+                                        processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">{payment.hasOwnProperty('id') ? 'Confirm Payment' : 'Pay'} </button>
                                     }
                                 </div>
                             </div>
