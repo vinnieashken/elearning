@@ -38,8 +38,8 @@
 
             <div class="dropdown">
                 <a class=" dropdown-toggle" data-toggle="dropdown">CLASSES
-                    <span class="caret"></span></a>
-                <ul class="dropdown-menu">
+                    <span class="caret" /></a>
+                <ul class="dropdown-menu" id="">
                     <li><a href="#">ENGLISH</a></li>
                     <li><a href="#">ENGLISH</a></li>
                     <li><a href="#">ENGLISH</a></li>
@@ -48,8 +48,8 @@
             </div>
             <div class="dropdown">
                 <a class=" dropdown-toggle" data-toggle="dropdown">SUBJECTS
-                    <span class="caret"></span></a>
-                <ul class="dropdown-menu">
+                    <span class="caret" /></a>
+                <ul class="dropdown-menu" id="">
                     <li><a href="#">ENGLISH</a></li>
                     <li><a href="#">ENGLISH</a></li>
                     <li><a href="#">ENGLISH</a></li>
@@ -57,7 +57,7 @@
                 </ul>
             </div>
             <a href="#">KCPE</a>
-            <a href="#">KCSE</a>
+{{--            <a href="#">KCSE</a>--}}
             <a href="#">LOGIN</a>
             <a href="#">REGISTER</a>
         </div>
@@ -92,10 +92,8 @@
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         CLASSES
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">English</a>
-                        <a class="dropdown-item" href="#">Mathematics</a>
-                        <a class="dropdown-item" href="#">Science</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="classes">
+
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -103,10 +101,8 @@
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         SUBJECTS
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">English</a>
-                        <a class="dropdown-item" href="#">Mathematics</a>
-                        <a class="dropdown-item" href="#">Science</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="subjects">
+
                     </div>
                 </li>
                 <li class="nav-item ">
@@ -636,10 +632,60 @@
     <i class="fa fa-arrow-up"></i>
 </a>
 
-<script src="js/jquery-min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
+<script src="{{ asset('static/landing/js/jquery-min.js?').date('YmdHis') }}"></script>
+<script src="{{ asset('static/landing/js/popper.min.js?').date('YmdHis') }}"></script>
+<script src="{{ asset('static/landing/js/bootstrap.min.js?').date('YmdHis') }}"></script>
+<script src="{{ asset('static/landing/js/main.js?').date('YmdHis') }}"></script>
+
+
+<script>
+    fetch('https://www.standardmedia.co.ke/elearning/public/api/classes/list', {
+        method: 'GET'
+    }).then(function (response) {
+        // The API call was successful!
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject(response);
+        }
+    }).then(function (data) {
+        // This is the JSON from our response
+        data.forEach((el) => {
+            let link = document.createElement("A");
+            link.href = `app/exams/classes/${el.id}/subjects`;
+            link.text = el.class;
+            link.className = "dropdown-item";
+            document.getElementById('classes').appendChild(link)
+        });
+
+    }).catch(function (err) {
+        // There was an error
+        console.warn('Something went wrong.', err);
+    });
+
+    fetch('https://www.standardmedia.co.ke/elearning/public/api/subjects/list', {
+        method: 'GET'
+    }).then(function (response) {
+        // The API call was successful!
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject(response);
+        }
+    }).then(function (data) {
+        // This is the JSON from our response
+        data.forEach((el) => {
+            let link = document.createElement("A");
+            link.href = `app/exams/subjects/${el.id}/modules`;
+            link.text = el.subject;
+            link.className = "dropdown-item";
+            document.getElementById('subjects').appendChild(link)
+        });
+    }).catch(function (err) {
+        // There was an error
+        console.warn('Something went wrong.', err);
+    });
+</script>
 
 </body>
 </html>

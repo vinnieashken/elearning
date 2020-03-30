@@ -86,7 +86,7 @@ export default function (props) {
                     <div
                         className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
                         <div className="d-inline-block">
-                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">Examination</h5>
+                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">Examination Paper</h5>
                         </div>
                     </div>
                 </div>
