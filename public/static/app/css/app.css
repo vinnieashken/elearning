@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito:300,400,600,700);
 :root {
     --blue: #2684ff;
-    --indigo: #6e00ff;
+    --indigo: #100025;
     --purple: #510fa8;
     --pink: #f074ad;
     --red: #ff5630;
@@ -12,7 +12,7 @@
     --cyan: #4bd6e5;
     --gray: #c0ccda;
     --gray-dark: #3c4858;
-    --primary: #6e00ff;
+    --primary: #100025;
     --secondary: #eff2f7;
     --success: #36b37e;
     --info: #00b8d9;
@@ -170,7 +170,7 @@ sup {
 }
 
 a {
-    color: #6e00ff;
+    color: #100025;
     background-color: transparent
 }
 
@@ -2816,8 +2816,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff;
+    background-color: #100025;
+    border-color: #100025;
     -webkit-box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, .15);
     box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, .15)
 }
@@ -2837,8 +2837,8 @@ fieldset:disabled a.btn {
 .btn-primary.disabled,
 .btn-primary:disabled {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff
+    background-color: #100025;
+    border-color: #100025
 }
 
 .btn-primary:not(:disabled):not(.disabled).active,
@@ -3233,14 +3233,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary {
-    color: #6e00ff;
-    border-color: #6e00ff
+    color: #100025;
+    border-color: #100025
 }
 
 .btn-outline-primary:hover {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff
+    background-color: #100025;
+    border-color: #100025
 }
 
 .btn-outline-primary.focus,
@@ -3251,7 +3251,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-primary.disabled,
 .btn-outline-primary:disabled {
-    color: #6e00ff;
+    color: #100025;
     background-color: transparent
 }
 
@@ -3259,8 +3259,8 @@ fieldset:disabled a.btn {
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .show>.btn-outline-primary.dropdown-toggle {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff
+    background-color: #100025;
+    border-color: #100025
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
@@ -3614,7 +3614,7 @@ fieldset:disabled a.btn {
 
 .btn-link {
     font-weight: 400;
-    color: #6e00ff;
+    color: #100025;
     text-decoration: none
 }
 
@@ -3926,7 +3926,7 @@ input[type=submit].btn-block {
 .dropdown-item:active,
 .dropdown-item:focus,
 .dropdown-item:hover {
-    color: #6e00ff;
+    color: #100025;
     text-decoration: none;
     background-color: transparent
 }
@@ -4853,7 +4853,7 @@ input[type=submit].btn-block {
 .nav-tabs .nav-link.active {
     color: #8492a6;
     background-color: transparent;
-    border-color: transparent transparent #6e00ff
+    border-color: transparent transparent #100025
 }
 
 .nav-tabs .dropdown-menu {
@@ -5771,7 +5771,7 @@ a.badge:hover {
 
 .badge-primary {
     color: #fff;
-    background-color: #6e00ff
+    background-color: #100025
 }
 
 a.badge-primary:focus,
@@ -6182,7 +6182,7 @@ a.badge-white:focus {
     color: #fff;
     text-align: center;
     white-space: nowrap;
-    background-color: #6e00ff;
+    background-color: #100025;
     -webkit-transition: width .6s ease;
     transition: width .6s ease
 }
@@ -7554,7 +7554,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-    background-color: #6e00ff!important
+    background-color: #100025!important
 }
 
 a.bg-primary:focus,
@@ -7705,7 +7705,7 @@ button.bg-white:hover {
 }
 
 .border-primary {
-    border-color: #6e00ff!important
+    border-color: #100025!important
 }
 
 .border-secondary {
@@ -12557,7 +12557,7 @@ button.bg-white:hover {
 }
 
 .text-primary {
-    color: #6e00ff!important
+    color: #100025!important
 }
 
 a.text-primary:focus,
@@ -13014,7 +13014,7 @@ a.bg-primary-light:focus,
 a.bg-primary-light:hover,
 button.bg-primary-light:focus,
 button.bg-primary-light:hover {
-    background-color: #6e00ff!important
+    background-color: #100025!important
 }
 
 .bg-primary-dark {
@@ -13221,7 +13221,7 @@ button.bg-white-dark:hover {
 }
 
 .bg-gradient-primary {
-    background: linear-gradient(50deg, #6e00ff, #b0f)!important
+    background: linear-gradient(50deg, #100025, #b0f)!important
 }
 
 .bg-gradient-secondary {
@@ -13649,11 +13649,11 @@ button.bg-black:hover {
 }
 
 .fill-indigo {
-    fill: #6e00ff!important
+    fill: #100025!important
 }
 
 .stroke-indigo {
-    stroke: #6e00ff!important
+    stroke: #100025!important
 }
 
 .fill-purple {
@@ -13737,11 +13737,11 @@ button.bg-black:hover {
 }
 
 .fill-primary {
-    fill: #6e00ff!important
+    fill: #100025!important
 }
 
 .stroke-primary {
-    stroke: #6e00ff!important
+    stroke: #100025!important
 }
 
 .fill-secondary {
@@ -15901,7 +15901,7 @@ a.text-muted:hover {
 }
 
 .avatar span {
-    background-color: #6e00ff
+    background-color: #100025
 }
 
 .avatar+.avatar {
@@ -16106,13 +16106,13 @@ a.text-muted:hover {
 }
 
 .badge-soft-primary {
-    color: #6e00ff;
+    color: #100025;
     background-color: #e2ccff
 }
 
 .badge-soft-primary[href]:focus,
 .badge-soft-primary[href]:hover {
-    color: #6e00ff;
+    color: #100025;
     text-decoration: none;
     background-color: #d4b3ff
 }
@@ -16387,8 +16387,8 @@ a.text-muted:hover {
 }
 
 .btn-neutral:not(:disabled):not(.disabled).active {
-    border-color: #6e00ff;
-    color: #6e00ff;
+    border-color: #100025;
+    color: #100025;
     background-color: #fff
 }
 
@@ -16430,7 +16430,7 @@ a.text-muted:hover {
 }
 
 .btn-soft-primary {
-    color: #6e00ff;
+    color: #100025;
     background-color: #e2ccff;
     border-color: #e2ccff;
     -webkit-box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, .15);
@@ -16439,8 +16439,8 @@ a.text-muted:hover {
 
 .btn-soft-primary:hover {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff;
+    background-color: #100025;
+    border-color: #100025;
     -webkit-box-shadow: 0 4px 11px rgba(226, 204, 255, .35);
     box-shadow: 0 4px 11px rgba(226, 204, 255, .35)
 }
@@ -16453,7 +16453,7 @@ a.text-muted:hover {
 
 .btn-soft-primary.disabled,
 .btn-soft-primary:disabled {
-    color: #6e00ff;
+    color: #100025;
     background-color: #e2ccff;
     border-color: #e2ccff
 }
@@ -16462,8 +16462,8 @@ a.text-muted:hover {
 .btn-soft-primary:not(:disabled):not(.disabled):active,
 .show>.btn-soft-primary.dropdown-toggle {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff
+    background-color: #100025;
+    border-color: #100025
 }
 
 .btn-soft-primary:not(:disabled):not(.disabled).active:focus,
@@ -17460,7 +17460,7 @@ a.text-muted:hover {
 }
 
 .btn-action-label .btn-secondary:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 .btn-icon-label {
@@ -17577,7 +17577,7 @@ a.text-muted:hover {
 }
 
 [data-toggle=buttons]:not(.btn-group-colors)>.btn.active {
-    background-color: #6e00ff;
+    background-color: #100025;
     color: #fff
 }
 
@@ -18075,7 +18075,7 @@ a.text-muted:hover {
 }
 
 .accordion .card-header[aria-expanded=true] .heading {
-    color: #6e00ff
+    color: #100025
 }
 
 .accordion-spaced .card {
@@ -18501,8 +18501,8 @@ a.text-muted:hover {
 
 .custom-input-file--2+label {
     color: #fff;
-    border-color: #6e00ff;
-    background: #6e00ff
+    border-color: #100025;
+    background: #100025
 }
 
 .custom-input-file--2+label:hover,
@@ -18517,7 +18517,7 @@ a.text-muted:hover {
     padding: 0;
     border: 0;
     background: transparent;
-    color: #6e00ff;
+    color: #100025;
     font-size: .875rem;
     font-weight: 600
 }
@@ -18665,7 +18665,7 @@ a.text-muted:hover {
 }
 
 .dropdown-menu .list-group-item .media:hover .heading {
-    color: #6e00ff
+    color: #100025
 }
 
 .dropdown-menu-dark {
@@ -18983,7 +18983,7 @@ a.text-muted:hover {
 }
 
 .footer-light .copyright a:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 .footer-dark p {
@@ -19095,8 +19095,8 @@ a.text-muted:hover {
 .form-control-emphasized:focus {
     background-color: #fff;
     border-color: transparent;
-    -webkit-box-shadow: 0 0 0 2px #6e00ff;
-    box-shadow: 0 0 0 2px #6e00ff
+    -webkit-box-shadow: 0 0 0 2px #100025;
+    box-shadow: 0 0 0 2px #100025
 }
 
 .form-control-flush {
@@ -19540,7 +19540,7 @@ textarea[resize=horizontal] {
 }
 
 .icon-primary {
-    color: #6e00ff;
+    color: #100025;
     background-color: #e2ccff
 }
 
@@ -19941,7 +19941,7 @@ textarea[resize=horizontal] {
 }
 
 .focused .input-group-text {
-    color: #6e00ff;
+    color: #100025;
     background-color: #eff2f7;
     border-color: rgba(110, 0, 255, .5)
 }
@@ -20113,7 +20113,7 @@ textarea[resize=horizontal] {
         z-index: -1;
         pointer-events: none;
         height: 430px;
-        background-color: #6e00ff;
+        background-color: #100025;
         border-bottom-left-radius: 2.5rem
     }
     .application .sidenav.show+.main-content {
@@ -20153,7 +20153,7 @@ textarea[resize=horizontal] {
     z-index: -1;
     pointer-events: none;
     height: 430px;
-    background-color: #6e00ff;
+    background-color: #10071d;
     border-bottom-left-radius: 2.5rem
 }
 
@@ -20438,7 +20438,7 @@ textarea[resize=horizontal] {
 }
 
 .list-group-emphasized .list-group-item.active .media a {
-    color: #6e00ff
+    color: #100025
 }
 
 .list-icon i,
@@ -20466,7 +20466,7 @@ textarea[resize=horizontal] {
 }
 
 .list-unstyled .list-link:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 .list-unstyled .list-link i {
@@ -20621,7 +20621,7 @@ textarea[resize=horizontal] {
 }
 
 .modal-primary .modal-content {
-    background-color: #6e00ff;
+    background-color: #100025;
     color: #fff
 }
 
@@ -20853,7 +20853,7 @@ textarea[resize=horizontal] {
 
 .nav-link.active,
 .nav-link:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 .nav-pills-icon .nav-link:not(.active) {
@@ -21010,12 +21010,12 @@ textarea[resize=horizontal] {
 }
 
 .nav-application>.btn {
-    width: 113px!important;
-    height: 113px!important;
+    width: 100px!important;
+    height: 80px!important;
     float: left;
     background: transparent;
     color: #8492a6;
-    margin: 0 0 24px
+    margin: 0 0 0;
 }
 
 .nav-application>.btn:nth-child(odd) {
@@ -21023,14 +21023,14 @@ textarea[resize=horizontal] {
 }
 
 .nav-application>.btn.active {
-    background-color: #6e00ff;
+    background-color: #100025;
     color: #fff;
     -webkit-box-shadow: 0 1rem 3rem rgba(31, 45, 61, .125)!important;
     box-shadow: 0 1rem 3rem rgba(31, 45, 61, .125)!important
 }
 
 .nav-application>.btn:hover:not(.active) {
-    color: #6e00ff;
+    color: #100025;
     -webkit-transform: scale(1.05);
     transform: scale(1.05)
 }
@@ -21862,7 +21862,7 @@ textarea[resize=horizontal] {
 }
 
 .navbar-vertical .navbar-nav .nav-link[data-toggle=collapse][aria-expanded=true]:after {
-    color: #6e00ff;
+    color: #100025;
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg)
 }
@@ -23606,7 +23606,7 @@ textarea[resize=horizontal] {
 
 .omnisearch .omnisearch-suggestions .list-link:hover,
 .omnisearch .omnisearch-suggestions .list-link:hover span {
-    color: #6e00ff
+    color: #100025
 }
 
 .omnisearch.show .omnisearch-form,
@@ -23638,11 +23638,11 @@ textarea[resize=horizontal] {
 }
 
 .popover-primary {
-    background-color: #6e00ff
+    background-color: #100025
 }
 
 .popover-primary .popover-header {
-    background-color: #6e00ff;
+    background-color: #100025;
     color: #fff
 }
 
@@ -23656,22 +23656,22 @@ textarea[resize=horizontal] {
 
 .popover-primary.bs-popover-auto[x-placement^=top] .arrow:after,
 .popover-primary.bs-popover-top .arrow:after {
-    border-top-color: #6e00ff
+    border-top-color: #100025
 }
 
 .popover-primary.bs-popover-auto[x-placement^=right] .arrow:after,
 .popover-primary.bs-popover-right .arrow:after {
-    border-right-color: #6e00ff
+    border-right-color: #100025
 }
 
 .popover-primary.bs-popover-auto[x-placement^=bottom] .arrow:after,
 .popover-primary.bs-popover-bottom .arrow:after {
-    border-bottom-color: #6e00ff
+    border-bottom-color: #100025
 }
 
 .popover-primary.bs-popover-auto[x-placement^=left] .arrow:after,
 .popover-primary.bs-popover-left .arrow:after {
-    border-left-color: #6e00ff
+    border-left-color: #100025
 }
 
 .popover-secondary {
@@ -24940,7 +24940,7 @@ section {
         float: right
     }
     [data-timeline-axis-color=primary]:before {
-        border-color: #6e00ff
+        border-color: #100025
     }
     [data-timeline-axis-color=secondary]:before {
         border-color: #eff2f7
@@ -25212,7 +25212,7 @@ h3 a:hover,
 h4 a:hover,
 h5 a:hover,
 h6 a:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 a {
@@ -25286,11 +25286,11 @@ a {
 }
 
 .link-underline-primary {
-    color: #6e00ff
+    color: #100025
 }
 
 .link-underline-primary:after {
-    background-color: #6e00ff
+    background-color: #100025
 }
 
 .link-underline-primary:hover {
@@ -25412,7 +25412,7 @@ a {
 .blockquote .quote:before {
     font-family: Arial;
     content: "\201C";
-    color: #6e00ff;
+    color: #100025;
     font-size: 4em;
     line-height: 1
 }
@@ -25427,7 +25427,7 @@ a {
 
 .blockquote-border-left,
 .blockquote-card {
-    border-left: .5rem solid #6e00ff
+    border-left: .5rem solid #100025
 }
 
 .blockquote-card {
@@ -25438,7 +25438,7 @@ a {
 .blockquote-card:before {
     font-family: Arial;
     content: "\201C";
-    color: #6e00ff;
+    color: #100025;
     font-size: 4em;
     position: absolute;
     left: .875rem;
@@ -25487,8 +25487,8 @@ article h5+figure {
 }
 
 .customizer .btn-skins {
-    background: #6e00ff;
-    background: linear-gradient(135deg, #6e00ff, #00b8d9 18%, #00b8d9 0, #36b37e 37%, #ff5630 50%, #ff5630 65%, #ffab00 83%, #ffab00)
+    background: #100025;
+    background: linear-gradient(135deg, #100025, #00b8d9 18%, #00b8d9 0, #36b37e 37%, #ff5630 50%, #ff5630 65%, #ffab00 83%, #ffab00)
 }
 
 .flatpickr-calendar {
@@ -25511,7 +25511,7 @@ article h5+figure {
 }
 
 .flatpickr-months {
-    background-color: #6e00ff;
+    background-color: #100025;
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem
 }
@@ -25622,22 +25622,22 @@ span.flatpickr-weekday {
 }
 
 .flatpickr-day.today {
-    color: #6e00ff!important
+    color: #100025!important
 }
 
 .flatpickr-day.today:hover,
 .flatpickr-day:hover {
     background-color: transparent;
-    color: #6e00ff
+    color: #100025
 }
 
 .flatpickr-day.selected {
-    background-color: #6e00ff;
+    background-color: #100025;
     color: #fff!important
 }
 
 .flatpickr-day.selected:hover {
-    background-color: #6e00ff;
+    background-color: #100025;
     color: #fff
 }
 
@@ -25808,7 +25808,7 @@ span.flatpickr-weekday {
     width: 60px;
     height: 60px;
     line-height: 60px;
-    background: #6e00ff;
+    background: #100025;
     color: #fff;
     font-size: 1.5rem;
     font-weight: 400;
@@ -26009,7 +26009,7 @@ span.flatpickr-weekday {
 }
 
 .quick-view-bullets li.active a span {
-    background: #6e00ff
+    background: #100025
 }
 
 .fc-header-toolbar {
@@ -26092,7 +26092,7 @@ span.flatpickr-weekday {
 }
 
 .fc-icon:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 .fc-button {
@@ -26614,7 +26614,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .noUi-connect {
-    background: #6e00ff;
+    background: #100025;
     -webkit-box-shadow: none;
     box-shadow: none
 }
@@ -26629,7 +26629,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     -webkit-box-shadow: none;
     box-shadow: none;
     cursor: pointer;
-    background-color: #6e00ff;
+    background-color: #100025;
     transition: box-shadow .2s, -webkit-transform .2s;
     -webkit-transition: -webkit-box-shadow .2s, -webkit-transform .2s;
     transition: -webkit-box-shadow .2s, -webkit-transform .2s;
@@ -26862,7 +26862,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .ql-toolbar button:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 .ql-toolbar button:first-child {
@@ -26870,7 +26870,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .ql-toolbar .ql-active {
-    color: #6e00ff
+    color: #100025
 }
 
 .ql-toolbar button svg {
@@ -27043,8 +27043,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .ql-tooltip .ql-action:before,
 .ql-tooltip.ql-editing .ql-action:before {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff;
+    background-color: #100025;
+    border-color: #100025;
     -webkit-box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, .15);
     box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, .15)
 }
@@ -27069,8 +27069,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .ql-tooltip.ql-editing .ql-action:before.disabled,
 .ql-tooltip.ql-editing .ql-action:before:disabled {
     color: #fff;
-    background-color: #6e00ff;
-    border-color: #6e00ff
+    background-color: #100025;
+    border-color: #100025
 }
 
 .ql-tooltip .ql-action:before:not(:disabled):not(.disabled).active,
@@ -28185,13 +28185,13 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 
 .select2-results__option:hover {
-    color: #6e00ff
+    color: #100025
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .select2-container--default .select2-results__option[aria-selected=true] {
     background-color: transparent;
-    color: #6e00ff
+    color: #100025
 }
 
 .select2-container--default .select2-results__option[aria-disabled=true] {
@@ -28348,7 +28348,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .swiper-pagination-bullet-active {
     -webkit-transform: scale(1.4);
     transform: scale(1.4);
-    background: #6e00ff;
+    background: #100025;
     opacity: 1
 }
 
@@ -28369,7 +28369,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .swiper-button:focus,
 .swiper-button:hover {
     background: transparent;
-    color: #6e00ff;
+    color: #100025;
     opacity: 1
 }
 
@@ -28455,7 +28455,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     padding: .625rem .625rem .5rem;
     margin: .125rem;
     border-radius: .25rem;
-    background: #6e00ff;
+    background: #100025;
     color: #fff;
     line-height: 1.5;
     overflow: hidden;
@@ -28498,4 +28498,11 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     width: 10px;
     height: 10px;
     margin-right: 10px
+}
+
+.page-content .card{
+    overflow-x: hidden;
+    max-height: 500px;
+    overflow-y: scroll;
+    padding: 2%;
 }

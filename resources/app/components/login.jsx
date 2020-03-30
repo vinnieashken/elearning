@@ -40,6 +40,7 @@ export default function Login(props) {
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
+                $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
                 localStorage.setItem('user', res);
@@ -67,7 +68,7 @@ export default function Login(props) {
 
                             <li>
                                 <a href={`${PUBLIC_URL}`} className="logo">
-                                    <img src={`${PUBLIC_URL}/static/landing/images/STANDARD-REDESIGN-LOGO.png`}
+                                    <img src={`${PUBLIC_URL}/static/landing/img/logo.png`}
                                          className="logoimg" alt="Standard E-Learning"/>
                                 </a>
                             </li>
