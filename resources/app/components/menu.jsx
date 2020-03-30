@@ -53,7 +53,7 @@ const Subscription = Loadable({
 
 export default function (props) {
     const User = localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {};
-    User['subscription'] = {id: 1};
+    User['subscription'] = {};
     const [loading, setLoading] = useState(true);
     const [percentage, setPercentage] = useState(0);
     const [message, setMessage] = useState(false);
@@ -102,14 +102,12 @@ export default function (props) {
 
     const getSubscription = () => {
         let user_ = user;
-        user['subscription'] = {id: 1};
+        user['subscription'] = {};
         $.ajax({
             url: `${API}/payments/subscription/user/${user.id}`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                    const response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -142,7 +140,10 @@ export default function (props) {
                         <div className={`sidenav ${sideBar ? 'show' : ''}`} id="sidenav-main">
                             <div className="sidenav-header d-flex align-items-center">
                                 <a className="navbar-brand" href={`${PUBLIC_URL}`}>
-                                    <img src={`${PUBLIC_URL}/static/landing/img/logo.png?20200326114313`} className="navbar-brand-img" alt="..." />
+                                    <img src={`${PUBLIC_URL}/static/landing/img/logo.png?20200326114313`} className="navbar-brand-img" alt="..." style={{
+                                        width: "200%",
+                                        height: 'auto'
+                                    }} />
                                 </a>
                                 <div className="ml-auto">
                                     <div className="sidenav-toggler sidenav-toggler-dark d-md-none active"
