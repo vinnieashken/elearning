@@ -173,7 +173,12 @@ export default function (props) {
                                 </div>
                                 <div className="text-right">
                                     {
-                                        processing ? <ClipLoader /> : <button type="submit" className="btn btn-sm btn-primary rounded-pill">{payment.hasOwnProperty('id') ? 'Confirm Payment' : 'Pay'} </button>
+                                        processing ? <ClipLoader /> :
+                                            payment.hasOwnProperty('id') ? <button type="button" className="btn btn-sm btn-primary rounded-pill" onClick={event => {
+                                                location.href=`${PUBLIC_URL}/app`;
+                                            }
+                                                }>Confirm Payment </button>
+                                            : <button type="submit" className="btn btn-sm btn-primary rounded-pill">Pay</button>
                                     }
                                 </div>
                             </div>
