@@ -39,21 +39,15 @@
             <div class="dropdown">
                 <a class=" dropdown-toggle" data-toggle="dropdown">CLASSES
                     <span class="caret" /></a>
-                <ul class="dropdown-menu" id="">
-                    <li><a href="#">ENGLISH</a></li>
-                    <li><a href="#">ENGLISH</a></li>
-                    <li><a href="#">ENGLISH</a></li>
-                    <li><a href="#">ENGLISH</a></li>
+                <ul class="dropdown-menu" id="classes1">
+
                 </ul>
             </div>
             <div class="dropdown">
                 <a class=" dropdown-toggle" data-toggle="dropdown">SUBJECTS
                     <span class="caret" /></a>
-                <ul class="dropdown-menu" id="">
-                    <li><a href="#">ENGLISH</a></li>
-                    <li><a href="#">ENGLISH</a></li>
-                    <li><a href="#">ENGLISH</a></li>
-                    <li><a href="#">ENGLISH</a></li>
+                <ul class="dropdown-menu" id="subjects1">
+
                 </ul>
             </div>
             <a href="#">KCPE</a>
@@ -181,90 +175,8 @@
         </ul>
         <div class="tab-content border-0" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div class="row">
-                    <!-- Start featured -->
-                    <div class="col-lg-4 col-md-6 col-xs-12">
-                        <div class="featured-box-item">
-                            <div class="featured-icon">
-                                <img src="{{ asset('static/landing/img/math.png?').date('YmdHis') }}" class="icons">
-                            </div>
-                            <div class="featured-content">
-                                <h4>Mathematics</h4>
-                                <p>Grade 1 to Grade 8</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End featured -->
+                <div class="row" id="subjectList">
 
-                    <!-- Start featured -->
-                    <div class="col-lg-4 col-md-6 col-xs-12">
-                        <div class="featured-box-item">
-                            <div class="featured-icon">
-                                <img src="{{ asset('static/landing/img/eng.png?').date('YmdHis') }}" class="icons">
-                            </div>
-                            <div class="featured-content">
-                                <h4>English</h4>
-
-                                <p>Grade 1 to Grade 8</p></div>
-                        </div>
-                    </div>
-                    <!-- End featured -->
-
-                    <!-- Start featured -->
-                    <div class="col-lg-4 col-md-6 col-xs-12">
-                        <div class="featured-box-item">
-                            <div class="featured-icon">
-                                <img src="{{ asset('static/landing/img/hist.png?').date('YmdHis') }}" class="icons">
-                            </div>
-                            <div class="featured-content">
-                                <h4>Social Studies</h4>
-
-                                <p>Grade 1 to Grade 8</p></div>
-                        </div>
-                    </div>
-                    <!-- End featured -->
-
-                    <!-- Start featured -->
-                    <div class="col-lg-4 col-md-6 col-xs-12">
-                        <div class="featured-box-item">
-                            <div class="featured-icon">
-                                <img src="{{ asset('static/landing/img/cre.png?').date('YmdHis') }}" class="icons">
-                            </div>
-                            <div class="featured-content">
-                                <h4>Kiswahili</h4>
-
-                                <p>Grade 1 to Grade 8</p></div>
-                        </div>
-                    </div>
-                    <!-- End featured -->
-
-                    <!-- Start featured -->
-                    <div class="col-lg-4 col-md-6 col-xs-12">
-                        <div class="featured-box-item">
-                            <div class="featured-icon">
-                                <img src="{{ asset('static/landing/img/chem.png?').date('YmdHis') }}" class="icons">
-                            </div>
-                            <div class="featured-content">
-                                <h4>Science</h4>
-
-                                <p>Grade 1 to Grade 8</p></div>
-                        </div>
-                    </div>
-                    <!-- End featured -->
-
-                    <!-- Start featured -->
-                    <div class="col-lg-4 col-md-6 col-xs-12">
-                        <div class="featured-box-item">
-                            <div class="featured-icon">
-                                <img src="{{ asset('static/landing/img/cre.png?').date('YmdHis') }}" class="icons">
-                            </div>
-                            <div class="featured-content">
-                                <h4>CRE/IRE</h4>
-
-                                <p>Grade 1 to Grade 8</p></div>
-                        </div>
-                    </div>
-                    <!-- End featured -->
                 </div>
             </div>
             {{--            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">--}}
@@ -639,6 +551,16 @@
 
 
 <script>
+
+    const imgSources = [
+      'static/landing/img/math.png',
+      'static/landing/img/eng.png',
+      'static/landing/img/hist.png',
+      'static/landing/img/cre.png',
+      'static/landing/img/chem.png',
+      'static/landing/img/cre.png',
+    ];
+
     fetch('https://www.standardmedia.co.ke/elearning/public/api/classes/list', {
         method: 'GET'
     }).then(function (response) {
@@ -652,10 +574,15 @@
         // This is the JSON from our response
         data.forEach((el) => {
             let link = document.createElement("A");
+            let link2 = document.createElement("A");
+
+            link2.href = `app/exams/classes/${el.id}/subjects`;
             link.href = `app/exams/classes/${el.id}/subjects`;
+            link2.text = el.class;
             link.text = el.class;
             link.className = "dropdown-item";
-            document.getElementById('classes').appendChild(link)
+            document.getElementById('classes').appendChild(link);
+            document.getElementById('classes1').appendChild(document.createElement("LI").appendChild(link2))
         });
 
     }).catch(function (err) {
@@ -674,12 +601,45 @@
         }
     }).then(function (data) {
         // This is the JSON from our response
-        data.forEach((el) => {
+        data.forEach((el, index) => {
             let link = document.createElement("A");
+            let link2 = document.createElement("A");
+
             link.href = `app/exams/subjects/${el.id}/modules`;
+            link2.href = `app/exams/subjects/${el.id}/modules`;
             link.text = el.subject;
+            link2.text = el.subject;
             link.className = "dropdown-item";
-            document.getElementById('subjects').appendChild(link)
+            document.getElementById('subjects').appendChild(link);
+            document.getElementById('subjects1').appendChild(document.createElement("LI").appendChild(link2));
+
+            if(index < 6) {
+                let div0 = document.createElement("DIV");
+                let div1 = document.createElement("DIV");
+                let div2 = document.createElement("DIV");
+                let div3 = document.createElement("DIV");
+                div0.className = "col-lg-4 col-md-6 col-xs-12";
+                div1.className = "featured-box-item";
+                div2.className = "featured-icon";
+                div3.className = "featured-content";
+
+                let img = document.createElement("IMG");
+                img.className = "icons";
+                img.src = imgSources[index];
+                div2.appendChild(img);
+
+
+                let header = document.createElement("H4");
+                header.appendChild(document.createTextNode(el.subject));
+                let p = document.createElement("P");
+                p.appendChild(document.createTextNode("This is a paragraph."));
+                div3.appendChild(header);
+                div3.appendChild(p);
+                div1.appendChild(div2);
+                div1.appendChild(div3);
+                div0.appendChild(div1);
+                document.getElementById('subjectList').appendChild(div0);
+            }
         });
     }).catch(function (err) {
         // There was an error
