@@ -20,6 +20,7 @@ class QuestionsController extends Controller
     public function getModuleQuestions(Request $request,$moduleid)
     {
         $model = new Question();
+        //$userid = $request->userid;
 
         if($request->has('size') && $request->has('page'))
         {
@@ -45,9 +46,11 @@ class QuestionsController extends Controller
 
             return $data;
         }
-        return $model->with('options')->where('module_id',$moduleid)
+        return $model->with('options')->where('questions.module_id',$moduleid)
             ->leftJoin('answers','answers.question_id','=','questions.id')
-            ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')->get();
+            //->leftJoin('user_answers','user_answers.user_id','=','questions.id')
+            ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')
+            ->get();
     }
 
     public function saveUserAnswers(Request $request)
