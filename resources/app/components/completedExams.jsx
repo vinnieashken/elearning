@@ -95,7 +95,7 @@ export default function (props) {
                                                 {dataField: 'module',      text: 'Module',    sort: true},
                                                 {dataField: 'class',        text: 'Class',      sort: true},
                                                 {dataField: 'subject',        text: 'Subject',      sort: true},
-                                                {dataField: 'marks',        text: 'Marks',      sort: true},
+                                                {dataField: 'percentage',        text: 'Score(%)',      sort: true},
 
                                                 {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
                                             ]

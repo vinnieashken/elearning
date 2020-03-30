@@ -110,14 +110,13 @@ export default function (props) {
 
     return (
         <div data-gr-c-s-loaded="true" className={`application application-offset ${sideBar ? 'sidenav-pinned' : ''} ready`}>
-
             {
                 loading ? <Loading /> :
                     <div className="container-fluid container-application">
                         <div className={`sidenav ${sideBar ? 'show' : ''}`} id="sidenav-main">
                             <div className="sidenav-header d-flex align-items-center">
                                 <a className="navbar-brand" href={`${PUBLIC_URL}`}>
-                                    <img src={`${PUBLIC_URL}/assets/img/elearning.png?20200326114313`} className="navbar-brand-img" alt="..." />
+                                    <img src={`${PUBLIC_URL}/static/landing/img/logo.png?20200326114313`} className="navbar-brand-img" alt="..." />
                                 </a>
                                 <div className="ml-auto">
                                     <div className="sidenav-toggler sidenav-toggler-dark d-md-none active"

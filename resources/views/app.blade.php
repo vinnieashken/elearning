@@ -92,7 +92,7 @@
         }
 
         .logoimg {
-            width: 20%;
+            width: 80%;
         }
 
         @media (max-width: 991px) {
