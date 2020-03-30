@@ -18,7 +18,7 @@ class PaymentsController extends Controller
     {
         $model  = new Subscription();
 
-        return $model->get(['id','description','cost','days']);
+        return $model->get(['id','subscription','description','cost','days']);
     }
 
     public function startTransaction(Request $request)
