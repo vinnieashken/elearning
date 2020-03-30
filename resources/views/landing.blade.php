@@ -1,342 +1,645 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="TemplateMo">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Standard E-Learning</title>
+    <title>Standard | eLearning</title>
 
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{{ asset('/static/landing/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/static/landing/css/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('/static/landing/css/style.css?').date('YmdHis') }}">
-
-    <style>
-        .topnav .nav-link {
-            color: #000000 !important;
-        }
-
-        footer .nav-link {
-            color: rgb(15, 15, 15);
-            font-weight: 500;
-        }
-
-        footer .nav {
-            justify-content: space-around;
-        }
-
-        footer .nav-item {
-            border-right: 1px solid #808080b8;
-            font-size: 11px;
-        }
-
-        footer .card-body {
-            color: #fff;
-            background: #0f5ca8;
-        }
-
-        .navbar-brand {
-            width: 100px;
-            height: auto;
-        }
-
-        .from {
-            justify-content: center !important;
-        }
-
-        .from .nav-item {
-            border: none;
-        }
-
-        .from a {
-            font-size: .9rem;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .fl-right {
-            padding: 0;
-        }
-
-        .btnlogin {
-            padding: 5px 7px;
-            border: 1px solid #00000052;
-            border-radius: 0;
-            color: rgb(24, 24, 24);
-            margin-right: 4px;
-        }
-        .navbar {
-            padding: 0rem;
-        }
-
-        .dropdown .dropdown-menu {
-            border-radius: 0;
-        }
-
-        @media (min-width: 768px) {
-            .dropdown:hover .dropdown-menu {
-                display: block;
-                margin-top: 0;
-                border-radius: 0;
-            }
-        }
-
-        footer {
-            padding-top: 0;
-            background-image: url(../images/footer-bg.png);
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            width: 100%;
-            margin-top: 60px;
-        }
-
-        @media (max-width: 991px) {
-            .logoimg {
-                width: 36% !important;
-                margin-left: 0;
-            }
-            .header-area {
-                background-color: #f7f7f7;
-                padding: 0px 15px;
-                min-height: 60px !important;
-                height: 60px !important;
-                box-shadow: none;
-                text-align: center;
-            }
-            .h1 {
-                color: #0f5ca8;
-                font: 35px sans-serif !important;
-                font-weight: 800 !important;
-                line-height: 1;
-            }
-            footer {
-                padding-top: 0!important;
-                background-image: url(../images/footer-bg.png);
-                background-repeat: no-repeat;
-                background-position: center center;
-                background-size: cover;
-                width: 100%;
-                margin-top: 60px;
-            }
-            .nav-link {
-                display: block;
-                padding: .2rem .2rem;
-                font-size: 9px;
-            }
-            footer span {
-                font-size: 12px;
-            }
-            p {
-                font-size: 14px;
-                line-height: 1.5;
-                color: #797979;
-            }
-            .features-item {
-                border-radius: 5px;
-                padding: 22px 11px;
-                text-align: center;
-                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            }
-            .icons,
-            .icon {
-                margin-top: 6%;
-                height: 62px;
-                width: 62px !important;
-                object-fit: cover;
-            }
-            .icons {
-                height: 84px !important;
-                margin-top: -22px;
-                width: 84px;
-            }
-        }
-
-        .sender {
-            padding: 14px 15px !important;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/landing/css/bootstrap.min.css?').date('YmdHis') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/landing/css/font-awesome.min.css?').date('YmdHis') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/landing/css/animate.css?').date('YmdHis') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/landing/css/main.css?').date('YmdHis') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/landing/css/extras.css?').date('YmdHis') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/landing/css/responsive.css?').date('YmdHis') }}">
 
 
 </head>
-
 <body>
 
-<nav class="navbar navbar-expand-md bg-white sticky-top pb-3">
-    <!-- One of the primary actions on mobile is to call a business - This displays a phone button on mobile only -->
+<header id="header-wrap">
+    <nav class="navbar navbar-expand-md bg-white fixed-top scrolling-navbar indigo">
+        <div class="w-100 d-block d-lg-none d-md-none">
+            <a class="nav-link" href="#">
+                <span style="font-size:20px;cursor:pointer" onclick="openNav()"
+                      class="float-right mr-3 opennav">&#9776;</span>
+                <img src="{{ asset('static/landing/img/logo.png?').date('YmdHis') }}" class="w-25 float-left"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 
+            </button>
+        </div>
 
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn border-0" onclick="closeNav()">&times;</a>
+            <a href="#">HOME</a>
 
-
-    <div class="collapse navbar-collapse flex-column  text-center" id="navbar">
-
-        <ul class="navbar-nav w-100 justify-content-center px-3 ">
-
-            <li>
-                <a href="{{ url('/') }}" class="logo">
-                    <img src="{{ asset('assets/img/elearning.png?').date('YmdHis') }}" class="logoimg" alt="Standard E-Learning"/>
-                </a>
-            </li>
-        </ul>
-
-        <ul class="navbar-nav justify-content-center w-100 bg-white px-3 ">
-            <ul class="navbar-nav topnav justify-content-end w-100 px-3 container pt-0 ">
-
-                <ul class="navbar-nav mr-auto w-100 text-black justify-content-space-between ">
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#slider-area ">
-                            <i class="lni-search "></i>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#about "> Home</a></li>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="#contact-us ">Contact Us</a>
-                    </li>
-
-                    <div class="span2 lwrap ">
-
+            <div class="dropdown">
+                <a class=" dropdown-toggle" data-toggle="dropdown">CLASSES
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">ENGLISH</a></li>
+                    <li><a href="#">ENGLISH</a></li>
+                    <li><a href="#">ENGLISH</a></li>
+                    <li><a href="#">ENGLISH</a></li>
                 </ul>
-                <ul class="navbar-nav mr-auto w-100 text-black justify-content-end ">
-                    <li class="btn-group fl-right ">
-                        <a href="{{ url('/login') }}" class="btn btn-default btnlogin "> <i class="fa fa-lock "></i> Login </a>
-                        <a href="{{ url('/register') }}" class="btn btn-default btnlogin "> <i class="fa fa-user "></i> Register </a>
-                    </li>
-
+            </div>
+            <div class="dropdown">
+                <a class=" dropdown-toggle" data-toggle="dropdown">SUBJECTS
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">ENGLISH</a></li>
+                    <li><a href="#">ENGLISH</a></li>
+                    <li><a href="#">ENGLISH</a></li>
+                    <li><a href="#">ENGLISH</a></li>
                 </ul>
+            </div>
+            <a href="#">KCPE</a>
+            <a href="#">KCSE</a>
+            <a href="#">LOGIN</a>
+            <a href="#">REGISTER</a>
+        </div>
+
+
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        </script>
+
+
+        <div class="collapse navbar-collapse flex-column " id="navbar">
+
+            <ul class="navbar-nav  w-100 justify-content-center p-0">
+                <li class="nav-item active p-0 m-0">
+                    <a class="nav-link" href="#">
+                        <img src="{{ asset('static/landing/img/logo.png?').date('YmdHis') }}" class="w-75"></a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav justify-content-around w-50">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">HOME </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{{url('/')}}" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        CLASSES
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">English</a>
+                        <a class="dropdown-item" href="#">Mathematics</a>
+                        <a class="dropdown-item" href="#">Science</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{{url('/')}}" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        SUBJECTS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">English</a>
+                        <a class="dropdown-item" href="#">Mathematics</a>
+                        <a class="dropdown-item" href="#">Science</a>
+                    </div>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="#">KCPE </a>
+                </li>
+{{--                <li class="nav-item ">--}}
+{{--                    <a class="nav-link" href="#">KCSE </a>--}}
+{{--                </li>--}}
+                <li class="nav-item ">
+
+                    <a class="nav-link login " href="{{url('/register')}}">REGISTER</a>
+
+                </li>
+                <li class="nav-item ">
+
+                    <a class="nav-link login" href="{{url('/login')}}">LOGIN</a>
+
+                </li>
+
 
             </ul>
 
 
+        </div>
+
+    </nav>
+
+    <!-- sliders -->
+    <div id="sliders">
+        <div class="full-width">
+            <!-- light slider -->
+            <div id="light-slider" class="carousel slide">
+                <div id="carousel-area">
+                    <div id="carousel-slider" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner mt-5" role="listbox">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}" alt="">
+                                <div class="carousel-caption">
+                                    <h3 class="slide-title animated fadeInDown"><span class="red"> Keep Learning</span>
+                                        - Anywhere Anytime</h3>
+                                    <h5 class="slide-text animated fadeIn">We make learning easy, fun, engaging and
+                                        accessible for every child</h5>
+                                    <a href="{{url('/register')}}" class="btn btn-lg btn-common animated fadeInUp">Get Started</a>
+                                    <a href="{{url('#about')}}" class="btn btn-lg btn-border animated fadeInUp">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="fixed-top d-flex  mx-2">
-        <a class="float-left " href="index.html ">
-            <img src="{{ asset('assets/img/elearning.png?').date('YmdHis') }}" class="logoimg mt-2 d-block d-md-none d-lg-none "></a>
-        <button class="navbar-toggler float-right " type="button " data-toggle="collapse " data-target="#navbar " aria-controls="navbarTogglerDemo02 " aria-expanded="false " aria-label="Toggle navigation ">
-            <i class="fa fa-bars "></i>
-        </button></div>
+    <!-- End sliders -->
 
-</nav>
-
-<div class="right-image-decor" id="about"></div>
-<section class="section">
+</header>
+<!-- Header Area wrapper End -->
+<!-- About Section End -->
+<div id="feature" class="section-padding">
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="section-title wow fadeInDown animated" data-wow-delay="0.3s">Subjects</h2>
+            </div>
+        </div>
+        <ul class="nav nav-pills mb-3 mx-5 col-12" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                   aria-controls="pills-home" aria-selected="true">Primary School</a>
+            </li>
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"--}}
+            {{--                   aria-controls="pills-profile" aria-selected="false">High School</a>--}}
+            {{--            </li>--}}
+        </ul>
+        <div class="tab-content border-0" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row">
+                    <!-- Start featured -->
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="featured-box-item">
+                            <div class="featured-icon">
+                                <img src="{{ asset('static/landing/img/math.png?').date('YmdHis') }}" class="icons">
+                            </div>
+                            <div class="featured-content">
+                                <h4>Mathematics</h4>
+                                <p>Grade 1 to Grade 8</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End featured -->
 
-        <div class="left-text col-lg-8 offset-md-2 col-md-8 offset-lg-2 mb-5 text-center topp" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
-            <h1 style="color: #0f5ca8;
-                font: 50px sans-serif;
-                font-weight: 800;
-                line-height: 1;">The Standard
-                <font style="color: #000000;"> E-learning</font>
-            </h1>
-            <p class="mt-3">
-                Connect to more customers with a single interface and enjoy all the benefits of an industry-leading platform that ensures compliance and value. Increase customer interactions by sending sms at scale.
+                    <!-- Start featured -->
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="featured-box-item">
+                            <div class="featured-icon">
+                                <img src="{{ asset('static/landing/img/eng.png?').date('YmdHis') }}" class="icons">
+                            </div>
+                            <div class="featured-content">
+                                <h4>English</h4>
 
+                                <p>Grade 1 to Grade 8</p></div>
+                        </div>
+                    </div>
+                    <!-- End featured -->
 
+                    <!-- Start featured -->
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="featured-box-item">
+                            <div class="featured-icon">
+                                <img src="{{ asset('static/landing/img/hist.png?').date('YmdHis') }}" class="icons">
+                            </div>
+                            <div class="featured-content">
+                                <h4>Social Studies</h4>
+
+                                <p>Grade 1 to Grade 8</p></div>
+                        </div>
+                    </div>
+                    <!-- End featured -->
+
+                    <!-- Start featured -->
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="featured-box-item">
+                            <div class="featured-icon">
+                                <img src="{{ asset('static/landing/img/cre.png?').date('YmdHis') }}" class="icons">
+                            </div>
+                            <div class="featured-content">
+                                <h4>Kiswahili</h4>
+
+                                <p>Grade 1 to Grade 8</p></div>
+                        </div>
+                    </div>
+                    <!-- End featured -->
+
+                    <!-- Start featured -->
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="featured-box-item">
+                            <div class="featured-icon">
+                                <img src="{{ asset('static/landing/img/chem.png?').date('YmdHis') }}" class="icons">
+                            </div>
+                            <div class="featured-content">
+                                <h4>Science</h4>
+
+                                <p>Grade 1 to Grade 8</p></div>
+                        </div>
+                    </div>
+                    <!-- End featured -->
+
+                    <!-- Start featured -->
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="featured-box-item">
+                            <div class="featured-icon">
+                                <img src="{{ asset('static/landing/img/cre.png?').date('YmdHis') }}" class="icons">
+                            </div>
+                            <div class="featured-content">
+                                <h4>CRE/IRE</h4>
+
+                                <p>Grade 1 to Grade 8</p></div>
+                        </div>
+                    </div>
+                    <!-- End featured -->
+                </div>
+            </div>
+            {{--            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">--}}
+            {{--                <div class="row">--}}
+
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/math.png?').date('YmdHis') }}" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Mathematics</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/eng.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>English</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/chem.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Chemistry</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/phyc.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Physics</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/bio.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Biology</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/hist.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>History</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/geo.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Geography</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/agric.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Agriculture</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/comp.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Computer Studies</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/cre.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>CRE/IRE</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/bus.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Business Studies</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                    <div class="col-lg-3 col-md-6 col-xs-12">--}}
+            {{--                        <div class="featured-box-item">--}}
+            {{--                            <div class="featured-icon">--}}
+            {{--                                <img src="{{ asset('static/landing/img/slider/bg-1.png?').date('YmdHis') }}img/prac.png" class="icons">--}}
+            {{--                            </div>--}}
+            {{--                            <div class="featured-content">--}}
+            {{--                                <h4>Practicals</h4>--}}
+            {{--                                <p>Form 1 to Form 4</p>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
+        </div>
+
+    </div>
+</div>
+<!-- About Section Start -->
+<div id="about" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="about block text-center">
+                    <img src="{{ asset('static/landing/img/image%20(1).png?').date('YmdHis') }}" alt="">
+                    <h5><a href="#">Past Papers</a></h5>
+                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="about block text-center">
+                    <img src="{{ asset('static/landing/img/image%20(2).png?').date('YmdHis') }}" alt="">
+                    <h5><a href="#">Revision Materials</a></h5>
+                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="about block text-center">
+                    <img src="{{ asset('static/landing/img/image%20(5).png?').date('YmdHis') }}" alt="">
+                    <h5><a href="#">Prediction Questions</a></h5>
+                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="about block text-center">
+                    <img src="{{ asset('static/landing/img/image%20(4).png?').date('YmdHis') }}" alt="">
+                    <h5><a href="#">Quick Test</a></h5>
+                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services Section Start -->
+<section id="services" class="section-padding bg-light" style="display: none">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="section-title wow fadeInDown animated" data-wow-delay="0.3s">Important Notes</h2>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Start Service Icon 1 -->
+            <div class="col-md-6 col-lg-4 col-xs-12">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-cogs"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4><a href="#"> Innovations to think about during this period</a></h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto officiis
+                            consequuntur vero error excepturi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Service Icon 1 -->
+
+            <!-- Start Service Icon 2 -->
+            <div class="col-md-6 col-lg-4 col-xs-12">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4><a href="#">Engaging with your teachers online</a></h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto officiis
+                            consequuntur vero error excepturi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Service Icon 2 -->
+
+            <!-- Start Service Icon 3 -->
+            <div class="col-md-6 col-lg-4 col-xs-12">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4><a href="#">Keeping track of your performance</a></h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto officiis
+                            consequuntur vero error excepturi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Service Icon 3 -->
+
+            <!-- Start Service Icon 4 -->
+            <div class="col-md-6 col-lg-4 col-xs-12">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4><a href="#">Improving Memorising capability</a></h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto officiis
+                            consequuntur vero error excepturi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Service Icon 4 -->
+
+            <!-- Start Service Icon 5 -->
+            <div class="col-md-6 col-lg-4 col-xs-12">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-folder-open"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4><a href="#">Things to avoid when studying from home</a></h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto officiis
+                            consequuntur vero error excepturi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Service Icon 5 -->
+
+            <!-- Start Service Icon 6 -->
+            <div class="col-md-6 col-lg-4 col-xs-12">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-hand-pointer-o"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4><a href="#">Fact checking</a></h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto officiis
+                            consequuntur vero error excepturi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Service Icon 6 -->
         </div>
     </div>
 </section>
 
-<footer style="color: #000000; background: linear-gradient(to bottom right, #510812, #bf1e2d); " class="fixed-bottom">
-    <ul class="nav from text-center bg-light ">
-        <li class="nav-item mt-2 mr-1 ">
-            <a class="nav-link px-0 " href="# ">E-Learning from </a>
-        </li>
-        <li class="nav-item ">
-            <a class="nav-link px-0 " href="# "><img src="{{asset('static/landing/images/STANDARD-REDESIGN-LOGO.png')}}" class="navbar-brand "></a>
-        </li>
-    </ul>
+<!-- Footer Section -->
+<ul class="nav from text-center bg-light d-flex">
 
-    <div class="card text-center ">
-        <div class="card-header p-2 ">
-            <div class="container ">
-                <ul class="nav text-center ">
-                    <li class="nav-item ">
-                        <a class="nav-link " href="https://digger.co.ke/">DIGGER</a>
+    <li class="nav-item ">
+        <a class="nav-link px-0 fromtext" href="# ">E-Learning from <img
+                src="https://www.standardmedia.co.ke/elearning/public/static/landing/images/STANDARD-REDESIGN-LOGO.png"
+                class="footerlogo"></a>
+    </li>
+</ul>
+<footer class="footer">
+    <!-- Container Starts -->
+    <div class="container">
+        <div class="row">
+
+            <div class="mx-auto col-xs-12">
+                <ul class="nav nav-inline ">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="http://www.btvkenya.ke/">BTV</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="http://www.btvkenya.ke/">BTV</a>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="http://www.evewoman.co.ke/">
+                            EVE WOMAN</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="# ">TRAVELOG</a>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="http://www.spicefm.co.ke/">
+                            SPICE RADIO</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="https://www.pulser.co.ke/">PULSER</a>
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="http://www.travelog.ke/">TRAVEL</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="https://www.farmers.co.ke/">FARMERS</a>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.farmers.co.ke/">FARMERS</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="http://www.evewoman.co.ke/">EVE WOMAN</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.digger.co.ke/">DIGGER</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="http://www.vybezradio.co.ke/">FM VYBEZ</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.vas.standardmedia.co.ke/">VAS</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="http://www.spicefm.co.ke/">SPICE RADIO</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.newsstand.standardmedia.co.ke/">EPAPER</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link page-scroll " href="https://www.standardmedia.co.ke/radiomaisha">RADIO MAISHA</a>
-                    </li>
-                    <li class="nav-item border-0 ">
-                        <a class="nav-link page-scroll " href="https://www.standardmedia.co.ke/corporate">CORPORATE</a>
+                    <li class="nav-item border-0">
+                        <a class="nav-link" href="https://www.standardmedia.co.ke/corporate">CORPORATE</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="card-body p-2 ">
-            <span>&copy; Copyright 2020 - Standard Group PLC</span>
+    </div>
+    <!-- Container Ends -->
 
+    <!-- Copyright -->
+    <div id="copyright">
+        <div class="container text-center p-0">
+            <div class="row p-0">
+                <div class="col-12 mx-auto p-0">
+                    <p class="text-center">© 2020 The Standard Group PLC All rights reserved
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- Copyright  End-->
 
 </footer>
+<!-- Footer Section End-->
 
-<!-- jQuery -->
-<link rel="stylesheet" href="{{ asset('/static/landing/js/jquery-2.1.0.min.js') }}">
+<!-- Go to Top Link -->
+<a href="#" class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+</a>
 
-<!-- Bootstrap -->
-<link rel="stylesheet" href="{{ asset('/static/landing/js/popper.js') }}">
-<link rel="stylesheet" href="{{ asset('/static/landing/js/bootstrap.min.js') }}">
+<script src="js/jquery-min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
 
-<!-- Plugins -->
-<link rel="stylesheet" href="{{ asset('/static/landing/js/owl-carousel.js') }}">
-<link rel="stylesheet" href="{{ asset('/static/landing/js/scrollreveal.min.js') }}">
-<link rel="stylesheet" href="{{ asset('/static/landing/js/waypoints.min.js') }}">
-<link rel="stylesheet" href="{{ asset('/static/landing/js/jquery.counterup.min.js') }}">
-<link rel="stylesheet" href="{{ asset('/static/landing/js/imgfix.min.js') }}">
-<!--Start of Tawk.to Script-->
-
-
-<link rel="stylesheet" href="{{ asset('/static/landing/js/custom.js') }}">
-
-<script type="text/javascript ">
-    var Tawk_API = Tawk_API || {},
-        Tawk_LoadStart = new Date();
-
-    (function() {
-
-        var s1 = document.createElement("script"),
-            s0 = document.getElementsByTagName("script")[0];
-
-        s1.async = true;
-
-        s1.src = 'https://embed.tawk.to/5e26fe888e78b86ed8aa5d7a/default';
-
-        s1.charset = 'UTF-8';
-
-        s1.setAttribute('crossorigin', '*');
-
-        s0.parentNode.insertBefore(s1, s0);
-
-    })();
-</script>
 </body>
-
 </html>
