@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::post('/app/login','Api\LoginController@login');
+Route::post('/app/register','Api\LoginController@register');
 
 Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 
@@ -40,6 +41,10 @@ Route::post('/payments/subscribe','Api\PaymentsController@startTransaction'); //
 Route::post('/payments/mpesa/stk','Api\PaymentsController@startMpesaStkPush');
 Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 Route::get('/payments/subscription/user/{id}','Api\PaymentsController@checkSubscription');
+
+Route::get('/payments/user/{user_id}','Api\PaymentsController@getUserPayments');
+Route::get('/payments/subscriptions/user/{id}','Api\PaymentsController@getUserSubscriptions');
+
 //for testing only
 Route::get('/payments/subscriptions/list','Api\PaymentsController@listSubscriptions');
 Route::get('/payments/list','Api\PaymentsController@listPayments');

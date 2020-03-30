@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -49,5 +50,39 @@ class LoginController extends Controller
         }
         //$body = json_decode($body);
         return $body;
+    }
+
+    public function register(Request $request)
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $password = $request->password;
+        $password_confirmation = $request->password_confirmation;
+
+        $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+
+        //return $params;
+
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
+        try {
+
+            $response = $client->request('POST', $this->api . 'register', $params);
+
+        }catch (Exception $e)
+        {
+            Log::error("Registration error".$params['body'].' Details'.$e->getMessage());
+        }
+
+        $headers = $response->getHeaders();
+        $body = $response->getBody()->getContents();
+        $objbody = json_decode($body);
+
+        if(property_exists($objbody ,'success'))
+        {
+            return response()->json($objbody , 400);
+        }
+        //$body = json_decode($body);
+        return $body;
+
     }
 }
