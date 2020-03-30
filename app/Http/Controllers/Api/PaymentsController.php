@@ -151,6 +151,75 @@ class PaymentsController extends Controller
         return $subscription;
     }
 
+    public function getUserPayments(Request $request,$userid)
+    {
+        $payments = new Payment();
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+            $results = $payments->where('user_id',$userid)
+                ->leftJoin('subscriptions','subscriptions.id','=','payments.packageid')
+                ->select('payments.channel as method','payments.transactioncode as receipt','payments.phone as initiator','payments.amount_received as amount','subscriptions.subscription as package','payments.created_at as date')
+                ->paginate($size)->items();
+
+            $totalrecords = $payments->where('user_id',$userid)->count();
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $data ["rows"] = $results;
+
+            return $data;
+        }
+
+        return $payments->where('user_id',$userid)
+            ->leftJoin('subscriptions','subscriptions.id','=','payments.packageid')
+            ->select('payments.channel as method','payments.transactioncode as receipt','payments.phone as initiator','payments.amount_received as amount','subscriptions.subscription as package','payments.created_at as date')
+            ->get();
+    }
+
+    public function getUserSubscriptions(Request $request,$userid)
+    {
+        $usersubscriptions = new UserSubscription();
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+            $results = $usersubscriptions->where('user_id',$userid)
+                ->leftJoin('subscriptions','subscriptions.id','=','user_subscriptions.package_id')
+                ->select('user_subscriptions.ordernumber','user_subscriptions.transactionid as receipt','user_subscriptions.paymentchannel as method','subscriptions.subscription as package','user_subscriptions.startdate','user_subscriptions.enddate as expiry_date')
+                ->paginate($size)->items();
+
+            $totalrecords = $usersubscriptions->where('user_id',$userid)->count();
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $data ["rows"] = $results;
+
+            return $data;
+        }
+
+        return $usersubscriptions->where('user_id',$userid)
+            ->leftJoin('subscriptions','subscriptions.id','=','user_subscriptions.package_id')
+            ->select('user_subscriptions.ordernumber','user_subscriptions.transactionid as receipt','user_subscriptions.paymentchannel as method','subscriptions.subscription as package','user_subscriptions.startdate','user_subscriptions.enddate as expiry_date')
+            ->get();
+    }
+
+    // for debugging purpose
     public function listSubscriptions()
     {
         $subscription = new UserSubscription();
