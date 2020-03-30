@@ -55,6 +55,7 @@ export default function (props) {
     const User = localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {};
     User['subscription'] = {id: 1};
     const [loading, setLoading] = useState(true);
+    const [percentage, setPercentage] = useState(0);
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
@@ -71,8 +72,33 @@ export default function (props) {
                 setSideBar(false)
             }
             getSubscription();
+            getModules();
         }
     }, []);
+
+    const getModules = () => {
+        $.ajax({
+            url: `${API}/modules/user/${user.id}`,
+            // url: `${API}/subjects/class/{class_id}`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr['responseText'])['message'];
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                let percentage = 0;
+                res.forEach((el) => {
+                    percentage += parseFloat( el.percentage)
+                });
+                setPercentage(percentage/(res.length));
+            }.bind(this)
+        })
+    };
 
     const getSubscription = () => {
         let user_ = user;
@@ -140,7 +166,7 @@ export default function (props) {
                                         <Link to={`${DIR}/subscribe`}
                                               className="btn btn-sm btn-white btn-icon rounded-pill shadow hover-translate-y-n3">
                                             <span className="btn-inner--icon"><i className="fa fa-magic" /></span>
-                                            <span className="btn-inner--text">84</span>
+                                            <span className="btn-inner--text">{`${percentage}%`}</span>
                                         </Link>
                                     </div>
                                 </div>
