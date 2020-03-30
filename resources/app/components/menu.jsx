@@ -63,10 +63,15 @@ export default function (props) {
     const [sideBar, setSideBar] = useState(true);
 
     useEffect((e) => {
-        if (!user.hasOwnProperty('name'))
+        if (!user.hasOwnProperty('name')) {
+            debugger;
             props.history.push({
                 pathname: `${ENV}login`,
+                state: {
+                    next: props.location.pathname
+                },
             });
+        }
         else {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 setSideBar(false)

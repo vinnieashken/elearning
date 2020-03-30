@@ -632,7 +632,7 @@
                 let header = document.createElement("H4");
                 header.appendChild(document.createTextNode(el.subject));
                 let p = document.createElement("P");
-                p.appendChild(document.createTextNode("This is a paragraph."));
+                p.appendChild(document.createTextNode("Grade 1 to Grade 8."));
                 div3.appendChild(header);
                 div3.appendChild(p);
                 div1.appendChild(div2);
