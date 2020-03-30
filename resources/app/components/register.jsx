@@ -54,7 +54,7 @@ export default function (props) {
 
                             <li>
                                 <a href={`${PUBLIC_URL}`} className="logo">
-                                    <img src={`${PUBLIC_URL}/static/landing/images/STANDARD-REDESIGN-LOGO.png`}
+                                    <img src={`${PUBLIC_URL}/static/landing/img/logo.png`}
                                          className="logoimg" alt="Standard E-Learning"/>
                                 </a>
                             </li>

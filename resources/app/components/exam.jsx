@@ -86,7 +86,7 @@ export default function (props) {
                     <div
                         className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
                         <div className="d-inline-block">
-                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">Exam</h5>
+                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">Examination</h5>
                         </div>
                     </div>
                 </div>
@@ -118,18 +118,21 @@ export default function (props) {
                                         {
                                             <div className='row'>
                                                 {
-                                                    exam.map((el) => {
+                                                    exam.map((el, index) => {
                                                         return (
                                                             <div className="form-group col-md-12">
 
-                                                                <p><label className="form-control-label"><span dangerouslySetInnerHTML={ {__html: `${el.question}`} } /></label></p>
+                                                                <p><label className="form-control-label"><span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } /></label></p>
                                                                 {
                                                                     el.options.map((ans) => {
                                                                         const isAns = parseInt(el.answer) === parseInt(ans.id);
                                                                         return (
                                                                             <React.Fragment>
-                                                                                <input type="radio" id={el.id} name={el.id} value={ans.id} required={true} />
-                                                                                <label htmlFor={ans.option}>{` ${ans.option}`}</label> {(isAns && showAns) ? <span className='fa fa-check alert-success'/> : ''}<br />
+                                                                                <label htmlFor={` ${ans.id}`}>
+                                                                                    <input type="radio" id={el.id} name={el.id} value={ans.id} required={true} />
+                                                                                    <i>{` ${ans.option}`}</i> {(isAns && showAns) ? <span className='fa fa-check alert-success'/> : ''}
+                                                                                </label>
+                                                                                <br />
                                                                             </React.Fragment>
                                                                         )
                                                                     })

@@ -95,7 +95,7 @@ export default function (props) {
                 res.forEach((el) => {
                     percentage += parseFloat( el.percentage)
                 });
-                setPercentage(percentage/(res.length));
+                setPercentage(parseFloat(percentage/(res.length)).toFixed(2));
             }.bind(this)
         })
     };
