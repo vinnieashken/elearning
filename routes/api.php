@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::post('/app/login','Api\LoginController@login');
+Route::post('/app/register','Api\LoginController@register');
 
 Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 
