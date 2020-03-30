@@ -77,7 +77,7 @@ class LoginController extends Controller
         $body = $response->getBody()->getContents();
         $objbody = json_decode($body);
 
-        if(property_exists($objbody ,'success'))
+        if(property_exists($objbody ,'message'))
         {
             return response()->json($objbody , 400);
         }
