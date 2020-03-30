@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSheet;
+use App\Models\Marks;
 use App\Models\Question;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -56,6 +57,7 @@ class QuestionsController extends Controller
         $userid = $data['userid'];
         $answers = $data['answers'];
 
+
         foreach ($answers as $answer)
         {
             $answerSheet = new AnswerSheet();
@@ -86,6 +88,21 @@ class QuestionsController extends Controller
 
         $headers = $response->getHeaders();
         $body = $response->getBody()->getContents();
+        $result = json_decode($body);
+
+        $marks = new Marks();
+        $existing = $marks->where('marks_user_id',$userid)->where('marks_module_id',$moduleid)->first();
+        if(!is_null($existing))
+        {
+
+        }
+        else {
+            $marks->marks_module_id = $moduleid;
+            $marks->marks_user_id = $userid;
+            $marks->score = $result->Score;
+            $marks->percentage = $result->Percentage;
+            $marks->save();
+        }
 
         return $body;
 

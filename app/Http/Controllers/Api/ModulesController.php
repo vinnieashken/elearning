@@ -158,8 +158,10 @@ class ModulesController extends Controller
                 ->leftJoin('modules','modules.id','=','user_answers.module_id')
                 ->leftJoin('subjects','subjects.id','=','modules.id')
                 ->leftJoin('classes','classes.id','=','subjects.id')
-                ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
+                ->leftJoin('marks','marks.marks_module_id','=','modules.id')
+                ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.percentage')
                 ->paginate($size)->items();
+
 
             $totalrecords = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->count();
             $totalpages = ceil($totalrecords / $size);
@@ -180,7 +182,8 @@ class ModulesController extends Controller
             ->leftJoin('modules','modules.id','=','user_answers.module_id')
             ->leftJoin('subjects','subjects.id','=','modules.id')
             ->leftJoin('classes','classes.id','=','subjects.id')
-            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
+            ->leftJoin('marks','marks.marks_module_id','=','modules.id')
+            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.percentage')
             ->get();
 
         return $sheets;
