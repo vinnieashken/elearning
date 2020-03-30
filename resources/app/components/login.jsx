@@ -40,6 +40,7 @@ export default function Login(props) {
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
+                $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
                 localStorage.setItem('user', res);
