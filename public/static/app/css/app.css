@@ -28506,3 +28506,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     overflow-y: scroll;
     padding: 2%;
 }
+
+input[type="radio"] {
+    margin-right: 5px !important;
+}
