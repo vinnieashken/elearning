@@ -314,6 +314,63 @@ export default function (props) {
                         </div>
                     </div>
             }
+            {
+                loading ? "" :
+                    <footer style={{color: "#000000", background: "linear-gradient(to bottom right, #510812, #bf1e2d)"}}
+                            className="">
+                        <ul className="nav from text-center bg-light ">
+                            <li className="nav-item mt-2 mr-1 ">
+                                <a className="nav-link px-0 " href="# ">VAS from </a>
+                            </li>
+                            <li className="nav-item ">
+                                <a className="nav-link px-0 " href="# "><img
+                                    src="https://vas.standardmedia.co.ke/front-end/images/STANDARD-REDESIGN-LOGO.png"
+                                    className="navbar-brand " /></a>
+                            </li>
+                        </ul>
+                        <div className="card text-center ">
+                            <div className="card-header p-2 ">
+                                <div className="container ">
+                                    <ul className="nav text-center ">
+                                        <li className="nav-item ">
+                                            <a className="nav-link " href="# ">DIGGER</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link " href="# ">BTV</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link " href="# ">TRAVELOG</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link page-scroll " href="#slider-area ">PULSER</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link page-scroll " href="#services ">FARMERS</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link page-scroll " href="#slider-area ">EVE WOMAN</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link page-scroll " href="#services ">FM VYBEZ</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link page-scroll " href="#slider-area ">SPICE RADIO</a>
+                                        </li>
+                                        <li className="nav-item ">
+                                            <a className="nav-link page-scroll " href="#services ">RADIO MAISHA</a>
+                                        </li>
+                                        <li className="nav-item border-0 ">
+                                            <a className="nav-link page-scroll " href="#slider-area ">CORPORATE</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="card-body p-2 ">
+                                <span>© Copyright 2020 - Standard Group PLC</span>
+                            </div>
+                        </div>
+                    </footer>
+            }
         </div>
     )
 }
