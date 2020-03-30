@@ -142,8 +142,8 @@ class PaymentsController extends Controller
     public function checkSubscription(Request $request,$userid)
     {
         $subscription = new UserSubscription();
-        $subscription = $subscription->orderby('id','DESC')->where('user_id',$userid)->where('status',1 )->where('enddate','>=',date_create('now'))
-            ->leftJoin('subscriptions')
+        $subscription = $subscription->orderby('user_subscriptions.id','DESC')->where('user_id',$userid)->where('status',1 )->where('enddate','>=',date_create('now'))
+            ->leftJoin('subscriptions','subscriptions.id','=','user_subscriptions.package_id')
             ->first();
 
         if(is_null($subscription))

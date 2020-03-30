@@ -20,8 +20,8 @@ class CreateUserSubscriptionsTable extends Migration
             $table->string('ordernumber')->nullable();
             $table->string('paymentchannel');
             $table->string('transactionid');
-            $table->string('startdate');
-            $table->string('enddate');
+            $table->timestamp('startdate')->nullable();
+            $table->timestamp('enddate')->nullable();
             $table->integer('status');
             $table->timestamps();
         });
