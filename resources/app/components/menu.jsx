@@ -169,7 +169,7 @@ export default function (props) {
                                     <div className="mt-4">
                                         <h5 className="mb-0 text-white">{"Avarege Score For The Last 300 Days"}</h5>
                                         {/*<span className="d-block text-sm text-white opacity-8 mb-3">{user.email}</span>*/}
-                                        <Link to={`${DIR}/subscribe`}
+                                        <Link to={`${DIR}/exams/done`}
                                               className="btn btn-sm btn-white btn-icon rounded-pill shadow hover-translate-y-n3">
                                             <span className="btn-inner--icon"><i className="fa fa-magic" /></span>
                                             <span className="btn-inner--text">{`${percentage}%`}</span>
@@ -320,7 +320,7 @@ export default function (props) {
                             className="">
                         <ul className="nav from text-center bg-light ">
                             <li className="nav-item mt-2 mr-1 ">
-                                <a className="nav-link px-0 " href="# ">VAS from </a>
+                                <a className="nav-link px-0 " href="# ">E-learning from </a>
                             </li>
                             <li className="nav-item ">
                                 <a className="nav-link px-0 " href="# "><img
