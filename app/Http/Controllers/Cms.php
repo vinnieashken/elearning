@@ -9,11 +9,16 @@ use App\Models\Option;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Subscription;
+use App\User;
 use Illuminate\Http\Request;
 
 
 class Cms extends Controller
     {
+        public function __construct()
+            {
+                $this->middleware('auth');
+            }
         public function index()
             {
                 return view('cms.modules.dashboard');
@@ -425,5 +430,11 @@ class Cms extends Controller
                     {
                         return array('status'=>FALSE,'msg'=>$validatedData->errors());
                     }
+            }
+        public function usermgt(Request $request)
+            {
+                $user           =   User::find($request->id);
+                $user->status   =   (int)$request->type;
+                return $user->save();
             }
     }

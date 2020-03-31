@@ -14,15 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/admin','Login@index');
-Route::post('/signin','Login@login');
 Route::get('/cms','Cms@index');
 Route::get('/cms/question','Cms@question');
 Route::get('/cms/class','Cms@classes');
 Route::get('/cms/subject','Cms@subject');
 Route::get('/cms/exams','Cms@modules');
 Route::get('/cms/rates','Cms@rates');
+Route::get('/cms/users', function() {
+    return view('cms.modules.users');
+});
+Route::post('/cms/usermgt','Cms@usermgt');
 //Datatables
+Route::post('get_users','Datatable@get_users');
 Route::post('get_classes','Datatable@get_classes');
 Route::post('get_subjects','Datatable@get_subjects');
 Route::post('get_modules','Datatable@get_modules');
@@ -61,4 +64,8 @@ Route::get('/app/{path?}', [
     'as' => '*',
     'where' => ['path' => '^((?!api|static).)*$']
 ]);
+
+
+Auth::routes();
+
 

@@ -33,6 +33,11 @@
                     <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Rates</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link font-weight-bold" href="{{ url('cms/users') }}">
+                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Users</span>
+                </a>
+            </li>
             {{--<li class="sidebar-item">
                 <a href="#dashboards" data-toggle="collapse" class="font-weight-bold sidebar-link collapsed">
                     <i class="align-middle" data-feather="shield"></i>
