@@ -20,7 +20,7 @@ class SubjectsController extends Controller
             $page = $request->page;
 
             $results =  $model->leftJoin('classes','subjects.class_id','=','classes.id')
-                ->select('subjects.id','subjects.class_id','subjects.subject','classes.class')->paginate($size)->items();
+                ->select('subjects.id','subjects.class_id','subjects.subject','subjects.thumburl','classes.class')->paginate($size)->items();
 
             $totalrecords = $model->count();
             $totalpages = ceil($totalrecords / $size);
@@ -37,7 +37,7 @@ class SubjectsController extends Controller
             return $data;
         }
         return $model->leftJoin('classes','subjects.class_id','=','classes.id')
-            ->select('subjects.id','subjects.class_id','subjects.subject','classes.class')->get();
+            ->select('subjects.id','subjects.class_id','subjects.subject','subjects.thumburl','classes.class')->get();
     }
 
     public function getClassSubjects(Request $request, $classid)
@@ -50,7 +50,7 @@ class SubjectsController extends Controller
             $page = $request->page;
 
             $results =  $model->where('class_id',$classid)->where('class_id',$classid)->leftJoin('classes','subjects.class_id','=','classes.id')
-                ->select('subjects.id','subjects.class_id','subjects.subject','classes.class')->paginate($size)->items();
+                ->select('subjects.id','subjects.class_id','subjects.subject','subjects.thumburl','classes.class')->paginate($size)->items();
 
             $totalrecords = $model->where('class_id',$classid)->count();
             $totalpages = ceil($totalrecords / $size);
@@ -67,6 +67,6 @@ class SubjectsController extends Controller
             return $data;
         }
         return $model->where('class_id',$classid)->leftJoin('classes','subjects.class_id','=','classes.id')
-            ->select('subjects.id','subjects.class_id','subjects.subject','classes.class')->get();
+            ->select('subjects.id','subjects.class_id','subjects.subject','subjects.thumburl','classes.class')->get();
     }
 }
