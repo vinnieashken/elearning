@@ -106,7 +106,7 @@ export default function (props) {
                                         Packages
                                     </label>
                                     <div className="row">
-                                        <div className="col-md-3 col-sm-6">
+                                        <div className="col-md-4 col-sm-6">
                                             <div className="custom-control custom-checkbox">
                                                 <input type="radio" className="custom-control-input"
                                                        name="project-privacy" id="radio-project-1" />
@@ -115,7 +115,7 @@ export default function (props) {
                                                     htmlFor="radio-project-1">Daily (30/=)</label>
                                             </div>
                                         </div>
-                                        <div className="col-md-3 col-sm-6">
+                                        <div className="col-md-4 col-sm-6">
                                             <div className="custom-control custom-checkbox">
                                                 <input type="radio" className="custom-control-input"
                                                        name="project-privacy" id="radio-project-2" defaultChecked={false} />
@@ -124,7 +124,7 @@ export default function (props) {
                                                     htmlFor="radio-project-2">Monthly (220/=)</label>
                                             </div>
                                         </div>
-                                        <div className="col-md-3 col-sm-6">
+                                        <div className="col-md-4 col-sm-6">
                                             <div className="custom-control custom-checkbox">
                                                 <input type="radio" className="custom-control-input"
                                                        name="project-privacy" id="radio-project-3" defaultChecked={false} />
@@ -134,15 +134,15 @@ export default function (props) {
                                             </div>
                                         </div>
 
-                                        <div className="col-md-3 col-sm-6">
-                                            <div className="custom-control custom-checkbox">
-                                                <input type="radio" className="custom-control-input"
-                                                       name="project-privacy" id="radio-project-3" disabled={true} />
-                                                <label
-                                                    className="custom-control-label form-control-label text-muted"
-                                                    htmlFor="radio-project-3">Gold (Coming Soon)</label>
-                                            </div>
-                                        </div>
+                                        {/*<div className="col-md-3 col-sm-6">*/}
+                                        {/*    <div className="custom-control custom-checkbox">*/}
+                                        {/*        <input type="radio" className="custom-control-input"*/}
+                                        {/*               name="project-privacy" id="radio-project-3" disabled={true} />*/}
+                                        {/*        <label*/}
+                                        {/*            className="custom-control-label form-control-label text-muted"*/}
+                                        {/*            htmlFor="radio-project-3">Gold (Coming Soon)</label>*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
                                     </div>
                                     {
                                         payment.hasOwnProperty('id') ? <div className='row'>
