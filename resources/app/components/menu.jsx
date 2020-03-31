@@ -100,7 +100,8 @@ export default function (props) {
                 res.forEach((el) => {
                     percentage += parseFloat( el.percentage)
                 });
-                setPercentage(parseFloat(percentage/(res.length)).toFixed(2));
+                let marks = parseFloat(percentage/(res.length)).toFixed(2)
+                setPercentage(isNaN(marks) ? 0 : marks);
             }.bind(this)
         })
     };
@@ -325,7 +326,7 @@ export default function (props) {
                             <li className="nav-item ">
                                 <a className="nav-link px-0 " href="# "><img
                                     src="https://vas.standardmedia.co.ke/front-end/images/STANDARD-REDESIGN-LOGO.png"
-                                    className="navbar-brand " /></a>
+                                    className="bottomlogo mt-2" /></a>
                             </li>
                         </ul>
                         <div className="card text-center ">

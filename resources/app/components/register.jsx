@@ -26,6 +26,11 @@ export default function (props) {
             contentType: false,
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message'];
+                }catch (e) {
+
+                }
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -194,7 +199,7 @@ export default function (props) {
                         <li className="nav-item ">
                             <a className="nav-link px-0 " href="# "><img
                                 src="https://vas.standardmedia.co.ke/front-end/images/STANDARD-REDESIGN-LOGO.png"
-                                className="navbar-brand " /></a>
+                                className="bottomlogo mt-2" /></a>
                         </li>
                     </ul>
                     <div className="card text-center ">

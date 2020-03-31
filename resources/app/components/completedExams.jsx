@@ -92,7 +92,7 @@ export default function (props) {
                                         data={ modules }
                                         columns={
                                             [
-                                                {dataField: 'module',      text: 'Module',    sort: true},
+                                                {dataField: 'module',      text: 'Exam',    sort: true},
                                                 {dataField: 'class',        text: 'Class',      sort: true},
                                                 {dataField: 'subject',        text: 'Subject',      sort: true},
                                                 {dataField: 'percentage',        text: 'Score(%)',      sort: true},
