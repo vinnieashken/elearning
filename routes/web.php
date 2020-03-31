@@ -66,6 +66,6 @@ Route::get('/app/{path?}', [
 ]);
 
 
-Auth::routes();
+//Auth::routes();
 
 
