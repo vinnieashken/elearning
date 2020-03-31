@@ -25,8 +25,8 @@ const Menu = Loadable({
 ReactDOM.render(
     (
     <BrowserRouter >
-    <Route exact={true} path={`${ENV}login`} component={Login} />
-    <Route exact={true} path={`${ENV}register`} component={Register} />
+    <Route exact={true} path={`${ENV}signin`} component={Login} />
+    <Route exact={true} path={`${ENV}signup`} component={Register} />
 <Route path={`${ENV}app`} component={Menu} />
 </BrowserRouter>
 ),

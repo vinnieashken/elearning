@@ -107,12 +107,12 @@
 {{--                </li>--}}
                 <li class="nav-item ">
 
-                    <a class="nav-link login " href="{{url('register')}}">REGISTER</a>
+                    <a class="nav-link login " href="{{url('signup')}}">REGISTER</a>
 
                 </li>
                 <li class="nav-item ">
 
-                    <a class="nav-link login" href="{{url('login')}}">LOGIN</a>
+                    <a class="nav-link login" href="{{url('signin')}}">LOGIN</a>
 
                 </li>
 

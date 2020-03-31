@@ -66,7 +66,7 @@ export default function (props) {
         if (!user.hasOwnProperty('name')) {
             debugger;
             props.history.push({
-                pathname: `${ENV}login`,
+                pathname: `${ENV}signin`,
                 state: {
                     next: props.location.pathname
                 },
@@ -278,7 +278,7 @@ export default function (props) {
                                                         <span>Activity</span>
                                                     </Link>
                                                     <div className="dropdown-divider" />
-                                                    <Link to={`${ENV}login`} className="dropdown-item">
+                                                    <Link to={`${ENV}signin`} className="dropdown-item">
                                                         <i className="fa fa-sign-out-alt" />
                                                         <span>Logout</span>
                                                     </Link>

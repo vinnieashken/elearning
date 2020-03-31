@@ -51,11 +51,11 @@ Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
 Route::get('/', function () {
     return view('landing');
 });
-Route::get('/login', function() {
+Route::get('/signin', function() {
     return view('app');
 });
 
-Route::get('/register', function() {
+Route::get('/signup', function() {
     return view('app');
 });
 
@@ -66,6 +66,6 @@ Route::get('/app/{path?}', [
 ]);
 
 
-//Auth::routes();
+Auth::routes();
 
 
