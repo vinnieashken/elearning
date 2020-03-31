@@ -158,7 +158,7 @@ export default function Login(props) {
                                                     </form>
                                                 </div>
                                                 <div className="card-footer px-md-5"><small>Not registered?</small>
-                                                    <Link to={`${ENV}register`} className="small font-weight-bold">Create account</Link></div>
+                                                    <Link to={`${ENV}signup`} className="small font-weight-bold">Create account</Link></div>
                                             </div>
                                         </div>
                                     </div>

@@ -181,7 +181,7 @@ export default function (props) {
                                                     </form>
                                                 </div>
                                                 <div className="card-footer px-md-5"><small>Already have an acocunt?</small>
-                                                    <Link to={`${ENV}login`} className="small font-weight-bold">Sign in</Link></div>
+                                                    <Link to={`${ENV}signin`} className="small font-weight-bold">Sign in</Link></div>
                                             </div>
                                         </div>
                                     </div>
