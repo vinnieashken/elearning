@@ -602,6 +602,7 @@
     }).then(function (data) {
         // This is the JSON from our response
         data.forEach((el, index) => {
+            if(index < 6) {
             let link = document.createElement("A");
             let link2 = document.createElement("A");
 
@@ -613,7 +614,7 @@
             document.getElementById('subjects').appendChild(link);
             document.getElementById('subjects1').appendChild(document.createElement("LI").appendChild(link2));
 
-            if(index < 6) {
+
                 let div0 = document.createElement("DIV");
                 let div1 = document.createElement("DIV");
                 let div2 = document.createElement("DIV");

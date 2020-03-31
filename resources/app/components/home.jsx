@@ -62,14 +62,14 @@ export default function (props) {
                     </div>
                 </div>
                 <div className="py-4 row">
-                    <div className="mb-3 mb-md-0 col-md-3">
+                    <div className="mb-3 mb-md-0 col-md-4">
                         <div className="text-center h-100 card">
                             <div className="d-flex flex-column card-body">
                                 <div className="mb-4"><h5>Daily</h5><span className="display-4">KES 30</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li >- Additional one day complimentary e-paper.</li>
-                                    <li >- Regular email bulletins from the Standard Insider.</li>
+                                    <li >- Plus complimentary e-paper.</li>
+                                    <li >- Regular email bulletins.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -77,15 +77,15 @@ export default function (props) {
                             </div>
                         </div>
                     </div>
-                    <div className="mb-3 mb-md-0 col-md-3">
+                    <div className="mb-3 mb-md-0 col-md-4">
                         <div className="text-center h-100 card">
                             <div className="d-flex flex-column card-body">
                                 <div className="mb-4"><h5>Monthly</h5><span
                                     className="display-4">KES 220</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li >- Additional one month complimentary e-paper.</li>
-                                    <li >- Regular email bulletins from the Standard Insider.</li>
+                                    <li >- Plus complimentary e-paper.</li>
+                                    <li >- Regular email bulletins.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -93,15 +93,15 @@ export default function (props) {
                             </div>
                         </div>
                     </div>
-                    <div className="mb-3 mb-md-0 col-md-3">
+                    <div className="mb-3 mb-md-0 col-md-4">
                         <div className="text-center h-100 card">
                             <div className="d-flex flex-column card-body">
                                 <div className="mb-4"><h5>Annual</h5><span
                                     className="display-4">KES 3,640</span></div>
                                 <h6>Includes:</h6>
                                 <ul className="list-unstyled">
-                                    <li >- Additional one year complimentary e-paper.</li>
-                                    <li >- Regular email bulletins from the Standard Insider.</li>
+                                    <li >- Plus complimentary e-paper.</li>
+                                    <li >- Regular email bulletins.</li>
                                 </ul>
                                 <div className="mt-auto">
                                     <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
@@ -109,23 +109,23 @@ export default function (props) {
                             </div>
                         </div>
                     </div>
-                    <div className="mb-3 mb-md-0 col-md-3">
-                        <div className="text-center h-100 card">
-                            <div className="d-flex flex-column card-body">
-                                <div className="mb-4"><h5>Gold</h5><span
-                                    className="display-4">KES 10,000</span></div>
-                                <h6>Includes:</h6>
-                                <ul className="list-unstyled">
-                                    <li >- Additional one year complimentary e-paper.</li>
-                                    <li >- Regular email bulletins from the Standard Insider.</li>
-                                    <li >- Set your own exam.</li>
-                                </ul>
-                                <div className="mt-auto">
-                                    <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div className="mb-3 mb-md-0 col-md-3">*/}
+                    {/*    <div className="text-center h-100 card">*/}
+                    {/*        <div className="d-flex flex-column card-body">*/}
+                    {/*            <div className="mb-4"><h5>Gold</h5><span*/}
+                    {/*                className="display-4">KES 10,000</span></div>*/}
+                    {/*            <h6>Includes:</h6>*/}
+                    {/*            <ul className="list-unstyled">*/}
+                    {/*                <li >- Plus complimentary e-paper.</li>*/}
+                    {/*                <li >- Regular email bulletins.</li>*/}
+                    {/*                <li >- Set your own exam.</li>*/}
+                    {/*            </ul>*/}
+                    {/*            <div className="mt-auto">*/}
+                    {/*                <Link to={`${DIR}/subscribe`} className="btn btn-outline-primary btn-lg">Select Plan</Link>*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </React.Fragment>
