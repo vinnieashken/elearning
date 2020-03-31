@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Module;
 use App\Models\Subscription;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -349,6 +350,84 @@ class Datatable extends Controller
                                 $x++;
                             }
                     }
+
+                $json_data = array(
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData),
+                    "recordsFiltered" => intval($totalFiltered),
+                    "data"            => $data
+                );
+
+                echo json_encode($json_data);
+            }
+        public function get_users(Request $request)
+            {
+                $columns = array(
+                    0   =>  'name',
+                    1   =>  'email',
+                    2   =>  'phoneno',
+                    3   =>   'status'
+
+                );
+
+                $totalData      = User::count();
+
+                $totalFiltered  = $totalData;
+
+                $limit  =   $request->input('length');
+                $start  =   $request->input('start');
+                $order  =   $columns[$request->input('order.0.column')];
+                $dir    =   $request->input('order.0.dir');
+
+                if(empty($request->input('search.value')))
+                {
+                    $posts = User::offset($start)
+                                         ->limit($limit)
+                                         ->orderBy($order,$dir)
+                                         ->get();
+                }
+                else
+                {
+                    $search     =   $request->input('search.value');
+
+                    //
+
+                    $posts      =   User::where('name','LIKE',"%{$search}%")
+                                                ->orwhere('email','LIKE',"%{$search}%")
+                                                ->orwhere('phoneno','LIKE',"%{$search}%")
+                                                ->offset($start)
+                                                ->limit($limit)
+                                                ->orderBy($order,$dir)
+                                                ->get();
+
+                    $totalFiltered = User::where('name','LIKE',"%{$search}%")
+                                                 ->orwhere('email','LIKE',"%{$search}%")
+                                                 ->orwhere('phoneno','LIKE',"%{$search}%")
+                                                 ->count();
+                }
+
+                $data = array();
+                if(!empty($posts))
+                {
+                    $x= $start + 1;
+                    foreach ($posts as $post)
+                    {
+
+                        $nestedData['*']        =   $x;
+                        $nestedData['name']     =   $post->name;
+                        $nestedData['email']    =   $post->email;
+                        $nestedData["phoneno"]  =   $post->phoneno;
+                        $nestedData['status']   =   $post->status == 0?'inactive':'Active';
+                        $nestedData['action']   =   $post->status == 0?'<a href="" class="usermgt btn btn-success" data-type="1" data-user=\''.$post.'\' >
+                                                                           Activate
+                                                                         </a>':'<a href="#" class="usermgt btn btn-danger" data-type="0" data-user=\''.$post.'\' >
+                                                                           Deactivate
+                                                                         </a>';
+
+                        $data[] = $nestedData;
+                        $x++;
+                    }
+                }
 
                 $json_data = array(
                     "draw"            => intval($request->input('draw')),

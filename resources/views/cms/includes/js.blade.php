@@ -222,7 +222,32 @@
                 }
             });
         });
+        $(document).on('click','.usermgt',function(e){
+            e.preventDefault();
+            var user = $(this).data('user');
+            var type = $(this).data('type');
+            $.ajax({
+                type: 'POST',
+                url: '<?=url('cms/usermgt'); ?>',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{'id':user.id,'type':type},
+                success: function (Mess) {
+                    toastr.success('Transaction Successful', 'User Manipulation', {
+                        timeOut: 1000,
+                        closeButton: true,
+                        progressBar: true,
+                        newestOnTop: true,
+                        onHidden: function () {
 
+                            window.location.reload();
+                        }
+                    });
+                },
+                error: function (f) {
+                    console.log(f);
+                }
+            });
+        });
         $(document).ready(function() {
             $(".summernote").summernote({
                 height:150,
@@ -327,6 +352,24 @@
             ]
 
         });
+            $('#users').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax":{
+                    "url": "{{ url('get_users') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                    "data":{ _token: "{{csrf_token()}}"}
+                },
+                "columns": [
+                    { "data": "*" },
+                    { "data": "name" },
+                    { "data": "email" },
+                    { "data": "phoneno" },
+                    { "data": "status" },
+                    { "data": "action"}
+                ]
 
+            });
     });
 </script>
