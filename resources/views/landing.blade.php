@@ -140,7 +140,7 @@
                                         - Anywhere Anytime</h3>
                                     <h5 class="slide-text animated fadeIn">We make learning easy, fun, engaging and
                                         accessible for every child</h5>
-                                    <a href="{{url('register')}}" class="btn btn-lg btn-common animated fadeInUp">Get Started</a>
+                                    <a href="{{url('signup')}}" class="btn btn-lg btn-common animated fadeInUp">Get Started</a>
                                     <a href="{{url('#about')}}" class="btn btn-lg btn-border animated fadeInUp">Learn More</a>
                                 </div>
                             </div>
