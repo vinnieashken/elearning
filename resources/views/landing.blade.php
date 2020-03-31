@@ -328,28 +328,28 @@
                 <div class="about block text-center">
                     <img src="{{ asset('static/landing/img/image%20(1).png?').date('YmdHis') }}" alt="">
                     <h5><a href="#">Past Papers</a></h5>
-                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                    <p>Get all the KCPE past papers from  2000 to date</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="about block text-center">
                     <img src="{{ asset('static/landing/img/image%20(2).png?').date('YmdHis') }}" alt="">
                     <h5><a href="#">Revision Materials</a></h5>
-                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                    <p>Access revision materials for Primary Schools, MOCKs Past Papers with marking schemes.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="about block text-center">
                     <img src="{{ asset('static/landing/img/image%20(5).png?').date('YmdHis') }}" alt="">
                     <h5><a href="#">Prediction Questions</a></h5>
-                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                    <p>We provide predictive questions and answers on all primary school subjects</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="about block text-center">
                     <img src="{{ asset('static/landing/img/image%20(4).png?').date('YmdHis') }}" alt="">
                     <h5><a href="#">Quick Test</a></h5>
-                    <p>We make learning fun, engaging and accessible for curious children all over Kenya</p>
+                    <p>Take quick tests on the platform to help improve yourself.</p>
                 </div>
             </div>
         </div>
