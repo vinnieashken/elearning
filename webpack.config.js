@@ -90,37 +90,37 @@ module.exports = (env, argv) => {
         hints: false,
     };
 
-    if (argv.mode === 'production') {
-        config.optimization = {
-            minimizer: [
-                new TerserPlugin({
-                    cache: true,
-                    parallel: true,
-                    sourceMap: true, // Must be set to true if using source-maps in production
-                    terserOptions: {
-                        ecma: undefined,
-                        warnings: false,
-                        comments: false,
-                        beautify: false,
-                        parse: {},
-                        compress: {
-                            drop_console: true,
-                            warnings: false,
-                        },
-                        mangle: true, // Note `mangle.properties` is `false` by default.
-                        module: false,
-                        output: null,
-                        toplevel: false,
-                        nameCache: null,
-                        ie8: false,
-                        keep_classnames: undefined,
-                        keep_fnames: false,
-                        safari10: false,
-                    }
-                }),
-            ],
-        }
-    }
+    // if (argv.mode === 'production') {
+    //     config.optimization = {
+    //         minimizer: [
+    //             new TerserPlugin({
+    //                 cache: true,
+    //                 parallel: true,
+    //                 sourceMap: true, // Must be set to true if using source-maps in production
+    //                 terserOptions: {
+    //                     ecma: undefined,
+    //                     warnings: false,
+    //                     comments: false,
+    //                     beautify: false,
+    //                     parse: {},
+    //                     compress: {
+    //                         drop_console: true,
+    //                         warnings: false,
+    //                     },
+    //                     mangle: true, // Note `mangle.properties` is `false` by default.
+    //                     module: false,
+    //                     output: null,
+    //                     toplevel: false,
+    //                     nameCache: null,
+    //                     ie8: false,
+    //                     keep_classnames: undefined,
+    //                     keep_fnames: false,
+    //                     safari10: false,
+    //                 }
+    //             }),
+    //         ],
+    //     }
+    // }
     config.plugins.push(
         new webpack.DefinePlugin({
             'env': constants[argv.mode],
