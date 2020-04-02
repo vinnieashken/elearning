@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -49,6 +50,16 @@ class LoginController extends Controller
             return response()->json($objbody , 400);
         }
         //$body = json_decode($body);
+        $customer = new Customer();
+        $exists = $customer->where('user_id',$objbody->id);
+        if(is_null($exists))
+        {
+            $customer->user_id = $objbody->id;
+            $customer->name = $objbody->name;
+            $customer->email = $objbody->email;
+            $customer->save();
+        }
+
         return $body;
     }
 
@@ -82,6 +93,16 @@ class LoginController extends Controller
             return response()->json($objbody , 400);
         }
         //$body = json_decode($body);
+        $customer = new Customer();
+        $exists = $customer->where('user_id',$objbody->id);
+        if(is_null($exists))
+        {
+            $customer->user_id = $objbody->id;
+            $customer->name = $objbody->name;
+            $customer->email = $objbody->email;
+            $customer->save();
+        }
+
         return $body;
 
     }

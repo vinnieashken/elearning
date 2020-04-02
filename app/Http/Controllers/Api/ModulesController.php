@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
+use App\Models\Customer;
 use App\Models\Module;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ModulesController extends Controller
 {
@@ -134,13 +137,27 @@ class ModulesController extends Controller
                 $score = $score + 1;
         }
 
+        $name = "";
+        $user = Customer::where('user_id',$userid)->first();
+        if(!is_null($user))
+            $name = $user->name;
+
         $data = [
             "moduleid" => (!is_null($module)  ? $module->id :''),
+            "Name" => $name,
             "Module" => (!is_null($module)  ? $module->module :''),
             "Score" => $score,
             "Questions" => $totalquestions,
             "Percentage" => (($score / $totalquestions) * 100)
         ];
+
+
+
+        //return $user;
+        if(!is_null($user))
+            //Mail::to($user->email)->send(new ResultSent((object)$data));
+
+        //return (new ResultSent((object)$data))->render();
 
         return $data;
     }
