@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
-import {API, APPNAME, DIR, PUBLIC_URL} from "../common/constants";
+import {API, APPNAME, ENV, PUBLIC_URL} from "../common/constants";
 import moment from "moment";
 
 const images = [
