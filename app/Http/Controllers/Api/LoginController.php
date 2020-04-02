@@ -51,7 +51,8 @@ class LoginController extends Controller
         }
         //$body = json_decode($body);
         $customer = new Customer();
-        $exists = $customer->where('user_id',$objbody->id);
+        $exists = $customer->where('user_id',$objbody->id)->first();
+
         if(is_null($exists))
         {
             $customer->user_id = $objbody->id;
@@ -94,7 +95,7 @@ class LoginController extends Controller
         }
         //$body = json_decode($body);
         $customer = new Customer();
-        $exists = $customer->where('user_id',$objbody->id);
+        $exists = $customer->where('user_id',$objbody->id)->first();
         if(is_null($exists))
         {
             $customer->user_id = $objbody->id;

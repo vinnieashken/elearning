@@ -151,14 +151,6 @@ class ModulesController extends Controller
             "Percentage" => (($score / $totalquestions) * 100)
         ];
 
-
-
-        //return $user;
-        if(!is_null($user))
-            //Mail::to($user->email)->send(new ResultSent((object)$data));
-
-        //return (new ResultSent((object)$data))->render();
-
         return $data;
     }
 

@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendResultsEmail;
+use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
+use App\Models\Customer;
 use App\Models\Marks;
 use App\Models\Question;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class QuestionsController extends Controller
 {
@@ -106,6 +110,16 @@ class QuestionsController extends Controller
             $marks->percentage = $result->Percentage;
             $marks->save();
         }
+
+        //return $user;
+        $user = Customer::where('user_id',$userid)->first();
+        if(!is_null($user))
+        {
+            $result->email = $user->email;
+            SendResultsEmail::dispatch($result);
+        }
+
+        //return (new ResultSent((object)$data))->render();
 
         return $body;
 
