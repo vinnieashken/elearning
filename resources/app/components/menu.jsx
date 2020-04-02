@@ -3,7 +3,7 @@ import {Link, Switch, Route} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
-import {API, DIR, ENV, APPNAME, PUBLIC_URL} from "../common/constants";
+import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION} from "../common/constants";
 import { useSelector } from 'react-redux'
 import { fetchSubscription } from "../common/actions";
 import { useDispatch } from "react-redux";
@@ -336,7 +336,7 @@ export default function (props) {
                                         <Switch>
                                             <Route exact={true} path={props.match.url}
                                                    render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
-                                            <Route exact={true} path={`${props.match.url}signin`}
+                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}signin`}
                                                    render={(props) => <Login{...props} setUser={setUser}/>}/>
                                             <Route exact={true} path={`${props.match.url}signup`}
                                                    render={(props) => <Register{...props} setUser={setUser}/>}/>
