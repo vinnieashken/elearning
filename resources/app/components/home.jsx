@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
-import {API, APPNAME, DIR, PUBLIC_URL} from "../common/constants";
+import {API, APPNAME, ENV, PUBLIC_URL} from "../common/constants";
 import moment from "moment";
 
 const images = [
@@ -69,8 +69,8 @@ export default function (props) {
                                             <h5 className="slide-text animated fadeIn">We make learning easy, fun,
                                                 engaging and
                                                 accessible for every child</h5>
-                                            <a href="#" className="btn btn-lg btn-common animated fadeInUp">Get
-                                                Started</a>
+                                            <Link to={`${ENV}signin`} className="btn btn-lg btn-common animated fadeInUp">Get
+                                                Started</Link>
                                             <a href="#" className="btn btn-lg btn-border animated fadeInUp">Learn
                                                 More</a>
                                         </div>
