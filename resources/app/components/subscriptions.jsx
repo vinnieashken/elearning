@@ -74,50 +74,29 @@ export default function (props) {
                 <div className="container mt-5">
                     <div className="row">
                         <div className="col-md-12">
-                            <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">Our Pricing
-                                Plans</h2>
+                            <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">Our Membership Plans</h2>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-lg-4 col-md-6 col-sm-12">
-                            <div className="card daily">
-                                <h5 className="card-header text-center">Daily</h5>
-                                <div className="card-body">
-                                    <h5 className="card-title text-center">Ksh. 30</h5>
-                                    <h6 className="card-title text-center">Also Recieve</h6>
-                                    <p className="card-text text-center">- Complimentary e-paper.<br />- Regular email bulletins.</p>
-                                    <div className="text-center">
-                                        <Link to={`${ENV}subscription/payment`} className="btn btn-primary">Select Plan</Link>
+                        {
+                            subscriptions.map(el => {
+                                return (
+                                    <div className="col-lg-4 col-md-6 col-sm-12">
+                                        <div className="card daily">
+                                            <h5 className="card-header text-center">{el.subscription}</h5>
+                                            <div className="card-body">
+                                                <h5 className="card-title text-center">Ksh. {el.cost}</h5>
+                                                <h6 className="card-title text-center">Also Recieve</h6>
+                                                <p className="card-text text-center">- Complimentary e-paper.<br />- Regular email bulletins.</p>
+                                                <div className="text-center">
+                                                    <Link to={`${ENV}subscription/payment`} className="btn btn-primary">Select Plan</Link>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-12">
-                            <div className="card monthly">
-                                <h5 className="card-header text-center">Monthly</h5>
-                                <div className="card-body">
-                                    <h5 className="card-title text-center">Ksh. 300</h5>
-                                    <h6 className="card-title text-center">Also Recieve</h6>
-                                    <p className="card-text text-center">- Complimentary e-paper.<br />- Regular email bulletins.</p>
-                                    <div className="text-center">
-                                        <Link to={`${ENV}subscription/payment`} className="btn btn-primary">Select Plan</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-12">
-                            <div className="card yearly">
-                                <h5 className="card-header text-center">Yearly</h5>
-                                <div className="card-body">
-                                    <h5 className="card-title text-center">Ksh. 3000</h5>
-                                    <h6 className="card-title text-center">Also Recieve</h6>
-                                    <p className="card-text text-center">- Complimentary e-paper.<br />- Regular email bulletins.</p>
-                                    <div className="text-center">
-                                        <Link to={`${ENV}subscription/payment`} className="btn btn-primary">Select Plan</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>

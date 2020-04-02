@@ -5,7 +5,7 @@ import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
 import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION} from "../common/constants";
 import { useSelector } from 'react-redux'
-import { fetchSubscription } from "../common/actions";
+import { fetchSubscription, fetchSubjects } from "../common/actions";
 import { useDispatch } from "react-redux";
 
 const Login = Loadable({
@@ -74,9 +74,9 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
-    const [subjects, setSubjects] = useState([]);
     const [classes, setClasses] = useState([]);
     const subscription = useSelector(state => state.subscription);
+    const subjects = useSelector(state => state.subjects);
 
     const dispatch = useDispatch();
 
@@ -84,8 +84,7 @@ export default function (props) {
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
-        console.log(props);
-        getSubjects();
+        dispatch(fetchSubjects());
         getClasses();
     }, []);
 
@@ -126,26 +125,6 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setClasses(res);
-                setLoading(false);
-            }.bind(this)
-        })
-    };
-    const getSubjects = () => {
-        $.ajax({
-            url: `${API}/subjects/${props.match.params.hasOwnProperty('class') ? `class/${props.match.params.class}` : 'list'}`,
-            // url: `${API}/subjects/class/{class_id}`,
-            method: 'GET',
-            error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
-                setLoading(false);
-                setMessage(true);
-                setMessageType('alert alert-danger');
-                setResponse(response);
-            }.bind(this),
-            success: function (res) {
-                setSubjects(res);
                 setLoading(false);
             }.bind(this)
         })

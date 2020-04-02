@@ -14,3 +14,4 @@ export const API = `https://www.standardmedia.co.ke/elearning/public/api`;
 
 
 export const SUBSCRIPTION_LOADED = "SUBSCRIPTION_LOADED";
+export const SUBJECTS_LOADED = "SUBJECTS_LOADED";
