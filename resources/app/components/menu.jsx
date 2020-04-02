@@ -70,12 +70,10 @@ const Payment = Loadable({
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
-    const [percentage, setPercentage] = useState(0);
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
-    // const [subscription, setSubscription] = useState({});
     const [subjects, setSubjects] = useState([]);
     const [classes, setClasses] = useState([]);
     const subscription = useSelector(state => state.subscription);
@@ -86,6 +84,7 @@ export default function (props) {
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
+        debugger;
         getSubjects();
         getClasses();
     }, []);
