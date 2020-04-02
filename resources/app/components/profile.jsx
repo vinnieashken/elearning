@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import moment from "moment";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
+import modules from "./modules";
+import Loading from "../common/loading";
 const { SearchBar } = Search;
 
 export default function (props) {
@@ -12,11 +14,40 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const [modules, setModules] = useState([]);
+    const [percentage, setPercentage] = useState(0);
     const [subscriptions, setSubscriptions] = useState([]);
 
     useEffect((e) => {
-            getSubscription();
+        getSubscription();
+        getModules();
     }, []);
+
+    const getModules = () => {
+        $.ajax({
+            url: `${API}/modules/user/${props.user.id}`,
+            // url: `${API}/subjects/class/{class_id}`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr['responseText'])['message'];
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setModules(res);
+                let percentage = 0;
+                res.forEach((el) => {
+                    percentage += parseFloat( el.percentage)
+                });
+                let marks = parseFloat(percentage/(res.length)).toFixed(2)
+                setPercentage(isNaN(marks) ? 0 : marks);
+            }.bind(this)
+        })
+    };
 
     const getSubscription = () => {
         $.ajax({
@@ -40,100 +71,102 @@ export default function (props) {
 
     return (
         <React.Fragment>
-            <div className="page-title">
-                <div className="row justify-content-between align-items-center">
-                    <div
-                        className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-                        <div className="d-inline-block">
-                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">My profile</h5>
-                        </div>
-                    </div>
-                    <div className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end">
-                        <div className="actions actions-dark d-inline-block">
-                            {/*<a href="#" className="action-item ml-md-4">*/}
-                            {/*    <i className="fa fa-file-export mr-2" />Export*/}
-                            {/*</a>*/}
-                            <a href="#" className="action-item ml-3">
-                                <i className="fa fa-cog mr-2" />Settings
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="card card-fluid">
-                        <div className="card-header">
-                            <div className="row align-items-center">
-                                <div className="col-auto">
-                                    <a href="#" className="avatar rounded-circle">
-                                        {/*<img alt="Image placeholder" src="../../assets/img/theme/light/team-3-800x800.jpg" className="" />*/}
-                                    </a>
+            <div id="about" className="section-padding mt-5 profile">
+                <div className="container mt-5">
+                    {
+                        loading ? <Loading/> :
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <div className="sticky-top pt-md-5">
+                                        <div className="mt-5 pt-5 d-none d-md-block d-lg-block" />
+                                        <table className="table mb-4 border-0">
+                                            <thead className="border-0">
+                                            <tr className="border-0">
+                                                <th className="border-0">
+                                                    <div className="float-left text-center">
+                                                        <h6>Average score for the last 30 Days</h6>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr className="border-0">
+                                                <td className="border-0">
+                                                    <h6 className="text-center">
+                                                        <font class="score">{`${percentage}%`}</font>
+                                                    </h6>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div className="col ml-md-n2">
-                                    <a href="#!" className="d-block h6 mb-0">{props.user.name}</a>
-                                    <small className="d-block text-muted">{props.user.email}</small>
-                                    <small className="d-block text-muted">{props.user.phone}</small>
+                                <div className="col-md-9">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <h2 className="section-title wow fadeInDown animated text-center"
+                                                data-wow-delay="0.3s">Exam Profile</h2>
+                                        </div>
+                                    </div>
+                                    <table className="table">
+                                        <thead className="thead-dark text-center">
+                                        <tr>
+                                            <th scope="col">Class</th>
+                                            <th scope="col">Subject</th>
+                                            <th scope="col">Exam</th>
+                                            <th scope="col">Score</th>
+                                            <th scope="col">Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {modules.map(el => {
+                                            return (
+                                                <tr>
+                                                    <th scope="row">{el.class}</th>
+                                                    <td>{el.subject}</td>
+                                                    <td>{el.module}</td>
+                                                    <td>{el.score}</td>
+                                                    <td>{el.percentage}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                        </tbody>
+                                    </table>
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <h2 className="section-title wow fadeInDown animated text-center mt-4"
+                                                data-wow-delay="0.3s">
+                                                Transactions</h2>
+                                        </div>
+                                    </div>
+                                    <table className="table">
+                                        <thead className="thead-dark text-center">
+                                        <tr>
+                                            <th scope="col">Order Number</th>
+                                            <th scope="col">Receipt Number</th>
+                                            <th scope="col">Package</th>
+                                            <th scope="col">Expiry</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            subscriptions.map(el => {
+                                                return (
+                                                    <tr>
+                                                        <th scope="row">{el.ordernumber}</th>
+                                                        <td>{el.receipt}</td>
+                                                        <td>{el.package}</td>
+                                                        <td>{el.expiry_date}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div className="col-auto">
-                                    <button type="button" className="btn btn-xs btn-primary btn-icon rounded-pill">
-                                        <span className="btn-inner--icon">
-                                            <i className="far fa-edit" />
-                                        </span>
-                                        {/*<span className="btn-inner--text">Edit</span>*/}
-                                    </button>
-                                </div>
+
                             </div>
-                        </div>
-                        <div className="card-body">
-                           <div>
-                               {
-
-                                   loading ?
-                                       <div className="text-center mt-4">
-                                           <ClipLoader color={'#cf2027'} />
-                                       </div> :
-
-                                       <div className="row">
-                                           <div className="col-md-12">
-                                               <ToolkitProvider
-                                                   keyField="id"
-                                                   data={ subscriptions }
-                                                   columns={
-                                                       [
-                                                           {dataField: 'ordernumber',      text: 'Order',    sort: true},
-                                                           {dataField: 'receipt',        text: 'Receipt',      sort: true},
-                                                           {dataField: 'method',        text: 'Method',      sort: true},
-                                                           {dataField: 'package',   text: 'Package',      sort: true},
-                                                           {dataField: 'startdate',   text: 'Start Date',      sort: true},
-                                                           {dataField: 'expiry_date',   text: 'Expiry Date',      sort: true},
-                                                       ]
-                                                   } search={true}>
-                                                   {
-                                                       props =>
-                                                           (
-                                                               <React.Fragment>
-                                                                   <div className='row  mb-3'>
-                                                                       <div className='col-md-12'>
-                                                                           <SearchBar className='col-md-4 float-right mb-3' { ...props.searchProps } />
-                                                                       </div>
-                                                                   </div>
-                                                                   <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
-
-                                                               </React.Fragment>
-                                                           )
-                                                   }
-                                               </ToolkitProvider>
-                                           </div>
-                                       </div>
-
-                               }
-                           </div>
-                        </div>
-                        <div className="card-footer">
-
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </React.Fragment>

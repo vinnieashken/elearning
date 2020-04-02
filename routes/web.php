@@ -48,22 +48,10 @@ Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
     return view('cms.modules.setquestion',['module_id'=>$postId,'title'=>$title]);
 });
 
-Route::get('/', function () {
-    return view('landing');
-});
-Route::get('/signin', function() {
-    return view('app');
-});
+Route::get('{any}', function ($any = null) {
 
-Route::get('/signup', function() {
     return view('app');
-});
-
-Route::get('/app/{path?}', [
-    'uses' => function() {return view('app');},
-    'as' => '*',
-    'where' => ['path' => '^((?!api|static).)*$']
-]);
+})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|get_rates|login|register).)*$');
 
 
 Auth::routes();

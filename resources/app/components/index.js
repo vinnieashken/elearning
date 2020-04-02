@@ -7,15 +7,8 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import Loadable from 'react-loadable';
 import Loading from "../common/loadingWhite";
 
-const Login = Loadable({
-    loader: () => import('./login'),
-    loading: Loading
-});
-
-const Register = Loadable({
-    loader: () => import('./register'),
-    loading: Loading
-});
+import { Provider } from 'react-redux'
+import store from '../common/store'
 
 const Menu = Loadable({
     loader: () => import('./menu'),
@@ -24,10 +17,10 @@ const Menu = Loadable({
 
 ReactDOM.render(
     (
-    <BrowserRouter >
-    <Route exact={true} path={`${ENV}signin`} component={Login} />
-    <Route exact={true} path={`${ENV}signup`} component={Register} />
-<Route path={`${ENV}app`} component={Menu} />
-</BrowserRouter>
-),
-document.getElementById('app'));
+        <Provider store={store}>
+            <BrowserRouter >
+                <Route path={`${ENV}`} component={Menu} />
+            </BrowserRouter>
+        </Provider>
+    ),
+    document.getElementById('app'));
