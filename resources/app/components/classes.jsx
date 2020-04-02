@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {API, DIR, PUBLIC_URL} from "../common/constants";
+import {API, DIR, ENV} from "../common/constants";
 import Loading from "../common/loading";
 import {Link} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
@@ -11,6 +11,9 @@ import moment from "moment";
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [classes, setClasses] = useState([]);
+    const [message, setMessage] = useState(false);
+    const [messageType, setMessageType] = useState( '');
+    const [response, setResponse] = useState('');
 
     useEffect(() => {
         getClasses();
@@ -43,7 +46,7 @@ export default function (props) {
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${DIR}/exams/classes/${row.id}/subjects`} className="action-item mr-2" data-toggle="tooltip" title=""
+                <Link to={`${ENV}exams/classes/${row.id}/subjects`} className="action-item mr-2" data-toggle="tooltip" title=""
                       data-original-title="Take Exam">
                     <i className="fa fa-external-link-alt" />
                 </Link>
@@ -60,59 +63,63 @@ export default function (props) {
 
     return (
         <React.Fragment>
-            <div className="page-title">
-                <div className="row justify-content-between align-items-center">
-                    <div
-                        className="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
-                        <div className="d-inline-block">
-                            <h5 className="h4 d-inline-block font-weight-400 mb-0 text-white">Classes</h5>
-                        </div>
-                        {/*<div className="align-items-center ml-4 d-inline-flex">*/}
-                        {/*    <span className="h4 text-info mb-0 mr-2">9</span>*/}
-                        {/*    <span className="text-sm opacity-7 text-white">New products</span>*/}
-                        {/*</div>*/}
-                        {/*<a href="card-listing.html" className="text-sm text-info d-none d-lg-inline-block ml-4">See*/}
-                        {/*    cards</a>*/}
-                    </div>
-                </div>
-            </div>
-            <div className='card'>
-                <div className="mt-3">
+            <div id="about" className="section-padding mt-5 profile">
+                <div className="container mt-5">
                     {
+                        loading ? <Loading/> :
+                            <React.Fragment>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <h2 className="section-title wow fadeInDown animated text-center"
+                                            data-wow-delay="0.3s">Classes</h2>
+                                    </div>
 
-                        loading ?
-                            <div className="text-center mt-4">
-                                <ClipLoader color={'#cf2027'} />
-                            </div> :
-
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <ToolkitProvider
-                                        keyField="id"
-                                        data={ classes }
-                                        columns={
-                                            [
-                                                {dataField: 'class',      text: 'Class',    sort: true},
-                                                {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
-                                            ]
-                                        } search={true}>
-                                        {
-                                            props =>
-                                                (
-                                                    <React.Fragment>
-                                                        <div className='row  mb-3'>
-                                                            <div className='col-md-12'>
-                                                                <SearchBar className='col-md-4 float-right mb-3' { ...props.searchProps } />
-                                                            </div>
-                                                        </div>
-                                                        <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
-
-                                                    </React.Fragment>
-                                                )
-                                        }
-                                    </ToolkitProvider>
                                 </div>
-                            </div>
+                                <div className='row'>
+                                    <div className='col-md-12'>
+                                        {
+                                            message ?
+                                                <div className="text-center mt-2">
+                                                    <div className={messageType} role="alert">
+                                                        <div className="alert-message">
+                                                            {response}
+                                                        </div>
+                                                    </div>
+                                                </div> : <ToolkitProvider
+                                                    keyField="id"
+                                                    data={classes}
+                                                    columns={
+                                                        [
+                                                            {dataField: 'class', text: 'Class', sort: true},
+                                                            {
+                                                                dataField: 'created_at',
+                                                                text: 'Select',
+                                                                sort: true,
+                                                                formatter: actionButton
+                                                            },
+                                                        ]
+                                                    } search={true}>
+                                                    {
+                                                        props =>
+                                                            (
+                                                                <React.Fragment>
+                                                                    <div className='row  mb-3'>
+                                                                        <div className='col-md-12'>
+                                                                            <SearchBar
+                                                                                className='col-md-4 float-right mb-3' {...props.searchProps} />
+                                                                        </div>
+                                                                    </div>
+                                                                    <BootstrapTable {...props.baseProps}
+                                                                                    wrapperClasses="table-responsive"/>
+
+                                                                </React.Fragment>
+                                                            )
+                                                    }
+                                                </ToolkitProvider>
+                                        }
+                                    </div>
+                                </div>
+                            </React.Fragment>
 
                     }
                 </div>

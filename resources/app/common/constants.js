@@ -1,4 +1,5 @@
 
+export const APPNAME = `Tutor-Soma`;
 const ORIGIN  = `${window.origin}`;
 
 export const environment = env.environment;
@@ -9,3 +10,6 @@ export const ENV = (environment === `production`) ? '/elearning/public/' : '/';
 
 // VAS
 export const API = `https://www.standardmedia.co.ke/elearning/public/api`;
+
+
+export const SUBSCRIPTION_LOADED = "SUBSCRIPTION_LOADED";
