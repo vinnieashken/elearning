@@ -17,6 +17,7 @@ class CreateSubjectsTable extends Migration
             $table->id();
             $table->integer('class_id')->unsigned();
             $table->string('subject');
+            $table->string('thumburl')->nullable();
             $table->timestamps();
         });
     }
