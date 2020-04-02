@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {API, DIR, ENV, PUBLIC_URL} from "../common/constants";
+import {API, DIR, ENV, PUBLIC_URL, SUBJECTS_LOADED, SUBSCRIPTION_DELETED} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
@@ -21,6 +21,7 @@ export default function Login(props) {
     useEffect(() => {
         localStorage.clear();
         props.setUser({});
+        dispatch ({ type: SUBSCRIPTION_DELETED, payload: [] });
         console.log(`${JSON.stringify(env)}`)
     }, []);
 
@@ -75,6 +76,18 @@ export default function Login(props) {
                                 <div className="card weekly">
                                     <h5 className="card-header text-center">WELCOME</h5>
                                     <div className="card-body">
+                                        {
+                                            message ?
+                                                <div className='col-md-12'>
+                                                    <div className="text-center mt-2">
+                                                        <div className={messageType} role="alert">
+                                                            <div className="alert-message">
+                                                                {response}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> : ''
+                                        }
                                         <div className="input-group mb-3 mt-3">
                                             <div className="input-group-prepend">
                                             <span className="input-group-text">
@@ -111,7 +124,9 @@ export default function Login(props) {
                                                     {/*    Forgot Password?*/}
                                                     {/*    <font class="green">Reset Password</font>*/}
                                                     {/*</h6>*/}
-                                                    <Link className="card-text text-center green" to={`${ENV}signup`}>Sign Up</Link>
+                                                    <h6 className="card-title text-center mt-4">Not yet registered?<br />
+                                                        <Link class="green" to={`${ENV}signup`}>Register</Link>
+                                                    </h6>
                                                 </React.Fragment>
                                         }
                                     </div>

@@ -179,16 +179,25 @@ export default function (props) {
                                         {
                                             subjects.slice(0, 4).map(el => {
                                                 return (
-                                                    <li><a href="#">{el.subject}</a></li>
+                                                    <li><Link to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link></li>
                                                 )
                                             })
                                         }
                                     </ul>
                                 </div>
-                                <a href="#">KCPE</a>
+                                <Link to={`${ENV}exams/modules`}>EXAMINATION PAPERS</Link>
                                 {/*<a href="#">KCSE</a>*/}
-                                <a href="#">LOGIN</a>
-                                <a href="#">REGISTER</a>
+                                {
+                                    user.hasOwnProperty('id') ?
+                                        <React.Fragment>
+                                            <Link to={`${ENV}profile`}>PROFILE</Link>
+                                            <Link to={`${ENV}signin`}>LOGOUT</Link>
+                                        </React.Fragment> :
+                                        <React.Fragment>
+                                            <Link to={`${ENV}signin`}>LOGIN</Link>
+                                            <Link to={`${ENV}signup`}>REGISTER</Link>
+                                        </React.Fragment>
+                                }
                             </div>
 
                             <div className="collapse navbar-collapse flex-column " id="navbar">
@@ -230,14 +239,14 @@ export default function (props) {
                                             {
                                                 subjects.slice(0, 4).map(el => {
                                                     return (
-                                                        <a className="dropdown-item" href="#">{el.subject}</a>
+                                                        <Link className="dropdown-item" to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link>
                                                     )
                                                 })
                                             }
                                         </div>
                                     </li>
                                     <li className="nav-item ">
-                                        <a className="nav-link" href="#">KCPE </a>
+                                        <Link className="nav-link" to={`${ENV}exams/modules`}>EXAMINATION PAPERS </Link>
                                     </li>
                                     {/*<li className="nav-item ">*/}
                                     {/*    <a className="nav-link" href="#">KCSE </a>*/}
@@ -319,8 +328,8 @@ export default function (props) {
                                                    render={(props) => <Login{...props} setUser={setUser}/>}/>
                                             <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}signup`}
                                                    render={(props) => <Register{...props} setUser={setUser}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}subscription/payment`}
-                                                   render={(props) => <Payment {...props} user={user}/>}/>
+                                            {/*<Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}subscription/payment`}*/}
+                                            {/*       render={(props) => <Payment {...props} user={user}/>}/>*/}
                                             <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}*`}
                                                    render={(props) => <Subscriptions {...props} user={user}/>}/>
                                         </Switch>
