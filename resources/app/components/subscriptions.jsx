@@ -89,7 +89,10 @@ export default function (props) {
                                                 <h6 className="card-title text-center">Also Recieve</h6>
                                                 <p className="card-text text-center">- Complimentary e-paper.<br />- Regular email bulletins.</p>
                                                 <div className="text-center">
-                                                    <Link to={`${ENV}subscription/payment`} className="btn btn-primary">Select Plan</Link>
+                                                    <Link to={ props.user.hasOwnProperty('id') ? `${ENV}subscription/payment` :
+                                                        {pathname: `${ENV}signin`, state: {
+                                                        next: `${ENV}subscription/payment`
+                                                        }}} className="btn btn-primary">Select Plan</Link>
                                                 </div>
                                             </div>
                                         </div>

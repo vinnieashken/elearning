@@ -47,9 +47,8 @@ export default function (props) {
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}exams/exam/${row.id}`} className="action-item mr-2" data-toggle="tooltip" title=""
-                      data-original-title="Take Exam">
-                    <i className="fa fa-external-link-alt" />
+                <Link to={`${ENV}exams/exam/${row.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
+                    Take Test
                 </Link>
                 {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
                 {/*    <i className="fa fa-pencil-alt"></i>*/}
@@ -104,7 +103,7 @@ export default function (props) {
                                                                 <React.Fragment>
                                                                     <div className='row  mb-3'>
                                                                         <div className='col-md-12'>
-                                                                            <SearchBar className='col-md-4 float-right mb-3' { ...props.searchProps } />
+                                                                            <SearchBar className='col-md-4 float-right mb-3 form-control form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>

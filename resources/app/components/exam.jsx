@@ -256,16 +256,20 @@ export default function (props) {
                                                         data-wow-delay="0.3s">You May Also Like</h2>
                                                     <div className="row">
                                                         {
-                                                            subjects.sort(() => 0.5 - Math.random(0, 3)).slice().map((el, index) => {
+                                                            subjects.sort(() => 0.5 - Math.random(0, 3)).slice(0, 4).map((el, index) => {
                                                                 return (
                                                                     <div className="col-lg-3 col-md-6 col-xs-6 col-sm-6">
                                                                         <div className="featured-box-item">
                                                                             <div className="featured-icon">
-                                                                                <img src={images[index]} className="icons" alt={APPNAME} />
+                                                                                <Link to={`${ENV}exams/subjects/${el.id}/modules`}>
+                                                                                    <img src={images[index]} className="icons" alt={APPNAME} />
+                                                                                </Link>
                                                                             </div>
                                                                             <div className="featured-content">
-                                                                                <h4>{el.subject}</h4>
-                                                                                <p>Paper 1 Grade 8</p>
+                                                                                <Link to={`${ENV}exams/subjects/${el.id}/modules`}>
+                                                                                    <h4>{el.subject}</h4>
+                                                                                    <p>Paper 1 Grade 8</p>
+                                                                                </Link>
                                                                             </div>
                                                                         </div>
                                                                     </div>

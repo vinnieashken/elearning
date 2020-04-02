@@ -1,4 +1,4 @@
-import {SUBJECTS_LOADED, SUBSCRIPTION_LOADED} from "./constants";
+import {SUBJECTS_LOADED, SUBSCRIPTION_LOADED, SUBSCRIPTION_DELETED} from "./constants";
 
 const initialState = {
     subscription: {},
@@ -12,6 +12,11 @@ function rootReducer(state = initialState, action) {
         case SUBSCRIPTION_LOADED:
             return Object.assign({}, state, {
                 subscription: action.payload
+            });
+
+        case SUBSCRIPTION_DELETED:
+            return Object.assign({}, state, {
+                subscription: {}
             });
 
         case SUBJECTS_LOADED:
