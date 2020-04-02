@@ -84,7 +84,7 @@ export default function (props) {
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
-        debugger;
+        console.log(props);
         getSubjects();
         getClasses();
     }, []);
