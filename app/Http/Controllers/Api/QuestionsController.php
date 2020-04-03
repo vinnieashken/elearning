@@ -99,7 +99,7 @@ class QuestionsController extends Controller
         $body = $response->getBody()->getContents();
         $result = json_decode($body);
 
-        return ['test'=> 33];
+        return ['test'=> $result];
 
         $marks = new Marks();
         $existing = $marks->where('marks_user_id',$userid)->where('marks_module_id',$moduleid)->first();
