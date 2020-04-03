@@ -82,7 +82,7 @@ class QuestionsController extends Controller
             }
         }
 
-        return $answers;
+        //return $answers;
 
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
         try {
@@ -99,7 +99,7 @@ class QuestionsController extends Controller
         $body = $response->getBody()->getContents();
         $result = json_decode($body);
 
-        return [];
+        return ['test'=> 33];
 
         $marks = new Marks();
         $existing = $marks->where('marks_user_id',$userid)->where('marks_module_id',$moduleid)->first();
