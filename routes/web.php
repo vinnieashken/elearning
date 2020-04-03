@@ -51,7 +51,7 @@ Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
 Route::get('{any}', function ($any = null) {
 
     return view('app');
-})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|get_rates|login|register).)*$');
+})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|get_rates|admin|register|login).)*$');
 
 
 Auth::routes();
