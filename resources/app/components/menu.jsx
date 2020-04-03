@@ -177,9 +177,7 @@ export default function (props) {
                                         </React.Fragment>
                                 }
                             </div>
-
                             <div className="collapse navbar-collapse flex-column " id="navbar">
-
                                 <ul className="navbar-nav  w-100 justify-content-center p-0">
                                     <li className="nav-item active p-0 m-0">
                                         <a className="nav-link" href="#">
@@ -253,16 +251,12 @@ export default function (props) {
                                                 <li className="nav-item ">
                                                     <Link className="nav-link login" to={`${ENV}signin`}>LOGIN</Link>
                                                 </li>
-
                                                 <li className="nav-item ">
                                                     <Link className="nav-link login" to={`${ENV}signin`}>Get 1 day for Ksh.30 </Link>
                                                 </li>
                                             </React.Fragment>
                                     }
-
                                 </ul>
-
-
                             </div>
                         </nav>
                     </header>

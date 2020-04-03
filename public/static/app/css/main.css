@@ -5353,3 +5353,7 @@ em {
     cursor: pointer;
     color: gainsboro;
 }
+
+.toggled{
+    width: 250px;
+}
