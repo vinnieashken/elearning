@@ -88,28 +88,6 @@ export default function (props) {
         getClasses();
     }, []);
 
-    const getSubscription = () => {
-        $.ajax({
-            url: `${API}/payments/subscription/user/${user.id}`,
-            method: 'GET',
-            error: function (xhr, status, error) {
-                const response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                setLoading(false);
-                setMessage(true);
-                setMessageType('alert alert-danger');
-                setResponse(response);
-            }.bind(this),
-            success: function (res) {
-                setSubscription(res);
-                if (user.hasOwnProperty('name')) {
-                    getSubjects();
-                    getClasses();
-                }
-            }.bind(this)
-        })
-    };
-
-
     const getClasses = () => {
         $.ajax({
             url: `${API}/classes/list`,
@@ -292,47 +270,124 @@ export default function (props) {
                         loading ? <Loading/> :
                             <React.Fragment>
                                 {
-                                    subscription.hasOwnProperty('id') ?
-                                        <Switch>
-                                            <Route exact={true} path={props.match.url}
-                                                   render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
-                                            <Route exact={true} path={`${props.match.url}signin`}
-                                                   render={(props) => <Login{...props} setUser={setUser} getSubscription={getSubscription()}/>}/>
-                                            <Route exact={true} path={`${props.match.url}signup`}
-                                                   render={(props) => <Register{...props} setUser={setUser} getSubscription={getSubscription()}/>}/>
-                                            <Route exact={true} path={`${props.match.url}profile`}
-                                                   render={(props) => <Profile {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}exams/classes`}
-                                                   render={(props) => <Classes {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}exams/subjects`}
-                                                   render={(props) => <Subjects {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}exams/classes/:class/subjects`}
-                                                   render={(props) => <Subjects {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}exams/modules`}
-                                                   render={(props) => <Modules {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
-                                                   render={(props) => <Modules {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}exams/done`}
-                                                   render={(props) => <CompletedExams {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}exams/exam/:module`}
-                                                   render={(props) => <Exam {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}subscriptions`}
-                                                   render={(props) => <Subscriptions {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}subscription/payment`}
-                                                   render={(props) => <Payment {...props} user={user}/>}/>
-                                        </Switch> :
-                                        <Switch>
-                                            <Route exact={true} path={props.match.url}
-                                                   render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
-                                            <Route exact={true} path={`${props.match.url}signin`}
-                                                   render={(props) => <Login{...props} setUser={setUser}/>}/>
-                                            <Route exact={true} path={`${props.match.url}signup`}
-                                                   render={(props) => <Register{...props} setUser={setUser}/>}/>
-                                            {/*<Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}subscription/payment`}*/}
-                                            {/*       render={(props) => <Payment {...props} user={user}/>}/>*/}
-                                            <Route exact={true} path={`${props.match.url}*`}
-                                                   render={(props) => <Subscriptions {...props} user={user}/>}/>
-                                        </Switch>
+                                    <Switch>
+                                        <Route exact={true} path={props.match.url}
+                                               render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
+                                        <Route exact={true} path={`${props.match.url}signin`}
+                                               render={(props) => <Login{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}signup`}
+                                               render={(props) => <Register{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}profile`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                    : <Profile {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/classes`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Classes {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/subjects`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Subjects {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/classes/:class/subjects`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Subjects {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/modules`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Modules {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Modules {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/done`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <CompletedExams {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/exam/:module`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Exam {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}subscriptions`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Subscriptions {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}subscription/payment`}
+                                               render={(props) =>
+                                                   !user.hasOwnProperty('id') ?
+                                                       props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                                       : <Payment {...props} user={user}/>
+                                               }/>
+                                    </Switch>
                                 }
                                 <ul className="nav from text-center bg-light d-flex">
 

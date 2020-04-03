@@ -8,9 +8,9 @@
     <link rel="icon" href="{{asset('favicon.ico')}}">
 
     <title>Tutor-Soma</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+{{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">--}}
     <link href="{{ asset('static/app/css/bootstrap.min.css?').date('YmdHis') }}" rel="stylesheet">
-{{--    <link href="{{ asset('static/app/css/font-awesome.min.css?').date('YmdHis') }}" rel="stylesheet">--}}
+    <link href="{{ asset('static/app/css/font-awesome.min.css?').date('YmdHis') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/animate.css?').date('YmdHis') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/main.css?').date('YmdHis') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/extras.css?').date('YmdHis') }}" rel="stylesheet">

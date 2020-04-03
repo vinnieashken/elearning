@@ -19,8 +19,17 @@ export default function (props) {
     const [subscriptions, setSubscriptions] = useState([]);
 
     useEffect((e) => {
-        getSubscription();
-        getModules();
+        if (props.user.hasOwnProperty('id')) {
+            getSubscription();
+            getModules();
+        } else {
+            props.history.push({
+                pathname: `${ENV}signin`,
+                state: {
+                    next: props.location.pathname
+                },
+            });
+        }
     }, []);
 
     const getModules = () => {
@@ -105,7 +114,7 @@ export default function (props) {
                                     <div className="row">
                                         <div className="col-md-12">
                                             <h2 className="section-title wow fadeInDown animated text-center"
-                                                data-wow-delay="0.3s">Exam Profile</h2>
+                                                data-wow-delay="0.3s">Past Performance</h2>
                                         </div>
                                     </div>
                                     <table className="table">
@@ -121,7 +130,7 @@ export default function (props) {
                                         <tbody>
                                         {modules.map(el => {
                                             return (
-                                                <tr>
+                                                <tr key={`m${el.id}`}>
                                                     <th scope="row">{el.class}</th>
                                                     <td>{el.subject}</td>
                                                     <td>{el.module}</td>
@@ -152,7 +161,7 @@ export default function (props) {
                                         {
                                             subscriptions.map(el => {
                                                 return (
-                                                    <tr>
+                                                    <tr key={`s${el.id}`}>
                                                         <th scope="row">{el.ordernumber}</th>
                                                         <td>{el.receipt}</td>
                                                         <td>{el.package}</td>

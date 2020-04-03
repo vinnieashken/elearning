@@ -121,6 +121,7 @@ module.exports = (env, argv) => {
             ],
         }
     }
+
     config.plugins.push(
         new webpack.DefinePlugin({
             'env': constants[argv.mode],

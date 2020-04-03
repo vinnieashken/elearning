@@ -46,9 +46,8 @@ export default function (props) {
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}exams/classes/${row.id}/subjects`} className="action-item mr-2" data-toggle="tooltip" title=""
-                      data-original-title="Take Exam">
-                    <i className="fa fa-external-link-alt" />
+                <Link to={`${ENV}exams/classes/${row.id}/subjects`} className="btn btn-sm btn-rounded btn-success-filled" >
+                    Choose Subject
                 </Link>
                 {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
                 {/*    <i className="fa fa-pencil-alt"></i>*/}
@@ -66,18 +65,18 @@ export default function (props) {
             <div id="about" className="section-padding mt-5 profile">
                 <div className="container mt-5">
                     {
-                        loading ? <Loading/> :
-                            <React.Fragment>
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <h2 className="section-title wow fadeInDown animated text-center"
-                                            data-wow-delay="0.3s">Classes</h2>
-                                    </div>
-
+                        <React.Fragment>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h2 className="section-title wow fadeInDown animated text-center mt-5"
+                                        data-wow-delay="0.3s">Classes</h2>
                                 </div>
-                                <div className='row'>
-                                    <div className='col-md-12'>
-                                        {
+
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-12'>
+                                    {
+                                        loading ? <Loading/> :
                                             message ?
                                                 <div className="text-center mt-2">
                                                     <div className={messageType} role="alert">
@@ -116,10 +115,10 @@ export default function (props) {
                                                             )
                                                     }
                                                 </ToolkitProvider>
-                                        }
-                                    </div>
+                                    }
                                 </div>
-                            </React.Fragment>
+                            </div>
+                        </React.Fragment>
 
                     }
                 </div>
