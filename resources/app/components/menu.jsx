@@ -279,113 +279,162 @@ export default function (props) {
                                                render={(props) => <Register{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}profile`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       <Profile {...props} user={user}/>
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                    : <Profile {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/classes`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <Classes {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Classes {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/subjects`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <Subjects {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Subjects {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/classes/:class/subjects`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <Subjects {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Subjects {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/modules`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       // subscription.hasOwnProperty('id') ?
+                                                       <Modules {...props} user={user}/>
+                                                       // : props.history.push({
+                                                       //     pathname: `${ENV}subscriptions`,
+                                                       //     state: {
+                                                       //         next: props.location.pathname
+                                                       //     },
+                                                       // })
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Modules {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       // subscription.hasOwnProperty('id') ?
+                                                       <Modules {...props} user={user}/>
+                                                       // : props.history.push({
+                                                       //     pathname: `${ENV}subscriptions`,
+                                                       //     state: {
+                                                       //         next: props.location.pathname
+                                                       //     },
+                                                       // })
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Modules {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/done`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <CompletedExams {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <CompletedExams {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/exam/:module`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       // subscription.hasOwnProperty('id') ?
+                                                           <Exam {...props} user={user}/>
+                                                           // : props.history.push({
+                                                           //     pathname: `${ENV}subscriptions`,
+                                                           //     state: {
+                                                           //         next: props.location.pathname
+                                                           //     },
+                                                           // })
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Exam {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}subscriptions`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
+                                                   user.hasOwnProperty('id') ?
+                                                       <Subscriptions {...props} user={user}/> :
                                                        props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Subscriptions {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}subscription/payment`}
                                                render={(props) =>
-                                                   !user.hasOwnProperty('id') ?
-                                                       props.history.push({
+                                                   user.hasOwnProperty('id') ?
+                                                       <Payment {...props} user={user}/>
+                                                       : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
                                                                next: props.location.pathname
                                                            },
                                                        })
-                                                       : <Payment {...props} user={user}/>
                                                }/>
                                     </Switch>
                                 }

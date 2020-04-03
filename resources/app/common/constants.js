@@ -10,9 +10,10 @@ export const DIR = (environment === `production`) ? '/elearning/public/app' : '/
 export const ENV = (environment === `production`) ? '/' : '/';
 
 // VAS
-export const API = `https://www.standardmedia.co.ke/elearning/public/api`;
+export const API = `https://tutorsoma.standardmedia.co.ke/api`;
 
 
+export const NEXT_CHANGED = "NEXT_CHANGED";
 export const SUBSCRIPTION_LOADED = "SUBSCRIPTION_LOADED";
 export const SUBSCRIPTION_DELETED = "SUBSCRIPTION_DELETED";
 export const SUBJECTS_LOADED = "SUBJECTS_LOADED";
