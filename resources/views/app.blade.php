@@ -18,8 +18,13 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{asset('static/app/images/favicon/apple-icon-144x144.png')}}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{asset('static/app/images/favicon/apple-icon-152x152.png')}}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('static/app/images/favicon/apple-icon-180x180.png')}}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('static/app/images/favicon/android-icon-192x192.png')}}">
-    <link rel="icon" type="image/png" sizes="144x144"  href="{{asset('static/app/images/favicon/android-icon-144x144.png')}}">
+    <link rel="icon" type="image/png" sizes="36x36"  href="{{asset('static/app/images/favicon/Android/Icon-36.png')}}">
+    <link rel="icon" type="image/png" sizes="48x48"  href="{{asset('static/app/images/favicon/Android/Icon-48.png')}}">
+    <link rel="icon" type="image/png" sizes="72x72"  href="{{asset('static/app/images/favicon/Android/Icon-72.png')}}">
+    <link rel="icon" type="image/png" sizes="96x96"  href="{{asset('static/app/images/favicon/Android/Icon-96.png')}}">
+    <link rel="icon" type="image/png" sizes="144x144"  href="{{asset('static/app/images/favicon/Android/Icon-144.png')}}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('static/app/images/favicon/Android/Icon-192.png')}}">
+    <link rel="icon" type="image/png" sizes="512x512"  href="{{asset('static/app/images/favicon/Android/Icon-512.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('static/app/images/favicon/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('static/app/images/favicon/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
