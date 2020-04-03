@@ -19,6 +19,7 @@
     <link rel="apple-touch-icon" sizes="152x152" href="{{asset('static/app/images/favicon/apple-icon-152x152.png')}}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('static/app/images/favicon/apple-icon-180x180.png')}}">
     <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('static/app/images/favicon/android-icon-192x192.png')}}">
+    <link rel="icon" type="image/png" sizes="144x144"  href="{{asset('static/app/images/favicon/android-icon-144x144.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('static/app/images/favicon/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('static/app/images/favicon/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
@@ -39,6 +40,12 @@
 <body>
 <div class="main h-100 w-100" id="app" >
 </div>
+<noscript>
+    <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+    </div>
+</noscript>
 <script type="text/javascript" src="{{ asset('static/app/js/jquery-3.4.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('static/app/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('static/app/js/main.js') }}"></script>
