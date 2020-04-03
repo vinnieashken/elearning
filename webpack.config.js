@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const env = process.env.NODE_ENV;
+const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 const config = {
     mode: env || 'development'
@@ -37,6 +38,16 @@ const target_envs = {
     }
 };
 
+// module.exports = {
+//     // ...your other modifications,
+//     configureWebpack: config => {
+//         config.plugins = config.plugins.concat(
+//             new WebpackAssetsManifest({
+//                 output: 'asset-manifest.json'
+//             })
+//         )
+//     }
+// }
 
 module.exports = (env, argv) => {
 
@@ -126,6 +137,9 @@ module.exports = (env, argv) => {
         new webpack.DefinePlugin({
             'env': constants[argv.mode],
         }),
+        new WebpackAssetsManifest({
+            output: 'asset-manifest.json'
+        })
     );
 
 
