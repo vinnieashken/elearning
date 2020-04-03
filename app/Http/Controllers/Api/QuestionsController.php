@@ -82,6 +82,8 @@ class QuestionsController extends Controller
             }
         }
 
+        return $answers;
+
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
         try {
 
