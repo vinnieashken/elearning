@@ -1,7 +1,7 @@
 {
     "name": "Tutor-Soma Tu",
     "short_name" : "Soma",
-    "start_url": "?utm_source=homescreen",
+    "start_url": "/?utm_source=homescreen",
     "scope" : "./",
     "icons": [
         {
