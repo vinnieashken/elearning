@@ -296,41 +296,41 @@ export default function (props) {
                                         <Switch>
                                             <Route exact={true} path={props.match.url}
                                                    render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}signin`}
+                                            <Route exact={true} path={`${props.match.url}signin`}
                                                    render={(props) => <Login{...props} setUser={setUser} getSubscription={getSubscription()}/>}/>
                                             <Route exact={true} path={`${props.match.url}signup`}
                                                    render={(props) => <Register{...props} setUser={setUser} getSubscription={getSubscription()}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}profile`}
+                                            <Route exact={true} path={`${props.match.url}profile`}
                                                    render={(props) => <Profile {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}exams/classes`}
+                                            <Route exact={true} path={`${props.match.url}exams/classes`}
                                                    render={(props) => <Classes {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}exams/subjects`}
+                                            <Route exact={true} path={`${props.match.url}exams/subjects`}
                                                    render={(props) => <Subjects {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}exams/classes/:class/subjects`}
+                                            <Route exact={true} path={`${props.match.url}exams/classes/:class/subjects`}
                                                    render={(props) => <Subjects {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}exams/modules`}
+                                            <Route exact={true} path={`${props.match.url}exams/modules`}
                                                    render={(props) => <Modules {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}exams/subjects/:subject/modules`}
+                                            <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
                                                    render={(props) => <Modules {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}exams/done`}
+                                            <Route exact={true} path={`${props.match.url}exams/done`}
                                                    render={(props) => <CompletedExams {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}exams/exam/:module`}
+                                            <Route exact={true} path={`${props.match.url}exams/exam/:module`}
                                                    render={(props) => <Exam {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}subscriptions`}
+                                            <Route exact={true} path={`${props.match.url}subscriptions`}
                                                    render={(props) => <Subscriptions {...props} user={user}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}subscription/payment`}
+                                            <Route exact={true} path={`${props.match.url}subscription/payment`}
                                                    render={(props) => <Payment {...props} user={user}/>}/>
                                         </Switch> :
                                         <Switch>
                                             <Route exact={true} path={props.match.url}
                                                    render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}signin`}
+                                            <Route exact={true} path={`${props.match.url}signin`}
                                                    render={(props) => <Login{...props} setUser={setUser}/>}/>
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}signup`}
+                                            <Route exact={true} path={`${props.match.url}signup`}
                                                    render={(props) => <Register{...props} setUser={setUser}/>}/>
                                             {/*<Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}subscription/payment`}*/}
                                             {/*       render={(props) => <Payment {...props} user={user}/>}/>*/}
-                                            <Route exact={true} path={`${props.match.url}${ISPRODUCTION ? '/' : ''}*`}
+                                            <Route exact={true} path={`${props.match.url}*`}
                                                    render={(props) => <Subscriptions {...props} user={user}/>}/>
                                         </Switch>
                                 }
