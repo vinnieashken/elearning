@@ -16,8 +16,9 @@ export default function (props) {
     const [response, setResponse] = useState('');
 
     useEffect(() => {
+        setLoading(true);
         getModules();
-    }, []);
+    }, [props.match.params.subject]);
 
     const getModules = () => {
         $.ajax({
@@ -66,18 +67,18 @@ export default function (props) {
             <div id="about" className="section-padding mt-5 profile">
                 <div className="container mt-5">
                     {
-                        loading ? <Loading/> :
-                            <React.Fragment>
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <h2 className="section-title wow fadeInDown animated text-center"
-                                            data-wow-delay="0.3s">Examination papers</h2>
-                                    </div>
-
+                        <React.Fragment>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h2 className="section-title wow fadeInDown animated text-center mt-5"
+                                        data-wow-delay="0.3s">Examination papers</h2>
                                 </div>
-                                <div className='row'>
-                                    <div className='col-md-12'>
-                                        {
+
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-12'>
+                                    {
+                                        loading ? <Loading/> :
                                             message ?
                                                 <div className="text-center mt-2">
                                                     <div className={messageType} role="alert">
@@ -91,7 +92,7 @@ export default function (props) {
                                                     data={ modules }
                                                     columns={
                                                         [
-                                                            {dataField: 'module',      text: 'Exam',    sort: true},
+                                                            {dataField: 'module',      text: 'Exam',    sort: true, style: { textAlign: 'left' }},
                                                             {dataField: 'class',        text: 'Class',      sort: true},
                                                             {dataField: 'subject',        text: 'Subject',      sort: true},
                                                             {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
@@ -103,7 +104,7 @@ export default function (props) {
                                                                 <React.Fragment>
                                                                     <div className='row  mb-3'>
                                                                         <div className='col-md-12'>
-                                                                            <SearchBar className='col-md-4 float-right mb-3 form-control form-control-sm' { ...props.searchProps } />
+                                                                            <SearchBar className='col-md-4 float-right mb-3 form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
@@ -112,10 +113,10 @@ export default function (props) {
                                                             )
                                                     }
                                                 </ToolkitProvider>
-                                        }
-                                    </div>
+                                    }
                                 </div>
-                            </React.Fragment>
+                            </div>
+                        </React.Fragment>
 
                     }
                 </div>

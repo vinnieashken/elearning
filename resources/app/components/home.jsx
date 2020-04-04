@@ -71,7 +71,7 @@ export default function (props) {
                                                 accessible for every child</h5>
                                             <Link to={`${ENV}signin`} className="btn btn-lg btn-common animated fadeInUp">Get
                                                 Started</Link>
-                                            <a href="#" className="btn btn-lg btn-border animated fadeInUp">Learn
+                                            <a href="#services" className="btn btn-lg btn-border animated fadeInUp">Learn
                                                 More</a>
                                         </div>
                                     </div>
@@ -358,7 +358,7 @@ export default function (props) {
                         <div className="col-md-6 col-lg-4 col-xs-12">
                             <div className="service-box">
                                 <div className="service-icon">
-                                    <i className="fa fa-check" />
+                                    <i className="fa fa-line-chart" />
                                 </div>
                                 <div className="service-content">
                                     <h4><a href="#">A great place to grow</a></h4>

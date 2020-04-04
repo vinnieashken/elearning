@@ -2282,7 +2282,19 @@ nav#menu span.fa.fa-bars:hover {
 }
 
 .featured-box-item {
-    margin-bottom: 40px;
+    margin-bottom: -35px;
+}
+
+.subject .featured-box-item {
+    box-shadow: -1px 2px 16px #dcdcdc85;
+    padding: 8px;
+    padding-bottom: 1px;
+}
+
+.subject .featured-box-item:hover {
+    box-shadow: -1px 2px 19px rgba(162, 162, 162, 0.52);
+    padding: 8px;
+    padding-bottom: 1px;
 }
 
 .featured-box-item .featured-icon {
@@ -3276,12 +3288,16 @@ address i {
     border-radius: 0;
     margin-bottom: 30px;
     padding: 10px 20px;
-    min-height: 50px;
+    min-height: 30px;
     -webkit-box-shadow: none;
     box-shadow: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+}
+
+.form-control-sm {
+    min-height: 20px !important;
 }
 
 .form-control:focus {
@@ -5194,6 +5210,7 @@ nav a {
     border-radius: 5px;
 
 }
+
 .alert-success {
     color: #2a6738;
     background-color: #d4edda;
@@ -5204,15 +5221,18 @@ nav a {
     background: #282828;
     color: white;
 }
+
 .login .weekly .card-header {
     background: #282828;
     color: white;
 }
+
 .payment .btn {
     font-size: 14px;
     padding: 5px 27px;
     margin-right: 0;
 }
+
 .login .input-group-text {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -5232,6 +5252,106 @@ nav a {
     border: 1px solid #ced4da;
     border-radius: .25rem;
     width: 41px;
+}
+
+em {
+    color: #0d5d5d;
+}
+
+.subject img {
+    width: 60px;
+}
+
+.subject img:hover {
+    width: 60px;
+    background: ivory;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.openBtn {
+    background: #f1f1f1;
+    border: none;
+    padding: 10px 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.openBtn:hover {
+    background: #bbb;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+}
+
+.overlay-content {
+    position: relative;
+    top: 46%;
+    width: 80%;
+    text-align: center;
+    margin-top: 30px;
+    margin: auto;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    cursor: pointer;
+    color: white;
+}
+
+.overlay .closebtn:hover {
+    color: #ccc;
+}
+
+.overlay input[type=text] {
+    padding: 15px;
+    font-size: 17px;
+    border: none;
+    float: left;
+    width: 80%;
+    background: white;
+}
+
+.overlay input[type=text]:hover {
+    background: #f1f1f1;
+}
+
+.overlay button:hover {
+    float: left;
+    width: 20%;
+    padding: 15px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.overlay button:hover {
+    background: #bbb;
+}
+.overlay button {
+    float: left;
+    width: 20%;
+    padding: 15px;
+    background: #354fb1;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    color: gainsboro;
 }
 
 .toggled{

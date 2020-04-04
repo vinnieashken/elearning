@@ -8,9 +8,34 @@
     <link rel="icon" href="{{asset('favicon.ico')}}">
 
     <title>Tutor-Soma</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{{asset('static/app/images/favicon/apple-icon-57x57.png')}}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{asset('static/app/images/favicon/apple-icon-60x60.png')}}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('static/app/images/favicon/apple-icon-72x72.png')}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('static/app/images/favicon/apple-icon-76x76.png')}}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('static/app/images/favicon/apple-icon-114x114.png')}}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{asset('static/app/images/favicon/apple-icon-120x120.png')}}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{asset('static/app/images/favicon/apple-icon-144x144.png')}}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{asset('static/app/images/favicon/apple-icon-152x152.png')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('static/app/images/favicon/apple-icon-180x180.png')}}">
+    <link rel="icon" type="image/png" sizes="36x36"  href="{{asset('static/app/images/favicon/Android/Icon-36.png')}}">
+    <link rel="icon" type="image/png" sizes="48x48"  href="{{asset('static/app/images/favicon/Android/Icon-48.png')}}">
+    <link rel="icon" type="image/png" sizes="72x72"  href="{{asset('static/app/images/favicon/Android/Icon-72.png')}}">
+    <link rel="icon" type="image/png" sizes="96x96"  href="{{asset('static/app/images/favicon/Android/Icon-96.png')}}">
+    <link rel="icon" type="image/png" sizes="144x144"  href="{{asset('static/app/images/favicon/Android/Icon-144.png')}}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('static/app/images/favicon/Android/Icon-192.png')}}">
+    <link rel="icon" type="image/png" sizes="512x512"  href="{{asset('static/app/images/favicon/Android/Icon-512.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('static/app/images/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{asset('static/app/images/favicon/favicon-96x96.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('static/app/images/favicon/manifest.json')}}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{asset('static/app/images/favicon/ms-icon-144x144.png')}}">
+    <meta name="theme-color" content="#ffffff">
+
+{{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">--}}
     <link href="{{ asset('static/app/css/bootstrap.min.css?').date('YmdHis') }}" rel="stylesheet">
-{{--    <link href="{{ asset('static/app/css/font-awesome.min.css?').date('YmdHis') }}" rel="stylesheet">--}}
+    <link href="{{ asset('static/app/css/font-awesome.min.css?').date('YmdHis') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/animate.css?').date('YmdHis') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/main.css?').date('YmdHis') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/extras.css?').date('YmdHis') }}" rel="stylesheet">
@@ -20,13 +45,33 @@
 <body>
 <div class="main h-100 w-100" id="app" >
 </div>
+<noscript>
+    <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+    </div>
+</noscript>
 <script type="text/javascript" src="{{ asset('static/app/js/jquery-3.4.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('static/app/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('static/app/js/main.js') }}"></script>
 
 </body>
 <script>
-
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register("{{ asset('service-worker.js') }}").then(function(registration) {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+                // registration failed :(
+                console.log('ServiceWorker registration failed: ', err);
+            }).catch(function(err) {
+                console.log(err)
+            });
+        });
+    } else {
+        console.log('service worker is not supported');
+    }
 </script>
 <script type="text/javascript" src="{{ asset('static/bundles/main.js?').date('Ymdhis') }}"></script>
 

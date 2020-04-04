@@ -8,6 +8,7 @@ use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
 use App\Models\Customer;
 use App\Models\Marks;
+use App\Models\Module;
 use App\Models\Question;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -25,6 +26,8 @@ class QuestionsController extends Controller
     {
         $model = new Question();
         //$userid = $request->userid;
+        $modulesmodel = new Module();
+        $module = $modulesmodel->where('id',$moduleid)->first();
 
         if($request->has('size') && $request->has('page'))
         {
@@ -50,11 +53,20 @@ class QuestionsController extends Controller
 
             return $data;
         }
-        return $model->with('options')->where('questions.module_id',$moduleid)
+
+
+        $results = $model->with('options')->where('questions.module_id',$moduleid)
             ->leftJoin('answers','answers.question_id','=','questions.id')
             //->leftJoin('user_answers','user_answers.user_id','=','questions.id')
             ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')
             ->get();
+        $data = [
+            'id'=> $module->id,
+            'name'=> $module->module,
+            'questions'=> $results,
+        ];
+
+        return $data;
     }
 
     public function saveUserAnswers(Request $request)
@@ -82,6 +94,8 @@ class QuestionsController extends Controller
             }
         }
 
+        //return $answers;
+
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
         try {
 
@@ -96,6 +110,7 @@ class QuestionsController extends Controller
         $headers = $response->getHeaders();
         $body = $response->getBody()->getContents();
         $result = json_decode($body);
+
 
         $marks = new Marks();
         $existing = $marks->where('marks_user_id',$userid)->where('marks_module_id',$moduleid)->first();
