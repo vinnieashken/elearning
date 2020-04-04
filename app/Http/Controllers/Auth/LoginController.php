@@ -52,20 +52,27 @@ class LoginController extends Controller
         protected function sendFailedLoginResponse(Request $request)
             {
                 $user = User::where('email',$request->email)->first();
+                if(is_object($user->password))
+                   {
+                        if(Hash::check($request->password, $user->password))
+                            {
+                                throw ValidationException::withMessages([
+                                    $this->username() => ['Account is inactive , Kindly contact the Administrator'],
+                                ]);
+                            }
+                        else
+                            {
 
-
-                if(Hash::check($request->password, $user->password))
-                    {
-                        throw ValidationException::withMessages([
-                            $this->username() => ['Account is inactive , Kindly contact the Administrator'],
-                        ]);
-                    }
+                                throw ValidationException::withMessages([
+                                    $this->username() => [trans('auth.failed'),$request->email],
+                                ]);
+                            }
+                   }     
                 else
                     {
-
                         throw ValidationException::withMessages([
-                            $this->username() => [trans('auth.failed'),$request->email],
-                        ]);
+                                    $this->username() => [trans('auth.failed'),$request->email],
+                                ]);
                     }
             }
 
