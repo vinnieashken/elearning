@@ -52,7 +52,7 @@ class LoginController extends Controller
         protected function sendFailedLoginResponse(Request $request)
             {
                 $user = User::where('email',$request->email)->first();
-                if(is_object($user->password))
+                if(is_object($user))
                    {
                         if(Hash::check($request->password, $user->password))
                             {
