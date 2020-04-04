@@ -190,7 +190,7 @@
             }
         });
         $(document).on('change','.m-class',function() {
-            var str = $( "select option:selected" ).val();
+            var str = $(this).val();
             $.ajax({
                 type: 'POST',
                 url: '<?=url('subjectfromclass'); ?>',
