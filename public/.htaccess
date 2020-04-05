@@ -21,8 +21,6 @@
 </IfModule>
 
 <IfModule mod_security.c>
-  <If "%{REQUEST_URI} =~ m#/question/#">
     SecFilterEngine Off
-    SecFilterScanPOST Off
-  </If>
+    SecFilterScanPOST Off  
 </IfModule>
