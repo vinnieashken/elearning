@@ -379,13 +379,16 @@ class Cms extends Controller
 
                 $validatedData = $request->validate([
                                                         'subscription'  =>  'required',
-                                                        'cost'          =>  'required'
+                                                        'cost'          =>  'required',
+                                                        'days'          =>  'required'
 
                                                     ]);
                 if($validatedData)
                     {
                         $subscription                   =   new Subscription();
                         $subscription->subscription     =   $request->subscription;
+                        $subscription->days             =   $request->days;
+                        $subscription->description      =   $request->description;
                         $subscription->cost             =   $request->cost;
                         $res                            =   $subscription->save();
 
@@ -408,12 +411,15 @@ class Cms extends Controller
             {
                 $validatedData = $request->validate([
                                                         'subscription'  =>  'required',
-                                                        'cost'          =>  'required'
+                                                        'cost'          =>  'required',
+                                                        'days'          =>  'required'
                                                     ]);
                 if($validatedData)
                     {
                         $subscription                   =   Subscription::find($request->id);
                         $subscription->subscription     =   $request->subscription;
+                        $subscription->days             =   $request->days;
+                        $subscription->description      =   $request->description;
                         $subscription->cost             =   $request->cost;
                         $res                            =   $subscription->save();
 

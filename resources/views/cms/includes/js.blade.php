@@ -126,6 +126,8 @@
            var rate = $(this).data('rate');
            $('#edit-id').val(rate.id);
            $('#edit-subscription').val(rate.subscription);
+           $('#edit-days').val(rate.days);
+           $('#edit-description').summernote('code',rate.description);
            $('#edit-cost').val(rate.cost);
            $('#editModal').modal('toggle');
        });
@@ -296,6 +298,8 @@
                 "columns": [
                     { "data": "*" },
                     { "data": "subscription" },
+                    { "data": "days" },
+                    { "data": "description" },
                     { "data": "cost" },
                     { "data": "action"}
                 ]
