@@ -286,6 +286,7 @@
                     data: dat,
                     type: "POST",
                     url:  '<?=url('upload'); ?>',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -296,7 +297,13 @@
                         $('.summernote').summernote("insertImage", image);
                         },
                         error: function(e) {
-                            console.log(e);
+                                                toastr.error(e, 'upload', {
+                                                timeOut: 1000,
+                                                closeButton: true,
+                                                progressBar: true,
+                                                newestOnTop: true
+                                               
+                                            });
                             }
                     });
             }    

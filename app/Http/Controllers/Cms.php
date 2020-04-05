@@ -449,21 +449,26 @@ class Cms extends Controller
         public function imageUploadPost(Request $request)
             {
 
-                $request->validate([
+                $validatedData  =   $request->validate([
 
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                ]);
+                                    ]);
 
-          
+                if($validatedData)
+                    {
+                        $imageName = time().'.'.$request->image->extension();  
 
-                $imageName = time().'.'.$request->image->extension();  
+                   
 
-           
+                        $request->image->move(public_path('uploads'), $imageName);          
 
-                $request->image->move(public_path('uploads'), $imageName);          
-
-                return $imageName;
+                        return $imageName;
+                    }
+                else
+                    {
+                        return $validatedData->errors();
+                    }    
 
            
 
