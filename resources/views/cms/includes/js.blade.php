@@ -256,6 +256,7 @@
                 height:150,
                 tabsize: 2,
                 lineHeight:1.5,
+                dialogsInBody: true,
                 toolbar: [
                     // [groupName, [list of button]]
                     ['style', ['bold', 'italic', 'underline', 'clear']],
