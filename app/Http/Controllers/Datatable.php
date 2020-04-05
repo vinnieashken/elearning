@@ -223,13 +223,16 @@ class Datatable extends Controller
 
         public function get_questions(Request $request)
             {
+
+//                return $request->input('id');
                 $columns = array(
                     0   =>  'listorder',
                     1   =>  'question'
 
                 );
 
-                $totalData      = Question::count();
+                $totalData      = Question::where('module_id',$request->input('id'))
+                                          ->count();
 
                 $totalFiltered  = $totalData;
 
@@ -240,7 +243,8 @@ class Datatable extends Controller
 
                 if(empty($request->input('search.value')))
                     {
-                        $posts = Question::offset($start)
+                        $posts = Question::where('module_id',$request->input('id'))
+                                       ->offset($start)
                                        ->limit($limit)
                                        ->orderBy($order,$dir)
                                        ->get();
@@ -251,13 +255,15 @@ class Datatable extends Controller
 
             //
 
-                        $posts      =   Question::where('question','LIKE',"%{$search}%")
+                        $posts      =   Question::where('module_id',$request->input('id'))
+                                              ->where('question','LIKE',"%{$search}%")
                                               ->offset($start)
                                               ->limit($limit)
                                               ->orderBy($order,$dir)
                                               ->get();
 
-                        $totalFiltered = Question::where('question','LIKE',"%{$search}%")
+                        $totalFiltered = Question::where('module_id',$request->input('id'))
+                                                  ->where('question','LIKE',"%{$search}%")
 
                                                ->count();
                     }

@@ -274,11 +274,11 @@
                                                                     uploadImage(image[0]);
 
                                                                 }
-                            }    
+                            }
             }).on('summernote.change', function(we, contents, $editable) {
                 $(this).val(contents);
             });
-        function uploadImage(image) 
+        function uploadImage(image)
             {
                 //console.log(image);
                 var dat = new FormData();
@@ -294,7 +294,7 @@
                     processData: false,
                     success: function(url) {
                         var image = IMAGE_PATH+$.trim(url);
-                        $('.summernote').summernote("insertImage", image,function ($image) {                            
+                        $('.summernote').summernote("insertImage", image,function ($image) {
                               $image.attr('class', 'image-fluid');
                             });
                         },
@@ -304,11 +304,11 @@
                                                 closeButton: true,
                                                 progressBar: true,
                                                 newestOnTop: true
-                                               
+
                                             });
                             }
                     });
-            }    
+            }
         $('#classes').DataTable({
             "processing": true,
             "serverSide": true,
@@ -387,7 +387,8 @@
                 "url": "{{ url('get_questions') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ _token: "{{csrf_token()}}"}
+                "headers": {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                "data":{ "id":"{{ $module_id }}"}
             },
             "columns": [
                 { "data": "*" },
