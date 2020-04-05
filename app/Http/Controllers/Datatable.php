@@ -294,7 +294,9 @@ class Datatable extends Controller
             {
                 $columns = array(
                     0   =>  'subscription',
-                    1   =>  'cost'
+                    1   =>  'days',
+                    2   =>  'description',
+                    3   =>  'cost'
 
                 );
 
@@ -321,6 +323,8 @@ class Datatable extends Controller
                         //
 
                         $posts      =   Subscription::where('subscription','LIKE',"%{$search}%")
+                                                ->orwhere('days','LIKE',"%{$search}%")
+                                                ->orwhere('descriptions','LIKE',"%{$search}%")
                                                 ->orwhere('cost','LIKE',"%{$search}%")
                                                 ->offset($start)
                                                 ->limit($limit)
@@ -328,6 +332,8 @@ class Datatable extends Controller
                                                 ->get();
 
                         $totalFiltered = Subscription::where('subscription','LIKE',"%{$search}%")
+                                                    ->orwhere('days','LIKE',"%{$search}%")
+                                                    ->orwhere('descriptions','LIKE',"%{$search}%")
                                                     ->orwhere('cost','LIKE',"%{$search}%")
                                                     ->count();
                     }
