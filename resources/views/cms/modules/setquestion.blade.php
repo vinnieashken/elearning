@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <label for="add-question" class="control-label">Question</label>
-                            <input type="text" name="question" id="add-question" class="form-control summernote">
+                            <textarea name="question" id="add-question" class="form-control summernote"></textarea>
                         </div>
                         <div class="form-group form-row">
                             <div class="col-3">
@@ -95,7 +95,7 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-question" class="control-label">Question</label>
-                        <input type="text" name="question" id="edit-question" class="form-control summernote">
+                        <textarea name="question" id="edit-question" class="form-control summernote"></textarea>
                     </div>
                     <div class="choices">
 

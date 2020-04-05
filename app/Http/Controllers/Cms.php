@@ -467,7 +467,7 @@ class Cms extends Controller
                     }
                 else
                     {
-                        return $validatedData->errors();
+                        return $validatedData;
                     }    
 
            
