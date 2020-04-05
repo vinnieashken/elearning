@@ -152,6 +152,7 @@
             e.preventDefault();
             var question = $(this).data('question');
             $('#edit-id').val(question.id);
+            $('#edit-question').val(question.listorder);
             $('#edit-question').summernote('code',question.question);
             $.ajax({
                 type: 'POST',

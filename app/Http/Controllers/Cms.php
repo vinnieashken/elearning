@@ -282,6 +282,7 @@ class Cms extends Controller
                 if($validatedData)
                     {
                         $question               =   new Question();
+                        $question->listorder    =   $request->listorder;
                         $question->module_id    =   $request->module;
                         $question->question     =   $request->question;
                         $queststatus            =   $question->save();
@@ -331,6 +332,7 @@ class Cms extends Controller
                 if($validatedData)
                     {
                         $question               =   Question::find($request->id);
+                        $question->listorder    =   $request->listorder;
                         $question->module_id    =   $request->module;
                         $question->question     =   $request->question;
                         $queststatus            =   $question->save();

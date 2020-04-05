@@ -14,7 +14,7 @@
             <table class="table table-horizontal" id="questions">
                 <thead>
                     <tr>
-                        <th>*</th>
+                        <th>*</th>                        
                         <th>Question</th>
                         <th>Action</th>
                     </tr>
@@ -41,6 +41,10 @@
                 </div>
                 <div class="modal-body">
                         <input type="hidden" name="module" value="{{ $module_id }}">
+                        <div class="form-group">
+                            <label for="add-question_no" class="control-label">Question No</label>
+                            <input type="number" name="listorder" id="add-question_no" class="form-control">
+                        </div>
                         <div class="form-group">
                             <label for="add-question" class="control-label">Question</label>
                             <input type="text" name="question" id="add-question" class="form-control summernote">
@@ -85,6 +89,10 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" id="edit-id">
                     <input type="hidden" name="module" value="{{ $module_id }}">
+                    <div class="form-group">
+                        <label for="edit-question_no" class="control-label">Question No</label>
+                        <input type="number" name="listorder" id="edit-question_no" class="form-control">
+                    </div>
                     <div class="form-group">
                         <label for="edit-question" class="control-label">Question</label>
                         <input type="text" name="question" id="edit-question" class="form-control summernote">

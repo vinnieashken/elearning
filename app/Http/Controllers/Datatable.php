@@ -224,7 +224,7 @@ class Datatable extends Controller
         public function get_questions(Request $request)
             {
                 $columns = array(
-                    0   =>  'id',
+                    0   =>  'listorder',
                     1   =>  'question'
 
                 );
@@ -269,7 +269,7 @@ class Datatable extends Controller
                         foreach ($posts as $post)
                             {
 
-                                $nestedData['*']            =   $x;
+                                $nestedData['*']            =   $post->listorder;
                                 $nestedData['question']     =   $post->question;
                                 $nestedData['action']       =   '<a href="#" class="edit-question text-dark" data-question=\''.$post.'\' >
                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
