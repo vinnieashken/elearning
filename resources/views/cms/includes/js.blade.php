@@ -292,8 +292,6 @@
                     processData: false,
                     success: function(url) {
                         var image = IMAGE_PATH+$.trim(url);
-                      
-                        console.log(image);
                         $('.summernote').summernote("insertImage", image);
                         },
                         error: function(e) {
