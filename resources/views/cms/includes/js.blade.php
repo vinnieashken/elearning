@@ -266,10 +266,40 @@
                     ['height', ['height']],
                     ['insert',['picture','link','video','table','hr']],
                     ['misc',['codeview','undo','redo']]
-                ]
+                ],
+                callbacks : {
+                                onImageUpload: function(image) {
+                                                                    uploadImage(image[0]);
+
+                                                                }
+                            }    
             }).on('summernote.change', function(we, contents, $editable) {
                 $(this).val(contents);
             });
+        function uploadImage(image) 
+            {
+                //console.log(image);
+                var dat = new FormData();
+                dat.append("image",image);
+                var IMAGE_PATH = '<?=asset('uploads').'/'; ?>';
+                $.ajax ({
+                    data: dat,
+                    type: "POST",
+                    url:  '<?=url('upload'); ?>',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(url) {
+                        var image = IMAGE_PATH+$.trim(url);
+                      
+                        console.log(image);
+                        $('.summernote').summernote("insertImage", image);
+                        },
+                        error: function(e) {
+                            console.log(e);
+                            }
+                    });
+            }    
         $('#classes').DataTable({
             "processing": true,
             "serverSide": true,
