@@ -292,7 +292,9 @@
                     processData: false,
                     success: function(url) {
                         var image = IMAGE_PATH+$.trim(url);
-                        $('.summernote').summernote("insertImage", image);
+                        $('.summernote').summernote("insertImage", image,function ($image) {                            
+                              $image.attr('class', 'image-fluid');
+                            });
                         },
                         error: function(e) {
                                                 toastr.error(e, 'upload', {
