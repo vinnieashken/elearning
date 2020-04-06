@@ -1,8 +1,8 @@
 {
     "name": "Tutor-Soma Tu",
-    "short_name" : "Soma",
+    "short_name" : "Tutor Soma",
     "description": "Progressive Web App that lists games submitted to the A-Frame category in the js13kGames 2017 competition.",
-    "start_url": "?utm_source=homescreen",
+    "start_url": "../?utm_source=homescreen",
     "scope" : "./",
     "icons": [
         {
