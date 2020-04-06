@@ -134,7 +134,7 @@ export default function (props) {
                                                                 <div className='row'>
                                                                     <div className='col-md-12'>
                                                                         <h3>Click <b onClick={event => {
-                                                                            location.href=`${ENV}profile`;
+                                                                            location.href=`${ENV}exams/modules`;
                                                                         }
                                                                                             }>Confirm Payment</b> after paying</h3>
                                                                     </div>
@@ -174,7 +174,7 @@ export default function (props) {
                                                         {
                                                             processing ? <ClipLoader /> :
                                                                 payment.hasOwnProperty('id') ? <button type="button" className="btn btn-primary mpesabtn" onClick={event => {
-                                                                        location.href=`${ENV}profile`;
+                                                                        location.href=`${ENV}exams/modules`;
                                                                     }
                                                                     }>Confirm Payment </button>
                                                                     : <button type='submit' className="btn btn-primary mpesabtn">Pay</button>
