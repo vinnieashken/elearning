@@ -132,7 +132,7 @@ class Cms extends Controller
         public function editlevel(Request $request)
             {
                 $validatedData = $request->validate([
-                    'class'         =>  'required|unique:classes',
+                    'class'         =>  'required',
                 ]);
 
                 if($validatedData)
@@ -457,20 +457,20 @@ class Cms extends Controller
 
                 if($validatedData)
                     {
-                        $imageName = time().'.'.$request->image->extension();  
+                        $imageName = time().'.'.$request->image->extension();
 
-                   
 
-                        $request->image->move(public_path('uploads'), $imageName);          
+
+                        $request->image->move(public_path('uploads'), $imageName);
 
                         return $imageName;
                     }
                 else
                     {
                         return $validatedData;
-                    }    
+                    }
 
-           
 
-            }    
+
+            }
     }
