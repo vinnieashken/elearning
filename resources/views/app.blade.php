@@ -4,10 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Tutor-Soma">
+    <meta name="description" content="Tutor-Soma Tu">
     <link rel="icon" href="{{asset('favicon.ico')}}">
 
-    <title>Tutor-Soma</title>
+    <title>Tutor-Soma Tu</title>
+
+    <link rel="manifest" href="{{asset('static/app/images/favicon/manifest.json')}}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{asset('static/app/images/favicon/ms-icon-144x144.png')}}">
+    <meta name="theme-color" content="#D32027">
+
+    <meta name="application-name" content="Tutor-Soma Tu">
+
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset('static/app/images/favicon/apple-icon-57x57.png')}}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{asset('static/app/images/favicon/apple-icon-60x60.png')}}">
@@ -28,19 +36,23 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('static/app/images/favicon/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('static/app/images/favicon/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{asset('static/app/images/favicon/manifest.json')}}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{asset('static/app/images/favicon/ms-icon-144x144.png')}}">
-    <meta name="theme-color" content="#ffffff">
+
 
 {{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">--}}
-    <link href="{{ asset('static/app/css/bootstrap.min.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/font-awesome.min.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/animate.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/main.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/extras.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/responsive.css?').date('YmdHis') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/extras.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/responsive.css') }}" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
+        gtag('config', 'UA-9511843-21');
+    </script>
 </head>
 <body>
 <div class="main h-100 w-100" id="app" >

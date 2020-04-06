@@ -30,7 +30,7 @@ export default function (props) {
 
     const getExam = () => {
         $.ajax({
-            url: `${API}/questions/module/${props.match.params.module}`,
+            url: `${API}/questions/module/${props.match.params.module}?userId=2`,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr['responseText'])['message'];
@@ -99,7 +99,7 @@ export default function (props) {
                             <React.Fragment>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">{`${exam.name} Examination`}</h2>
+                                        <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">{`${exam.name}`}</h2>
                                     </div>
                                 </div>
                                 {

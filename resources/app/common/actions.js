@@ -1,4 +1,4 @@
-import { LOADING_SUBSCRIPTION, SUBSCRIPTION_LOADED, SUBJECTS_LOADED, API } from "./constants";
+import { SUBSCRIPTION_LOADED, SUBJECTS_LOADED, API } from "./constants";
 
 export function fetchSubscription(user) {
     return function (dispatch) {
