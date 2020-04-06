@@ -15,7 +15,7 @@
 </div>
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
+<script src="{{ asset('assets/summernote/summernote-bs4.min.js') }}"></script>
 @include('cms.includes.js')
 </body>
 

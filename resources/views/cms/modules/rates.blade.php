@@ -16,6 +16,8 @@
                     <tr>
                         <th>*</th>
                         <th>Subscription</th>
+                        <th>No of Days</th>
+                        <th>Description</th>
                         <th>Cost</th>
                         <th>Action</th>
                     </tr>
@@ -24,6 +26,8 @@
                     <tr>
                         <th>*</th>
                         <th>Subscription</th>
+                        <th>No of Days</th>
+                        <th>Description</th>
                         <th>Cost</th>
                         <th>Action</th>
                     </tr>
@@ -47,6 +51,14 @@
                     <div class="form-group">
                         <label for="add-subscription" class="control-label">Subscription</label>
                         <input type="text" name="subscription" id="add-subscription" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="add-days" class="control-label">Days</label>
+                        <input type="text" name="days" id="add-days" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="add-description" class="control-label">Description</label>
+                        <input type="text" name="description" id="add-description" class="summernote">
                     </div>
                     <div class="form-group">
                         <label for="add-cost" class="control-label">Cost</label>
@@ -76,6 +88,14 @@
                     <div class="form-group">
                         <label for="edit-subscription" class="control-label">Subscription</label>
                         <input type="text" name="subscription" id="edit-subscription" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-days" class="control-label">Days</label>
+                        <input type="text" name="days" id="edit-days" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-description" class="control-label">Description</label>
+                        <input type="text" name="description" id="edit-description" class="summernote">
                     </div>
                     <div class="form-group">
                         <label for="edit-cost" class="control-label">Cost</label>

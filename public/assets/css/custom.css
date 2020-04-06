@@ -1,3 +1,4 @@
+.modal-dialog { z-index: 1040 !important; }
 .btn-default {
     border: solid 1px #cac7c7;
 }

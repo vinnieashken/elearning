@@ -223,13 +223,16 @@ class Datatable extends Controller
 
         public function get_questions(Request $request)
             {
+
+//                return $request->input('id');
                 $columns = array(
-                    0   =>  'id',
+                    0   =>  'listorder',
                     1   =>  'question'
 
                 );
 
-                $totalData      = Question::count();
+                $totalData      = Question::where('module_id',$request->input('id'))
+                                          ->count();
 
                 $totalFiltered  = $totalData;
 
@@ -240,7 +243,8 @@ class Datatable extends Controller
 
                 if(empty($request->input('search.value')))
                     {
-                        $posts = Question::offset($start)
+                        $posts = Question::where('module_id',$request->input('id'))
+                                       ->offset($start)
                                        ->limit($limit)
                                        ->orderBy($order,$dir)
                                        ->get();
@@ -251,13 +255,15 @@ class Datatable extends Controller
 
             //
 
-                        $posts      =   Question::where('question','LIKE',"%{$search}%")
+                        $posts      =   Question::where('module_id',$request->input('id'))
+                                              ->where('question','LIKE',"%{$search}%")
                                               ->offset($start)
                                               ->limit($limit)
                                               ->orderBy($order,$dir)
                                               ->get();
 
-                        $totalFiltered = Question::where('question','LIKE',"%{$search}%")
+                        $totalFiltered = Question::where('module_id',$request->input('id'))
+                                                  ->where('question','LIKE',"%{$search}%")
 
                                                ->count();
                     }
@@ -269,7 +275,7 @@ class Datatable extends Controller
                         foreach ($posts as $post)
                             {
 
-                                $nestedData['*']            =   $x;
+                                $nestedData['*']            =   $post->listorder;
                                 $nestedData['question']     =   $post->question;
                                 $nestedData['action']       =   '<a href="#" class="edit-question text-dark" data-question=\''.$post.'\' >
                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
@@ -294,7 +300,9 @@ class Datatable extends Controller
             {
                 $columns = array(
                     0   =>  'subscription',
-                    1   =>  'cost'
+                    1   =>  'days',
+                    2   =>  'description',
+                    3   =>  'cost'
 
                 );
 
@@ -321,6 +329,8 @@ class Datatable extends Controller
                         //
 
                         $posts      =   Subscription::where('subscription','LIKE',"%{$search}%")
+                                                ->orwhere('days','LIKE',"%{$search}%")
+                                                ->orwhere('descriptions','LIKE',"%{$search}%")
                                                 ->orwhere('cost','LIKE',"%{$search}%")
                                                 ->offset($start)
                                                 ->limit($limit)
@@ -328,6 +338,8 @@ class Datatable extends Controller
                                                 ->get();
 
                         $totalFiltered = Subscription::where('subscription','LIKE',"%{$search}%")
+                                                    ->orwhere('days','LIKE',"%{$search}%")
+                                                    ->orwhere('descriptions','LIKE',"%{$search}%")
                                                     ->orwhere('cost','LIKE',"%{$search}%")
                                                     ->count();
                     }
@@ -341,6 +353,8 @@ class Datatable extends Controller
 
                                 $nestedData['*']            =   $x;
                                 $nestedData['subscription'] =   $post->subscription;
+                                $nestedData['days']         =   $post->days;
+                                $nestedData['description']  =   $post->description;
                                 $nestedData['cost']         =   $post->cost;
                                 $nestedData['action']       =   '<a href="#" class="edit-rate text-dark" data-rate=\''.$post.'\' >
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>

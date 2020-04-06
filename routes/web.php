@@ -25,12 +25,13 @@ Route::get('/cms/users', function() {
 });
 Route::post('/cms/usermgt','Cms@usermgt');
 //Datatables
-Route::post('get_users','Datatable@get_users');
-Route::post('get_classes','Datatable@get_classes');
-Route::post('get_subjects','Datatable@get_subjects');
-Route::post('get_modules','Datatable@get_modules');
-Route::post('get_questions','Datatable@get_questions');
-Route::post('get_rates','Datatable@get_rates');
+Route::post('/get_users','Datatable@get_users');
+Route::post('/get_classes','Datatable@get_classes');
+Route::post('/get_subjects','Datatable@get_subjects');
+Route::post('/get_modules','Datatable@get_modules');
+Route::post('/get_questions','Datatable@get_questions');
+Route::Post('/upload','Cms@imageUploadPost')->name('upload');
+Route::post('/get_rates','Datatable@get_rates');
 Route::post('/cms/addsubject','Cms@addsubject');
 Route::post('/cms/editsubject','Cms@editsubject');
 Route::post('/cms/addmodule','Cms@addmodule');
@@ -51,7 +52,7 @@ Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
 Route::get('{any}', function ($any = null) {
 
     return view('app');
-})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|get_rates|admin|register|login).)*$');
+})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|admin|upload).)*$');
 
 
 Auth::routes();

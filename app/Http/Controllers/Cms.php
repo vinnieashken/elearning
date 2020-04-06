@@ -132,7 +132,7 @@ class Cms extends Controller
         public function editlevel(Request $request)
             {
                 $validatedData = $request->validate([
-                    'class'         =>  'required|unique:classes',
+                    'class'         =>  'required',
                 ]);
 
                 if($validatedData)
@@ -282,6 +282,7 @@ class Cms extends Controller
                 if($validatedData)
                     {
                         $question               =   new Question();
+                        $question->listorder    =   $request->listorder;
                         $question->module_id    =   $request->module;
                         $question->question     =   $request->question;
                         $queststatus            =   $question->save();
@@ -331,6 +332,7 @@ class Cms extends Controller
                 if($validatedData)
                     {
                         $question               =   Question::find($request->id);
+                        $question->listorder    =   $request->listorder;
                         $question->module_id    =   $request->module;
                         $question->question     =   $request->question;
                         $queststatus            =   $question->save();
@@ -379,13 +381,16 @@ class Cms extends Controller
 
                 $validatedData = $request->validate([
                                                         'subscription'  =>  'required',
-                                                        'cost'          =>  'required'
+                                                        'cost'          =>  'required',
+                                                        'days'          =>  'required'
 
                                                     ]);
                 if($validatedData)
                     {
                         $subscription                   =   new Subscription();
                         $subscription->subscription     =   $request->subscription;
+                        $subscription->days             =   $request->days;
+                        $subscription->description      =   $request->description;
                         $subscription->cost             =   $request->cost;
                         $res                            =   $subscription->save();
 
@@ -408,12 +413,15 @@ class Cms extends Controller
             {
                 $validatedData = $request->validate([
                                                         'subscription'  =>  'required',
-                                                        'cost'          =>  'required'
+                                                        'cost'          =>  'required',
+                                                        'days'          =>  'required'
                                                     ]);
                 if($validatedData)
                     {
                         $subscription                   =   Subscription::find($request->id);
                         $subscription->subscription     =   $request->subscription;
+                        $subscription->days             =   $request->days;
+                        $subscription->description      =   $request->description;
                         $subscription->cost             =   $request->cost;
                         $res                            =   $subscription->save();
 
@@ -436,5 +444,33 @@ class Cms extends Controller
                 $user           =   User::find($request->id);
                 $user->status   =   (int)$request->type;
                 return $user->save();
+            }
+
+        public function imageUploadPost(Request $request)
+            {
+
+                $validatedData  =   $request->validate([
+
+                                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+                                    ]);
+
+                if($validatedData)
+                    {
+                        $imageName = time().'.'.$request->image->extension();
+
+
+
+                        $request->image->move(public_path('uploads'), $imageName);
+
+                        return $imageName;
+                    }
+                else
+                    {
+                        return $validatedData;
+                    }
+
+
+
             }
     }

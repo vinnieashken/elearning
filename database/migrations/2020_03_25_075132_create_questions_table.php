@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('module_id');
             $table->text('question');
             $table->integer('exam_id')->unsigned()->default(0);
+            $table->integer('listorder')->nullable();
             $table->timestamps();
         });
     }

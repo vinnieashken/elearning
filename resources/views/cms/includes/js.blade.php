@@ -126,6 +126,8 @@
            var rate = $(this).data('rate');
            $('#edit-id').val(rate.id);
            $('#edit-subscription').val(rate.subscription);
+           $('#edit-days').val(rate.days);
+           $('#edit-description').summernote('code',rate.description);
            $('#edit-cost').val(rate.cost);
            $('#editModal').modal('toggle');
        });
@@ -150,6 +152,7 @@
             e.preventDefault();
             var question = $(this).data('question');
             $('#edit-id').val(question.id);
+            $('#edit-question_no').val(question.listorder);
             $('#edit-question').summernote('code',question.question);
             $.ajax({
                 type: 'POST',
@@ -190,7 +193,7 @@
             }
         });
         $(document).on('change','.m-class',function() {
-            var str = $( "select option:selected" ).val();
+            var str = $(this).val();
             $.ajax({
                 type: 'POST',
                 url: '<?=url('subjectfromclass'); ?>',
@@ -253,6 +256,8 @@
                 height:150,
                 tabsize: 2,
                 lineHeight:1.5,
+                dialogsInBody: true,
+                dialogsFade: false,
                 toolbar: [
                     // [groupName, [list of button]]
                     ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -263,10 +268,47 @@
                     ['height', ['height']],
                     ['insert',['picture','link','video','table','hr']],
                     ['misc',['codeview','undo','redo']]
-                ]
+                ],
+                callbacks : {
+                                onImageUpload: function(image) {
+                                                                    uploadImage(image[0]);
+
+                                                                }
+                            }
             }).on('summernote.change', function(we, contents, $editable) {
                 $(this).val(contents);
             });
+        function uploadImage(image)
+            {
+                //console.log(image);
+                var dat = new FormData();
+                dat.append("image",image);
+                var IMAGE_PATH = '<?=asset('uploads').'/'; ?>';
+                $.ajax ({
+                    data: dat,
+                    type: "POST",
+                    url:  '<?=url('upload'); ?>',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(url) {
+                        var image = IMAGE_PATH+$.trim(url);
+                        $('.summernote').summernote("insertImage", image,function ($image) {
+                              $image.attr('class', 'image-fluid');
+                            });
+                        },
+                        error: function(e) {
+                                                toastr.error(e, 'upload', {
+                                                timeOut: 1000,
+                                                closeButton: true,
+                                                progressBar: true,
+                                                newestOnTop: true
+
+                                            });
+                            }
+                    });
+            }
         $('#classes').DataTable({
             "processing": true,
             "serverSide": true,
@@ -296,6 +338,8 @@
                 "columns": [
                     { "data": "*" },
                     { "data": "subscription" },
+                    { "data": "days" },
+                    { "data": "description" },
                     { "data": "cost" },
                     { "data": "action"}
                 ]
@@ -343,7 +387,8 @@
                 "url": "{{ url('get_questions') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ _token: "{{csrf_token()}}"}
+                "headers": {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                "data":{ "id":"{{ $module_id ?? ''}}"}
             },
             "columns": [
                 { "data": "*" },
@@ -371,5 +416,28 @@
                 ]
 
             });
+    });
+    $(document).on("show.bs.modal", '.modal', function (event) {
+    console.log("Global show.bs.modal fire");
+    var zIndex = 100000 + (10 * $(".modal:visible").length);
+    $(this).css("z-index", zIndex);
+    setTimeout(function () {
+        $(".modal-backdrop").not(".modal-stack").first().css("z-index", zIndex - 1).addClass("modal-stack");
+    }, 0);
+    }).on("hidden.bs.modal", '.modal', function (event) {
+        console.log("Global hidden.bs.modal fire");
+        $(".modal:visible").length && $("body").addClass("modal-open");
+    });
+    $(document).on('inserted.bs.tooltip', function (event) {
+        console.log("Global show.bs.tooltip fire");
+        var zIndex = 100000 + (10 * $(".modal:visible").length);
+        var tooltipId = $(event.target).attr("aria-describedby");
+        $("#" + tooltipId).css("z-index", zIndex);
+    });
+    $(document).on('inserted.bs.popover', function (event) {
+        console.log("Global inserted.bs.popover fire");
+        var zIndex = 100000 + (10 * $(".modal:visible").length);
+        var popoverId = $(event.target).attr("aria-describedby");
+        $("#" + popoverId).css("z-index", zIndex);
     });
 </script>
