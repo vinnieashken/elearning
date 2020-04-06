@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="add-module" class="control-label">Module Name</label>
+                        <label for="add-module" class="control-label">Exam Name</label>
                         <input type="text" name="module" id="add-module" class="form-control">
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="edit-module" class="control-label">Module Name</label>
+                        <label for="edit-module" class="control-label">Exam Name</label>
                         <input type="text" name="module" id="edit-module" class="form-control">
                     </div>
                 </div>
