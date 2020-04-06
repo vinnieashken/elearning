@@ -77,6 +77,7 @@ export default function (props) {
     const [classes, setClasses] = useState([]);
     const subscription = useSelector(state => state.subscription);
     const subjects = useSelector(state => state.subjects);
+    const loadingSubscription = useSelector(state => state.loadingSubscription);
 
     const dispatch = useDispatch();
 
@@ -261,7 +262,7 @@ export default function (props) {
                         </nav>
                     </header>
                     {
-                        loading ? <Loading/> :
+                        (loading || loadingSubscription) ? <Loading/> :
                             <React.Fragment>
                                 {
                                     <Switch>
@@ -339,14 +340,7 @@ export default function (props) {
                                         <Route exact={true} path={`${props.match.url}exams/modules`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
-                                                       subscription.hasOwnProperty('id') ?
                                                        <Modules {...props} user={user}/>
-                                                       : props.history.push({
-                                                           pathname: `${ENV}subscriptions`,
-                                                           state: {
-                                                               next: props.location.pathname
-                                                           },
-                                                       })
                                                        : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {

@@ -217,10 +217,10 @@ export default function (props) {
                                                                             </ul>
                                                                             <ul className="list-group list-group-flush">
                                                                                 <li className="list-group-item">
-                                                                                    <p>
+
                                                                                         <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
                                                                                         {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
-                                                                                    </p>
+
                                                                                 </li>
                                                                                 {
                                                                                     el.options.map((ans) => {

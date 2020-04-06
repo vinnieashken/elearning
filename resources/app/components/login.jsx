@@ -1,5 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {API, DIR, ENV, PUBLIC_URL, SUBJECTS_LOADED, SUBSCRIPTION_DELETED} from "../common/constants";
+import {
+    API,
+    DIR,
+    ENV,
+    PUBLIC_URL,
+    LOADING_SUBSCRIPTION,
+    SUBJECTS_LOADED,
+    SUBSCRIPTION_DELETED,
+    SUBSCRIPTION_LOADED
+} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
@@ -50,6 +59,7 @@ export default function Login(props) {
             }.bind(this),
             success: function (res) {
                 const thisUser = JSON.parse(res);
+                dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
                 dispatch(fetchSubscription(thisUser));
                 props.setUser(thisUser);
                 localStorage.setItem('user', res);
