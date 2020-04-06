@@ -1,8 +1,15 @@
-import {ENV, NEXT_CHANGED, SUBJECTS_LOADED, SUBSCRIPTION_LOADED, SUBSCRIPTION_DELETED} from "./constants";
+import {
+    ENV,
+    NEXT_CHANGED,
+    SUBJECTS_LOADED,
+    SUBSCRIPTION_LOADED,
+    SUBSCRIPTION_DELETED,
+    LOADING_SUBSCRIPTION
+} from "./constants";
 
 const initialState = {
     next: `${ENV}exams/modules`,
-    loadingSubscription: true,
+    loadingSubscription: false,
     subscription: {},
     subjects: [],
 };
@@ -12,6 +19,11 @@ function rootReducer(state = initialState, action) {
         case NEXT_CHANGED:
             return Object.assign({
                 next: action.payload
+            });
+
+        case LOADING_SUBSCRIPTION:
+            return Object.assign({}, state, {
+                loadingSubscription: action.payload
             });
 
         case SUBSCRIPTION_LOADED:

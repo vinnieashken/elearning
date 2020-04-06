@@ -211,7 +211,7 @@ export default function (props) {
                                                             {
                                                                 exam.questions.map((el, index) => {
                                                                     return (
-                                                                        <div className="card examcard my-4 mt-md-0" >
+                                                                        <div className="card examcard my-4 mt-md-0 w-100" >
                                                                             <ul className="bg-white float-right" style={{display: 'none'}}>
                                                                                 <li className="text-center p-1 marks">Mrks<br /> 10</li>
                                                                             </ul>
