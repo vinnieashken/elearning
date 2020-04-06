@@ -24,6 +24,7 @@ class QuestionsController extends Controller
 
     public function getModuleQuestions(Request $request,$moduleid)
     {
+
         $model = new Question();
         //$userid = $request->userid;
         $modulesmodel = new Module();
@@ -54,18 +55,28 @@ class QuestionsController extends Controller
             return $data;
         }
 
+        $results = $model->orderBy('listorder','ASC')->with('options')->where('questions.module_id',$moduleid)
 
-        $results = $model->with('options')->where('questions.module_id',$moduleid)
             ->leftJoin('answers','answers.question_id','=','questions.id')
             //->leftJoin('user_answers','user_answers.user_id','=','questions.id')
             ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')
             ->get();
         $data = [
             'id'=> $module->id,
+            'done' => false,
             'name'=> $module->module,
             'questions'=> $results,
         ];
 
+        if($request->has('userid'))
+        {
+            $userid = $request->userid;
+            $record = AnswerSheet::where('user_id',$userid)->where('module_id',$moduleid)->first();
+            if(!is_null($record))
+            {
+                $data['done'] = true;
+            }
+        }
         return $data;
     }
 
