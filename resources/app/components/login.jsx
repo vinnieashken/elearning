@@ -49,10 +49,10 @@ export default function Login(props) {
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
-                localStorage.setItem('user', res);
                 const thisUser = JSON.parse(res);
                 dispatch(fetchSubscription(thisUser));
                 props.setUser(thisUser);
+                localStorage.setItem('user', res);
                 props.history.push({
                     pathname: `${next}`,
                     state: {user: thisUser},

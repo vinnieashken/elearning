@@ -111,7 +111,7 @@ export default function (props) {
                                     </div>
                                 </div>
                                 <div className="col-md-9">
-                                    <div className="row">
+                                    <div className="row mt-5">
                                         <div className="col-md-12">
                                             <h2 className="section-title wow fadeInDown animated text-center"
                                                 data-wow-delay="0.3s">Past Performance</h2>

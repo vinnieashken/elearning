@@ -15,8 +15,8 @@ function rootReducer(state = initialState, action) {
 
         case SUBSCRIPTION_LOADED:
             return Object.assign({}, state, {
-                // subscription: action.payload
-                subscription: {}
+                subscription: action.payload
+                // subscription: {}
             });
 
         case SUBSCRIPTION_DELETED:

@@ -7,6 +7,7 @@ export function fetchSubscription(user) {
             method: 'get',
             dataType: 'json',
             success: function (res) {
+                console.log(res);
                 dispatch ({ type: SUBSCRIPTION_LOADED, payload: res });
             }.bind(this)
         })
