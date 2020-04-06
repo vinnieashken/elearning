@@ -76,7 +76,7 @@
                     <form action="{{ url('cms/editsubject') }}" method="post" class="form form-horizontal create-form" data-modal="#editModal">
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="id" id="edit-id">
+                    <input type="hidden" name="id" id="edit-id">
                     <div class="form-group">
                         <label for="edit-classroom" class="control-label">Class</label>
                         <select name="class" id="edit-classroom" class="custom-select">
