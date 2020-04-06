@@ -55,7 +55,7 @@ class QuestionsController extends Controller
             return $data;
         }
 
-        $results = $model->orderBy('listorder','DESC')->with('options')->where('questions.module_id',$moduleid)
+        $results = $model->orderBy('listorder','ASC')->with('options')->where('questions.module_id',$moduleid)
 
             ->leftJoin('answers','answers.question_id','=','questions.id')
             //->leftJoin('user_answers','user_answers.user_id','=','questions.id')
