@@ -37,13 +37,60 @@ class ModulesController extends Controller
                 "currentPage" => $page,
             ];
 
-            $data ["rows"] = $results;
+            $temp = [];
+
+            if($request->has('userid'))
+            {
+                $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                foreach ($results as $result)
+                {
+                    foreach ($usermodules as $usermodule)
+                    {
+                        if($result->id === $usermodule->module_id)
+                        {
+                            $result['done'] = true;
+                        }
+                        else{
+                            $result['done'] = false;
+                        }
+                        array_push($temp,$result);
+                    }
+                }
+                $data ["rows"] = $temp;
+            }
+            else
+                $data ["rows"] = $results;
 
             return $data;
         }
-        return $model->leftJoin('subjects','modules.subject_id','=','subjects.id')
+
+        $results = $model->leftJoin('subjects','modules.subject_id','=','subjects.id')
             ->leftJoin('classes','subjects.class_id','=','classes.id')
             ->select('modules.id','modules.module','modules.subject_id','subjects.subject','classes.class')->get();
+
+        $data = [];
+        if($request->has('userid'))
+        {
+            $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+            foreach ($results as $result)
+            {
+                foreach ($usermodules as $usermodule)
+                {
+                    if($result->id === $usermodule->module_id)
+                    {
+                        $result['done'] = true;
+                    }
+                    else{
+                        $result['done'] = false;
+                    }
+                    array_push($data,$result);
+                }
+            }
+        }
+        else
+            $data = $results;
+
+        return $data;
     }
 
     public function getSubjectModules(Request $request,$subjectid)
@@ -68,14 +115,59 @@ class ModulesController extends Controller
                 "pageCount" => $totalpages,
                 "currentPage" => $page,
             ];
+            $temp = [];
 
-            $data ["rows"] = $results;
+            if($request->has('userid'))
+            {
+                $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                foreach ($results as $result)
+                {
+                    foreach ($usermodules as $usermodule)
+                    {
+                        if($result->id === $usermodule->module_id)
+                        {
+                            $result['done'] = true;
+                        }
+                        else{
+                            $result['done'] = false;
+                        }
+                        array_push($temp,$result);
+                    }
+                }
+                $data ["rows"] = $temp;
+            }
+            else
+                $data ["rows"] = $results;
 
             return $data;
         }
-        return $model->where('subject_id',$subjectid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+
+        $results = $model->where('subject_id',$subjectid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
             ->leftJoin('classes','subjects.class_id','=','classes.id')
             ->select('modules.id','modules.module','modules.subject_id','subjects.subject','classes.class')->get();
+        $data = [];
+        if($request->has('userid'))
+        {
+            $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+            foreach ($results as $result)
+            {
+                foreach ($usermodules as $usermodule)
+                {
+                    if($result->id === $usermodule->module_id)
+                    {
+                        $result['done'] = true;
+                    }
+                    else{
+                        $result['done'] = false;
+                    }
+                    array_push($data,$result);
+                }
+            }
+        }
+        else
+            $data = $results;
+
+        return $data;
     }
 
     public function getUserModuleAnswers(Request $request,$moduleid,$userid)
@@ -168,7 +260,7 @@ class ModulesController extends Controller
                 ->leftJoin('subjects','subjects.id','=','modules.id')
                 ->leftJoin('classes','classes.id','=','subjects.id')
                 ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-                ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.percentage')
+                ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
                 ->paginate($size)->items();
 
 
@@ -192,7 +284,7 @@ class ModulesController extends Controller
             ->leftJoin('subjects','subjects.id','=','modules.id')
             ->leftJoin('classes','classes.id','=','subjects.id')
             ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.percentage')
+            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
         return $sheets;

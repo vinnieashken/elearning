@@ -133,6 +133,7 @@ class QuestionsController extends Controller
             $marks->marks_module_id = $moduleid;
             $marks->marks_user_id = $userid;
             $marks->score = $result->Score;
+            $marks->questions = $result->Questions;
             $marks->percentage = $result->Percentage;
             $marks->save();
         }
