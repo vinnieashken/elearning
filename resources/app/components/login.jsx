@@ -27,13 +27,6 @@ export default function Login(props) {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        localStorage.clear();
-        props.setUser({});
-        dispatch ({ type: SUBSCRIPTION_DELETED, payload: [] });
-        console.log(`${JSON.stringify(env)}`)
-    }, []);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setProcessing(true);
@@ -63,11 +56,11 @@ export default function Login(props) {
                 dispatch(fetchSubscription(thisUser));
                 props.setUser(thisUser);
                 localStorage.setItem('user', res);
+                console.log(next);
                 props.history.push({
                     pathname: `${next}`,
                     state: {user: thisUser},
                 });
-                setProcessing(false);
             }.bind(this)
         })
     };
@@ -75,6 +68,7 @@ export default function Login(props) {
     const togglePasswordType = (toggle, e) => {
         setPasswordType(toggle ? 'text' : 'password')
     };
+
     return (
         <React.Fragment>
             <div id="about" className="section-padding mt-5 pricing login">

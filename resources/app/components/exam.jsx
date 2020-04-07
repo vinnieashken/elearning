@@ -27,12 +27,11 @@ export default function (props) {
 
     useEffect(() => {
         getExam();
-        getUserAnswers();
     }, []);
 
     const getExam = () => {
         $.ajax({
-            url: `${API}/questions/module/${props.match.params.module}?userId=2`,
+            url: `${API}/questions/module/${props.match.params.module}?userid=2`,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr['responseText'])['message'];
@@ -45,7 +44,10 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setExam(res);
-                setLoading(false);
+                setLoading(res.done);
+                if (res.done)
+                    getUserAnswers();
+
             }.bind(this)
         })
     };
@@ -57,14 +59,15 @@ export default function (props) {
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                // setLoading(false);
+                setLoading(false);
                 // setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
             }.bind(this),
             success: function (res) {
                 setUserAnswers(res);
-                setShowAns(res.length > 0 )
+                setShowAns(res.length > 0 );
+                setLoading(false);
             }.bind(this)
         })
     };
@@ -243,8 +246,8 @@ export default function (props) {
                                                                                 <div className='row'>
                                                                                     <div className="col-md-12">
                                                                                         <div className="card examcard my-4 mt-md-0 w-100" >
-                                                                                            <ul className="bg-white float-right" style={showAns ? {display: 'none'} : {}}>
-                                                                                                <li className="text-center p-1 marks">Mrks<br /> 10</li>
+                                                                                            <ul className="bg-white float-right" style={{display: `${exam.done ? 'block' : 'none'}`}}>
+                                                                                                <li className="text-center p-1 marks">Mrks<br />{el.answer === answer.user_option ? 1 : 0}</li>
                                                                                             </ul>
                                                                                             <ul className="list-group list-group-flush">
                                                                                                 <li className="list-group-item">
@@ -260,7 +263,7 @@ export default function (props) {
                                                                                                             <React.Fragment>
                                                                                                                 <li className="list-group-item ml-4">
                                                                                                                     <input type="radio" id={`${ans.id}`} required={true}
-                                                                                                                           checked={answer.hasOwnProperty('user_option') && answer.user_option === ans.id}
+                                                                                                                           defaultChecked={answer.hasOwnProperty('user_option') && answer.user_option === ans.id}
                                                                                                                            disabled={answer.hasOwnProperty('user_option')}
                                                                                                                            value={ans.id} name={el.id} />
                                                                                                                     <label htmlFor={`${ans.id}`}>

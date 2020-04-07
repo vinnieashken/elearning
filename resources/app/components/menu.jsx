@@ -3,7 +3,7 @@ import {Link, Switch, Route} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
-import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION} from "../common/constants";
+import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED} from "../common/constants";
 import { useSelector } from 'react-redux'
 import { fetchSubscription, fetchSubjects } from "../common/actions";
 import { useDispatch } from "react-redux";
@@ -114,6 +114,16 @@ export default function (props) {
         ele.toggleClass('toggled');
     };
 
+    const logout = (e) => {
+        localStorage.clear();
+        setUser({});
+        dispatch ({ type: SUBSCRIPTION_DELETED, payload: [] });
+        props.history.push({
+            pathname: `${ENV}signin`,
+            state: {next: props.location.pathname},
+        });
+    };
+
     return (
         <React.Fragment>
             {
@@ -170,7 +180,7 @@ export default function (props) {
                                     user.hasOwnProperty('id') ?
                                         <React.Fragment>
                                             <Link to={`${ENV}profile`}>PROFILE</Link>
-                                            <Link to={`${ENV}signin`}>LOGOUT</Link>
+                                            <a href='#' onClick={logout}>LOGOUT</a>
                                         </React.Fragment> :
                                         <React.Fragment>
                                             <Link to={`${ENV}signin`}>LOGIN</Link>
@@ -241,7 +251,7 @@ export default function (props) {
                                                     <div className="dropdown-menu"
                                                          aria-labelledby="navbarDropdownMenuLink">
                                                         <Link className="dropdown-item" to={`${ENV}profile`}>PROFILE</Link>
-                                                        <Link className="dropdown-item" to={`${ENV}signin`}>LOGOUT</Link>
+                                                        <a href='#' onClick={logout} className="dropdown-item" >LOGOUT</a>
                                                     </div>
                                                 </li>
                                             </React.Fragment> :
@@ -339,14 +349,14 @@ export default function (props) {
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/modules`}
                                                render={(props) =>
-                                                   user.hasOwnProperty('id') ?
+                                                   // user.hasOwnProperty('id') ?
                                                        <Modules {...props} user={user}/>
-                                                       : props.history.push({
-                                                           pathname: `${ENV}signin`,
-                                                           state: {
-                                                               next: props.location.pathname
-                                                           },
-                                                       })
+                                                       // : props.history.push({
+                                                       //     pathname: `${ENV}signin`,
+                                                       //     state: {
+                                                       //         next: props.location.pathname
+                                                       //     },
+                                                       // })
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
                                                render={(props) =>

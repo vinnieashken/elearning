@@ -16,7 +16,7 @@ export default function (props) {
     const [response, setResponse] = useState('');
 
     useEffect(() => {
-        setLoading(true);
+        // setLoading(true);
         getModules();
     }, [props.match.params.subject]);
 
@@ -33,7 +33,7 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setModules(res);
+                setModules(res.reverse());
                 setLoading(false);
             }.bind(this)
         })
