@@ -16,6 +16,7 @@ const images = [
 
 export default function (props) {
     const [exam, setExam] = useState([]);
+    const [userAnswers, setUserAnswers] = useState([]);
     const [showAns, setShowAns] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -26,6 +27,7 @@ export default function (props) {
 
     useEffect(() => {
         getExam();
+        getUserAnswers();
     }, []);
 
     const getExam = () => {
@@ -44,6 +46,25 @@ export default function (props) {
             success: function (res) {
                 setExam(res);
                 setLoading(false);
+            }.bind(this)
+        })
+    };
+
+    const getUserAnswers = () => {
+        $.ajax({
+            url: `${API}/modules/${props.match.params.module}/user/${props.user.id}`,
+            // url: `${API}/subjects/class/{class_id}`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                // setLoading(false);
+                // setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setUserAnswers(res);
+                // setLoading(false);
             }.bind(this)
         })
     };
@@ -84,7 +105,7 @@ export default function (props) {
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-success');
-                setResponse(<h4>Congratulations, you have scored {score['Percentage']}%. <Link to={`${ENV}exams/modules`}>You can do another paper here</Link></h4>);
+                setResponse(<h4>Congratulations, you have scored {(Math.round(score['Percentage'] * 100) / 100).toFixed(2)}%. <Link to={`${ENV}exams/modules`}>You can do another paper here</Link></h4>);
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this)
         })
@@ -207,58 +228,80 @@ export default function (props) {
                                                                     </div>
                                                                 </div> : ''
                                                         }
-                                                        <div className="col-md-12">
-                                                            {
-                                                                exam.questions.map((el, index) => {
-                                                                    return (
-                                                                        <div className="card examcard my-4 mt-md-0 w-100" >
-                                                                            <ul className="bg-white float-right" style={{display: 'none'}}>
-                                                                                <li className="text-center p-1 marks">Mrks<br /> 10</li>
-                                                                            </ul>
-                                                                            <ul className="list-group list-group-flush">
-                                                                                <li className="list-group-item">
+                                                        {
+                                                            exam.questions.length > 0 ?
+                                                                <React.Fragment>
+                                                                    {
+                                                                        exam.questions.map((el, index) => {
+                                                                            const ansArray = userAnswers.filter(ans => {
+                                                                                return el.id === ans.question_id;
+                                                                            });
+                                                                            const answer = ansArray.length > 0 ? ansArray[0] : {};
+                                                                            console.log(answer);
+                                                                            return (
+                                                                                <div className="col-md-12">
+                                                                                    <div className="card examcard my-4 mt-md-0 w-100" >
+                                                                                        <ul className="bg-white float-right" style={{display: 'none'}}>
+                                                                                            <li className="text-center p-1 marks">Mrks<br /> 10</li>
+                                                                                        </ul>
+                                                                                        <ul className="list-group list-group-flush">
+                                                                                            <li className="list-group-item">
 
-                                                                                        <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
-                                                                                        {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
+                                                                                                <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
+                                                                                                {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
 
-                                                                                </li>
-                                                                                {
-                                                                                    el.options.map((ans) => {
-                                                                                        const isAns = parseInt(el.answer) === parseInt(ans.id);
-                                                                                        return (
-                                                                                            <React.Fragment>
-                                                                                                <li className="list-group-item ml-4">
-                                                                                                    <input type="radio" id={`${ans.id}`} required={true}
-                                                                                                           value={ans.id} name={el.id} />
-                                                                                                    <label htmlFor={`${ans.id}`}>
-                                                                                                        <em>{ans.option}</em>
-                                                                                                        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
-                                                                                                    </label>
-                                                                                                </li>
-                                                                                                {/*<li className="list-group-item">*/}
-                                                                                                {/*    <input type="radio" id={`${ans.id}`} required={true}*/}
-                                                                                                {/*           value={ans.id} name={el.id}*/}
-                                                                                                {/*           aria-label="Checkbox for following text input" />*/}
-                                                                                                {/*    <label htmlFor={`${ans.id}`}>*/}
-                                                                                                {/*        {ans.option}*/}
-                                                                                                {/*        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }*/}
-                                                                                                {/*    </label>*/}
-                                                                                                {/*</li>*/}
-                                                                                            </React.Fragment>
-                                                                                        )
-                                                                                    })
-                                                                                }
-                                                                            </ul>
+                                                                                            </li>
+                                                                                            {
+                                                                                                el.options.map((ans) => {
+                                                                                                    const isAns = parseInt(el.answer) === parseInt(ans.id);
+                                                                                                    return (
+                                                                                                        <React.Fragment>
+                                                                                                            <li className="list-group-item ml-4">
+                                                                                                                <input type="radio" id={`${ans.id}`} required={true}
+                                                                                                                       value={ans.id} name={el.id} />
+                                                                                                                <label htmlFor={`${ans.id}`}>
+                                                                                                                    <em>{ans.option}</em>
+                                                                                                                    {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
+                                                                                                                </label>
+                                                                                                            </li>
+                                                                                                            {/*<li className="list-group-item">*/}
+                                                                                                            {/*    <input type="radio" id={`${ans.id}`} required={true}*/}
+                                                                                                            {/*           value={ans.id} name={el.id}*/}
+                                                                                                            {/*           aria-label="Checkbox for following text input" />*/}
+                                                                                                            {/*    <label htmlFor={`${ans.id}`}>*/}
+                                                                                                            {/*        {ans.option}*/}
+                                                                                                            {/*        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }*/}
+                                                                                                            {/*    </label>*/}
+                                                                                                            {/*</li>*/}
+                                                                                                        </React.Fragment>
+                                                                                                    )
+                                                                                                })
+                                                                                            }
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                        })
+                                                                    }
+
+                                                                    {
+                                                                        processing ? <ClipLoader /> : showAns ? '' :
+                                                                            <div className="col-md-12">
+                                                                                <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit</button>
+                                                                            </div>
+                                                                    }
+                                                                </React.Fragment>
+                                                                : message ? ''
+                                                                : <div className='col-md-12'>
+                                                                    <div className="text-center mt-2">
+                                                                        <div className='alert alert-warning' role="alert">
+                                                                            <div className="alert-message">
+                                                                                <h4>Sorry, we were unable to get questions for this paper <Link to={`${ENV}exams/modules`}>You can select another paper here</Link></h4>
+                                                                            </div>
                                                                         </div>
-                                                                    )
-                                                                })
-                                                            }
-
-                                                            {
-                                                                processing ? <ClipLoader /> : showAns ? '' :
-                                                                    <button type='submit' className="submit text-center float-right">Submit</button>
-                                                            }
-                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        }
                                                     </form>
                                                     <div className="mt-5 text-center container">
                                                         {

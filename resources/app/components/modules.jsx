@@ -22,13 +22,11 @@ export default function (props) {
 
     const getModules = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}`,
+            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -41,15 +39,11 @@ export default function (props) {
         })
     };
 
-    const dateFormatter= (cell, row) => {
-        return moment(cell, 'Y-MM-DD HH:mm:ss').fromNow()
-    };
-
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}exams/exam/${row.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
-                    Take Test
+                <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
+                    {row.done ? `Revise Paper` : `Take Test`}
                 </Link>
                 {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
                 {/*    <i className="fa fa-pencil-alt"></i>*/}

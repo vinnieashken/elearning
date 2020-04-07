@@ -2,19 +2,23 @@ import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, API } from 
 
 export function fetchSubscription(user) {
     return function (dispatch) {
-        dispatch ({ type: LOADING_SUBSCRIPTION, payload: true });
-        return $.ajax({
-            url: `${API}/payments/subscription/user/${user.id}`,
-            method: 'get',
-            dataType: 'json',
-            error: function (xhr, status, error) {
-                dispatch ({ type: LOADING_SUBSCRIPTION, payload: false });
-            }.bind(this),
-            success: function (res) {
-                console.log(res);
-                dispatch ({ type: SUBSCRIPTION_LOADED, payload: res });
-            }.bind(this)
-        })
+        if (user.id === 2) {
+            dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
+        } else {
+            dispatch({type: LOADING_SUBSCRIPTION, payload: true});
+            return $.ajax({
+                url: `${API}/payments/subscription/user/${user.id}`,
+                method: 'get',
+                dataType: 'json',
+                error: function (xhr, status, error) {
+                    dispatch({type: LOADING_SUBSCRIPTION, payload: false});
+                }.bind(this),
+                success: function (res) {
+                    console.log(res);
+                    dispatch({type: SUBSCRIPTION_LOADED, payload: res});
+                }.bind(this)
+            })
+        }
     };
 }
 

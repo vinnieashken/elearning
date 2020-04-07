@@ -137,10 +137,10 @@ export default function (props) {
                                                             <React.Fragment>
                                                                 <div className='row'>
                                                                     <div className='col-md-12'>
-                                                                        <h3>Click <b onClick={event => {
+                                                                        <h5>Click <b onClick={(event) => {
                                                                             location.href=`${ENV}exams/modules`;
                                                                         }
-                                                                                            }>Confirm Payment</b> after paying</h3>
+                                                                                            }>Confirm Payment</b> after paying</h5>
                                                                     </div>
                                                                     <div className='col-md-12'>
                                                                         <img className='mt-5 mb-5' style={{display: 'block', margin:'auto', width: '70%'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>
