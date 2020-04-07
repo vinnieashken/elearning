@@ -2,7 +2,7 @@ import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, API } from 
 
 export function fetchSubscription(user) {
     return function (dispatch) {
-        if (user.id === 2) {
+        if (parseInt(user.id) === 2) {
             dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
         } else {
             dispatch({type: LOADING_SUBSCRIPTION, payload: true});

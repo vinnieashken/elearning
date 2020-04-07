@@ -64,7 +64,7 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setUserAnswers(res);
-                // setLoading(false);
+                setShowAns(res.length > 0 )
             }.bind(this)
         })
     };
@@ -214,15 +214,17 @@ export default function (props) {
                                         </div>
                                         {
                                             loading ? <Loading/> :
-                                                <React.Fragment>
+                                                <div className='col-md-12'>
                                                     <form onSubmit={handleSubmit}>
                                                         {
                                                             message ?
-                                                                <div className='col-md-12'>
-                                                                    <div className="text-center mt-2">
-                                                                        <div className={messageType} role="alert">
-                                                                            <div className="alert-message">
-                                                                                {response}
+                                                                <div className='row'>
+                                                                    <div className='col-md-12'>
+                                                                        <div className="text-center mt-2">
+                                                                            <div className={messageType} role="alert">
+                                                                                <div className="alert-message">
+                                                                                    {response}
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -237,47 +239,41 @@ export default function (props) {
                                                                                 return el.id === ans.question_id;
                                                                             });
                                                                             const answer = ansArray.length > 0 ? ansArray[0] : {};
-                                                                            console.log(answer);
                                                                             return (
-                                                                                <div className="col-md-12">
-                                                                                    <div className="card examcard my-4 mt-md-0 w-100" >
-                                                                                        <ul className="bg-white float-right" style={{display: 'none'}}>
-                                                                                            <li className="text-center p-1 marks">Mrks<br /> 10</li>
-                                                                                        </ul>
-                                                                                        <ul className="list-group list-group-flush">
-                                                                                            <li className="list-group-item">
+                                                                                <div className='row'>
+                                                                                    <div className="col-md-12">
+                                                                                        <div className="card examcard my-4 mt-md-0 w-100" >
+                                                                                            <ul className="bg-white float-right" style={showAns ? {display: 'none'} : {}}>
+                                                                                                <li className="text-center p-1 marks">Mrks<br /> 10</li>
+                                                                                            </ul>
+                                                                                            <ul className="list-group list-group-flush">
+                                                                                                <li className="list-group-item">
 
-                                                                                                <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
-                                                                                                {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
+                                                                                                    <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
+                                                                                                    {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
 
-                                                                                            </li>
-                                                                                            {
-                                                                                                el.options.map((ans) => {
-                                                                                                    const isAns = parseInt(el.answer) === parseInt(ans.id);
-                                                                                                    return (
-                                                                                                        <React.Fragment>
-                                                                                                            <li className="list-group-item ml-4">
-                                                                                                                <input type="radio" id={`${ans.id}`} required={true}
-                                                                                                                       value={ans.id} name={el.id} />
-                                                                                                                <label htmlFor={`${ans.id}`}>
-                                                                                                                    <em>{ans.option}</em>
-                                                                                                                    {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
-                                                                                                                </label>
-                                                                                                            </li>
-                                                                                                            {/*<li className="list-group-item">*/}
-                                                                                                            {/*    <input type="radio" id={`${ans.id}`} required={true}*/}
-                                                                                                            {/*           value={ans.id} name={el.id}*/}
-                                                                                                            {/*           aria-label="Checkbox for following text input" />*/}
-                                                                                                            {/*    <label htmlFor={`${ans.id}`}>*/}
-                                                                                                            {/*        {ans.option}*/}
-                                                                                                            {/*        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }*/}
-                                                                                                            {/*    </label>*/}
-                                                                                                            {/*</li>*/}
-                                                                                                        </React.Fragment>
-                                                                                                    )
-                                                                                                })
-                                                                                            }
-                                                                                        </ul>
+                                                                                                </li>
+                                                                                                {
+                                                                                                    el.options.map((ans) => {
+                                                                                                        const isAns = parseInt(el.answer) === parseInt(ans.id);
+                                                                                                        return (
+                                                                                                            <React.Fragment>
+                                                                                                                <li className="list-group-item ml-4">
+                                                                                                                    <input type="radio" id={`${ans.id}`} required={true}
+                                                                                                                           checked={answer.hasOwnProperty('user_option') && answer.user_option === ans.id}
+                                                                                                                           disabled={answer.hasOwnProperty('user_option')}
+                                                                                                                           value={ans.id} name={el.id} />
+                                                                                                                    <label htmlFor={`${ans.id}`}>
+                                                                                                                        <em>{ans.option}</em>
+                                                                                                                        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
+                                                                                                                    </label>
+                                                                                                                </li>
+                                                                                                            </React.Fragment>
+                                                                                                        )
+                                                                                                    })
+                                                                                                }
+                                                                                            </ul>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             )
@@ -286,17 +282,21 @@ export default function (props) {
 
                                                                     {
                                                                         processing ? <ClipLoader /> : showAns ? '' :
-                                                                            <div className="col-md-12">
-                                                                                <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit</button>
+                                                                            <div className='row'>
+                                                                                <div className="col-md-12">
+                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit</button>
+                                                                                </div>
                                                                             </div>
                                                                     }
                                                                 </React.Fragment>
                                                                 : message ? ''
-                                                                : <div className='col-md-12'>
-                                                                    <div className="text-center mt-2">
-                                                                        <div className='alert alert-warning' role="alert">
-                                                                            <div className="alert-message">
-                                                                                <h4>Sorry, we were unable to get questions for this paper <Link to={`${ENV}exams/modules`}>You can select another paper here</Link></h4>
+                                                                : <div className='rounded'>
+                                                                    <div className='col-md-12'>
+                                                                        <div className="text-center mt-2">
+                                                                            <div className='alert alert-warning' role="alert">
+                                                                                <div className="alert-message">
+                                                                                    <h4>Sorry, we were unable to get questions for this paper <Link to={`${ENV}exams/modules`}>You can select another paper here</Link></h4>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -336,7 +336,7 @@ export default function (props) {
                                                                 </React.Fragment> : ''
                                                         }
                                                     </div>
-                                                </React.Fragment>
+                                                </div>
                                         }
                                     </div>
                                 }
