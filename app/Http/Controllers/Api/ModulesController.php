@@ -53,8 +53,8 @@ class ModulesController extends Controller
                         else{
                             $result['done'] = false;
                         }
-                        array_push($temp,$result);
                     }
+                    array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
             }
@@ -76,15 +76,16 @@ class ModulesController extends Controller
             {
                 foreach ($usermodules as $usermodule)
                 {
-                    if($result->id === $usermodule->module_id)
+                    if($result->id == $usermodule->module_id)
                     {
                         $result['done'] = true;
                     }
                     else{
                         $result['done'] = false;
                     }
-                    array_push($data,$result);
                 }
+
+                array_push($data,$result);
             }
         }
         else
@@ -131,8 +132,8 @@ class ModulesController extends Controller
                         else{
                             $result['done'] = false;
                         }
-                        array_push($temp,$result);
                     }
+                    array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
             }
@@ -160,8 +161,8 @@ class ModulesController extends Controller
                     else{
                         $result['done'] = false;
                     }
-                    array_push($data,$result);
                 }
+                array_push($data,$result);
             }
         }
         else
