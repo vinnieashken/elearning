@@ -53,8 +53,8 @@ class ModulesController extends Controller
                         else{
                             $result['done'] = false;
                         }
-                        array_push($temp,$result);
                     }
+                    array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
             }
@@ -132,8 +132,8 @@ class ModulesController extends Controller
                         else{
                             $result['done'] = false;
                         }
-                        array_push($temp,$result);
                     }
+                    array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
             }
@@ -161,8 +161,8 @@ class ModulesController extends Controller
                     else{
                         $result['done'] = false;
                     }
-                    array_push($data,$result);
                 }
+                array_push($data,$result);
             }
         }
         else
