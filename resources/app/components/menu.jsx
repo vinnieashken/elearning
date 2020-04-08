@@ -307,9 +307,7 @@ export default function (props) {
                     </header>
                     {
                         (loading || loadingSubscription) ?
-                            <div className="text-center" style={{marginTop: '200px'}}>
-                                <ClipLoader color={'#cf2027'}/>
-                            </div>
+                            <Loading/>
                             : <React.Fragment>
                                 {
                                     <Switch>

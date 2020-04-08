@@ -122,7 +122,9 @@ export default function Login(props) {
                                         {/*        Me</p>*/}
                                         {
                                             processing ?
-                                                <Loading/> :
+                                                <div className="text-center">
+                                                    <ClipLoader color={'#cf2027'}/>
+                                                </div> :
                                                 <React.Fragment>
                                                     <div className="text-center mt-2">
                                                         <button type='submit' className="btn btn-primary">Login</button>
