@@ -4,6 +4,7 @@ import Loading from "../common/loading";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import { useSelector } from 'react-redux'
+import {Helmet} from "react-helmet";
 
 const images = [
     `${PUBLIC_URL}/static/app/images/math.png`,
@@ -24,6 +25,7 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const subjects = useSelector(state => state.subjects);
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         getExam();
@@ -121,6 +123,18 @@ export default function (props) {
                     {
                         loading ? <Loading/> :
                             <React.Fragment>
+                                <Helmet>
+                                    <link rel="canonical" href={pathname} />
+                                    <meta name="keywords" content={`Tutor-Soma Tu, Standard E-learning, ${exam.name}`} />
+                                    <meta name="author" content={`Standard Group`} />
+                                    <meta name="description" content={`Tutor-Soma Tu ${exam.name}`} />
+                                    <meta property="twitter:title" content={`Tutor-Soma Tu : ${exam.name} : The Standard`} />
+                                    <meta property="twitter:description" content={`Tutor-Soma Tu - ${exam.name} `} />
+                                    <meta property="twitter:url" content={pathname} />
+                                    <meta property="og:title" content={`Tutor-Soma Tu : ${exam.name} : The Standard `} />
+                                    <meta property="og:description" content={`Tutor-Soma Tu - ${exam.name} `} />
+                                    <meta property="og:url" content={pathname} />
+                                </Helmet>
                                 <div className="row">
                                     <div className="col-md-12">
                                         <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">{`${exam.name}`}</h2>

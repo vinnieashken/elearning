@@ -15,7 +15,7 @@ import Loading from "../common/loading";
 import { fetchSubscription } from "../common/actions";
 import { useDispatch } from "react-redux";
 
-export default function Login(props) {
+export default function (props) {
     const oldState = props.history.location.state;
 
     const [processing, setProcessing] = useState(false);
@@ -24,50 +24,44 @@ export default function Login(props) {
     const [messageType, setMessageType] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('messageType') ? oldState.messageType : '');
     const [response, setResponse] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('response') ? oldState.response : '');
     const [passwordType, setPasswordType] = useState('password');
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(props);
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setProcessing(true);
         setMessage(false);
-        let email = $('#email').val();
-        let password = $('#password').val();
         $.ajax({
-            url: `${API}/app/login`,
+            url: `https://vas.standardmedia.co.ke/api/password/reset`,
             method: 'post',
             data: {
-                username: email,
-                password: password,
+                email: $('#email').val(),
+                redirect_url: 'https://tutorsoma.standardmedia.co.ke/signin' ,
+            },
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
-                $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
-                const thisUser = JSON.parse(res);
-                dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
-                dispatch(fetchSubscription(thisUser));
-                props.setUser(thisUser);
-                localStorage.setItem('user', res);
-                console.log(next);
-                props.history.push({
-                    pathname: `${next}`,
-                    state: {user: thisUser},
-                });
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-success');
+                setResponse(res.message);
             }.bind(this)
         })
     };
 
-    const togglePasswordType = (toggle, e) => {
-        setPasswordType(toggle ? 'text' : 'password')
-    };
 
     return (
         <React.Fragment>
@@ -103,17 +97,6 @@ export default function Login(props) {
                                                    aria-label="Username"
                                                    aria-describedby="basic-addon1" />
                                         </div>
-                                        <div className="input-group mb-3 mt-4">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-key" />
-                                            </span>
-                                            </div>
-                                            <input type="password" className="form-control loginput" placeholder="Password"
-                                                   id='password'
-                                                   aria-label="Password"
-                                                   aria-describedby="basic-addon1" />
-                                        </div>
                                         {/*<p className="card-text grey">*/}
                                         {/*    <input type="checkbox" aria-label="Checkbox for following text input" /> Remember*/}
                                         {/*        Me</p>*/}
@@ -122,14 +105,14 @@ export default function Login(props) {
                                                 <Loading/> :
                                                 <React.Fragment>
                                                     <div className="text-center mt-2">
-                                                        <button type='submit' className="btn btn-primary">Login</button>
+                                                        <button type='submit' className="btn btn-primary">Reset Password</button>
                                                     </div>
-                                                    <h6 className="card-title text-center mt-4">
-                                                        Forgot Password?
-                                                        <Link class="green" to={`${ENV}reset`}> Reset Password</Link>
-                                                    </h6>
-                                                    <h6 className="card-title text-center mt-4">Not yet registered?<br />
-                                                        <Link class="green" to={`${ENV}signup`}>Register</Link>
+                                                    {/*<h6 className="card-title text-center mt-4">*/}
+                                                    {/*    Forgot Password?*/}
+                                                    {/*    <font class="green">Reset Password</font>*/}
+                                                    {/*</h6>*/}
+                                                    <h6 className="card-title text-center mt-4">Have an Account?<br />
+                                                        <Link class="green" to={`${ENV}signin`}>Sign in</Link>
                                                     </h6>
                                                 </React.Fragment>
                                         }

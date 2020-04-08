@@ -7,6 +7,7 @@ const { SearchBar } = Search;
 import moment from "moment";
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
+import {Helmet} from "react-helmet";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -14,6 +15,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         setLoading(true);
@@ -51,6 +53,18 @@ export default function (props) {
 
     return (
         <React.Fragment>
+            <Helmet>
+                <link rel="canonical" href={pathname} />
+                <meta name="keywords" content="Tutor-Soma Tu, Standard E-learning, Subjects" />
+                <meta name="author" content="Standard Group" />
+                <meta name="description" content="Tutor-Soma Tu Subjects" />
+                <meta property="twitter:title" content="Tutor-Soma Tu : Subjects : The Standard" />
+                <meta property="twitter:description" content="Tutor-Soma Tu - Subjects " />
+                <meta property="twitter:url" content={pathname} />
+                <meta property="og:title" content="Tutor-Soma Tu : Subjects : The Standard" />
+                <meta property="og:description" content="Tutor-Soma Tu - Subjects " />
+                <meta property="og:url" content={pathname} />
+            </Helmet>
             <div id="about" className="section-padding mt-5 profile">
                 <div className="container mt-5">
                     {

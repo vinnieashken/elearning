@@ -13,6 +13,11 @@ const Login = Loadable({
     loading: Loading
 });
 
+const ResetPassword = Loadable({
+    loader: () => import('./resetPassword'),
+    loading: Loading
+});
+
 const Register = Loadable({
     loader: () => import('./register'),
     loading: Loading
@@ -28,10 +33,6 @@ const Profile = Loadable({
     loading: LoadingWhite
 });
 
-const Exams = Loadable({
-    loader: () => import('./exams'),
-    loading: LoadingWhite
-});
 
 const Exam = Loadable({
     loader: () => import('./exam'),
@@ -280,6 +281,8 @@ export default function (props) {
                                                render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
                                         <Route exact={true} path={`${props.match.url}signin`}
                                                render={(props) => <Login{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}reset`}
+                                               render={(props) => <ResetPassword {...props}  />}/>
                                         <Route exact={true} path={`${props.match.url}signup`}
                                                render={(props) => <Register{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}profile`}

@@ -7,6 +7,7 @@ import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
 const { SearchBar } = Search;
+import { Helmet } from 'react-helmet';
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -14,9 +15,10 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
-        // setLoading(true);
+        setLoading(true);
         getModules();
     }, [props.match.params.subject]);
 
@@ -58,6 +60,20 @@ export default function (props) {
 
     return (
         <React.Fragment>
+            <div className="application">
+            <Helmet>
+                <link rel="canonical" href={pathname} />
+                <meta name="keywords" content="Tutor-Soma Tu, Standard E-learning, Examination Papers" />
+                <meta name="author" content="Standard Group" />
+                <meta name="description" content="Tutor-Soma Tu Examination Papers" />
+                <meta property="twitter:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
+                <meta property="twitter:description" content="Tutor-Soma Tu - Examination Papers " />
+                <meta property="twitter:url" content={pathname} />
+                <meta property="og:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
+                <meta property="og:description" content="Tutor-Soma Tu - Examination Papers " />
+                <meta property="og:url" content={pathname} />
+            </Helmet>
+            </div>
             <div id="about" className="section-padding mt-5 profile">
                 <div className="container mt-5">
                     {
