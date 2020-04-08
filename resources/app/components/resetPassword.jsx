@@ -37,7 +37,7 @@ export default function (props) {
         setProcessing(true);
         setMessage(false);
         $.ajax({
-            url: `https://vas.standardmedia.co.ke/api/password/reset`,
+            url: `${API}/app/password/reset`,
             method: 'post',
             data: {
                 email: $('#email').val(),
@@ -47,7 +47,12 @@ export default function (props) {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try{
+                    response = JSON.parse(xhr['responseText'])['message'];
+                } catch (e) {
+
+                }
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -57,7 +62,7 @@ export default function (props) {
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-success');
-                setResponse(res.message);
+                setResponse(JSON.parse(res)['message']);
             }.bind(this)
         })
     };
@@ -92,9 +97,9 @@ export default function (props) {
                                                 <i className="fa fa-user" />
                                             </span>
                                             </div>
-                                            <input type="email" className="form-control loginput" placeholder="Username"
+                                            <input type="email" className="form-control loginput" placeholder="Email"
                                                    id='email'
-                                                   aria-label="Username"
+                                                   aria-label="Email"
                                                    aria-describedby="basic-addon1" />
                                         </div>
                                         {/*<p className="card-text grey">*/}

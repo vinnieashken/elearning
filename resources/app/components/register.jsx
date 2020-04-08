@@ -127,6 +127,10 @@ export default function (props) {
                                                 processing ? <ClipLoader /> : <button type='submit' className="btn btn-primary">Register</button>
                                             }
                                         </div>
+                                        <h6 className="card-title text-center mt-4">
+                                            Forgot Password?
+                                            <Link class="green" to={`${ENV}reset`}> Reset Password</Link>
+                                        </h6>
                                         <h6 className="card-title text-center mt-4">Have an Account?<br />
                                             <Link class="green" to={`${ENV}signin`}>Sign in</Link>
                                         </h6>

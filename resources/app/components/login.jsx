@@ -41,9 +41,12 @@ export default function Login(props) {
                 password: password,
             },
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try{
+                    response = JSON.parse(xhr['responseText'])['message'];
+                } catch (e) {
+
+                }
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -98,9 +101,9 @@ export default function Login(props) {
                                                 <i className="fa fa-user" />
                                             </span>
                                             </div>
-                                            <input type="email" className="form-control loginput" placeholder="Username"
+                                            <input type="email" className="form-control loginput" placeholder="Email"
                                                    id='email'
-                                                   aria-label="Username"
+                                                   aria-label="Email"
                                                    aria-describedby="basic-addon1" />
                                         </div>
                                         <div className="input-group mb-3 mt-4">

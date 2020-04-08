@@ -7,6 +7,7 @@ import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED} 
 import { useSelector } from 'react-redux'
 import { fetchSubscription, fetchSubjects } from "../common/actions";
 import { useDispatch } from "react-redux";
+import {ClipLoader} from "react-spinners";
 
 const Login = Loadable({
     loader: () => import('./login'),
@@ -79,6 +80,7 @@ export default function (props) {
     const subscription = useSelector(state => state.subscription);
     const subjects = useSelector(state => state.subjects);
     const loadingSubscription = useSelector(state => state.loadingSubscription);
+    const [subscriptionShown, setSubscriptionShown] = useState({});
 
     const dispatch = useDispatch();
 
@@ -87,8 +89,37 @@ export default function (props) {
             dispatch(fetchSubscription(user));
         }
         dispatch(fetchSubjects());
+        getSubscriptions();
         getClasses();
     }, []);
+
+    const getSubscriptions = () => {
+        $.ajax({
+            url: `${API}/payments/subscriptions`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = "Sorry an error has occurred. We are working on it. ";
+
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                else if (xhr.hasOwnProperty('responseText'))
+                    response = JSON.parse(xhr['responseText'])['message'];
+
+                // setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                const filterd = res.filter(el => {
+                    return el.days === 1;
+                });
+                if (filterd.length > 0)
+                    setSubscriptionShown(filterd[0]);
+                // setLoading(false);
+            }.bind(this)
+        })
+    };
 
     const getClasses = () => {
         $.ajax({
@@ -263,9 +294,11 @@ export default function (props) {
                                                 <li className="nav-item ">
                                                     <Link className="nav-link login" to={`${ENV}signin`}>LOGIN</Link>
                                                 </li>
-                                                <li className="nav-item ">
-                                                    <Link className="nav-link login" to={`${ENV}signin`}>Get 1 day for Ksh.30 </Link>
-                                                </li>
+                                                {
+                                                    subscriptionShown.hasOwnProperty('cost') > 0 ? <li className="nav-item ">
+                                                        <Link className="nav-link login" to={`${ENV}signin`}>Get {subscriptionShown['days']} day for Ksh.{subscriptionShown['cost']} </Link>
+                                                    </li> : ''
+                                                }
                                             </React.Fragment>
                                     }
                                 </ul>
@@ -273,8 +306,11 @@ export default function (props) {
                         </nav>
                     </header>
                     {
-                        (loading || loadingSubscription) ? <Loading/> :
-                            <React.Fragment>
+                        (loading || loadingSubscription) ?
+                            <div className="text-center" style={{marginTop: '200px'}}>
+                                <ClipLoader color={'#cf2027'}/>
+                            </div>
+                            : <React.Fragment>
                                 {
                                     <Switch>
                                         <Route exact={true} path={props.match.url}
