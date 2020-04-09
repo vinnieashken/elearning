@@ -169,7 +169,7 @@
                         toolbar: [
                             ['fontsize', ['fontsize']],
                             ['para', ['ul', 'ol', 'paragraph']],
-                            ['insert',['table']],
+                            ['insert',['table','image']],
 
                         ],
                         callbacks : {
@@ -294,7 +294,7 @@
                         toolbar: [
                                     ['fontsize', ['fontsize']],
                                     ['para', ['ul', 'ol', 'paragraph']],
-                                    ['insert',['table']],
+                                    ['insert',['table','image']],
 
                                 ],
                         callbacks : {
