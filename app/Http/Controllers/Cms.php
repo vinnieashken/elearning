@@ -28,6 +28,10 @@ class Cms extends Controller
                 $customers  =   Customer::count();
                 return view('cms.modules.dashboard',compact('exams','subjects','users','customers'));
             }
+        public function profile(Request $request)
+            {
+
+            }
         public function question()
             {
                 return view('cms.modules.setquestion');
