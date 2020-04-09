@@ -160,11 +160,45 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'question_id':question.id},
                 success: function (Mess) {
-                    $('.choices').html(Mess);
+                    $('.choices').html(Mess).find(".ans-editor").summernote({
+                        height:100,
+                        tabsize: 2,
+                        lineHeight:1.5,
+                        dialogsInBody: true,
+                        dialogsFade: false,
+                        toolbar: [
+                            ['fontsize', ['fontsize']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['insert',['table']],
+
+                        ]
+                    }).on('summernote.change', function(we, contents, $editable) {
+                        $(this).val(contents);
+                    });
                 },
                 error: function (f) {
                     console.log(f);
                 }
+            });
+            $(".ans-editor").summernote({
+                height:100,
+                tabsize: 2,
+                lineHeight:1.5,
+                dialogsInBody: true,
+                dialogsFade: false,
+                toolbar: [
+                    // [groupName, [list of button]]
+
+                    ['font', ['strikethrough', 'superscript', 'subscript','fontname']],
+                    ['fontsize', ['fontsize']],
+
+                    ['para', ['ul', 'ol', 'paragraph','style']],
+
+                    ['insert',['table','hr']],
+
+                ]
+            }).on('summernote.change', function(we, contents, $editable) {
+                $(this).val(contents);
             });
             $('#editModal').modal('toggle');
         });
@@ -218,12 +252,27 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'choices':choices},
                 success: function (Mess) {
-                    $('.choices').append(Mess);
+                    $('.choices').append(Mess).find(".ans-editor").summernote({
+                        height:100,
+                        tabsize: 2,
+                        lineHeight:1.5,
+                        dialogsInBody: true,
+                        dialogsFade: false,
+                        toolbar: [
+                                    ['fontsize', ['fontsize']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['insert',['table']],
+
+                                ]
+                    }).on('summernote.change', function(we, contents, $editable) {
+                        $(this).val(contents);
+                    });
                 },
                 error: function (f) {
                     console.log(f);
                 }
             });
+
         });
         $(document).on('click','.usermgt',function(e){
             e.preventDefault();
@@ -309,6 +358,7 @@
                             }
                     });
             }
+
         $('#classes').DataTable({
             "processing": true,
             "serverSide": true,
