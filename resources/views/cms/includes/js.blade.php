@@ -227,7 +227,7 @@
 
                     ['para', ['ul', 'ol', 'paragraph','style']],
 
-                    ['insert',['table','hr']],
+                    ['insert',['table','picture']],
 
                 ]
             }).on('summernote.change', function(we, contents, $editable) {
@@ -294,7 +294,7 @@
                         toolbar: [
                                     ['fontsize', ['fontsize']],
                                     ['para', ['ul', 'ol', 'paragraph']],
-                                    ['insert',['table','image']],
+                                    ['insert',['table','picture']],
 
                                 ],
                         callbacks : {
