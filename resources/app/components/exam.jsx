@@ -125,9 +125,9 @@ export default function (props) {
                             <React.Fragment>
                                 <Helmet>
                                     <link rel="canonical" href={pathname} />
-                                    <meta name="keywords" content={`Tutor-Soma Tu, Standard E-learning, ${exam.name}`} />
+                                    <meta name="keywords" content={`Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili, ${exam.name}`} />
                                     <meta name="author" content={`Standard Group`} />
-                                    <meta name="description" content={`Tutor-Soma Tu ${exam.name}`} />
+                                    <meta name="description" content={`Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more ${exam.name}`} />
                                     <meta property="twitter:title" content={`Tutor-Soma Tu : ${exam.name} : The Standard`} />
                                     <meta property="twitter:description" content={`Tutor-Soma Tu - ${exam.name} `} />
                                     <meta property="twitter:url" content={pathname} />

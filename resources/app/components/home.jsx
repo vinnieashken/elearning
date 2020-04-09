@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
 import {API, APPNAME, ENV, PUBLIC_URL} from "../common/constants";
 import moment from "moment";
+import {Helmet} from "react-helmet";
 
 const images = [
     `${PUBLIC_URL}/static/app/images/math.png`,
@@ -18,6 +19,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         getSubscriptions();
@@ -54,6 +56,20 @@ export default function (props) {
 
     return (
         <React.Fragment>
+            <div className="application">
+                <Helmet>
+                    <link rel="canonical" href={pathname} />
+                    <meta name="keywords" content="Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili" />
+                    <meta name="author" content="Standard Group" />
+                    <meta name="description" content="Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more" />
+                    <meta property="twitter:title" content="Tutor-Soma Tu : Classes : The Standard" />
+                    <meta property="twitter:description" content="Tutor-Soma Tu - Classes " />
+                    <meta property="twitter:url" content={pathname} />
+                    <meta property="og:title" content="Tutor-Soma Tu : Classes : The Standard" />
+                    <meta property="og:description" content="Tutor-Soma Tu - Classes " />
+                    <meta property="og:url" content={pathname} />
+                </Helmet>
+            </div>
             <div id="sliders">
                 <div className="full-width">
                     <div id="light-slider" className="carousel slide">

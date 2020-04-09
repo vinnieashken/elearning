@@ -7,7 +7,7 @@
     <meta name="description" content="Tutor-Soma Tu">
     <link rel="icon" href="{{asset('favicon.ico')}}">
 
-    <title>Tutor-Soma Tu</title>
+    <title>Tutorsoma Tu:  Kenya's leading e-learning platform. Access past KCPE, KCSE revision papers</title>
 
     <link rel="manifest" href="{{asset('static/app/images/favicon/manifest.json')}}">
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -29,11 +29,7 @@
     <meta property="og:type" content="website" />
     <meta property="fb:app_id" content="118898458656" />
     <meta property="og:site_name" content="Tutor-Soma Tu" />
-    <meta name="developer" content="Dennis Kiptoo Kiptugen">
-    <meta name="developer:email" content="dennis.kiptoo@programmer.net">
-    <meta name="designer" content="Allan Muchira Njau">
-    <meta name="designer:email" content="allan2muchira@gmail.com">
-    <meta name="site-live" content="02:00:45 11-12-2018" />
+    <meta name="site-live" content="02:00:45 11-04-2020" />
 
 {{--    <link rel="image_src" href="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
 {{--    <meta property="twitter:image" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}

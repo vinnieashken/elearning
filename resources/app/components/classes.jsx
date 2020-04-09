@@ -67,9 +67,9 @@ export default function (props) {
             <div className="application">
             <Helmet>
                 <link rel="canonical" href={pathname} />
-                <meta name="keywords" content="Tutor-Soma Tu, Standard E-learning, Classes" />
+                <meta name="keywords" content="Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili" />
                 <meta name="author" content="Standard Group" />
-                <meta name="description" content="Tutor-Soma Tu Classes" />
+                <meta name="description" content="Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more" />
                 <meta property="twitter:title" content="Tutor-Soma Tu : Classes : The Standard" />
                 <meta property="twitter:description" content="Tutor-Soma Tu - Classes " />
                 <meta property="twitter:url" content={pathname} />
