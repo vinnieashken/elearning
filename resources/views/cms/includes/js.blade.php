@@ -61,7 +61,7 @@
         $(document).on('submit', '.add-question', function (e) {
             e.preventDefault();
             var frm = $(this);
-            frm.append($('.choices'));
+            frm.append($('.choices')).addClass('d-none');
 
 
             $.ajax({
