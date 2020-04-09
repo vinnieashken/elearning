@@ -1,6 +1,6 @@
 <nav class="sidebar sidebar-sticky">
     <div class="sidebar-content  js-simplebar">
-        <a class="sidebar-brand px-5" href="{{ url('dashboard') }}">
+        <a class="sidebar-brand px-5" href="{{ url('cms') }}">
             <img class="img-fluid" src="{{ asset('assets/img/elearning.png?').date('YmdHis') }}" alt="Standard Epaper">
         </a>
 
