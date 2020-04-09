@@ -26,7 +26,7 @@
                 <i class="align-self-center" data-feather="menu"></i>
             </a>
 
-            
+
 
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav ml-auto">
@@ -41,7 +41,7 @@
                             <span class="text-dark">{{ Auth::user()->name??'' }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="">Profile</a>
+                            <a class="dropdown-item" href="{{ url('cms/profilemgt') }}">Profile</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"  onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">{{ __('Sign out') }}</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -50,7 +50,7 @@
                         </div>
                     </li>
 
-                    
+
 
                 </ul>
             </div>

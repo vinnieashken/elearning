@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\Customer;
 use App\Models\Module;
 use App\Models\Level;
 use App\Models\Option;
@@ -21,7 +22,15 @@ class Cms extends Controller
             }
         public function index()
             {
-                return view('cms.modules.dashboard');
+                $exams      =   Module::count();
+                $subjects   =   Subject::count();
+                $users      =   User::whereNotNull('rights')->count();
+                $customers  =   Customer::count();
+                return view('cms.modules.dashboard',compact('exams','subjects','users','customers'));
+            }
+        public function profile(Request $request)
+            {
+
             }
         public function question()
             {
@@ -224,50 +233,66 @@ class Cms extends Controller
             }
         public function choices(Request $request)
             {
-                $choice = "";
+                $choice = $ans = "";
+
                 $size = (int)$request->choices + 65;
                 for($i=65; $i<$size; $i++)
                     {
-                        $choice .='<div class="form-group form-row">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">'.chr($i).'</div>
-                                            </div>
-                                            <input type="text" class="form-control" name="option['.chr($i).'][]" >
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <input type="radio" name="correctanswer" value="'.chr($i).'">
-                                                </div>
-                                            </div>
-                                        </div>
+
+                        $choice .=   '<div class="form-group">
+                                       <label class="control-label w-100" for="add-choice-'.chr($i).'">CHOICE '.chr($i).'</label>
+                                        <textarea class="form-control ans-editor w-100" name="option['.chr($i).'][]" id="add-choice-'.chr($i).'">
+                                        </textarea>
+                                     </div
+                                    ';
+                        $ans   .=    '<div class="form-check form-check-inline">
+                                        <label class="form-check-label mr-2" for="add-ans-'.chr($i).'">'.chr($i).'</label>
+                                        <input class="form-check-input" type="radio" name="correctanswer" id="add-ans-'.chr($i).'" value="'.chr($i).'">
+
                                     </div>';
                     }
+                $choice .=   '  <hr>
+                                <div class="form-group mt-5">
+                                    <label for="correct-ans">Correct Answer</label>
+                                    <div id="correct-ans" class="d-flex justify-content-between flex-wrap">
+                                        '.$ans.'
+                                    </div>
+                                </div>
+                            ';
                 return $choice;
             }
         public function questionanswers(Request $request)
             {
-                $choice = "";
+                $choice = $ans="";
                 $i=65;
-                $answer = Answer::where('question_id',$request->question_id)->first();
+                $answer  = Answer::where('question_id',$request->question_id)->first();
+                $choice .=  '<input type="hidden" name="correct_id" value="'.$answer->id.'" >';
                 foreach(Option::where('question_id',$request->question_id)->get() as $value)
                     {
                         $t = ($answer->option_id == $value->id)?'checked':NULL;
-                        $choice .='<div class="form-group form-row">
-                                            <div class="input-group">
-                                                 <div class="input-group-prepend">
-                                                    <div class="input-group-text">'.chr($i).'</div>
-                                                </div>
-                                                <input type="text" class="form-control" name="option['.$value->id.']"  value="'.str_replace(chr($i).') ','',$value->option).'">
-                                                <input type="hidden" name="correct_id" value="'.$answer->id.'" >
-                                                <div class="input-group-append">
-                                                    <div class="input-group-text">
-                                                        <input type="radio" name="correctanswer" '.$t.' value="'.$value->id.'">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>';
+
+                        $choice .=   '<div class="form-group">
+                                       <label class="control-label w-100" for="edit-choice-'.chr($i).'">CHOICE '.chr($i).'</label>
+                                        <textarea class="form-control ans-editor w-100" name="option['.$value->id.']" id="edit-choice-'.chr($i).'">
+                                            '.str_replace(chr($i).') ','',$value->option).'
+                                        </textarea>
+                                     </div
+                                    ';
+                        $ans   .=    '<div class="form-check form-check-inline">
+                                        <label class="form-check-label mr-2" for="edit-ans-'.chr($i).'">'.chr($i).'</label>
+                                        <input class="form-check-input" type="radio" name="correctanswer" '.$t.' id="edit-ans-'.chr($i).'" value="'.$value->id.'">
+
+                                    </div>';
                         $i++;
                     }
+                $choice .=   '  <hr>
+                                <div class="form-group mt-5">
+                                    <label for="correct-ans">Correct Answer</label>
+                                    <div id="correct-ans" >
+                                        '.$ans.'
+                                    </div>
+                                </div>
+                            ';
                 return $choice;
             }
         public function addquestion(Request $request)

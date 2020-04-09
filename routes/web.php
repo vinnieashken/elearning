@@ -23,6 +23,10 @@ Route::get('/cms/rates','Cms@rates');
 Route::get('/cms/users', function() {
     return view('cms.modules.users');
 });
+Route::get('/cms/profilemgt', function() {
+    return view('cms.modules.profile');
+});
+Route::post('/cms/profile','Cms@profile');
 Route::post('/cms/usermgt','Cms@usermgt');
 //Datatables
 Route::post('/get_users','Datatable@get_users');

@@ -8,8 +8,8 @@
             <div class="card-body py-4">
                 <div class="row">
                     <div class="col-8">
-                        <h3 class="mb-2">0</h3>
-                        <div class="mb-0">Total<br/>Users</div>
+                        <h3 class="mb-2">{{ $customers }}</h3>
+                        <div class="mb-0">Total<br/>Customers</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
                         <div class="d-inline-block mt-2">
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
             <div class="card-body py-4">
                 <div class="row">
                     <div class="col-8">
-                        <h3 class="mb-2">0</h3>
+                        <h3 class="mb-2">{{ $subjects }}</h3>
                         <div class="mb-0">Subjects</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
             <div class="card-body py-4">
                 <div class="row">
                     <div class="col-8">
-                        <h3 class="mb-2">0</h3>
+                        <h3 class="mb-2">{{ $exams }}</h3>
                         <div class="mb-0">Exams</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
             <div class="card-body py-4">
                 <div class="row">
                     <div class="col-8">
-                        <h3 class="mb-2">2</h3>
+                        <h3 class="mb-2">{{ $users }}</h3>
                         <div class="mb-0">Admin Users</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
@@ -71,10 +71,12 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
     </div>
-    
+    <div class="row">
+
+    </div>
 @endsection
