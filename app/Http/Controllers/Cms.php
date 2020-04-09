@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\Customer;
 use App\Models\Module;
 use App\Models\Level;
 use App\Models\Option;
@@ -21,7 +22,11 @@ class Cms extends Controller
             }
         public function index()
             {
-                return view('cms.modules.dashboard');
+                $exams      =   Module::count();
+                $subjects   =   Subject::count();
+                $users      =   User::whereNotNull('rights')->count();
+                $customers  =   Customer::count();
+                return view('cms.modules.dashboard',compact('exams','subjects','users','customers'));
             }
         public function question()
             {
