@@ -5393,3 +5393,15 @@ em {
 .toggled{
     width: 250px;
 }
+
+@media (max-width: 767px) {
+    table .btn-sm {
+        font-size: 11px;
+        min-width: 56px;
+        padding: 5px 10px;
+    }
+    .profile{
+        padding: 0 0 !important;
+    }
+}
+
