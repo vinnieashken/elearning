@@ -66,7 +66,7 @@
     <link href="{{ asset('static/app/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/main.css?').date('Ymdhis') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/extras.css') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/responsive.css') }}" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
