@@ -4,10 +4,42 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Tutor-Soma">
+    <meta name="description" content="Tutor-Soma Tu">
     <link rel="icon" href="{{asset('favicon.ico')}}">
 
-    <title>Tutor-Soma</title>
+    <title>Tutor-Soma Tu</title>
+
+    <link rel="manifest" href="{{asset('static/app/images/favicon/manifest.json')}}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{asset('static/app/images/favicon/ms-icon-144x144.png')}}">
+    <meta name="theme-color" content="#D32027">
+
+    <meta name="application-name" content="Tutor-Soma Tu">
+    <link rel="dns-prefetch" href="https://www.gstatic.com">
+    <link rel="dns-prefetch" href="https://tt.onthe.io">
+    <meta name="robots" content="index,follow" />
+    <meta name="copyright" content="The Standard Group" />
+    <meta name="online" content="online@standardmedia.co.ke" />
+    <meta http-equiv="refresh" content="650">
+    <meta name="google-translate-customization" content="9d90f29fa7bea403-55a95e98e906d1f5-gca3f4862da4da582-17" />
+    <meta name="msvalidate.01" content="895B0BFD6A675ED63FA74B3DDCFB918B" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@StandardKenya" />
+    <meta name="twitter:creator" content="@StandardKenya" />
+    <meta property="og:type" content="website" />
+    <meta property="fb:app_id" content="118898458656" />
+    <meta property="og:site_name" content="Tutor-Soma Tu" />
+    <meta name="developer" content="Dennis Kiptoo Kiptugen">
+    <meta name="developer:email" content="dennis.kiptoo@programmer.net">
+    <meta name="designer" content="Allan Muchira Njau">
+    <meta name="designer:email" content="allan2muchira@gmail.com">
+    <meta name="site-live" content="02:00:45 11-12-2018" />
+
+{{--    <link rel="image_src" href="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+{{--    <meta property="twitter:image" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+{{--    <meta property="og:image" content="http://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+{{--    <meta property="og:image:secure_url" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset('static/app/images/favicon/apple-icon-57x57.png')}}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{asset('static/app/images/favicon/apple-icon-60x60.png')}}">
@@ -28,19 +60,23 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('static/app/images/favicon/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('static/app/images/favicon/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{asset('static/app/images/favicon/manifest.json')}}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{asset('static/app/images/favicon/ms-icon-144x144.png')}}">
-    <meta name="theme-color" content="#ffffff">
+
 
 {{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">--}}
-    <link href="{{ asset('static/app/css/bootstrap.min.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/font-awesome.min.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/animate.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/main.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/extras.css?').date('YmdHis') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/responsive.css?').date('YmdHis') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/extras.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/app/css/responsive.css') }}" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
+        gtag('config', 'UA-9511843-21');
+    </script>
 </head>
 <body>
 <div class="main h-100 w-100" id="app" >

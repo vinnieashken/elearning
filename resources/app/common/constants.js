@@ -14,6 +14,7 @@ export const API = `https://tutorsoma.standardmedia.co.ke/api`;
 
 
 export const NEXT_CHANGED = "NEXT_CHANGED";
+export const LOADING_SUBSCRIPTION = "LOADING_SUBSCRIPTION";
 export const SUBSCRIPTION_LOADED = "SUBSCRIPTION_LOADED";
 export const SUBSCRIPTION_DELETED = "SUBSCRIPTION_DELETED";
 export const SUBJECTS_LOADED = "SUBJECTS_LOADED";

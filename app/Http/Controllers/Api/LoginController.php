@@ -105,6 +105,30 @@ class LoginController extends Controller
         }
 
         return $body;
+    }
+    public function resetPassword(Request $request)
+    {
+        $email = $request->email;
+        $url = $request->redirect_url;
 
+        $params = ["body"=>json_encode(['email'=> $email, 'redirect_url'=> $url ])];
+
+        //return $params;
+
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
+        try {
+
+            $response = $client->request('POST', $this->api . 'email/password', $params);
+
+        }catch (Exception $e)
+        {
+
+        }
+
+        $headers = $response->getHeaders();
+        $body = $response->getBody()->getContents();
+        $objbody = json_decode($body);
+
+        return $body;
     }
 }

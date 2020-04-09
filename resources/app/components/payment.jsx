@@ -4,6 +4,9 @@ import {ClipLoader} from "react-spinners";
 import Loading from "../common/loading";
 
 export default function (props) {
+    const oldState = props.history.location.state;
+
+    const [plan, setPlan] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('plan') ? oldState.plan : {});
     const [subscriptions, setSubscriptions] = useState([]);
     const [payment, setPayment] = useState({});
     const [processing, setProcessing] = useState(false);
@@ -14,6 +17,7 @@ export default function (props) {
 
 
     useEffect(() => {
+        console.log(props);
         getSubscriptions();
     }, []);
 
@@ -117,7 +121,7 @@ export default function (props) {
                                                                         <div className="col-md-4 col-sm-6">
                                                                             <div className="custom-control custom-checkbox">
                                                                                 <input type="radio" className="custom-control-input" value={el.id} onChange={handleChanged}
-                                                                                       name="package_id" id={`${el.id}`} defaultChecked={false}  required/>
+                                                                                       name="package_id" id={`${el.id}`} defaultChecked={parseInt(plan.id) === parseInt(el.id)}  required/>
                                                                                 <label
                                                                                     className="custom-control-label form-control-label text-muted"
                                                                                     htmlFor={`${el.id}`}>{el.subscription} ({el.cost}/=)</label>
@@ -132,6 +136,12 @@ export default function (props) {
                                                         payment.hasOwnProperty('id') ?
                                                             <React.Fragment>
                                                                 <div className='row'>
+                                                                    <div className='col-md-12'>
+                                                                        <h5>Click <b onClick={(event) => {
+                                                                            location.href=`${ENV}exams/modules`;
+                                                                        }
+                                                                                            }>Confirm Payment</b> after paying</h5>
+                                                                    </div>
                                                                     <div className='col-md-12'>
                                                                         <img className='mt-5 mb-5' style={{display: 'block', margin:'auto', width: '70%'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>
                                                                     </div>
@@ -168,7 +178,7 @@ export default function (props) {
                                                         {
                                                             processing ? <ClipLoader /> :
                                                                 payment.hasOwnProperty('id') ? <button type="button" className="btn btn-primary mpesabtn" onClick={event => {
-                                                                        location.href=`${ENV}profile`;
+                                                                        location.href=`${ENV}exams/modules`;
                                                                     }
                                                                     }>Confirm Payment </button>
                                                                     : <button type='submit' className="btn btn-primary mpesabtn">Pay</button>

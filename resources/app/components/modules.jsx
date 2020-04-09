@@ -7,6 +7,7 @@ import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
 const { SearchBar } = Search;
+import { Helmet } from 'react-helmet';
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -14,6 +15,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         setLoading(true);
@@ -22,34 +24,28 @@ export default function (props) {
 
     const getModules = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}`,
+            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setModules(res);
+                setModules(res.reverse());
                 setLoading(false);
             }.bind(this)
         })
     };
 
-    const dateFormatter= (cell, row) => {
-        return moment(cell, 'Y-MM-DD HH:mm:ss').fromNow()
-    };
-
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}exams/exam/${row.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
-                    Take Test
+                <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
+                    {row.done ? `Revise Paper` : `Take Test`}
                 </Link>
                 {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
                 {/*    <i className="fa fa-pencil-alt"></i>*/}
@@ -64,6 +60,20 @@ export default function (props) {
 
     return (
         <React.Fragment>
+            <div className="application">
+            <Helmet>
+                <link rel="canonical" href={pathname} />
+                <meta name="keywords" content="Tutor-Soma Tu, Standard E-learning, Examination Papers" />
+                <meta name="author" content="Standard Group" />
+                <meta name="description" content="Tutor-Soma Tu Examination Papers" />
+                <meta property="twitter:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
+                <meta property="twitter:description" content="Tutor-Soma Tu - Examination Papers " />
+                <meta property="twitter:url" content={pathname} />
+                <meta property="og:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
+                <meta property="og:description" content="Tutor-Soma Tu - Examination Papers " />
+                <meta property="og:url" content={pathname} />
+            </Helmet>
+            </div>
             <div id="about" className="section-padding mt-5 profile">
                 <div className="container mt-5">
                     {

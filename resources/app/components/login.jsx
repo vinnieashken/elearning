@@ -1,5 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {API, DIR, ENV, PUBLIC_URL, SUBJECTS_LOADED, SUBSCRIPTION_DELETED} from "../common/constants";
+import {
+    API,
+    DIR,
+    ENV,
+    PUBLIC_URL,
+    LOADING_SUBSCRIPTION,
+    SUBJECTS_LOADED,
+    SUBSCRIPTION_DELETED,
+    SUBSCRIPTION_LOADED
+} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
@@ -18,13 +27,6 @@ export default function Login(props) {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        localStorage.clear();
-        props.setUser({});
-        dispatch ({ type: SUBSCRIPTION_DELETED, payload: [] });
-        console.log(`${JSON.stringify(env)}`)
-    }, []);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setProcessing(true);
@@ -39,9 +41,12 @@ export default function Login(props) {
                 password: password,
             },
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try{
+                    response = JSON.parse(xhr['responseText'])['message'];
+                } catch (e) {
+
+                }
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -49,15 +54,16 @@ export default function Login(props) {
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
-                localStorage.setItem('user', res);
                 const thisUser = JSON.parse(res);
+                dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
                 dispatch(fetchSubscription(thisUser));
                 props.setUser(thisUser);
+                localStorage.setItem('user', res);
+                console.log(next);
                 props.history.push({
                     pathname: `${next}`,
                     state: {user: thisUser},
                 });
-                setProcessing(false);
             }.bind(this)
         })
     };
@@ -65,6 +71,7 @@ export default function Login(props) {
     const togglePasswordType = (toggle, e) => {
         setPasswordType(toggle ? 'text' : 'password')
     };
+
     return (
         <React.Fragment>
             <div id="about" className="section-padding mt-5 pricing login">
@@ -94,9 +101,9 @@ export default function Login(props) {
                                                 <i className="fa fa-user" />
                                             </span>
                                             </div>
-                                            <input type="email" className="form-control loginput" placeholder="Username"
+                                            <input type="email" className="form-control loginput" placeholder="Email"
                                                    id='email'
-                                                   aria-label="Username"
+                                                   aria-label="Email"
                                                    aria-describedby="basic-addon1" />
                                         </div>
                                         <div className="input-group mb-3 mt-4">
@@ -115,15 +122,17 @@ export default function Login(props) {
                                         {/*        Me</p>*/}
                                         {
                                             processing ?
-                                                <Loading/> :
+                                                <div className="text-center">
+                                                    <ClipLoader color={'#cf2027'}/>
+                                                </div> :
                                                 <React.Fragment>
                                                     <div className="text-center mt-2">
                                                         <button type='submit' className="btn btn-primary">Login</button>
                                                     </div>
-                                                    {/*<h6 className="card-title text-center mt-4">*/}
-                                                    {/*    Forgot Password?*/}
-                                                    {/*    <font class="green">Reset Password</font>*/}
-                                                    {/*</h6>*/}
+                                                    <h6 className="card-title text-center mt-4">
+                                                        Forgot Password?
+                                                        <Link class="green" to={`${ENV}reset`}> Reset Password</Link>
+                                                    </h6>
                                                     <h6 className="card-title text-center mt-4">Not yet registered?<br />
                                                         <Link class="green" to={`${ENV}signup`}>Register</Link>
                                                     </h6>

@@ -78,6 +78,23 @@ export default function (props) {
         })
     };
 
+    const reviseButton = (cell, row) => {
+        return (
+            <div className="actions ml-3">
+                <Link to={`${ENV}exams/exam/${row.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
+                    Revise
+                </Link>
+                {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
+                {/*    <i className="fa fa-pencil-alt"></i>*/}
+                {/*</a>*/}
+                {/*<a href="#" className="action-item text-danger mr-2" data-toggle="tooltip" title=""*/}
+                {/*   data-original-title="Move to trash">*/}
+                {/*    <i className="fa fa-trash"></i>*/}
+                {/*</a>*/}
+            </div>
+        )
+    };
+
     return (
         <React.Fragment>
             <div id="about" className="section-padding mt-5 profile">
@@ -111,7 +128,7 @@ export default function (props) {
                                     </div>
                                 </div>
                                 <div className="col-md-9">
-                                    <div className="row">
+                                    <div className="row mt-5">
                                         <div className="col-md-12">
                                             <h2 className="section-title wow fadeInDown animated text-center"
                                                 data-wow-delay="0.3s">Past Performance</h2>
@@ -125,6 +142,7 @@ export default function (props) {
                                             <th scope="col">Exam</th>
                                             <th scope="col">Score</th>
                                             <th scope="col">Percentage</th>
+                                            <th scope="col">Revise</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -135,7 +153,12 @@ export default function (props) {
                                                     <td>{el.subject}</td>
                                                     <td>{el.module}</td>
                                                     <td>{el.score}</td>
-                                                    <td>{el.percentage}</td>
+                                                    <td>{`${el.percentage}%`}</td>
+                                                    <td>
+                                                        <Link to={`${ENV}exams/exam/${el.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
+                                                        Revise Exam
+                                                    </Link>
+                                                    </td>
                                                 </tr>
                                             )
                                         })}

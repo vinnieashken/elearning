@@ -4,6 +4,7 @@ import Loading from "../common/loading";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import { useSelector } from 'react-redux'
+import {Helmet} from "react-helmet";
 
 const images = [
     `${PUBLIC_URL}/static/app/images/math.png`,
@@ -16,6 +17,7 @@ const images = [
 
 export default function (props) {
     const [exam, setExam] = useState([]);
+    const [userAnswers, setUserAnswers] = useState([]);
     const [showAns, setShowAns] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -23,6 +25,7 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const subjects = useSelector(state => state.subjects);
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         getExam();
@@ -30,7 +33,7 @@ export default function (props) {
 
     const getExam = () => {
         $.ajax({
-            url: `${API}/questions/module/${props.match.params.module}`,
+            url: `${API}/questions/module/${props.match.params.module}?userid=2`,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr['responseText'])['message'];
@@ -43,6 +46,29 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setExam(res);
+                setLoading(res.done);
+                if (res.done)
+                    getUserAnswers();
+
+            }.bind(this)
+        })
+    };
+
+    const getUserAnswers = () => {
+        $.ajax({
+            url: `${API}/modules/${props.match.params.module}/user/${props.user.id}`,
+            // url: `${API}/subjects/class/{class_id}`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                setLoading(false);
+                // setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setUserAnswers(res);
+                setShowAns(res.length > 0 );
                 setLoading(false);
             }.bind(this)
         })
@@ -84,7 +110,7 @@ export default function (props) {
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-success');
-                setResponse(<h4>Congratulations, you have scored {score['Percentage']}%. <Link to={`${ENV}exams/modules`}>You can do another paper here</Link></h4>);
+                setResponse(<h4>Congratulations, you have scored {(Math.round(score['Percentage'] * 100) / 100).toFixed(2)}%. <Link to={`${ENV}exams/modules`}>You can do another paper here</Link></h4>);
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this)
         })
@@ -97,9 +123,21 @@ export default function (props) {
                     {
                         loading ? <Loading/> :
                             <React.Fragment>
+                                <Helmet>
+                                    <link rel="canonical" href={pathname} />
+                                    <meta name="keywords" content={`Tutor-Soma Tu, Standard E-learning, ${exam.name}`} />
+                                    <meta name="author" content={`Standard Group`} />
+                                    <meta name="description" content={`Tutor-Soma Tu ${exam.name}`} />
+                                    <meta property="twitter:title" content={`Tutor-Soma Tu : ${exam.name} : The Standard`} />
+                                    <meta property="twitter:description" content={`Tutor-Soma Tu - ${exam.name} `} />
+                                    <meta property="twitter:url" content={pathname} />
+                                    <meta property="og:title" content={`Tutor-Soma Tu : ${exam.name} : The Standard `} />
+                                    <meta property="og:description" content={`Tutor-Soma Tu - ${exam.name} `} />
+                                    <meta property="og:url" content={pathname} />
+                                </Helmet>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">{`${exam.name} Examination`}</h2>
+                                        <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">{`${exam.name}`}</h2>
                                     </div>
                                 </div>
                                 {
@@ -193,72 +231,94 @@ export default function (props) {
                                         </div>
                                         {
                                             loading ? <Loading/> :
-                                                <React.Fragment>
+                                                <div className='col-md-12'>
                                                     <form onSubmit={handleSubmit}>
                                                         {
                                                             message ?
-                                                                <div className='col-md-12'>
-                                                                    <div className="text-center mt-2">
-                                                                        <div className={messageType} role="alert">
-                                                                            <div className="alert-message">
-                                                                                {response}
+                                                                <div className='row'>
+                                                                    <div className='col-md-12'>
+                                                                        <div className="text-center mt-2">
+                                                                            <div className={messageType} role="alert">
+                                                                                <div className="alert-message">
+                                                                                    {response}
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div> : ''
                                                         }
-                                                        <div className="col-md-12">
-                                                            {
-                                                                exam.questions.map((el, index) => {
-                                                                    return (
-                                                                        <div className="card examcard my-4 mt-md-0" >
-                                                                            <ul className="bg-white float-right" style={{display: 'none'}}>
-                                                                                <li className="text-center p-1 marks">Mrks<br /> 10</li>
-                                                                            </ul>
-                                                                            <ul className="list-group list-group-flush">
-                                                                                <li className="list-group-item">
-                                                                                    <p>
-                                                                                        <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
-                                                                                        {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
-                                                                                    </p>
-                                                                                </li>
-                                                                                {
-                                                                                    el.options.map((ans) => {
-                                                                                        const isAns = parseInt(el.answer) === parseInt(ans.id);
-                                                                                        return (
-                                                                                            <React.Fragment>
-                                                                                                <li className="list-group-item ml-4">
-                                                                                                    <input type="radio" id={`${ans.id}`} required={true}
-                                                                                                           value={ans.id} name={el.id} />
-                                                                                                    <label htmlFor={`${ans.id}`}>
-                                                                                                        <em>{ans.option}</em>
-                                                                                                        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
-                                                                                                    </label>
-                                                                                                </li>
-                                                                                                {/*<li className="list-group-item">*/}
-                                                                                                {/*    <input type="radio" id={`${ans.id}`} required={true}*/}
-                                                                                                {/*           value={ans.id} name={el.id}*/}
-                                                                                                {/*           aria-label="Checkbox for following text input" />*/}
-                                                                                                {/*    <label htmlFor={`${ans.id}`}>*/}
-                                                                                                {/*        {ans.option}*/}
-                                                                                                {/*        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }*/}
-                                                                                                {/*    </label>*/}
-                                                                                                {/*</li>*/}
-                                                                                            </React.Fragment>
-                                                                                        )
-                                                                                    })
-                                                                                }
-                                                                            </ul>
-                                                                        </div>
-                                                                    )
-                                                                })
-                                                            }
+                                                        {
+                                                            exam.questions.length > 0 ?
+                                                                <React.Fragment>
+                                                                    {
+                                                                        exam.questions.map((el, index) => {
+                                                                            const ansArray = userAnswers.filter(ans => {
+                                                                                return el.id === ans.question_id;
+                                                                            });
+                                                                            const answer = ansArray.length > 0 ? ansArray[0] : {};
+                                                                            return (
+                                                                                <div className='row'>
+                                                                                    <div className="col-md-12">
+                                                                                        <div className="card examcard my-4 mt-md-0 w-100" >
+                                                                                            <ul className="bg-white float-right" style={{display: `${exam.done ? 'block' : 'none'}`}}>
+                                                                                                <li className="text-center p-1 marks">Mrks<br />{el.answer === answer.user_option ? 1 : 0}</li>
+                                                                                            </ul>
+                                                                                            <ul className="list-group list-group-flush">
+                                                                                                <li className="list-group-item">
 
-                                                            {
-                                                                processing ? <ClipLoader /> : showAns ? '' :
-                                                                    <button type='submit' className="submit text-center float-right">Submit</button>
-                                                            }
-                                                        </div>
+                                                                                                    <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
+                                                                                                    {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
+
+                                                                                                </li>
+                                                                                                {
+                                                                                                    el.options.map((ans) => {
+                                                                                                        const isAns = parseInt(el.answer) === parseInt(ans.id);
+                                                                                                        return (
+                                                                                                            <React.Fragment>
+                                                                                                                <li className="list-group-item ml-4">
+                                                                                                                    <input type="radio" id={`${ans.id}`} required={true}
+                                                                                                                           defaultChecked={answer.hasOwnProperty('user_option') && answer.user_option === ans.id}
+                                                                                                                           disabled={answer.hasOwnProperty('user_option')}
+                                                                                                                           value={ans.id} name={el.id} />
+                                                                                                                    <label htmlFor={`${ans.id}`}>
+                                                                                                                        <em>{ans.option}</em>
+                                                                                                                        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
+                                                                                                                    </label>
+                                                                                                                </li>
+                                                                                                            </React.Fragment>
+                                                                                                        )
+                                                                                                    })
+                                                                                                }
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                        })
+                                                                    }
+
+                                                                    {
+                                                                        processing ? <ClipLoader /> : showAns ? '' :
+                                                                            <div className='row'>
+                                                                                <div className="col-md-12">
+                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit</button>
+                                                                                </div>
+                                                                            </div>
+                                                                    }
+                                                                </React.Fragment>
+                                                                : message ? ''
+                                                                : <div className='rounded'>
+                                                                    <div className='col-md-12'>
+                                                                        <div className="text-center mt-2">
+                                                                            <div className='alert alert-warning' role="alert">
+                                                                                <div className="alert-message">
+                                                                                    <h4>Sorry, we were unable to get questions for this paper <Link to={`${ENV}exams/modules`}>You can select another paper here</Link></h4>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        }
                                                     </form>
                                                     <div className="mt-5 text-center container">
                                                         {
@@ -293,7 +353,7 @@ export default function (props) {
                                                                 </React.Fragment> : ''
                                                         }
                                                     </div>
-                                                </React.Fragment>
+                                                </div>
                                         }
                                     </div>
                                 }

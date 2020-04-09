@@ -3,6 +3,7 @@ import {API, ENV, SUBSCRIPTION_DELETED} from "../common/constants";
 import { useDispatch } from "react-redux";
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
+import {Helmet} from "react-helmet";
 
 export default function (props) {
 
@@ -18,6 +19,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         getSubscriptions();
@@ -49,6 +51,18 @@ export default function (props) {
 
     return(
         <React.Fragment>
+            <Helmet>
+                <link rel="canonical" href={pathname} />
+                <meta name="keywords" content="Tutor-Soma Tu, Standard E-learning, Membership Plans" />
+                <meta name="author" content="Standard Group" />
+                <meta name="description" content="Tutor-Soma Tu Membership Plans" />
+                <meta property="twitter:title" content="Tutor-Soma Tu : Membership Plans : The Standard" />
+                <meta property="twitter:description" content="Tutor-Soma Tu - Membership Plans " />
+                <meta property="twitter:url" content={pathname} />
+                <meta property="og:title" content="Tutor-Soma Tu : Membership Plans : The Standard" />
+                <meta property="og:description" content="Tutor-Soma Tu - Membership Plans " />
+                <meta property="og:url" content={pathname} />
+            </Helmet>
             <div id="about" className="section-padding mt-5 pricing">
                 <div className="container mt-5">
                     <div className="row">
@@ -71,7 +85,12 @@ export default function (props) {
                                                     <h6 className="card-title text-center">Also Recieve</h6>
                                                     <p className="card-text text-center">- Complimentary e-paper.<br />- Regular email bulletins.</p>
                                                     <div className="text-center">
-                                                        <Link to={`${ENV}subscription/payment`} className="btn btn-primary">Select Plan</Link>
+                                                        <Link to={{
+                                                            pathname: `${ENV}subscription/payment`,
+                                                            state: {
+                                                                plan: el
+                                                            }
+                                                        }} className="btn btn-primary">Select Plan</Link>
                                                     </div>
                                                 </div>
                                             </div>

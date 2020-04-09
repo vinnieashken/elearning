@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/app/login','Api\LoginController@login');
 Route::post('/app/register','Api\LoginController@register');
+Route::post('/app/password/reset','Api\LoginController@resetPassword');
 
 Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 

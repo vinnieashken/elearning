@@ -18,6 +18,7 @@ class CreateMarksTable extends Migration
             $table->integer('marks_module_id');
             $table->integer('marks_user_id');
             $table->integer('score');
+            $table->integer('questions');
             $table->integer('percentage');
             $table->timestamps();
         });

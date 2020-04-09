@@ -3,13 +3,19 @@ import {Link, Switch, Route} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
-import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION} from "../common/constants";
+import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED} from "../common/constants";
 import { useSelector } from 'react-redux'
 import { fetchSubscription, fetchSubjects } from "../common/actions";
 import { useDispatch } from "react-redux";
+import {ClipLoader} from "react-spinners";
 
 const Login = Loadable({
     loader: () => import('./login'),
+    loading: Loading
+});
+
+const ResetPassword = Loadable({
+    loader: () => import('./resetPassword'),
     loading: Loading
 });
 
@@ -28,10 +34,6 @@ const Profile = Loadable({
     loading: LoadingWhite
 });
 
-const Exams = Loadable({
-    loader: () => import('./exams'),
-    loading: LoadingWhite
-});
 
 const Exam = Loadable({
     loader: () => import('./exam'),
@@ -77,6 +79,8 @@ export default function (props) {
     const [classes, setClasses] = useState([]);
     const subscription = useSelector(state => state.subscription);
     const subjects = useSelector(state => state.subjects);
+    const loadingSubscription = useSelector(state => state.loadingSubscription);
+    const [subscriptionShown, setSubscriptionShown] = useState({});
 
     const dispatch = useDispatch();
 
@@ -85,8 +89,37 @@ export default function (props) {
             dispatch(fetchSubscription(user));
         }
         dispatch(fetchSubjects());
+        getSubscriptions();
         getClasses();
     }, []);
+
+    const getSubscriptions = () => {
+        $.ajax({
+            url: `${API}/payments/subscriptions`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = "Sorry an error has occurred. We are working on it. ";
+
+                if (xhr.status === 405)
+                    response = "Sorry an error has occurred. We are working on it. (405)";
+                else if (xhr.hasOwnProperty('responseText'))
+                    response = JSON.parse(xhr['responseText'])['message'];
+
+                // setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                const filterd = res.filter(el => {
+                    return el.days === 1;
+                });
+                if (filterd.length > 0)
+                    setSubscriptionShown(filterd[0]);
+                // setLoading(false);
+            }.bind(this)
+        })
+    };
 
     const getClasses = () => {
         $.ajax({
@@ -111,6 +144,16 @@ export default function (props) {
     const toggleSideBar = (e) => {
         const ele = $('.sidenav');
         ele.toggleClass('toggled');
+    };
+
+    const logout = (e) => {
+        localStorage.clear();
+        setUser({});
+        dispatch ({ type: SUBSCRIPTION_DELETED, payload: [] });
+        props.history.push({
+            pathname: `${ENV}signin`,
+            state: {next: props.location.pathname},
+        });
     };
 
     return (
@@ -169,7 +212,7 @@ export default function (props) {
                                     user.hasOwnProperty('id') ?
                                         <React.Fragment>
                                             <Link to={`${ENV}profile`}>PROFILE</Link>
-                                            <Link to={`${ENV}signin`}>LOGOUT</Link>
+                                            <a href='#' onClick={logout}>LOGOUT</a>
                                         </React.Fragment> :
                                         <React.Fragment>
                                             <Link to={`${ENV}signin`}>LOGIN</Link>
@@ -240,7 +283,7 @@ export default function (props) {
                                                     <div className="dropdown-menu"
                                                          aria-labelledby="navbarDropdownMenuLink">
                                                         <Link className="dropdown-item" to={`${ENV}profile`}>PROFILE</Link>
-                                                        <Link className="dropdown-item" to={`${ENV}signin`}>LOGOUT</Link>
+                                                        <a href='#' onClick={logout} className="dropdown-item" >LOGOUT</a>
                                                     </div>
                                                 </li>
                                             </React.Fragment> :
@@ -251,9 +294,11 @@ export default function (props) {
                                                 <li className="nav-item ">
                                                     <Link className="nav-link login" to={`${ENV}signin`}>LOGIN</Link>
                                                 </li>
-                                                <li className="nav-item ">
-                                                    <Link className="nav-link login" to={`${ENV}signin`}>Get 1 day for Ksh.30 </Link>
-                                                </li>
+                                                {
+                                                    subscriptionShown.hasOwnProperty('cost') > 0 ? <li className="nav-item ">
+                                                        <Link className="nav-link login" to={`${ENV}signin`}>Get {subscriptionShown['days']} day for Ksh.{subscriptionShown['cost']} </Link>
+                                                    </li> : ''
+                                                }
                                             </React.Fragment>
                                     }
                                 </ul>
@@ -261,14 +306,17 @@ export default function (props) {
                         </nav>
                     </header>
                     {
-                        loading ? <Loading/> :
-                            <React.Fragment>
+                        (loading || loadingSubscription) ?
+                            <Loading/>
+                            : <React.Fragment>
                                 {
                                     <Switch>
                                         <Route exact={true} path={props.match.url}
                                                render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
                                         <Route exact={true} path={`${props.match.url}signin`}
                                                render={(props) => <Login{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}reset`}
+                                               render={(props) => <ResetPassword {...props}  />}/>
                                         <Route exact={true} path={`${props.match.url}signup`}
                                                render={(props) => <Register{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}profile`}
@@ -338,21 +386,14 @@ export default function (props) {
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/modules`}
                                                render={(props) =>
-                                                   user.hasOwnProperty('id') ?
-                                                       subscription.hasOwnProperty('id') ?
+                                                   // user.hasOwnProperty('id') ?
                                                        <Modules {...props} user={user}/>
-                                                       : props.history.push({
-                                                           pathname: `${ENV}subscriptions`,
-                                                           state: {
-                                                               next: props.location.pathname
-                                                           },
-                                                       })
-                                                       : props.history.push({
-                                                           pathname: `${ENV}signin`,
-                                                           state: {
-                                                               next: props.location.pathname
-                                                           },
-                                                       })
+                                                       // : props.history.push({
+                                                       //     pathname: `${ENV}signin`,
+                                                       //     state: {
+                                                       //         next: props.location.pathname
+                                                       //     },
+                                                       // })
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
                                                render={(props) =>
