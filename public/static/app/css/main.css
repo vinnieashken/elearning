@@ -5405,3 +5405,18 @@ em {
     }
 }
 
+@media (max-width: 767px) {
+    .featured-box-item .featured-content h4 {
+        font-size: 11px;
+        text-transform: uppercase;
+        margin-bottom: 0px;
+    }
+    .featured-box-item {
+        margin-bottom: 30px;
+    }
+    .nav-link .w-25 {
+        width: 25%!important;
+        margin-left: 4%;
+    }
+}
+
