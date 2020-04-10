@@ -281,7 +281,7 @@ export default function (props) {
                                                                                                                            disabled={answer.hasOwnProperty('user_option')}
                                                                                                                            value={ans.id} name={el.id} />
                                                                                                                     <label htmlFor={`${ans.id}`}>
-                                                                                                                        <em>{ans.option}</em>
+                                                                                                                        <em><span dangerouslySetInnerHTML={ {__html: `${ans.option}`} } /></em>
                                                                                                                         {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
                                                                                                                     </label>
                                                                                                                 </li>
