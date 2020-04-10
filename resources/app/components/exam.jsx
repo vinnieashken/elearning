@@ -110,7 +110,7 @@ export default function (props) {
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-success');
-                setResponse(<h4>Congratulations, you have scored {(Math.round(score['Percentage'] * 100) / 100).toFixed(2)}%. <Link to={`${ENV}exams/modules`}>You can do another paper here</Link></h4>);
+                setResponse(<h4>Congratulations, you have scored {res['Score']} / {res['Questions']}. <Link to={`${ENV}exams/modules`}>You can do another paper here</Link></h4>);
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this)
         })
