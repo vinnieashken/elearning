@@ -50,5 +50,7 @@ Route::get('/payments/subscriptions/user/{id}','Api\PaymentsController@getUserSu
 Route::get('/payments/subscriptions/list','Api\PaymentsController@listSubscriptions');
 Route::get('/payments/list','Api\PaymentsController@listPayments');
 
+Route::get('/test/{id}','API\ModulesController@mymodules');
+
 
 

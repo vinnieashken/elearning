@@ -291,4 +291,10 @@ class ModulesController extends Controller
         return $sheets;
     }
 
+    public function mymodules($userid)
+    {
+        $usermodules = AnswerSheet::where('user_id',$userid)->select('module_id')->distinct()->get();
+        return $usermodules;
+    }
+
 }
