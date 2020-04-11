@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Module;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ModulesController extends Controller
@@ -44,14 +45,13 @@ class ModulesController extends Controller
                 $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
                 foreach ($results as $result)
                 {
+                    $result['done'] = false;
+
                     foreach ($usermodules as $usermodule)
                     {
                         if($result->id === $usermodule->module_id)
                         {
                             $result['done'] = true;
-                        }
-                        else{
-                            $result['done'] = false;
                         }
                     }
                     array_push($temp,$result);
@@ -72,16 +72,19 @@ class ModulesController extends Controller
         if($request->has('userid'))
         {
             $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+
+
             foreach ($results as $result)
             {
+                $result['done'] = false;
+
                 foreach ($usermodules as $usermodule)
                 {
+
                     if($result->id == $usermodule->module_id)
                     {
+                        Log::info('Result ID '.$result->id.'  Module ID '.$usermodule->module_id);
                         $result['done'] = true;
-                    }
-                    else{
-                        $result['done'] = false;
                     }
                 }
 
@@ -123,14 +126,13 @@ class ModulesController extends Controller
                 $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
                 foreach ($results as $result)
                 {
+                    $result['done'] = false;
+
                     foreach ($usermodules as $usermodule)
                     {
                         if($result->id === $usermodule->module_id)
                         {
                             $result['done'] = true;
-                        }
-                        else{
-                            $result['done'] = false;
                         }
                     }
                     array_push($temp,$result);
@@ -152,15 +154,15 @@ class ModulesController extends Controller
             $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
             foreach ($results as $result)
             {
+                $result['done'] = false;
+
                 foreach ($usermodules as $usermodule)
                 {
                     if($result->id === $usermodule->module_id)
                     {
                         $result['done'] = true;
                     }
-                    else{
-                        $result['done'] = false;
-                    }
+
                 }
                 array_push($data,$result);
             }
