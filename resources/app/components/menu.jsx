@@ -164,6 +164,7 @@ export default function (props) {
                         <nav className="navbar navbar-expand-md bg-white fixed-top scrolling-navbar indigo py-3">
                             <div className="w-100 d-block d-lg-none d-md-none mr-5">
                                 <a className="nav-link" href="#">
+                                    
                                     <span style={{fontSize: "20px", cursor:"pointer"}} className="float-right opennav" onClick={toggleSideBar}>&#9776;</span>
                                     <img src={`${PUBLIC_URL}/static/app/images/logo.png`} className="w-25 float-left" alt={APPNAME} />
                                 </a>
