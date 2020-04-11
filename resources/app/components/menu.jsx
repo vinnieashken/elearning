@@ -207,7 +207,7 @@ export default function (props) {
                                         }
                                     </ul>
                                 </div>
-                                <Link to={`${ENV}exams/modules`}>EXAMINATI PAPERS</Link>
+                                <Link to={`${ENV}exams/modules`}>EXAMINATION PAPERS</Link>
                                 {/*<a href="#">KCSE</a>*/}
                                 {
                                     user.hasOwnProperty('id') ?
