@@ -83,7 +83,6 @@ class ModulesController extends Controller
 
                     if($result->id == $usermodule->module_id)
                     {
-                        Log::info('Result ID '.$result->id.'  Module ID '.$usermodule->module_id);
                         $result['done'] = true;
                     }
                 }
