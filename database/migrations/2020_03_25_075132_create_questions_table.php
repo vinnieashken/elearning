@@ -16,7 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->integer('module_id');
-            $table->text('question');
+            $table->text('question')->nullable();
             $table->integer('exam_id')->unsigned()->default(0);
             $table->integer('listorder')->nullable();
             $table->timestamps();

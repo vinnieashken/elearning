@@ -234,31 +234,36 @@ class Cms extends Controller
         public function choices(Request $request)
             {
                 $choice = $ans = "";
-
-                $size = (int)$request->choices + 65;
-                for($i=65; $i<$size; $i++)
+               for($x=1; $x<=(int)$request->choicegrp; $x++)
                     {
+                        $size = (int)$request->choices + 65;
+                        $choice .= '<h2> Question '.$x .'</h2>';
+                        $ans = "";
+                        for($i=65; $i<$size; $i++)
+                            {
 
-                        $choice .=   '<div class="form-group">
-                                       <label class="control-label w-100" for="add-choice-'.chr($i).'">CHOICE '.chr($i).'</label>
-                                        <textarea class="form-control ans-editor w-100" name="option['.chr($i).'][]" id="add-choice-'.chr($i).'">
-                                        </textarea>
-                                     </div
-                                    ';
-                        $ans   .=    '<div class="form-check form-check-inline">
-                                        <label class="form-check-label mr-2" for="add-ans-'.chr($i).'">'.chr($i).'</label>
-                                        <input class="form-check-input" type="radio" name="correctanswer" id="add-ans-'.chr($i).'" value="'.chr($i).'">
-
-                                    </div>';
-                    }
-                $choice .=   '  <hr>
-                                <div class="form-group mt-5">
+                                $choice .=   '<div class="form-group">
+                                                   <label class="control-label w-100" for="add-choice-'.chr($i).$x.'">CHOICE '.chr($i).'</label>
+                                                    <textarea class="form-control ans-editor w-100" name="option['.$x.']['.chr($i).'][]" id="add-choice-'.chr($i).$x.'">
+                                                    </textarea>
+                                                 </div
+                                                ';
+                                $ans   .=    '  <div class="form-check form-check-inline">
+                                                    <label class="form-check-label mr-2" for="add-ans-'.chr($i).$x.'">'.chr($i).'</label>
+                                                    <input class="form-check-input" type="radio" name="correctanswer['.$x.']" id="add-ans-'.chr($i).$x.'" value="'.chr($i).'">
+                                                </div>';
+                            }
+                        $choice .=   '  <hr>
+                                <div class="form-group my-5">
                                     <label for="correct-ans">Correct Answer</label>
-                                    <div id="correct-ans" class="d-flex justify-content-between flex-wrap">
+                                    <div id="correct-ans">
                                         '.$ans.'
                                     </div>
                                 </div>
+                                <hr class="my-2"/>
                             ';
+                    }
+
                 return $choice;
             }
         public function questionanswers(Request $request)
@@ -306,39 +311,46 @@ class Cms extends Controller
                                                     ]);
                 if($validatedData)
                     {
-                        $question               =   new Question();
-                        $question->listorder    =   $request->listorder;
-                        $question->module_id    =   $request->module;
-                        $question->question     =   $request->question;
-                        $queststatus            =   $question->save();
-                        if($queststatus)
+                        $i = 0;
+                        foreach($request->option as $g => $value)
                             {
-
-                                foreach ($request->option as $key => $value)
+                                $question               =   new Question();
+                                $question->listorder    =   $request->listorder+$i;
+                                $question->module_id    =   $request->module;
+                                $question->question     =   ($i == 0)?$request->question:NULL;
+                                $queststatus            =   $question->save();
+                                if($queststatus)
                                     {
-                                        $option                 =   new Option();
-                                        $option->question_id    =   $question->id;
-                                        $option->option         =   $key.') '.$value[0];
-                                        $optstatus              =   $option->save();
-
-                                        if($request->correctanswer == $key)
+                                        foreach($value as $key => $check)
                                             {
-                                                $correct                =   new Answer();
-                                                $correct->question_id   =   $question->id;
-                                                $correct->option_id     =   $option->id;
-                                                $corstatus              =   $correct->save();
+                                                $option                 =   new Option();
+                                                $option->question_id    =   $question->id;
+                                                $option->option         =   $key.') '.$check[0];
+                                                $optstatus              =   $option->save();
+
+                                                if($request->correctanswer[$g] == $key)
+                                                    {
+                                                        $correct                =   new Answer();
+                                                        $correct->question_id   =   $question->id;
+                                                        $correct->option_id     =   $option->id;
+                                                        $corstatus              =   $correct->save();
+                                                    }
+
                                             }
 
+
                                     }
+                                if($queststatus & $optstatus & $corstatus)
+                                    {
+                                        $result = array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                    }
+                                else
+                                    {
+                                        $result = array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                    }
+                                $i++;
                             }
-                        if($queststatus & $optstatus & $corstatus)
-                            {
-                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
-                            }
-                        else
-                            {
-                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
-                            }
+                        return $result;
                     }
                 else
                     {

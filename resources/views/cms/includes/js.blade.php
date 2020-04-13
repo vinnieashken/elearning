@@ -160,7 +160,7 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'question_id':question.id},
                 success: function (Mess) {
-                    $('.choices').append(Mess).find(".ans-editor").summernote({
+                    $('.choices').html(Mess).find(".ans-editor").summernote({
                         height:100,
                         tabsize: 2,
                         lineHeight:1.5,
@@ -278,66 +278,69 @@
         $(document).on('click','.choicebtn',function(e){
             e.preventDefault();
             var choices = $('#noc').val();
-            $(this).parent().parent().parent().remove();
-            $.ajax({
-                type: 'POST',
-                url: '<?=url('choices'); ?>',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data:{'choices':choices},
-                success: function (Mess) {
-                    $('.choices').append(Mess).find(".ans-editor").summernote({
-                        height:100,
-                        tabsize: 2,
-                        lineHeight:1.5,
-                        dialogsInBody: true,
-                        dialogsFade: false,
-                        toolbar: [
-                                    ['fontsize', ['fontsize']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['insert',['table','picture']],
+            var choicegrp = $('#ansgrp').val();
+            if(choices != '') {
+                $(this).parent().parent().remove();
+                $.ajax({
+                    type: 'POST',
+                    url: '<?=url( 'choices' ); ?>',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {'choices': choices,'choicegrp':choicegrp},
+                    success: function (Mess) {
+                        $('.choices').html(Mess).find(".ans-editor").summernote({
+                            height: 100,
+                            tabsize: 2,
+                            lineHeight: 1.5,
+                            dialogsInBody: true,
+                            dialogsFade: false,
+                            toolbar: [
+                                ['fontsize', ['fontsize']],
+                                ['para', ['ul', 'ol', 'paragraph']],
+                                ['insert', ['table', 'picture']],
 
-                                ],
-                        callbacks : {
-                            onImageUpload: function(dt) {
-                                var image = dt[0];
-                                var dat = new FormData();
-                                dat.append("image",image);
-                                var IMAGE_PATH = '<?=asset('uploads').'/'; ?>';
-                                $.ajax ({
-                                    data: dat,
-                                    type: "POST",
-                                    url:  '<?=url('upload'); ?>',
-                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false,
-                                    success: function(url) {
-                                        var image = IMAGE_PATH+$.trim(url);
-                                        $('.summernote').summernote("insertImage", image,function ($image) {
-                                            $image.attr('class', 'image-fluid');
-                                        });
-                                    },
-                                    error: function(e) {
-                                        toastr.error(e, 'upload', {
-                                            timeOut: 1000,
-                                            closeButton: true,
-                                            progressBar: true,
-                                            newestOnTop: true
+                            ],
+                            callbacks: {
+                                onImageUpload: function (dt) {
+                                    var image = dt[0];
+                                    var dat = new FormData();
+                                    dat.append("image", image);
+                                    var IMAGE_PATH = '<?=asset( 'uploads' ) . '/'; ?>';
+                                    $.ajax({
+                                        data: dat,
+                                        type: "POST",
+                                        url: '<?=url( 'upload' ); ?>',
+                                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                        cache: false,
+                                        contentType: false,
+                                        processData: false,
+                                        success: function (url) {
+                                            var image = IMAGE_PATH + $.trim(url);
+                                            $('.summernote').summernote("insertImage", image, function ($image) {
+                                                $image.attr('class', 'image-fluid');
+                                            });
+                                        },
+                                        error: function (e) {
+                                            toastr.error(e, 'upload', {
+                                                timeOut: 1000,
+                                                closeButton: true,
+                                                progressBar: true,
+                                                newestOnTop: true
 
-                                        });
-                                    }
-                                });
+                                            });
+                                        }
+                                    });
 
+                                }
                             }
-                        }
-                    }).on('summernote.change', function(we, contents, $editable) {
-                        $(this).val(contents);
-                    });
-                },
-                error: function (f) {
-                    console.log(f);
-                }
-            });
+                        }).on('summernote.change', function (we, contents, $editable) {
+                            $(this).val(contents);
+                        });
+                    },
+                    error: function (f) {
+                        console.log(f);
+                    }
+                });
+            }
 
         });
         $(document).on('click','.usermgt',function(e){

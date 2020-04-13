@@ -14,7 +14,7 @@
             <table class="table table-horizontal" id="questions">
                 <thead>
                     <tr>
-                        <th>*</th>                        
+                        <th>*</th>
                         <th>Question</th>
                         <th>Action</th>
                     </tr>
@@ -43,7 +43,7 @@
                         <input type="hidden" name="module" value="{{ $module_id }}">
                         <div class="form-group">
                             <label for="add-question_no" class="control-label">Question No</label>
-                            <input type="number" name="listorder" id="add-question_no" class="form-control">
+                            <input type="number" name="listorder" id="add-question_no" class="form-control" value="1">
                         </div>
                         <div class="form-group">
                             <label for="add-question" class="control-label">Question</label>
@@ -52,12 +52,14 @@
                         <div class="form-group form-row">
                             <div class="col-3">
                                 <label for="noc" class="control-label">No Of Choices</label>
-                                <div class="input-group">
-                                    <input type="text" name="noofchoices" id="noc"  class="form-control">
-                                    <div class="input-group-append">
-                                        <a href="Javascript:;" class="btn btn-secondary choicebtn">Select</a>
-                                    </div>
-                                </div>
+                                <input type="number" name="noofchoices" id="noc"  class="form-control"  min="1" required>
+                            </div>
+                            <div class="col-3">
+                                <label for="ansgrp" class="control-label">Answer group</label>
+                                <input type="number" name="answergroup" id="ansgrp"  class="form-control" min="1" value="1">
+                            </div>
+                            <div class="col-3">
+                                <a href="Javascript:;" class="btn btn-secondary choicebtn">Select</a>
                             </div>
 
                         </div>

@@ -82,6 +82,6 @@
     </div>
 </main>
 
-<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/js/paper.js') }}"></script>
 </body>
 </html>
