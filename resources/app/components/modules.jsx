@@ -102,7 +102,7 @@ export default function (props) {
                                                     data={ modules }
                                                     columns={
                                                         [
-                                                            {dataField: 'id',      text: '#',    sort: true, style: { textAlign: 'left' }},
+                                                            {dataField: 'id',      text: '#',    sort: true, style: { width:"1%", whiteSpace:"nowrap" } },
                                                             {dataField: 'module',      text: 'Exam',    sort: true, style: { textAlign: 'left' }},
                                                             {dataField: 'class',        text: 'Class',      sort: true},
                                                             {dataField: 'subject',        text: 'Subject',      sort: true},
