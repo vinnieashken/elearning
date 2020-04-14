@@ -35,7 +35,7 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setModules(res.reverse());
+                setModules(res);
                 setLoading(false);
             }.bind(this)
         })
