@@ -145,6 +145,11 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
+        if(is_null($email) || is_null($name) || is_null($password) || is_null($password_confirmation))
+        {
+            return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+        }
+
         $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
 
         //return $params;
@@ -191,6 +196,11 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
+        if(is_null($institution) || is_null($email) || is_null($name) || is_null($password) || is_null($password_confirmation))
+        {
+            return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+        }
+
         $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
 
         //return $params;
@@ -236,6 +246,11 @@ class LoginController extends Controller
         $teacher = $request->teacherid;
         $name = $request->name;
         $adm_no = $request->adm_no;
+
+        if(is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no))
+        {
+            return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+        }
 
         $student = new Student();
         $existing  = $student->where('institution_id',$institution)->where('teacher_id',$teacher)->where('adm_no',$adm_no)->first();
