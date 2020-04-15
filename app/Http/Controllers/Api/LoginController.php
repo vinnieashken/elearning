@@ -59,6 +59,12 @@ class LoginController extends Controller
         $id = null;
         if(!is_null($default_institution))
             $id = $default_institution->id;
+        else{
+            $institution = new Institution();
+            $institution->name = "Standard Group";
+            $institution->save();
+            $id = $institution->id;
+        }
 
         if(is_null($exists))
         {
@@ -69,6 +75,15 @@ class LoginController extends Controller
             $customer->save();
 
             $customer = $customer->with('institution')->where('id',$customer->id)->first();
+        }
+        else
+        {
+            if($exists->institution_id == null)
+            {
+                $exists->institution_id = $id;
+                $exists->save();
+            }
+
         }
 
         return $exists ?? $customer;
