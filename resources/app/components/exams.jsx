@@ -86,9 +86,9 @@ export default function (props) {
                 <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
                     {row.done ? `Revise Paper` : `Take Test`}
                 </Link>
-                <button className='float-right btn btn-sm btn-success btn-rounded' data-toggle="modal" data-target="#exampleModal">
-                    Edit
-                </button>
+                {/*<button className='float-right btn btn-sm btn-success btn-rounded' data-toggle="modal" data-target="#exampleModal">*/}
+                {/*    Edit*/}
+                {/*</button>*/}
 
                 {/*<a href="#" className="action-item text-danger mr-2" data-toggle="tooltip" title=""*/}
                 {/*   data-original-title="Move to trash">*/}
@@ -158,7 +158,7 @@ export default function (props) {
                                                                             <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                         <div className='col-md-8 ' >
-                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                            {/*<button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>*/}
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
