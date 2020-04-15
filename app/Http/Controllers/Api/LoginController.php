@@ -54,7 +54,7 @@ class LoginController extends Controller
         }
         //$body = json_decode($body);
         $customer = new Customer();
-        $exists = $customer->where('user_id',$objbody->id)->first();
+        $exists = $customer->with('institution')->where('user_id',$objbody->id)->first();
 
         if(is_null($exists))
         {
@@ -62,9 +62,11 @@ class LoginController extends Controller
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
             $customer->save();
+
+            $customer = $customer->with('institution')->where('id',$customer->id)->first();
         }
 
-        return $body;
+        return $exists ?? $customer;
     }
 
     public function register(Request $request)
@@ -134,6 +136,7 @@ class LoginController extends Controller
 
         return $body;
     }
+
     //=====================================================================================================================================
     //institutions
     //====================================================================================================================================
@@ -173,19 +176,28 @@ class LoginController extends Controller
             return response()->json($objbody , 400);
         }
         //$body = json_decode($body);
-        $institution = new Institution();
-        $exists = $institution->where('vas_id',$objbody->id)->first();
+        $customer = new Customer();
+
+        $exists = $customer->with('institution')->where('user_id',$objbody->id)->first();
+
         if(is_null($exists))
         {
-            $institution->vas_id = $objbody->id;
-            $institution->name = $objbody->name;
-            $institution->email = $objbody->email;
+            $institution = new Institution();
+            $institution->name = $request->institution_name;
+            $institution->phone = $request->institution_phone;
+            $institution->address = $request->institution_address;
             $institution->save();
 
-            $institution = $institution->where('id',$institution->id)->first();
+            $customer->user_id = $objbody->id;
+            $customer->institution_id = $institution->id;
+            $customer->name = $objbody->name;
+            $customer->email = $objbody->email;
+            $customer->save();
+
+            $customer = $customer->with('institution')->where('id',$customer->id)->first();
         }
 
-        return $exists ?? $institution;
+        return $exists ?? $customer;
     }
 
     public function registerTeacher(Request $request)
