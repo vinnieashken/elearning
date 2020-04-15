@@ -14,6 +14,11 @@ const Login = Loadable({
     loading: Loading
 });
 
+const SchoolLogin = Loadable({
+    loader: () => import('./studentLogin'),
+    loading: Loading
+});
+
 const ResetPassword = Loadable({
     loader: () => import('./resetPassword'),
     loading: Loading
@@ -21,6 +26,11 @@ const ResetPassword = Loadable({
 
 const Register = Loadable({
     loader: () => import('./register'),
+    loading: Loading
+});
+
+const InitialSetup = Loadable({
+    loader: () => import('./initialSetup'),
     loading: Loading
 });
 
@@ -56,7 +66,7 @@ const Subjects = Loadable({
 });
 
 const Modules = Loadable({
-    loader: () => import('./modules'),
+    loader: () => import('./exams'),
     loading: LoadingWhite
 });
 
@@ -68,6 +78,11 @@ const Subscriptions = Loadable({
 const Payment = Loadable({
     loader: () => import('./payment'),
     loading: LoadingWhite
+});
+
+const EditExam = Loadable({
+    loader: () => import('./editExam'),
+    loading: Loading
 });
 
 export default function (props) {
@@ -316,10 +331,14 @@ export default function (props) {
                                                render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
                                         <Route exact={true} path={`${props.match.url}signin`}
                                                render={(props) => <Login{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}school`}
+                                               render={(props) => <SchoolLogin{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}reset`}
                                                render={(props) => <ResetPassword {...props}  />}/>
                                         <Route exact={true} path={`${props.match.url}signup`}
                                                render={(props) => <Register{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}initialSetup`}
+                                               render={(props) => <InitialSetup{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}profile`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
@@ -419,6 +438,43 @@ export default function (props) {
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <CompletedExams {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+
+                                        <Route exact={true} path={`${props.match.url}exams/exam/new`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <EditExam {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/exam/edit/:exam`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <EditExam {...props} user={user}/>
                                                            : props.history.push({
                                                                pathname: `${ENV}subscriptions`,
                                                                state: {

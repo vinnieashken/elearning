@@ -58,7 +58,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
 
 
-{{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">--}}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="{{ asset('static/app/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/app/css/animate.css') }}" rel="stylesheet">
@@ -84,6 +84,7 @@
     </div>
 </noscript>
 <script type="text/javascript" src="{{ asset('static/app/js/jquery-3.4.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('static/app/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('static/app/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('static/app/js/main.js') }}"></script>
 

@@ -8,6 +8,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
 const { SearchBar } = Search;
 import { Helmet } from 'react-helmet';
+import EditExam from "./editExam";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -15,6 +16,9 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const [selectedExam, setSelectedExam] = useState({})
+    const [classes, setClasses] = useState([])
+    const [subjects, setSubjects] = useState([])
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
@@ -37,8 +41,43 @@ export default function (props) {
             success: function (res) {
                 setModules(res);
                 setLoading(false);
+                if (classes.length <= 0 || subjects.length <= 0) {
+                    getClasses();
+                    getSubjects();
+                }
             }.bind(this)
         })
+    };
+
+    const getClasses = () => {
+        $.ajax({
+            url: `${API}/classes/list`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+
+            }.bind(this),
+            success: function (res) {
+                setClasses(res);
+            }.bind(this)
+        })
+    };
+
+    const getSubjects = () => {
+        $.ajax({
+            url: `${API}/subjects/${props.match.params.hasOwnProperty('class') ? `class/${props.match.params.class}` : 'list'}`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+
+            }.bind(this),
+            success: function (res) {
+                setSubjects(res);
+            }.bind(this)
+        })
+    };
+
+    const selected = (row, isSelected) =>{
+        console.log(row);
+        setSelectedExam(row);
     };
 
     const actionButton = (cell, row) => {
@@ -47,9 +86,10 @@ export default function (props) {
                 <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
                     {row.done ? `Revise Paper` : `Take Test`}
                 </Link>
-                {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
-                {/*    <i className="fa fa-pencil-alt"></i>*/}
-                {/*</a>*/}
+                <button className='float-right btn btn-sm btn-success btn-rounded' data-toggle="modal" data-target="#exampleModal">
+                    Edit
+                </button>
+
                 {/*<a href="#" className="action-item text-danger mr-2" data-toggle="tooltip" title=""*/}
                 {/*   data-original-title="Move to trash">*/}
                 {/*    <i className="fa fa-trash"></i>*/}
@@ -61,18 +101,18 @@ export default function (props) {
     return (
         <React.Fragment>
             <div className="application">
-            <Helmet>
-                <link rel="canonical" href={pathname} />
-                <meta name="keywords" content="Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili" />
-                <meta name="author" content="Standard Group" />
-                <meta name="description" content="Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more" />
-                <meta property="twitter:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
-                <meta property="twitter:description" content="Tutor-Soma Tu - Examination Papers " />
-                <meta property="twitter:url" content={pathname} />
-                <meta property="og:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
-                <meta property="og:description" content="Tutor-Soma Tu - Examination Papers " />
-                <meta property="og:url" content={pathname} />
-            </Helmet>
+                <Helmet>
+                    <link rel="canonical" href={pathname} />
+                    <meta name="keywords" content="Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili" />
+                    <meta name="author" content="Standard Group" />
+                    <meta name="description" content="Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more" />
+                    <meta property="twitter:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
+                    <meta property="twitter:description" content="Tutor-Soma Tu - Examination Papers " />
+                    <meta property="twitter:url" content={pathname} />
+                    <meta property="og:title" content="Tutor-Soma Tu : Examination Papers : The Standard" />
+                    <meta property="og:description" content="Tutor-Soma Tu - Examination Papers " />
+                    <meta property="og:url" content={pathname} />
+                </Helmet>
             </div>
             <div id="about" className="section-padding mt-5 profile">
                 <div className="container mt-5">
@@ -102,7 +142,7 @@ export default function (props) {
                                                     data={ modules }
                                                     columns={
                                                         [
-                                                            {dataField: 'id',      text: '#',    sort: true },
+                                                            {dataField: 'id',      text: 'ID',    sort: true },
                                                             {dataField: 'module',      text: 'Exam',    sort: true, style: { textAlign: 'left' }},
                                                             {dataField: 'class',        text: 'Class',      sort: true},
                                                             {dataField: 'subject',        text: 'Subject',      sort: true},
@@ -114,11 +154,14 @@ export default function (props) {
                                                             (
                                                                 <React.Fragment>
                                                                     <div className='row  mb-3'>
-                                                                        <div className='col-md-12'>
-                                                                            <SearchBar className='col-md-4 float-right mb-3 form-control-sm' { ...props.searchProps } />
+                                                                        <div className='col-md-4'>
+                                                                            <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
+                                                                        </div>
+                                                                        <div className='col-md-8 ' >
+                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
                                                                         </div>
                                                                     </div>
-                                                                    <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
+                                                                    <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
 
                                                                 </React.Fragment>
                                                             )
@@ -132,6 +175,7 @@ export default function (props) {
                     }
                 </div>
             </div>
+            <EditExam exam={selectedExam} classes={classes} subjects={subjects} />
         </React.Fragment>
     )
 }

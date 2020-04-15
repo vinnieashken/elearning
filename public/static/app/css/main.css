@@ -1116,7 +1116,7 @@ footer .menu li a:hover {
 /* Small Buttons */
 .btn-sm {
     font-size: 12px;
-    min-width: 122px;
+    min-width: 90px;
     padding: 5px 11px;
 }
 
@@ -5424,4 +5424,8 @@ em {
     table-layout: auto !important;
     /*font-size: .675rem;*/
 }
+
+/*.react-bootstrap-table .selection-cell {*/
+/*    display: none;*/
+/*}*/
 

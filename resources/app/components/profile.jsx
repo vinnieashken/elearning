@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import moment from "moment";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
-import modules from "./modules";
 import Loading from "../common/loading";
 const { SearchBar } = Search;
 

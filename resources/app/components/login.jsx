@@ -54,11 +54,11 @@ export default function Login(props) {
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
-                const thisUser = JSON.parse(res);
+                const thisUser = res;
                 dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
                 dispatch(fetchSubscription(thisUser));
                 props.setUser(thisUser);
-                localStorage.setItem('user', res);
+                localStorage.setItem('user', JSON.stringify(res));
                 console.log(next);
                 props.history.push({
                     pathname: `${next}`,
@@ -129,6 +129,10 @@ export default function Login(props) {
                                                     <div className="text-center mt-2">
                                                         <button type='submit' className="btn btn-primary">Login</button>
                                                     </div>
+                                                    <h6 className="card-title text-center mt-4">
+                                                        Login To Your
+                                                        <Link class="green" to={`${ENV}school`}> Student Account</Link>
+                                                    </h6>
                                                     <h6 className="card-title text-center mt-4">
                                                         Forgot Password?
                                                         <Link class="green" to={`${ENV}reset`}> Reset Password</Link>
