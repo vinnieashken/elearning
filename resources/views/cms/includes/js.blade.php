@@ -160,7 +160,7 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:{'question_id':question.id},
                 success: function (Mess) {
-                    $('.choices').html(Mess).find(".ans-editor").summernote({
+                  $('.choices').html(Mess).find(".ans-editor").summernote({
                         height:100,
                         tabsize: 2,
                         lineHeight:1.5,
@@ -169,11 +169,12 @@
                         toolbar: [
                             ['fontsize', ['fontsize']],
                             ['para', ['ul', 'ol', 'paragraph']],
-                            ['insert',['table','image']],
+                            ['insert',['picture','table']],
 
                         ],
                         callbacks : {
-                            onImageUpload: function(dt) {
+                           /* onImageUpload: function(dt) {
+                                var $summernote = $(this);
                                 var image = dt[0];
                                 var dat = new FormData();
                                 dat.append("image",image);
@@ -188,9 +189,12 @@
                                     processData: false,
                                     success: function(url) {
                                         var image = IMAGE_PATH+$.trim(url);
-                                        $('.summernote').summernote("insertImage", image,function ($image) {
-                                            $image.attr('class', 'image-fluid');
+                                        //editor.insertImage(welEditable, image);
+                                        $summernote.summernote('insertImage', image, function ($image) {
+                                            $image.attr('class', 'img-fluid');
                                         });
+
+
                                     },
                                     error: function(e) {
                                         toastr.error(e, 'upload', {
@@ -203,7 +207,7 @@
                                     }
                                 });
 
-                            }
+                            }*/
                         }
                     }).on('summernote.change', function(we, contents, $editable) {
                         $(this).val(contents);
@@ -213,26 +217,7 @@
                     console.log(f);
                 }
             });
-            $(".ans-editor").summernote({
-                height:100,
-                tabsize: 2,
-                lineHeight:1.5,
-                dialogsInBody: true,
-                dialogsFade: false,
-                toolbar: [
-                    // [groupName, [list of button]]
-
-                    ['font', ['strikethrough', 'superscript', 'subscript','fontname']],
-                    ['fontsize', ['fontsize']],
-
-                    ['para', ['ul', 'ol', 'paragraph','style']],
-
-                    ['insert',['table','picture']],
-
-                ]
-            }).on('summernote.change', function(we, contents, $editable) {
-                $(this).val(contents);
-            });
+           
             $('#editModal').modal('toggle');
         });
 
@@ -296,11 +281,12 @@
                             toolbar: [
                                 ['fontsize', ['fontsize']],
                                 ['para', ['ul', 'ol', 'paragraph']],
-                                ['insert', ['table', 'picture']],
+                                ['insert', ['picture','table']],
 
                             ],
                             callbacks: {
-                                onImageUpload: function (dt) {
+                                /*onImageUpload: function (dt) {
+                                    $summernote = $(this);
                                     var image = dt[0];
                                     var dat = new FormData();
                                     dat.append("image", image);
@@ -315,9 +301,7 @@
                                         processData: false,
                                         success: function (url) {
                                             var image = IMAGE_PATH + $.trim(url);
-                                            $('.summernote').summernote("insertImage", image, function ($image) {
-                                                $image.attr('class', 'image-fluid');
-                                            });
+                                            $summernote.summernote('insertNode', image);
                                         },
                                         error: function (e) {
                                             toastr.error(e, 'upload', {
@@ -330,10 +314,8 @@
                                         }
                                     });
 
-                                }
+                                }*/
                             }
-                        }).on('summernote.change', function (we, contents, $editable) {
-                            $(this).val(contents);
                         });
                     },
                     error: function (f) {
@@ -389,14 +371,15 @@
                 ],
                 callbacks : {
                                 onImageUpload: function(image) {
-                                                                    uploadImage(image[0]);
+
+                                                                    uploadImage(image[0],$(this));
 
                                                                 }
                             }
             }).on('summernote.change', function(we, contents, $editable) {
                 $(this).val(contents);
             });
-        function uploadImage(image)
+        function uploadImage(image,$summernote)
             {
                 //console.log(image);
                 var dat = new FormData();
@@ -412,7 +395,7 @@
                     processData: false,
                     success: function(url) {
                         var image = IMAGE_PATH+$.trim(url);
-                        $('.summernote').summernote("insertImage", image,function ($image) {
+                        $summernote.summernote("insertImage", image,function ($image) {
                               $image.attr('class', 'image-fluid');
                             });
                         },
