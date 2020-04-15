@@ -373,14 +373,15 @@
                 ],
                 callbacks : {
                                 onImageUpload: function(image) {
-                                                                    uploadImage(image[0]);
+
+                                                                    uploadImage(image[0],$(this));
 
                                                                 }
                             }
             }).on('summernote.change', function(we, contents, $editable) {
                 $(this).val(contents);
             });
-        function uploadImage(image)
+        function uploadImage(image,$summernote)
             {
                 //console.log(image);
                 var dat = new FormData();
@@ -396,7 +397,7 @@
                     processData: false,
                     success: function(url) {
                         var image = IMAGE_PATH+$.trim(url);
-                        $('.summernote').summernote("insertImage", image,function ($image) {
+                        $summernote.summernote("insertImage", image,function ($image) {
                               $image.attr('class', 'image-fluid');
                             });
                         },
