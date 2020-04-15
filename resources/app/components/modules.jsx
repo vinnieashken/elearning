@@ -35,7 +35,7 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setModules(res.reverse());
+                setModules(res);
                 setLoading(false);
             }.bind(this)
         })
@@ -102,6 +102,7 @@ export default function (props) {
                                                     data={ modules }
                                                     columns={
                                                         [
+                                                            {dataField: 'id',      text: '#',    sort: true },
                                                             {dataField: 'module',      text: 'Exam',    sort: true, style: { textAlign: 'left' }},
                                                             {dataField: 'class',        text: 'Class',      sort: true},
                                                             {dataField: 'subject',        text: 'Subject',      sort: true},

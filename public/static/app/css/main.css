@@ -5420,3 +5420,8 @@ em {
     }
 }
 
+.react-bootstrap-table table {
+    table-layout: auto !important;
+    /*font-size: .675rem;*/
+}
+
