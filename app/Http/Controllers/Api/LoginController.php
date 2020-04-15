@@ -55,12 +55,17 @@ class LoginController extends Controller
         //$body = json_decode($body);
         $customer = new Customer();
         $exists = $customer->with('institution')->where('user_id',$objbody->id)->first();
+        $default_institution = Institution::where('name','like','standard group')->first();
+        $id = null;
+        if(!is_null($default_institution))
+            $id = $default_institution->id;
 
         if(is_null($exists))
         {
             $customer->user_id = $objbody->id;
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
+            $customer->institution_id = $id;
             $customer->save();
 
             $customer = $customer->with('institution')->where('id',$customer->id)->first();
