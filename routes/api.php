@@ -49,8 +49,15 @@ Route::get('/payments/subscriptions/user/{id}','Api\PaymentsController@getUserSu
 //for testing only
 Route::get('/payments/subscriptions/list','Api\PaymentsController@listSubscriptions');
 Route::get('/payments/list','Api\PaymentsController@listPayments');
-
 Route::get('/test/{id}','Api\ModulesController@mymodules');
+
+/////=====================Institutions=============================================
+
+Route::post('/institution/register','Api\LoginController@registerInstitution');
+Route::post('/institution/teacher/register','Api\LoginController@registerTeacher');
+Route::post('/institution/student/register','Api\LoginController@registerStudent');
+
+
 
 
 
