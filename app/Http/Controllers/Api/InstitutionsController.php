@@ -9,6 +9,60 @@ use Illuminate\Http\Request;
 class InstitutionsController extends Controller
 {
     //
+    public function studentsList(Request $request,$id)
+    {
+        $list = new Customer();
+        if($request->has('size') && $request->has('page')) {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results = $list->where('institution_id',$id)->where('teacher',0)->paginate($size)->items();
+
+            $totalrecords = $list->where('institution_id',$id)->where('teacher',0)->count();
+
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+            $data ["rows"] = $results;
+            return $data;
+        }
+
+        $students = $list->where('institution_id',$id)->where('teacher',0)->get();
+
+        return $students;
+    }
+    public function teachersList(Request $request,$id)
+    {
+        $list = new Customer();
+        if($request->has('size') && $request->has('page')) {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results = $list->where('institution_id',$id)->where('teacher',1)->paginate($size)->items();
+
+            $totalrecords = $list->where('institution_id',$id)->where('teacher',1)->count();
+
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+            $data ["rows"] = $results;
+            return $data;
+        }
+
+        $students = $list->where('institution_id',$id)->where('teacher',1)->get();
+
+        return $students;
+    }
     public function editStudent(Request $request)
     {
         $id = $request->id;

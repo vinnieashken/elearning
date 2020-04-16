@@ -61,6 +61,9 @@ Route::get('/institution/student/login/{code}','Api\LoginController@studentLogin
 Route::post('/institution/student/edit','Api\InstitutionsController@editStudent');
 Route::post('/institution/teacher/edit','Api\InstitutionsController@editTeacher');
 
+Route::get('/institution/students/list/{id}','Api\InstitutionsController@studentsList');
+Route::get('/institution/teachers/list/{id}','Api\InstitutionsController@teachersList');
+
 
 
 
