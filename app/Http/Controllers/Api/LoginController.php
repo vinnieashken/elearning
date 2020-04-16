@@ -256,12 +256,12 @@ class LoginController extends Controller
             return response()->json($objbody , 400);
         }
         //$body = json_decode($body);
-        $teacher = new Teacher();
+        $teacher = new Customer();
         $exists = $teacher->where('vas_id',$objbody->id)->first();
         if(is_null($exists))
         {
             $teacher->institution_id = $institution;
-            $teacher->vas_id = $objbody->id;
+            $teacher->user_id = $objbody->id;
             $teacher->name = $objbody->name;
             $teacher->email = $objbody->email;
             $teacher->save();
