@@ -58,6 +58,9 @@ Route::post('/institution/teacher/register','Api\LoginController@registerTeacher
 Route::post('/institution/student/register','Api\LoginController@registerStudent');
 Route::get('/institution/student/login/{code}','Api\LoginController@studentLogin');
 
+Route::post('/institution/student/edit','Api\InstitutionsController@editStudent');
+Route::post('/institution/teacher/edit','Api\InstitutionsController@editTeacher');
+
 
 
 
