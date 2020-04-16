@@ -56,6 +56,7 @@ Route::get('/test/{id}','Api\ModulesController@mymodules');
 Route::post('/institution/register','Api\LoginController@registerInstitution');
 Route::post('/institution/teacher/register','Api\LoginController@registerTeacher');
 Route::post('/institution/student/register','Api\LoginController@registerStudent');
+Route::get('/institution/student/login/{code}','Api\LoginController@studentLogin');
 
 
 

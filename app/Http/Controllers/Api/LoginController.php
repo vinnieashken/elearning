@@ -212,6 +212,7 @@ class LoginController extends Controller
             $customer->institution_id = $institution->id;
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
+            $customer->owner = 1;
             $customer->save();
 
             $customer = $customer->with('institution')->where('id',$customer->id)->first();
@@ -257,13 +258,14 @@ class LoginController extends Controller
         }
         //$body = json_decode($body);
         $teacher = new Customer();
-        $exists = $teacher->where('vas_id',$objbody->id)->first();
+        $exists = $teacher->where('user_id',$objbody->id)->first();
         if(is_null($exists))
         {
             $teacher->institution_id = $institution;
             $teacher->user_id = $objbody->id;
             $teacher->name = $objbody->name;
             $teacher->email = $objbody->email;
+            $teacher->teacher = 1;
             $teacher->save();
 
             $teacher = $teacher->where('id',$teacher->id)->first();
@@ -284,7 +286,7 @@ class LoginController extends Controller
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
 
-        $student = new Student();
+        $student = new Customer();
         $existing  = $student->where('institution_id',$institution)->where('teacher_id',$teacher)->where('adm_no',$adm_no)->first();
         if(is_null($existing))
         {
@@ -305,5 +307,18 @@ class LoginController extends Controller
             $existing->save();
         }
         return $existing ?? $student;
+    }
+
+    public function studentLogin($code)
+    {
+        $customer = new Customer();
+        $student =  $customer->where('login_code',$code)->first();
+
+        if( is_null($student) )
+        {
+            return response()->json(['message'=>'Invalid code.','data'=> $code ] , 400);
+        }
+
+        return $student;
     }
 }
