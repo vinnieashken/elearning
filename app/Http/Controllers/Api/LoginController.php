@@ -55,15 +55,35 @@ class LoginController extends Controller
         //$body = json_decode($body);
         $customer = new Customer();
         $exists = $customer->with('institution')->where('user_id',$objbody->id)->first();
+        $default_institution = Institution::where('name','like','standard group')->first();
+        $id = null;
+        if(!is_null($default_institution))
+            $id = $default_institution->id;
+        else{
+            $institution = new Institution();
+            $institution->name = "Standard Group";
+            $institution->save();
+            $id = $institution->id;
+        }
 
         if(is_null($exists))
         {
             $customer->user_id = $objbody->id;
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
+            $customer->institution_id = $id;
             $customer->save();
 
             $customer = $customer->with('institution')->where('id',$customer->id)->first();
+        }
+        else
+        {
+            if($exists->institution_id == null)
+            {
+                $exists->institution_id = $id;
+                $exists->save();
+            }
+
         }
 
         return $exists ?? $customer;
@@ -192,6 +212,7 @@ class LoginController extends Controller
             $customer->institution_id = $institution->id;
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
+            $customer->owner = 1;
             $customer->save();
 
             $customer = $customer->with('institution')->where('id',$customer->id)->first();
@@ -236,14 +257,15 @@ class LoginController extends Controller
             return response()->json($objbody , 400);
         }
         //$body = json_decode($body);
-        $teacher = new Teacher();
-        $exists = $teacher->where('vas_id',$objbody->id)->first();
+        $teacher = new Customer();
+        $exists = $teacher->where('user_id',$objbody->id)->first();
         if(is_null($exists))
         {
             $teacher->institution_id = $institution;
-            $teacher->vas_id = $objbody->id;
+            $teacher->user_id = $objbody->id;
             $teacher->name = $objbody->name;
             $teacher->email = $objbody->email;
+            $teacher->teacher = 1;
             $teacher->save();
 
             $teacher = $teacher->where('id',$teacher->id)->first();
@@ -258,18 +280,20 @@ class LoginController extends Controller
         $teacher = $request->teacherid;
         $name = $request->name;
         $adm_no = $request->adm_no;
+        $email = $request->email;
 
-        if(is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no))
+        if(is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no) || is_null($email))
         {
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
 
-        $student = new Student();
+        $student = new Customer();
         $existing  = $student->where('institution_id',$institution)->where('teacher_id',$teacher)->where('adm_no',$adm_no)->first();
         if(is_null($existing))
         {
             $student->institution_id = $institution;
             $student->teacher_id = $teacher;
+            $student->email = $email;
             $student->name = $name;
             $student->adm_no = $adm_no;
             $student->login_code = $student->institution_id.'-'.$student->adm_no;
@@ -279,11 +303,25 @@ class LoginController extends Controller
         else{
 
             $existing->teacher_id = $teacher;
+            $existing->email = $email;
             $existing->name = $name;
             $existing->adm_no = $adm_no;
             $existing->login_code = $existing->institution_id.'-'.$existing->adm_no;
             $existing->save();
         }
         return $existing ?? $student;
+    }
+
+    public function studentLogin($code)
+    {
+        $customer = new Customer();
+        $student =  $customer->where('login_code',$code)->first();
+
+        if( is_null($student) )
+        {
+            return response()->json(['message'=>'Invalid code.','data'=> $code ] , 400);
+        }
+
+        return $student;
     }
 }

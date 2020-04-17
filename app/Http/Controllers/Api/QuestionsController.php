@@ -7,6 +7,7 @@ use App\Jobs\SendResultsEmail;
 use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
 use App\Models\Customer;
+use App\Models\Level;
 use App\Models\Marks;
 use App\Models\Module;
 use App\Models\Question;
@@ -28,7 +29,8 @@ class QuestionsController extends Controller
         $model = new Question();
         //$userid = $request->userid;
         $modulesmodel = new Module();
-        $module = $modulesmodel->where('id',$moduleid)->first();
+        $module = $modulesmodel->with('subject')->where('id',$moduleid)->first();
+        $class = Level::find($module->subject->class_id);
 
         if($request->has('size') && $request->has('page'))
         {
@@ -63,6 +65,8 @@ class QuestionsController extends Controller
             ->get();
         $data = [
             'id'=> $module->id,
+            'class' => $class,
+            'subject' => $module->subject,
             'done' => false,
             'name'=> $module->module,
             'questions'=> $results,
