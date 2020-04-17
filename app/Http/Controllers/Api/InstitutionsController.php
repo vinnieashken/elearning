@@ -36,6 +36,7 @@ class InstitutionsController extends Controller
 
         return $students;
     }
+
     public function teachersList(Request $request,$id)
     {
         $list = new Customer();
