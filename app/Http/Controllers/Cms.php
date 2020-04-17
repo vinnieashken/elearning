@@ -362,7 +362,6 @@ class Cms extends Controller
             {
                 $validatedData = $request->validate([
                                                         'correctanswer'   =>  'required',
-                                                        'question'        =>  'required',
                                                         'module'          =>   'required',
                                                         'option'          =>   'required'
                                                     ]);
