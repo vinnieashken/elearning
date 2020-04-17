@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Models\Customer;
 use App\Models\Module;
+use App\Models\Option;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InstitutionsController extends Controller
 {
@@ -169,6 +173,40 @@ class InstitutionsController extends Controller
     }
 
     public function addModuleQuestions(Request $request)
+    {
+        $module = $request->moduleid;
+        $questions = $request->questions;
+
+        foreach ($questions as $question)
+        {
+
+            $questionmodel = new Question();
+            $questionmodel->module_id = $module;
+            $questionmodel->question = $question['question'];
+            $questionmodel ->save();
+
+            foreach ($question['options'] as $option)
+            {
+                //Log::info($option);
+                //return
+                $optionmodel = new Option();
+                $optionmodel->question_id = $questionmodel->id;
+                $optionmodel->option = $option;
+                $optionmodel->save();
+
+                if($question['answer'] === $option)
+                {
+                    $answer = new Answer();
+                    $answer->question_id = $questionmodel->id;
+                    $answer->option_id = $optionmodel->id;
+                    $answer->save();
+                }
+
+            }
+        }
+    }
+
+    public function editModuleQuestions(Request $request)
     {
 
     }
