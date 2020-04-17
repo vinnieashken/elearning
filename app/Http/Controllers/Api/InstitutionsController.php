@@ -187,8 +187,6 @@ class InstitutionsController extends Controller
 
             foreach ($question['options'] as $option)
             {
-                //Log::info($option);
-                //return
                 $optionmodel = new Option();
                 $optionmodel->question_id = $questionmodel->id;
                 $optionmodel->option = $option;
@@ -204,10 +202,54 @@ class InstitutionsController extends Controller
 
             }
         }
+
+        $questions = Question::orderBy('listorder','ASC')->with('options')->where('questions.module_id',$module)
+            ->leftJoin('answers','answers.question_id','=','questions.id')
+            ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')
+            ->get();
+        $data = [];
+        $data['moduleid'] = $module;
+        $data['questions'] = $questions;
+
+        return $data;
     }
 
     public function editModuleQuestions(Request $request)
     {
+        $module = $request->moduleid;
+        $questions = $request->questions;
 
+        foreach ($questions as $question)
+        {
+
+            $questionmodel = new Question();
+            $existing = $questionmodel->where('id',$question['id'])->first();
+            $existing->question = $question['question'];
+            $existing ->save();
+
+            foreach ($question['options'] as $option)
+            {
+                $optionmodel = new Option();
+                $existingoption = $optionmodel->where('id',$option['id'])->first();
+                $existingoption->option = $option;
+                $existingoption->save();
+
+                $answer = new Answer();
+                $existinganswer = $answer->where('question_id',$existing->id)->first();
+                $existinganswer->option_id = $question['answer'];
+                $existinganswer->save();
+
+            }
+        }
+
+        $questions = Question::orderBy('listorder','ASC')->with('options')->where('questions.module_id',$module)
+            ->leftJoin('answers','answers.question_id','=','questions.id')
+            ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')
+            ->get();
+        $data = [];
+        $data['moduleid'] = $module;
+        $data['questions'] = $questions;
+
+        return $data;
     }
 }

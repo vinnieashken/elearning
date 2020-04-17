@@ -67,6 +67,7 @@ Route::get('/institution/teachers/list/{id}','Api\InstitutionsController@teacher
 Route::post('/institution/modules/add','Api\InstitutionsController@addModule');
 Route::post('/institution/modules/edit','Api\InstitutionsController@editModule');
 Route::post('/institution/modules/questions/add','Api\InstitutionsController@addModuleQuestions');
+Route::post('/institution/modules/questions/edit','Api\InstitutionsController@editModuleQuestions');
 
 
 
