@@ -803,8 +803,11 @@ footer .menu li a:hover {
 
 .btn-xs {
     font-size: 10px;
+    min-width: 90px;
+    line-height: 1.5;
     padding: 5px 8px;
 }
+
 
 .btn-rounded {
     border-radius: 4px !important;
@@ -5429,3 +5432,10 @@ em {
 /*    display: none;*/
 /*}*/
 
+.answer {
+    color: green;
+}
+
+.wrong-answer {
+    color: red;
+}

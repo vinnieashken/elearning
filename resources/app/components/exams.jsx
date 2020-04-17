@@ -8,7 +8,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
 const { SearchBar } = Search;
 import { Helmet } from 'react-helmet';
-import EditExam from "./editExam";
+import EditExamModal from "./editExamModal";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -76,7 +76,6 @@ export default function (props) {
     };
 
     const selected = (row, isSelected) =>{
-        console.log(row);
         setSelectedExam(row);
     };
 
@@ -86,14 +85,12 @@ export default function (props) {
                 <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
                     {row.done ? `Revise Paper` : `Take Test`}
                 </Link>
-                {/*<button className='float-right btn btn-sm btn-success btn-rounded' data-toggle="modal" data-target="#exampleModal">*/}
-                {/*    Edit*/}
-                {/*</button>*/}
-
-                {/*<a href="#" className="action-item text-danger mr-2" data-toggle="tooltip" title=""*/}
-                {/*   data-original-title="Move to trash">*/}
-                {/*    <i className="fa fa-trash"></i>*/}
-                {/*</a>*/}
+                <Link to={`${ENV}exams/exam/edit/${row.id}`} className='float-right p-2'>
+                    <i className="fa fa-plus" />
+                </Link>
+                <Link to={'#'} className='float-right p-2' data-toggle="modal" data-target="#exampleModal">
+                    <i className="fa fa-pencil" />
+                </Link>
             </div>
         )
     };
@@ -158,7 +155,7 @@ export default function (props) {
                                                                             <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                         <div className='col-md-8 ' >
-                                                                            {/*<button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>*/}
+                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
@@ -175,7 +172,7 @@ export default function (props) {
                     }
                 </div>
             </div>
-            <EditExam exam={selectedExam} classes={classes} subjects={subjects} />
+            <EditExamModal exam={selectedExam} classes={classes} subjects={subjects} />
         </React.Fragment>
     )
 }

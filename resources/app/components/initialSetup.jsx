@@ -61,7 +61,7 @@ export default function (props) {
                 <div className="container mt-5">
 
                     <div className="row">
-                        <div className="mx-auto mt-5 col-md-5 col-sm-12">
+                        <div className="mx-auto mt-5 col-md-10 col-sm-12">
                             <div className="card weekly">
                                 <h5 className="card-header text-center">REGISTER SCHOOL</h5>
                                 <form onSubmit={handleSubmit} id='register'>
@@ -78,48 +78,94 @@ export default function (props) {
                                                     </div>
                                                 </div> : ''
                                         }
-                                        <div className="input-group mb-3 mt-3">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-institution" />
-                                            </span>
+                                        <div className='row'>
+                                            <div className='form-group col-md-6  mb-3 mt-3'>
+                                                <label>Institution Name</label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-institution" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" className="form-control loginput" placeholder="Institution Name" name='institution_name' required />
+                                                </div>
                                             </div>
-                                            <input type="text" className="form-control loginput" placeholder="Full Name"
-                                                   name='name' />
+                                            <div className='form-group col-md-6  mb-3 mt-3'>
+                                                <label>Address</label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-address-card" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" className="form-control loginput" placeholder="Address" name='institution_address' />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="input-group mb-3 mt-3">
-                                            <div className="input-group-prepend">
-                                                <span className="input-group-text">@</span>
+                                        <div className='row'>
+                                            <div className='form-group col-md-6  mb-3 mt-3'>
+                                                <label>Your Name</label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-user" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" className="form-control loginput" placeholder="Your Name" name='name' required/>
+                                                </div>
                                             </div>
-                                            <input type="email" className="form-control loginput" placeholder="Email"
-                                                   name='email'/>
+                                            <div className='form-group col-md-6  mb-3 mt-3'>
+                                                <label>Phone Number</label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text"><i className="fa fa-mobile" /></span>
+                                                    </div>
+                                                    <input type="text" className="form-control loginput" placeholder="Phone Number" name='institution_phone'/>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="input-group mb-3 mt-4">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-key" />
-                                            </span>
+                                        <div className='row'>
+                                            <div className='form-group col-md-6  mb-3 mt-3'>
+                                                <label>Email</label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text"><i className="fa fa-envelope" /></span>
+                                                    </div>
+                                                    <input type="email" className="form-control loginput" placeholder="Email" name='email' required/>
+                                                </div>
                                             </div>
-                                            <input type="password" className="form-control loginput" placeholder="Password"
-                                                   name='password' />
+                                            <div className='form-group col-md-6  mb-3 mt-3'>
+                                                <label>Password</label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-key" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" className="form-control loginput" placeholder="Password" name='password' required/>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="input-group mb-3 mt-4">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-key" />
-                                            </span>
+                                        <div className='row'>
+                                            <div className='form-group col-md-6  mb-3 mt-3'>
+                                                <label>Confirm Password</label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-key" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" className="form-control loginput" placeholder="Confirm Password" aria-label="Confirm Password" name='password_confirmation' required />
+                                                </div>
                                             </div>
-                                            <input type="password" className="form-control loginput"
-                                                   placeholder="Confirm Password" aria-label="Confirm Password"
-                                                   name='password_confirmation' />
                                         </div>
                                         <p className="card-text grey">
-                                            <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
-                                            I agree to the terms and conditions
+                                            <input type="checkbox" aria-label="Checkbox for following text input" id='terms' required={true}/>
+                                            <label htmlFor='terms'>I agree to the terms and conditions</label>
                                         </p>
                                         <p className="card-text grey">
-                                            <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
-                                            I agree to the privacy policy
+                                            <input type="checkbox" aria-label="Checkbox for following text input" id='policy' required={true}/>
+                                            <label htmlFor='policy'>I agree to the privacy policy</label>
                                         </p>
                                         <div className="text-center mt-2">
                                             {

@@ -3,17 +3,7 @@ import {API, APPNAME, ENV, PUBLIC_URL} from "../common/constants";
 import Loading from "../common/loading";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
-import { useSelector } from 'react-redux'
-import {Helmet} from "react-helmet";
-
-const images = [
-    `${PUBLIC_URL}/static/app/images/math.png`,
-    `${PUBLIC_URL}/static/app/images/eng.png`,
-    `${PUBLIC_URL}/static/app/images/hist.png`,
-    `${PUBLIC_URL}/static/app/images/cre.png`,
-    `${PUBLIC_URL}/static/app/images/chem.png`,
-    `${PUBLIC_URL}/static/app/images/cre.png`
-];
+import ExamQuestionModal from './editQuestionModal';
 
 export default function (props) {
     const [exam, setExam] = useState([]);
@@ -24,8 +14,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
-    const subjects = useSelector(state => state.subjects);
-    const pathname = `${window.origin}${props.history.location.pathname}`;
+    const [question, setQuestion] = useState({});
 
     useEffect(() => {
         getExam();
@@ -46,29 +35,6 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setExam(res);
-                setLoading(res.done);
-                if (res.done)
-                    getUserAnswers();
-
-            }.bind(this)
-        })
-    };
-
-    const getUserAnswers = () => {
-        $.ajax({
-            url: `${API}/modules/${props.match.params.exam}/user/${props.user.id}`,
-            // url: `${API}/subjects/class/{class_id}`,
-            method: 'GET',
-            error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                setLoading(false);
-                // setMessage(true);
-                setMessageType('alert alert-danger');
-                setResponse(response);
-            }.bind(this),
-            success: function (res) {
-                setUserAnswers(res);
-                setShowAns(res.length > 0 );
                 setLoading(false);
             }.bind(this)
         })
@@ -88,7 +54,7 @@ export default function (props) {
             answers.push({"questionid": el.id, "optionid": parseInt(ans)})
         });
         let data = {
-            "moduleid": props.match.params.exam,
+            "moduleid": props.match.params.module,
             "userid": props.user.id,
             "answers": answers
         };
@@ -123,18 +89,6 @@ export default function (props) {
                     {
                         loading ? <Loading/> :
                             <React.Fragment>
-                                <Helmet>
-                                    <link rel="canonical" href={pathname} />
-                                    <meta name="keywords" content={`Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili, ${exam.name}`} />
-                                    <meta name="author" content={`Standard Group`} />
-                                    <meta name="description" content={`Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more ${exam.name}`} />
-                                    <meta property="twitter:title" content={`Tutor-Soma Tu : ${exam.name} : The Standard`} />
-                                    <meta property="twitter:description" content={`Tutor-Soma Tu - ${exam.name} `} />
-                                    <meta property="twitter:url" content={pathname} />
-                                    <meta property="og:title" content={`Tutor-Soma Tu : ${exam.name} : The Standard `} />
-                                    <meta property="og:description" content={`Tutor-Soma Tu - ${exam.name} `} />
-                                    <meta property="og:url" content={pathname} />
-                                </Helmet>
                                 <div className="row">
                                     <div className="col-md-12">
                                         <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">{`${exam.name}`}</h2>
@@ -260,8 +214,16 @@ export default function (props) {
                                                                                 <div className='row'>
                                                                                     <div className="col-md-12">
                                                                                         <div className="card examcard my-4 mt-md-0 w-100" >
-                                                                                            <ul className="bg-white float-right" style={{display: `${(exam.done && showAns) ? 'block' : 'none'}`}}>
-                                                                                                <li className="text-center p-1 marks">Mrks<br />{el.answer === answer.user_option ? 1 : 0}</li>
+                                                                                            <ul className="bg-white float-right" >
+                                                                                                <li className="text-center p-1">
+                                                                                                    <button type='button' className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#questionModal" onClick={e=> {
+                                                                                                        let question = el;
+                                                                                                        question['module'] = exam.name;
+                                                                                                        setQuestion(question);
+                                                                                                    }}>
+                                                                                                        Edit<br /><i className='fa fa-pencil' />
+                                                                                                    </button>
+                                                                                                   </li>
                                                                                             </ul>
                                                                                             <ul className="list-group list-group-flush">
                                                                                                 <li className="list-group-item">
@@ -273,18 +235,15 @@ export default function (props) {
                                                                                                 {
                                                                                                     el.options.map((ans) => {
                                                                                                         const isAns = parseInt(el.answer) === parseInt(ans.id);
-                                                                                                        const selected = answer.hasOwnProperty('user_option') && answer.user_option === ans.id
                                                                                                         return (
                                                                                                             <React.Fragment>
-                                                                                                                <li className="list-group-item ml-4">
+                                                                                                                <li className={`list-group-item ml-4 ${isAns ? 'alert-success' : ''}`}>
                                                                                                                     <input type="radio" id={`${ans.id}`} required={true}
-                                                                                                                           defaultChecked={selected}
+                                                                                                                           defaultChecked={isAns}
                                                                                                                            disabled={answer.hasOwnProperty('user_option')}
                                                                                                                            value={ans.id} name={el.id} />
-                                                                                                                    <label htmlFor={`${ans.id}`}>
-                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${ans.option}`} }
-                                                                                                                              className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />
-                                                                                                                        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
+                                                                                                                    <label htmlFor={`${ans.id}`} className={isAns ? 'answer' : ''}>
+                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${ans.option}`} } />
                                                                                                                     </label>
                                                                                                                 </li>
                                                                                                             </React.Fragment>
@@ -307,54 +266,9 @@ export default function (props) {
                                                                                 </div>
                                                                             </div>
                                                                     }
-                                                                </React.Fragment>
-                                                                : message ? ''
-                                                                : <div className='rounded'>
-                                                                    <div className='col-md-12'>
-                                                                        <div className="text-center mt-2">
-                                                                            <div className='alert alert-warning' role="alert">
-                                                                                <div className="alert-message">
-                                                                                    <h4>Sorry, we were unable to get questions for this paper <Link to={`${ENV}exams/modules`}>You can select another paper here</Link></h4>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        }
-                                                    </form>
-                                                    <div className="mt-5 text-center container">
-                                                        {
-                                                            subjects.length > 0 ?
-                                                                <React.Fragment>
-                                                                    <h2 className="section-title wow fadeInDown animated text-center my-4"
-                                                                        data-wow-delay="0.3s">You May Also Like</h2>
-                                                                    <div className="row">
-                                                                        {
-                                                                            subjects.sort(() => 0.5 - Math.random(0, 3)).slice(0, 4).map((el, index) => {
-                                                                                return (
-                                                                                    <div className="col-lg-3 col-md-6 col-xs-6 col-sm-6">
-                                                                                        <div className="featured-box-item">
-                                                                                            <div className="featured-icon">
-                                                                                                <Link to={`${ENV}exams/subjects/${el.id}/modules`}>
-                                                                                                    <img src={images[index]} className="icons" alt={APPNAME} />
-                                                                                                </Link>
-                                                                                            </div>
-                                                                                            <div className="featured-content">
-                                                                                                <Link to={`${ENV}exams/subjects/${el.id}/modules`}>
-                                                                                                    <h4>{el.subject}</h4>
-                                                                                                    <p>Paper 1 Grade 8</p>
-                                                                                                </Link>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                )
-                                                                            })
-                                                                        }
-
-                                                                    </div>
                                                                 </React.Fragment> : ''
                                                         }
-                                                    </div>
+                                                    </form>
                                                 </div>
                                         }
                                     </div>
@@ -363,6 +277,7 @@ export default function (props) {
                     }
                 </div>
             </div>
+            <ExamQuestionModal question={question} />
         </React.Fragment>
     )
 }
