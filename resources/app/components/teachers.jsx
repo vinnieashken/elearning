@@ -12,18 +12,19 @@ import {Helmet} from "react-helmet";
 export default function (props) {
     const [loading, setLoading] = useState(false);
     const [teachers, setTeachers] = useState([]);
+    const [teacher, setTeacher] = useState({});
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
-        // getTeachers();
+        getTeachers();
     }, []);
 
     const getTeachers = () => {
         $.ajax({
-            url: `${API}/classes/list`,
+            url: `${API}/institution/teachers/list/${props.user.institution.id}`,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr['responseText'])['message'];
@@ -43,6 +44,10 @@ export default function (props) {
 
     const dateFormatter= (cell, row) => {
         return moment(cell, 'Y-MM-DD HH:mm:ss').fromNow()
+    };
+
+    const selected = (row, isSelected) =>{
+        setTeacher(row);
     };
 
     const actionButton = (cell, row) => {
@@ -126,8 +131,8 @@ export default function (props) {
                                                                                 className='col-md-4 float-right mb-3' {...props.searchProps} />
                                                                         </div>
                                                                     </div>
-                                                                    <BootstrapTable {...props.baseProps}
-                                                                                    wrapperClasses="table-responsive"/>
+                                                                    <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
+
 
                                                                 </React.Fragment>
                                                             )

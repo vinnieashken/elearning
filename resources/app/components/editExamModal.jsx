@@ -24,8 +24,10 @@ export default function (props) {
     useEffect((e) => {
         setComplete(false)
         setMessage(false)
+        console.log(props);
         if (props.exam.hasOwnProperty('id'))
             getExam()
+        else setLoading(false)
     }, [props.exam])
 
     const getExam = () => {
@@ -87,7 +89,7 @@ export default function (props) {
                                     complete ? '' :
                                         <div className="card">
                                             <div className='card-header'>
-                                                <h5>{props.exam.module}</h5>
+                                                <h5>{exam.hasOwnProperty('name') ? exam.name : "Add New Exam"}</h5>
                                             </div>
                                             <div className='card-body'>
                                                 <div className='row'>

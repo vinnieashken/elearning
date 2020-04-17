@@ -8,6 +8,7 @@ const { SearchBar } = Search;
 import BootstrapTable from "react-bootstrap-table-next";
 import moment from "moment";
 import {Helmet} from "react-helmet";
+import EditStudentModal from './editStudentModal';
 
 export default function (props) {
     const [loading, setLoading] = useState(false);
@@ -15,15 +16,16 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const [student, setStudent] = useState({});
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
-        // getStudents();
+        getStudents();
     }, []);
 
     const getStudents = () => {
         $.ajax({
-            url: `${API}/classes/list`,
+            url: `${API}/institution/students/list/${props.user.institution.id}`,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr['responseText'])['message'];
@@ -45,12 +47,14 @@ export default function (props) {
         return moment(cell, 'Y-MM-DD HH:mm:ss').fromNow()
     };
 
+    const selected = (row, isSelected) =>{
+        setStudent(row);
+    };
+
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}students/student/${row.id}/edit`} className="btn btn-sm btn-rounded btn-success-filled" >
-                    Edit
-                </Link>
+                <button className='btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#studentModal">Edit Student</button>
                 {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
                 {/*    <i className="fa fa-pencil-alt"></i>*/}
                 {/*</a>*/}
@@ -121,13 +125,14 @@ export default function (props) {
                                                             (
                                                                 <React.Fragment>
                                                                     <div className='row  mb-3'>
-                                                                        <div className='col-md-12'>
-                                                                            <SearchBar
-                                                                                className='col-md-4 float-right mb-3' {...props.searchProps} />
+                                                                        <div className='col-md-4'>
+                                                                            <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
+                                                                        </div>
+                                                                        <div className='col-md-8 ' >
+                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#studentModal">Add Student</button>
                                                                         </div>
                                                                     </div>
-                                                                    <BootstrapTable {...props.baseProps}
-                                                                                    wrapperClasses="table-responsive"/>
+                                                                    <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
 
                                                                 </React.Fragment>
                                                             )
@@ -141,6 +146,7 @@ export default function (props) {
                     }
                 </div>
             </div>
+            <EditStudentModal student={student} />
         </React.Fragment>
     )
 }

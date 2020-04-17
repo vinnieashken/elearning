@@ -301,16 +301,18 @@ export default function (props) {
                                                     (typeof user.institution !== "undefined" && user.institution.hasOwnProperty('id')) ?
                                                         <React.Fragment>
                                                             {
-                                                                parseInt(user.teacher) === 1 ?
+                                                                // parseInt(user.teacher) === 1 ?
                                                                     <li className="nav-item ">
                                                                         <Link className="nav-link" to={`${ENV}students`}>STUDENTS </Link>
-                                                                    </li> : ''
+                                                                    </li>
+                                                                // : ''
                                                             }
                                                             {
-                                                                parseInt(user.owner) === 1 ?
+                                                                // parseInt(user.owner) === 1 ?
                                                                 <li className="nav-item ">
                                                                     <Link className="nav-link" to={`${ENV}teachers`}>TEACHERS </Link>
-                                                                </li> : ''
+                                                                </li>
+                                                                // : ''
                                                             }
                                                         </React.Fragment> : ''
                                                 }
