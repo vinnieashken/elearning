@@ -55,10 +55,45 @@ export default function (props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setMessage(true);
-        setMessageType('alert alert-success');
-        setResponse("Exam details have been updated successfully.");
-        setComplete(true)
+        debugger;
+        setMessage(false);
+        setProcessing(true);
+        var formData = new FormData($('form#exam')[0]);
+        formData.append('institutionid', props.exam.institution_id)
+        if (props.exam.hasOwnProperty('id'))
+            formData.append('id', props.exam.id)
+        $.ajax({
+            url: `${API}/institution/modules/${props.exam.hasOwnProperty('id') ? 'edit' : 'add'}`,
+            method: 'post',
+            processData: false,
+            contentType: false,
+            data:formData,
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            error: function (xhr, status, error) {
+                var response = JSON.parse(xhr['responseText'])['message'];
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+                $("html, body").animate({scrollTop: 0}, 200);
+            }.bind(this),
+            success: function (res) {
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-success');
+                setResponse(`Module updated successfully.`);
+                if (props.exam.hasOwnProperty('id'))
+                    setComplete(true);
+                else {
+                    $('#exam')[0].reset();
+                    setSelectedClass({});
+                    setSelectedSubject({});
+                    props.getModules();
+                }
+            }.bind(this)
+        })
     }
 
     return (
@@ -92,39 +127,44 @@ export default function (props) {
                                                 <h5>{exam.hasOwnProperty('name') ? exam.name : "Add New Exam"}</h5>
                                             </div>
                                             <div className='card-body'>
-                                                <div className='row'>
-                                                    <div className='form-group col-md-12'>
-                                                        <label>Name</label>
-                                                        <input type='text' name='name' className='form-control' defaultValue={exam.name}/>
+                                                <form id='exam'>
+                                                    <div className='row'>
+                                                        <div className='form-group col-md-12'>
+                                                            <label>Name</label>
+                                                            <input type='text' name='module' className='form-control' defaultValue={exam.name}/>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className='row'>
-                                                    <div className='form-group col-md-6'>
-                                                        <label>Class</label>
-                                                        <Select name="class"
-                                                                defaultValue={selectedClass}
-                                                                onChange={setSelectedClass}
-                                                                options={props.classes.map(el => {
-                                                                    return {value: el.id, label: el.class}
-                                                                })}
-                                                        />
+                                                    <div className='row'>
+                                                        <div className='form-group col-md-6'>
+                                                            <label>Class</label>
+                                                            <Select name="classid"
+                                                                    defaultValue={selectedClass}
+                                                                    onChange={setSelectedClass}
+                                                                    options={props.classes.map(el => {
+                                                                        return {value: el.id, label: el.class}
+                                                                    })}
+                                                            />
+                                                        </div>
+                                                        <div className='form-group col-md-6'>
+                                                            <label>Subject</label>
+                                                            <Select name="subjectid"
+                                                                    defaultValue={selectedSubject}
+                                                                    onChange={setSelectedSubject}
+                                                                    options={props.subjects.map(el => {
+                                                                        return {value: el.id, label: el.subject}
+                                                                    })}
+                                                            />
+                                                        </div>
                                                     </div>
-                                                    <div className='form-group col-md-6'>
-                                                        <label>Subject</label>
-                                                        <Select name="class"
-                                                                defaultValue={selectedSubject}
-                                                                onChange={setSelectedSubject}
-                                                                options={props.subjects.map(el => {
-                                                                    return {value: el.id, label: el.subject}
-                                                                })}
-                                                        />
+                                                    <div className='row'>
+                                                        <div className='col-md-12'>
+                                                            {
+                                                                processing ? <ClipLoader /> :
+                                                                    <button type="button" onClick={handleSubmit} className="btn btn-sm btn-success btn-rounded float-right">Save changes</button>
+                                                            }
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className='row'>
-                                                    <div className='col-md-12'>
-                                                        <button type="submit" className="btn btn-sm btn-success btn-rounded float-right">Save changes</button>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                 }

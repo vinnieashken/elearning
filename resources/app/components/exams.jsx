@@ -19,10 +19,12 @@ export default function (props) {
     const [selectedExam, setSelectedExam] = useState({})
     const [classes, setClasses] = useState([])
     const [subjects, setSubjects] = useState([])
+    const [user, setUser] = useState({})
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         setLoading(true);
+        setUser(props.user)
         getModules();
     }, [props.match.params.subject]);
 
@@ -76,8 +78,14 @@ export default function (props) {
     };
 
     const selected = (row, isSelected) =>{
-        setSelectedExam(row);
+        let exam = row;
+        exam['institution_id'] = props.user.institution.id
+        setSelectedExam(exam);
     };
+
+    const addExam = (exam) => {
+        setModules(modules.push(exam))
+    }
 
     const actionButton = (cell, row) => {
         return (
@@ -155,7 +163,11 @@ export default function (props) {
                                                                             <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                         <div className='col-md-8 ' >
-                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                            <button onClick={e => {
+                                                                                let exam = {};
+                                                                                exam['institution_id'] = user.institution.id
+                                                                                setSelectedExam(exam);
+                                                                            }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
@@ -172,7 +184,7 @@ export default function (props) {
                     }
                 </div>
             </div>
-            <EditExamModal exam={selectedExam} classes={classes} subjects={subjects} />
+            <EditExamModal exam={selectedExam} classes={classes} subjects={subjects} getModules={getModules}/>
         </React.Fragment>
     )
 }
