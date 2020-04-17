@@ -71,6 +71,7 @@ class InstitutionsController extends Controller
         $name = $request->name;
         $adm_no = $request->adm_no;
         $email = $request->email;
+        $convert = $request->convert;
 
         $student = new Customer();
         $existing = $student->where('id',$request->id)->first();
@@ -90,6 +91,9 @@ class InstitutionsController extends Controller
         $existing->name = $name;
         $existing->adm_no = $adm_no;
         $existing->login_code = $existing->institution_id.'-'.$existing->adm_no;
+        if($convert == 1)
+            $existing->teacher = 1;
+
         $existing->save();
 
         return $existing;
