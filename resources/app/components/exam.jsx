@@ -33,7 +33,7 @@ export default function (props) {
 
     const getExam = () => {
         $.ajax({
-            url: `${API}/questions/module/${props.match.params.module}?userid=2`,
+            url: `${API}/questions/module/${props.match.params.exam}?userid=2`,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = JSON.parse(xhr['responseText'])['message'];
@@ -56,7 +56,7 @@ export default function (props) {
 
     const getUserAnswers = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.module}/user/${props.user.id}`,
+            url: `${API}/modules/${props.match.params.exam}/user/${props.user.id}`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             error: function (xhr, status, error) {
@@ -88,7 +88,7 @@ export default function (props) {
             answers.push({"questionid": el.id, "optionid": parseInt(ans)})
         });
         let data = {
-            "moduleid": props.match.params.module,
+            "moduleid": props.match.params.exam,
             "userid": props.user.id,
             "answers": answers
         };
@@ -260,7 +260,7 @@ export default function (props) {
                                                                                 <div className='row'>
                                                                                     <div className="col-md-12">
                                                                                         <div className="card examcard my-4 mt-md-0 w-100" >
-                                                                                            <ul className="bg-white float-right" style={{display: `${exam.done ? 'block' : 'none'}`}}>
+                                                                                            <ul className="bg-white float-right" style={{display: `${(exam.done && showAns) ? 'block' : 'none'}`}}>
                                                                                                 <li className="text-center p-1 marks">Mrks<br />{el.answer === answer.user_option ? 1 : 0}</li>
                                                                                             </ul>
                                                                                             <ul className="list-group list-group-flush">
@@ -273,15 +273,17 @@ export default function (props) {
                                                                                                 {
                                                                                                     el.options.map((ans) => {
                                                                                                         const isAns = parseInt(el.answer) === parseInt(ans.id);
+                                                                                                        const selected = answer.hasOwnProperty('user_option') && answer.user_option === ans.id
                                                                                                         return (
                                                                                                             <React.Fragment>
                                                                                                                 <li className="list-group-item ml-4">
                                                                                                                     <input type="radio" id={`${ans.id}`} required={true}
-                                                                                                                           defaultChecked={answer.hasOwnProperty('user_option') && answer.user_option === ans.id}
+                                                                                                                           defaultChecked={selected}
                                                                                                                            disabled={answer.hasOwnProperty('user_option')}
                                                                                                                            value={ans.id} name={el.id} />
                                                                                                                     <label htmlFor={`${ans.id}`}>
-                                                                                                                        <em><span dangerouslySetInnerHTML={ {__html: `${ans.option}`} } /></em>
+                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${ans.option}`} }
+                                                                                                                              className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />
                                                                                                                         {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
                                                                                                                     </label>
                                                                                                                 </li>
