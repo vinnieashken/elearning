@@ -3,6 +3,7 @@ var webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const env = process.env.NODE_ENV;
 const WebpackAssetsManifest = require('webpack-assets-manifest');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
     mode: env || 'development'
@@ -60,7 +61,7 @@ module.exports = (env, argv) => {
             'window.jQuery': 'jquery',
             // 'NODE_ENV': env,
         }),
-
+        new CleanWebpackPlugin()
     ];
 
     config.performance = {

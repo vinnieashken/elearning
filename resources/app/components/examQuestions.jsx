@@ -201,6 +201,14 @@ export default function (props) {
                                                                     </div>
                                                                 </div> : ''
                                                         }
+                                                        <div className="row">
+                                                            <div className='col-md-12'>
+                                                                    <button type='button' className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#questionModal" onClick={e=> {
+                                                                        let question = {'module': exam.name, 'moduleId': exam.id};
+                                                                        setQuestion(question);
+                                                                    }}>New Question</button>
+                                                            </div>
+                                                        </div>
                                                         {
                                                             exam.questions.length > 0 ?
                                                                 <React.Fragment>
@@ -219,6 +227,7 @@ export default function (props) {
                                                                                                     <button type='button' className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#questionModal" onClick={e=> {
                                                                                                         let question = el;
                                                                                                         question['module'] = exam.name;
+                                                                                                        question['moduleId'] = exam.id;
                                                                                                         setQuestion(question);
                                                                                                     }}>
                                                                                                         Edit<br /><i className='fa fa-pencil' />
