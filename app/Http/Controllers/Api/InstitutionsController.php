@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
 class InstitutionsController extends Controller
@@ -64,6 +65,7 @@ class InstitutionsController extends Controller
 
         return $students;
     }
+
     public function editStudent(Request $request)
     {
         $id = $request->id;
@@ -126,5 +128,48 @@ class InstitutionsController extends Controller
         $existing->name = $name;
         $existing->save();
         return $existing;
+    }
+
+    public function addModule(Request $request)
+    {
+        $subjectid = $request->subjectid;
+        $modulename = $request->module;
+        $institutionid = $request->institutionid;
+
+        $module = new Module();
+        $module->subject_id = $subjectid;
+        $module->module = $modulename;
+        $module->institution_id = $institutionid;
+        $module->save();
+
+        return $module;
+    }
+
+    public function editModule(Request $request)
+    {
+        $id = $request->id;
+        $subjectid = $request->subjectid;
+        $modulename = $request->module;
+        $institutionid = $request->institutionid;
+
+        $module = new Module();
+        $existing = $module->where('id',$id)->first();
+
+        if(is_null($existing))
+        {
+            return response()->json(['message'=>'Record not found','data'=> $request->all()] , 400);
+        }
+
+        $existing->subject_id = $subjectid;
+        $existing->module = $modulename;
+        $existing->institution_id = $institutionid;
+        $existing->save();
+
+        return $existing;
+    }
+
+    public function addModuleQuestions(Request $request)
+    {
+
     }
 }
