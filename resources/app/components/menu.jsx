@@ -95,6 +95,11 @@ const Students = Loadable({
     loading: Loading
 })
 
+const EditQuestion = Loadable({
+    loader: () => import('./editQuestion'),
+    loading: Loading
+})
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -505,6 +510,24 @@ export default function (props) {
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <Exam {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}questions/question/:question/edit`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <EditQuestion {...props} user={user}/>
                                                            : props.history.push({
                                                                pathname: `${ENV}subscriptions`,
                                                                state: {
