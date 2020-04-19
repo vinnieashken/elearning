@@ -24,13 +24,15 @@ export default function (props) {
     }, []);
 
     const getStudents = () => {
+        setLoading(true)
         $.ajax({
             url: `${API}/institution/students/list/${props.user.institution.id}`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -110,6 +112,7 @@ export default function (props) {
                                                     columns={
                                                         [
                                                             {dataField: 'adm_no', text: 'Adm. No.', sort: true},
+                                                            {dataField: 'login_code', text: 'Login Code', sort: true},
                                                             {dataField: 'name', text: 'Name', sort: true},
                                                             {dataField: 'avg', text: 'Average', sort: true},
                                                             {
@@ -129,7 +132,7 @@ export default function (props) {
                                                                             <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                         <div className='col-md-8 ' >
-                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#studentModal">Add Student</button>
+                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#studentModal" onClick={setStudent.bind({})}>Add Student</button>
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
@@ -146,7 +149,7 @@ export default function (props) {
                     }
                 </div>
             </div>
-            <EditStudentModal student={student} />
+            <EditStudentModal student={student} user={props.user} getStudents={getStudents} />
         </React.Fragment>
     )
 }

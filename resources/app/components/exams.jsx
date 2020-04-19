@@ -19,7 +19,7 @@ export default function (props) {
     const [selectedExam, setSelectedExam] = useState({})
     const [classes, setClasses] = useState([])
     const [subjects, setSubjects] = useState([])
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(props.user)
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
@@ -35,7 +35,9 @@ export default function (props) {
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                setLoading(false);
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}                setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
@@ -93,12 +95,17 @@ export default function (props) {
                 <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
                     {row.done ? `Revise Paper` : `Take Test`}
                 </Link>
-                <Link to={`${ENV}exams/exam/edit/${row.id}`} className='float-right p-2'>
-                    <i className="fa fa-plus" />
-                </Link>
-                <Link to={'#'} className='float-right p-2' data-toggle="modal" data-target="#exampleModal">
-                    <i className="fa fa-pencil" />
-                </Link>
+                {
+                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
+                        <React.Fragment>
+                            <Link to={`${ENV}exams/exam/edit/${row.id}`} className='float-right p-2'>
+                                <i className="fa fa-plus" />
+                            </Link>
+                            <Link to={'#'} className='float-right p-2' data-toggle="modal" data-target="#exampleModal">
+                                <i className="fa fa-pencil" />
+                            </Link>
+                        </React.Fragment> : ''
+                }
             </div>
         )
     };
@@ -144,7 +151,9 @@ export default function (props) {
                                                 </div> :
                                                 <ToolkitProvider
                                                     keyField="id"
-                                                    data={ modules }
+                                                    data={ modules.filter(el => {
+                                                        return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
+                                                    }) }
                                                     columns={
                                                         [
                                                             {dataField: 'id',      text: 'ID',    sort: true },
@@ -163,11 +172,15 @@ export default function (props) {
                                                                             <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                         <div className='col-md-8 ' >
-                                                                            <button onClick={e => {
-                                                                                let exam = {};
-                                                                                exam['institution_id'] = user.institution.id
-                                                                                setSelectedExam(exam);
-                                                                            }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                            {
+                                                                                user.teacher || user.owner ?
+                                                                                    <button onClick={e => {
+                                                                                        let exam = {};
+                                                                                        exam['institution_id'] = user.institution.id
+                                                                                        setSelectedExam(exam);
+                                                                                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button> : ''
+                                                                            }
+
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>

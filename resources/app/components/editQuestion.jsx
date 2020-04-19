@@ -11,7 +11,7 @@ function Row(props) {
     const [data, setData] = useState('');
 
     useEffect((e) => {
-        console.log(props);
+        // console.log(props);
     }, []);
     const removeComponent = (e) => {
         ReactDOM.unmountComponentAtNode(document.getElementById(`option-${props.rowKey}`).parentNode);
@@ -59,7 +59,7 @@ export default function (props) {
     const [module] = useState(oldState.hasOwnProperty('module') ? oldState.module : {});
 
     const [complete, setComplete] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(question.hasOwnProperty('options') && question.options.length > 0);
     const [processing, setProcessing] = useState(false);
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState('');
@@ -73,6 +73,13 @@ export default function (props) {
     useEffect((e) => {
         $( "[id^='option-']" ).remove();
         if (question.hasOwnProperty('options') && question.options.length > 0) {
+            if (question.hasOwnProperty('answer')) {
+                const answer = question.options.filter(el => {
+                    return el.id === question.answer
+                })
+                if (answer.length > 0)
+                    setCorrectAnswer({label: answer[0].option, value: question.answer})
+            }
             const allOptions = options;
             allOptions[`id-${question.options[0].id}`] = question.options[0];
             setOptions(allOptions)
@@ -80,6 +87,7 @@ export default function (props) {
                 for (let i = 1; i< question.options.length; i++) {
                     addRow(question.options[i]);
                 }
+            setLoading(false)
         }
     }, [props.question]);
 
@@ -113,6 +121,8 @@ export default function (props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setMessage(false);
+        setProcessing(true);
         let data = {moduleid: module.id};
         data["questions"] = [
             question.hasOwnProperty('id') ?
@@ -120,7 +130,7 @@ export default function (props) {
                     "id": question.id,
                     "module_id": module.id,
                     "question": questionData,
-                    // "answer": 3451,
+                    "answer": correctAnswer.value,
                     "options":
                         answerOptions.map( el=> {
                             const data = {
@@ -139,40 +149,35 @@ export default function (props) {
                         answerOptions.map(el => {
                             return el.option
                         }),
-                    "answer":"A) Him"
+                    "answer": correctAnswer.value
                 }
         ];
-        debugger;
-        // setMessage(false);
-        // setProcessing(true);
-        // var formData = new FormData($('form#options')[0]);
-        // if (question.hasOwnProperty('id'))
-        //     formData.append('id', question.id);
-        // $.ajax({
-        //     url: `${API}/institution/modules/questions/${question.hasOwnProperty('id') ? 'edit' : 'add'}`,
-        //     method: 'post',
-        //     processData: false,
-        //     contentType: false,
-        //     data:formData,
-        //     headers: {
-        //         'Authorization': `Bearer ${localStorage.getItem('token')}`
-        //     },
-        //     error: function (xhr, status, error) {
-        //         var response = JSON.parse(xhr['responseText'])['message'];
-        //         setProcessing(false);
-        //         setMessage(true);
-        //         setMessageType('alert alert-danger');
-        //         setResponse(response);
-        //         $("html, body").animate({scrollTop: 0}, 200);
-        //     }.bind(this),
-        //     success: function (res) {
-        //         setProcessing(false);
-        //         setMessage(true);
-        //         setMessageType('alert alert-success');
-        //         setResponse(`Module updated successfully.`);
-        //
-        //     }.bind(this)
-        // })
+        console.log(data)
+        $.ajax({
+            url: `${API}/institution/modules/questions/${question.hasOwnProperty('id') ? 'edit' : 'add'}`,
+            method: 'post',
+            data: data,
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+                $("html, body").animate({scrollTop: 0}, 200);
+            }.bind(this),
+            success: function (res) {
+                props.history.push({
+                    pathname: `/exams/exam/edit/${module.id}`,
+                    state: {
+                        message: true,
+                        message_type: 'alert alert-success',
+                        response: "Question updated successfully.",
+                    }
+                })
+            }.bind(this)
+        })
     };
 
     return (
@@ -180,9 +185,6 @@ export default function (props) {
             <div id="about" className="section-padding mt-md-5 exam">
                 <div className="container mt-md-5">
                     {
-                        loading ? <div className="text-center" style={{marginTop: '50px'}}>
-                                <ClipLoader color={'#cf2027'}/>
-                            </div> :
                             <form onSubmit={handleSubmit} >
                                 {
                                     message ?
@@ -254,28 +256,39 @@ export default function (props) {
                                                     </div>
                                                 </div>
                                                 <div id='options' />
-                                                <div className='row'>
-                                                    <div className='form-group col-md-6'>
-                                                        <label>Correct Answer</label>
-                                                        <Select name="answerr"
-                                                                defaultValue={correctAnswer}
-                                                                onChange={setCorrectAnswer}
-                                                                options={
-                                                                    answerOptions.map( el=> {
-                                                                        return {
-                                                                            "value": el.hasOwnProperty('id') ? el.id : el.option,
-                                                                            "label": el.option,
-                                                                        }
-                                                                    })
-                                                                }
-                                                        />
-                                                    </div>
-                                                    <div className='col-md-6'>
-                                                        <button type="submit" className="btn btn-sm btn-success btn-rounded float-right">Save changes</button>
-                                                    </div>
+                                                {
+                                                    loading ?
+                                                        <div className="text-center" style={{marginTop: '50px'}}>
+                                                            <ClipLoader color={'#cf2027'}/>
+                                                        </div>
+                                                        : <React.Fragment>
+                                                            <div className='row'>
+                                                                <div className='form-group col-md-6'>
+                                                                    <label>Correct Answer</label>
+                                                                    <Select name="answerr"
+                                                                            defaultValue={correctAnswer}
+                                                                            onChange={setCorrectAnswer}
+                                                                            options={
+                                                                                answerOptions.map( el=> {
+                                                                                    return {
+                                                                                        "value": el.hasOwnProperty('id') ? el.id : el.option,
+                                                                                        "label": el.option,
+                                                                                    }
+                                                                                })
+                                                                            }
+                                                                    />
+                                                                </div>
+                                                                <div className='col-md-6'>
+                                                                    {
+                                                                        processing ? <ClipLoader /> :
+                                                                            <button type="submit" className="btn btn-sm btn-success btn-rounded float-right">Save changes</button>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </React.Fragment>
+                                                    }
                                                 </div>
                                             </div>
-                                        </div>
                                 }
                             </form>
                     }

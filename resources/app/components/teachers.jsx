@@ -8,6 +8,7 @@ const { SearchBar } = Search;
 import BootstrapTable from "react-bootstrap-table-next";
 import moment from "moment";
 import {Helmet} from "react-helmet";
+import EditTeacherModal from './editTeacherModal';
 
 export default function (props) {
     const [loading, setLoading] = useState(false);
@@ -27,9 +28,10 @@ export default function (props) {
             url: `${API}/institution/teachers/list/${props.user.institution.id}`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -53,9 +55,8 @@ export default function (props) {
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}teachers/teacher/${row.id}/edit`} className="btn btn-sm btn-rounded btn-success-filled" >
-                    Edit
-                </Link>
+                <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#teacherModal">Edit Teacher</button>
+
                 {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
                 {/*    <i className="fa fa-pencil-alt"></i>*/}
                 {/*</a>*/}
@@ -126,9 +127,11 @@ export default function (props) {
                                                             (
                                                                 <React.Fragment>
                                                                     <div className='row  mb-3'>
-                                                                        <div className='col-md-12'>
-                                                                            <SearchBar
-                                                                                className='col-md-4 float-right mb-3' {...props.searchProps} />
+                                                                        <div className='col-md-4'>
+                                                                            <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
+                                                                        </div>
+                                                                        <div className='col-md-8 ' >
+                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#teacherModal" onClick={setTeacher.bind({})}>Add Teacher</button>
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
@@ -146,6 +149,8 @@ export default function (props) {
                     }
                 </div>
             </div>
+            <EditTeacherModal teacher={teacher} user={props.user} />
+
         </React.Fragment>
     )
 }

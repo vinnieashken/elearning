@@ -17,11 +17,12 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState('');
     const [response, setResponse] = useState('');
-    const [student, setStudent] = useState({});
+    const [teacher, setTeacher] = useState({});
 
     useEffect((e) => {
-        setStudent(props.student)
-    }, [props.student])
+        setTeacher(props.teacher)
+    }, [props.teacher])
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,10 +30,10 @@ export default function (props) {
         setProcessing(true);
         var formData = new FormData($('form#student')[0]);
         formData.append('institutionid', props.user.institution_id)
-        if (student.hasOwnProperty('id'))
+        if (teacher.hasOwnProperty('id'))
             formData.append('id', student.id)
         $.ajax({
-            url: `${API}/institution/student/${student.hasOwnProperty('id') ? 'edit' : 'register' }`,
+            url: `${API}/institution/student/${teacher.hasOwnProperty('id') ? 'edit' : 'register'}`,
             method: 'post',
             processData: false,
             contentType: false,
@@ -56,14 +57,13 @@ export default function (props) {
                 setMessageType('alert alert-success');
                 setResponse(`Student updated successfully.`);
                 setComplete(true)
-                props.getStudents()
             }.bind(this)
         })
     }
 
     return (
-        <div className="modal fade" id="studentModal" tabIndex="-1" role="dialog"
-             aria-labelledby="studentModalLabel" aria-hidden="true">
+        <div className="modal fade" id="teacherModal" tabIndex="-1" role="dialog"
+             aria-labelledby="teacherModalLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     {
@@ -89,34 +89,20 @@ export default function (props) {
                                     complete ? '' :
                                         <div className="card">
                                             <div className='card-header'>
-                                                <h5>{student.hasOwnProperty('name') ? student.name : "Register Student"}</h5>
+                                                <h5>{teacher.hasOwnProperty('name') ? teacher.name : "Register Teacher"}</h5>
                                             </div>
                                             <div className='card-body'>
                                                 <form onSubmit={handleSubmit} id='student'>
                                                     <div className='row'>
                                                         <div className='form-group col-md-12'>
-                                                            <label>Admission Number</label>
-                                                            <input type='text' name='adm_no' className='form-control' defaultValue={student.adm_no} required/>
-                                                        </div>
-                                                        <div className='form-group col-md-12'>
                                                             <label>Name</label>
-                                                            <input type='text' name='name' className='form-control' defaultValue={student.name} required/>
+                                                            <input type='text' name='name' className='form-control' defaultValue={teacher.name} required/>
                                                         </div>
 
                                                         <div className='form-group col-md-12'>
                                                             <label>Email</label>
-                                                            <input type='email' name='email' className='form-control' defaultValue={student.email}/>
+                                                            <input type='email' name='email' className='form-control' defaultValue={teacher.email}/>
                                                         </div>
-                                                        {
-                                                            props.user.teacher || props.user.owner ?
-                                                                <div className='form-group col-md-12'>
-                                                                    <label>Convert To Teacher</label>
-                                                                    <select name='convert' className='form-control' defaultValue={0}>
-                                                                        <option value={0}>No</option>
-                                                                        <option value='1'>Yes</option>
-                                                                    </select>
-                                                                </div> : ''
-                                                        }
                                                     </div>
                                                     <div className='row'>
                                                         <div className='col-md-12'>
