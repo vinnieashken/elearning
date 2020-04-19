@@ -74,7 +74,7 @@ class InstitutionsController extends Controller
     {
         $id = $request->id;
         $institution = $request->institutionid;
-        $teacher = $request->teacherid;
+        //$teacher = $request->teacherid;
         $name = $request->name;
         $adm_no = $request->adm_no;
         $email = $request->email;
@@ -86,7 +86,7 @@ class InstitutionsController extends Controller
         $student = new Customer();
         $existing = $student->where('id',$request->id)->first();
 
-        if(is_null($id) || is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no))
+        if(is_null($id) || is_null($institution) || is_null($name) || is_null($adm_no))
         {
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
@@ -96,7 +96,7 @@ class InstitutionsController extends Controller
             return response()->json(['message'=>'Record not found','data'=> $request->all()] , 400);
         }
 
-        $existing->teacher_id = $teacher;
+        //$existing->teacher_id = $teacher;
         $existing->email = $email;
         $existing->name = $name;
         $existing->adm_no = $adm_no;
@@ -231,7 +231,7 @@ class InstitutionsController extends Controller
             {
                 $optionmodel = new Option();
                 $existingoption = $optionmodel->where('id',$option['id'])->first();
-                $existingoption->option = $option;
+                $existingoption->option = $option['option'];
                 $existingoption->save();
 
                 $answer = new Answer();

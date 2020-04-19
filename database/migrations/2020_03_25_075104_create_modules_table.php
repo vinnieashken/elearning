@@ -17,6 +17,7 @@ class CreateModulesTable extends Migration
             $table->id();
             $table->integer('subject_id')->unsigned();
             $table->string('module');
+            $table->integer('institution_id')->nullable();
             $table->timestamps();
         });
     }
