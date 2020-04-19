@@ -18,7 +18,7 @@ class CheckAppKey
     {
         $appkey = $request->header('appkey');
         if(is_null($appkey))
-            return response()->json(['status' => false,'error' => "Invalid requst"], 401);
+            return response()->json(['status' => false,'error' => "Invalid request"], 401);
         else
         {
             $model = new Application();
