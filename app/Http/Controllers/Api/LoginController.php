@@ -324,4 +324,5 @@ class LoginController extends Controller
 
         return $student;
     }
+
 }
