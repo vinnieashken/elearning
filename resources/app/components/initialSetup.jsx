@@ -61,7 +61,7 @@ export default function (props) {
                     <div className="row">
                         <div className="mx-auto mt-5 col-md-10 col-sm-12">
                             <div className="card weekly">
-                                <h5 className="card-header text-center">REGISTER SCHOOL</h5>
+                                <h5 className="card-header text-center">REGISTER INSTITUTION</h5>
                                 <form onSubmit={handleSubmit} id='register'>
                                     <div className="card-body">
                                         {

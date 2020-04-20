@@ -17,6 +17,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const [user, setUser] = useState(props.user);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
@@ -108,7 +109,9 @@ export default function (props) {
                                                     </div>
                                                 </div> : <ToolkitProvider
                                                     keyField="id"
-                                                    data={teachers}
+                                                    data={teachers.filter(el => {
+                                                        return (parseInt(el.institution_id)) === parseInt(user.institution_id)
+                                                    })}
                                                     columns={
                                                         [
                                                             {dataField: 'email', text: 'Email', sort: true},

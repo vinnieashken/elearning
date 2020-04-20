@@ -17,6 +17,7 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [student, setStudent] = useState({});
+    const [user, setUser] = useState(props.user);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
@@ -108,7 +109,9 @@ export default function (props) {
                                                     </div>
                                                 </div> : <ToolkitProvider
                                                     keyField="id"
-                                                    data={students}
+                                                    data={students.filter(el => {
+                                                        return el.institution_id === user.institution_id
+                                                    })}
                                                     columns={
                                                         [
                                                             {dataField: 'adm_no', text: 'Adm. No.', sort: true},

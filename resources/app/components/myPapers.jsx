@@ -32,8 +32,7 @@ export default function (props) {
 
     const getModules = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`,
-            // url: `${API}/subjects/class/{class_id}`,
+            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}&institutionid=${props.user.institution_id}`,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
@@ -101,7 +100,7 @@ export default function (props) {
                                 Edit Paper <i className="fa fa-plus" />
                             </Link>
                             <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success' data-toggle="modal" data-target="#exampleModal">
-                                Add Question <i className="fa fa-pencil" />
+                                Add Questions <i className="fa fa-pencil" />
                             </Link>
                         </React.Fragment> :
                         <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
@@ -176,24 +175,19 @@ export default function (props) {
                                                                         <div className='col-md-8 ' >
                                                                             {
                                                                                 subscription.hasOwnProperty('id') ?
-                                                                                user.teacher || user.owner ?
-                                                                                    <button onClick={e => {
-                                                                                        let exam = {};
-                                                                                        exam['institution_id'] = user.institution.id
-                                                                                        setSelectedExam(exam);
-                                                                                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
-                                                                                    : ''
-                                                                                : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
+                                                                                    user.teacher || user.owner ?
+                                                                                        <button onClick={e => {
+                                                                                            let exam = {};
+                                                                                            exam['institution_id'] = user.institution.id
+                                                                                            setSelectedExam(exam);
+                                                                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                        : ''
+                                                                                    : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
                                                                             }
 
                                                                         </div>
                                                                     </div>
-                                                                    {
-                                                                        (user.teacher || user.owner) ?
-                                                                            <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
-                                                                            : <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
-
-                                                                    }
+                                                                    <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
 
                                                                 </React.Fragment>
                                                             )

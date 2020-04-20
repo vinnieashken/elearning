@@ -100,6 +100,11 @@ const EditQuestion = Loadable({
     loading: Loading
 })
 
+const MyPapers = Loadable({
+    loader: () => import('./myPapers'),
+    loading: Loading
+})
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -306,17 +311,17 @@ export default function (props) {
                                                         <React.Fragment>
                                                             {
                                                                 parseInt(user.owner) || parseInt(user.teacher)  ?
-                                                                    <li className="nav-item ">
-                                                                        <Link className="nav-link" to={`${ENV}students`}>STUDENTS </Link>
-                                                                    </li>
-                                                                : ''
-                                                            }
-                                                            {
-
-                                                                    parseInt(user.owner) || parseInt(user.teacher)  ?
-                                                                <li className="nav-item ">
-                                                                    <Link className="nav-link" to={`${ENV}teachers`}>TEACHERS </Link>
-                                                                </li>
+                                                                    <React.Fragment>
+                                                                        <li className="nav-item ">
+                                                                            <Link className="nav-link" to={`${ENV}students`}>STUDENTS </Link>
+                                                                        </li>
+                                                                        <li className="nav-item ">
+                                                                            <Link className="nav-link" to={`${ENV}teachers`}>TEACHERS </Link>
+                                                                        </li>
+                                                                        <li className="nav-item ">
+                                                                            <Link className="nav-link" to={`${ENV}exams/mine`}>MY PAPERS </Link>
+                                                                        </li>
+                                                                    </React.Fragment>
                                                                 : ''
                                                             }
                                                         </React.Fragment> : ''
@@ -473,6 +478,25 @@ export default function (props) {
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <CompletedExams {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+
+                                        <Route exact={true} path={`${props.match.url}exams/mine`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <MyPapers {...props} user={user}/>
                                                            : props.history.push({
                                                                pathname: `${ENV}subscriptions`,
                                                                state: {
