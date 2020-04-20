@@ -252,4 +252,32 @@ class InstitutionsController extends Controller
 
         return $data;
     }
+
+    public function getPublishers(Request $request)
+    {
+        $list = new Customer();
+        if($request->has('size') && $request->has('page')) {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results = $list->where('publisher',1)->paginate($size)->items();
+
+            $totalrecords = $list->where('publisher',1)->count();
+
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+            $data ["rows"] = $results;
+            return $data;
+        }
+
+        $students = $list->where('publisher',1)->get();
+
+        return $students;
+    }
 }
