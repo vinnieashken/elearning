@@ -26,7 +26,7 @@ class ModulesController extends Controller
 
             $results =  $model->leftJoin('subjects','modules.subject_id','=','subjects.id')
                 ->leftJoin('classes','subjects.class_id','=','classes.id')
-                ->leftJoin('institutions','customers.institution_id','=','institutions.id')
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                 ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class')->paginate($size)->items();
 
             $totalrecords = $model->count();
@@ -127,7 +127,8 @@ class ModulesController extends Controller
 
             $results =  $model->where('subject_id',$subjectid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
                 ->leftJoin('classes','subjects.class_id','=','classes.id')
-                ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','subjects.subject','classes.class')->paginate($size)->items();
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class')->paginate($size)->items();
 
             $totalrecords = $model->where('subject_id',$subjectid)->count();
             $totalpages = ceil($totalrecords / $size);
@@ -166,7 +167,8 @@ class ModulesController extends Controller
 
         $results = $model->where('subject_id',$subjectid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
             ->leftJoin('classes','subjects.class_id','=','classes.id')
-            ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','subjects.subject','classes.class')->get();
+            ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+            ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class')->get();
         $data = [];
         if($request->has('userid'))
         {
