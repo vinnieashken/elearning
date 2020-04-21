@@ -208,7 +208,7 @@ class Datatable extends Controller
                                 $subject                    =   Subject::where('id',$post->subject_id)->first();
                                 $nestedData['id']           =   $post->id;
                                 $nestedData['level']        =   Level::where('id',$subject->class_id)->first()->class;
-                                $nestedData['publisher']    =   Institution::where('id',$post->institution_id)->first()->name;
+                                $nestedData['publisher']    =   ($post->institution_id < 1)?"":Institution::where('id',$post->institution_id)->first()->name;
                                 $nestedData['subject']      =   $subject->subject;
                                 $nestedData['module']       =   $post->module;
                                 $nestedData['action']       =   '<a href="#" class="edit-module text-dark" data-module=\''.$post.'\' >
