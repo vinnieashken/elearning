@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Institution;
+use App\Models\Institution;
 use App\Models\Level;
 use App\Models\Question;
 use App\Models\Subject;
