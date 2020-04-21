@@ -16,15 +16,17 @@ use Illuminate\Http\Request;
 
 class Cms extends Controller
     {
+        public $data;
         public function __construct()
             {
                 $this->middleware('auth');
+
             }
         public function index()
             {
                 $exams      =   Module::count();
                 $subjects   =   Subject::count();
-                $users      =   User::whereNotNull('rights')->count();
+                $users      =   User::count();
                 $customers  =   Customer::count();
                 return view('cms.modules.dashboard',compact('exams','subjects','users','customers'));
             }
@@ -52,6 +54,7 @@ class Cms extends Controller
                         $module             =   new Module();
                         $module->module     =   $request->module;
                         $module->subject_id =   $request->subject;
+                        $module->creator    =   \Auth::User()->id;
                         $req                =   $module->save();
                         if($req)
                             {
@@ -79,6 +82,7 @@ class Cms extends Controller
                         $module             =   Module::find($request->id);
                         $module->module     =   $request->module;
                         $module->subject_id =   $request->subject;
+                        $module->creator    =   \Auth::User()->id;
                         $req                =   $module->save();
                         if($req)
                             {
@@ -494,9 +498,6 @@ class Cms extends Controller
                 if($validatedData)
                     {
                         $imageName = time().'.'.$request->image->extension();
-
-
-
                         $request->image->move(public_path('uploads'), $imageName);
 
                         return $imageName;
@@ -507,6 +508,14 @@ class Cms extends Controller
                     }
 
 
+
+            }
+        public function posts($type)
+            {
+
+            }
+        public function moderate(Request $request)
+            {
 
             }
     }

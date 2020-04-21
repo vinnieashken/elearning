@@ -1,3 +1,6 @@
+@php
+    $role = unserialize(session('role'));
+@endphp
 <nav class="sidebar sidebar-sticky">
     <div class="sidebar-content  js-simplebar">
         <a class="sidebar-brand px-5" href="{{ url('cms') }}">
@@ -20,35 +23,55 @@
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link font-weight-bold" href="{{ url('cms/subject') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Subject</span>
+                    <i class="align-middle" data-feather="minus-square"></i> <span class="align-middle">Subject</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a class="sidebar-link font-weight-bold" href="{{ url('cms/exams') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Exams</span>
+                    <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Exams</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('cms/rates') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Rates</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link font-weight-bold" href="{{ url('cms/users') }}">
-                    <i class="align-middle" data-feather="pocket"></i> <span class="align-middle">Users</span>
-                </a>
-            </li>
-            {{--<li class="sidebar-item">
-                <a href="#dashboards" data-toggle="collapse" class="font-weight-bold sidebar-link collapsed">
-                    <i class="align-middle" data-feather="shield"></i>
-                    <span class="align-middle">Student</span>
-                </a>
-                <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse ">
-                    <li class="sidebar-item"><a class="sidebar-link" href="">Manage Students</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="">Results</a></li>
-                </ul>
-            </li>
---}}
+
+            @if(in_array("moderate", array_keys($role)))
+                <li class="sidebar-item">
+                    <a href="#dashboards" data-toggle="collapse" class="font-weight-bold sidebar-link collapsed">
+                        <i class="align-middle" data-feather="settings"></i>
+                        <span class="align-middle">Moderation</span>
+                    </a>
+                    <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse ">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link d-flex" href="">
+                                Pending
+                                <span class="badge badge-warning ml-auto mr-3">{{ App\Models\Module::where('status',FALSE)->count()}}</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link d-flex" href="">
+                                Active
+                                <span class="badge badge-success ml-auto mr-3">{{ App\Models\Module::where('status',TRUE)->count()}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            @if(in_array("rate", array_keys($role)))
+                <li class="sidebar-item">
+                    <a class="sidebar-link font-weight-bold" href="{{ url('cms/rates') }}">
+                        <i class="align-middle" data-feather="edit"></i>
+                        <span class="align-middle">Rates</span>
+                    </a>
+                </li>
+            @endif
+            @if(in_array("user", array_keys($role)))
+                <li class="sidebar-item">
+                    <a class="sidebar-link font-weight-bold" href="{{ url('cms/users') }}">
+                        <i class="align-middle" data-feather="user"></i>
+                        <span class="align-middle">Users</span>
+                    </a>
+                </li>
+            @endif
+
         </ul>
     </div>
 </nav>
+

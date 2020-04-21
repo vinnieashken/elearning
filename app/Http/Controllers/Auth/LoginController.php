@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User_meta;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use GuzzleHttp\Client;
@@ -67,7 +68,7 @@ class LoginController extends Controller
                                     $this->username() => [trans('auth.failed'),$request->email],
                                 ]);
                             }
-                   }     
+                   }
                 else
                     {
                         throw ValidationException::withMessages([
@@ -75,7 +76,19 @@ class LoginController extends Controller
                                 ]);
                     }
             }
+        protected function authenticated(Request $request, $user)
+            {
+                foreach(User_meta::where('user_id',$user->id)->get() as $value)
+                    {
+                        $data[$value->meta_key] = $value->meta_value;
+                    }
+                if(isset($data))
+                    {
+                        session($data);
+                        //dd($data);
+                    }
 
+            }
         public function apilogin(Request $request)
             {
                 $username = $request->email;
@@ -98,9 +111,22 @@ class LoginController extends Controller
                 $objbody = json_decode($body,true);
                 if(!isset($objbody['message']))
                     {
-                        User::updateOrCreate(['email'=>$request->email],
+                        $user = User::updateOrCreate(['email'=>$request->email],
                             ['email'=>$request->email,'password'=>bcrypt($request->password),'name'=>$objbody['name'],'phoneno'=>$objbody['phone']]);
+                        if(User_meta::where('user_id',$user->id)->count() == 0)
+                            {
+                                $meta = new User_meta();
+                                $meta->user_id      =   $user->id;
+                                $meta->meta_key     =   'role';
+                                $meta->meta_value   =   serialize(array());
+                                $meta->save();
 
+                                $meta = new User_meta();
+                                $meta->user_id      =   $user->id;
+                                $meta->meta_key     =   'thumburl';
+                                $meta->meta_value   =   'assets/img/avatar.png';
+                                $meta->save();
+                            }
                     }
             }
         public function login(Request $request)

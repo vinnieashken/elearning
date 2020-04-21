@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubscriptionsTable extends Migration
+class CreateUserMetasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('user_metas', function (Blueprint $table) {
             $table->id();
-            $table->string('subscription');
-            $table->integer('days')->default(0);
-            $table->integer('cost');
-            $table->string('description')->nullable();
+            $table->integer('user_id')->unsigned();
+            $table->string('meta_key');
+            $table->text('meta_value')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -31,6 +29,6 @@ class CreateSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('user_metas');
     }
 }

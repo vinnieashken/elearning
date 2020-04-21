@@ -422,26 +422,27 @@ class Datatable extends Controller
 
                 $data = array();
                 if(!empty($posts))
-                {
-                    $x= $start + 1;
-                    foreach ($posts as $post)
                     {
+                        $x= $start + 1;
+                        foreach ($posts as $post)
+                            {
+                                $actionbtn              =    $post->status == 0?'<a href="" class="usermgt btn btn-success" data-type="1" data-user=\''.$post.'\' >
+                                                                                   Activate
+                                                                                 </a>':'<a href="#" class="usermgt btn btn-danger" data-type="0" data-user=\''.$post.'\' >
+                                                                                   Deactivate
+                                                                                 </a>';
 
-                        $nestedData['*']        =   $x;
-                        $nestedData['name']     =   $post->name;
-                        $nestedData['email']    =   $post->email;
-                        $nestedData["phoneno"]  =   $post->phoneno;
-                        $nestedData['status']   =   $post->status == 0?'inactive':'Active';
-                        $nestedData['action']   =   $post->status == 0?'<a href="" class="usermgt btn btn-success" data-type="1" data-user=\''.$post.'\' >
-                                                                           Activate
-                                                                         </a>':'<a href="#" class="usermgt btn btn-danger" data-type="0" data-user=\''.$post.'\' >
-                                                                           Deactivate
-                                                                         </a>';
+                                $nestedData['*']        =   $x;
+                                $nestedData['name']     =   $post->name;
+                                $nestedData['email']    =   $post->email;
+                                $nestedData["phoneno"]  =   $post->phoneno;
+                                $nestedData['status']   =   $post->status == 0?'inactive':'Active';
+                                $nestedData['action']   =   $actionbtn;
 
-                        $data[] = $nestedData;
-                        $x++;
+                                $data[] = $nestedData;
+                                $x++;
+                            }
                     }
-                }
 
                 $json_data = array(
                     "draw"            => intval($request->input('draw')),

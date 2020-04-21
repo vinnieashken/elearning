@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col-8">
                         <h3 class="mb-2">{{ $users }}</h3>
-                        <div class="mb-0">Admin Users</div>
+                        <div class="mb-0">Users</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
                         <div class="d-inline-block mt-2">
