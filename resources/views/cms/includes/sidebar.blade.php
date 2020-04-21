@@ -32,7 +32,7 @@
                 </a>
             </li>
 
-            @if(in_array("moderate", array_keys($role)))
+            @if($role["moderate"])
                 <li class="sidebar-item">
                     <a href="#dashboards" data-toggle="collapse" class="font-weight-bold sidebar-link collapsed">
                         <i class="align-middle" data-feather="settings"></i>
@@ -54,7 +54,7 @@
                     </ul>
                 </li>
             @endif
-            @if(in_array("rate", array_keys($role)))
+            @if($role["rates"]["view"])
                 <li class="sidebar-item">
                     <a class="sidebar-link font-weight-bold" href="{{ url('cms/rates') }}">
                         <i class="align-middle" data-feather="edit"></i>
@@ -62,7 +62,7 @@
                     </a>
                 </li>
             @endif
-            @if(in_array("user", array_keys($role)))
+            @if($role["users"]["view"])
                 <li class="sidebar-item">
                     <a class="sidebar-link font-weight-bold" href="{{ url('cms/users') }}">
                         <i class="align-middle" data-feather="user"></i>

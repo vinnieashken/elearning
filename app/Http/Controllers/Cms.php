@@ -10,6 +10,8 @@ use App\Models\Option;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Subscription;
+use App\Models\User_meta;
+use App\Models\Usermeta;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -51,11 +53,12 @@ class Cms extends Controller
 
                 if($validatedData)
                     {
-                        $module             =   new Module();
-                        $module->module     =   $request->module;
-                        $module->subject_id =   $request->subject;
-                        $module->creator    =   \Auth::User()->id;
-                        $req                =   $module->save();
+                        $module                 =   new Module();
+                        $module->module         =   $request->module;
+                        $module->subject_id     =   $request->subject;
+                        $module->publisher_id   =   $request->publisher_id;
+                        $module->creator        =   \Auth::User()->id;
+                        $req                    =   $module->save();
                         if($req)
                             {
                                 return array('status'=>TRUE,'msg'=>'Module added successful','header'=>'Module');
@@ -79,11 +82,12 @@ class Cms extends Controller
 
                 if($validatedData)
                     {
-                        $module             =   Module::find($request->id);
-                        $module->module     =   $request->module;
-                        $module->subject_id =   $request->subject;
-                        $module->creator    =   \Auth::User()->id;
-                        $req                =   $module->save();
+                        $module                 =   Module::find($request->id);
+                        $module->module         =   $request->module;
+                        $module->subject_id     =   $request->subject;
+                        $module->publisher_id   =   $request->publisher_id;
+                        $module->creator        =   \Auth::User()->id;
+                        $req                    =   $module->save();
                         if($req)
                             {
                                 return array('status'=>TRUE,'msg'=>'Module added successful','header'=>'Module');
@@ -517,5 +521,42 @@ class Cms extends Controller
         public function moderate(Request $request)
             {
 
+            }
+        public function getuserroles(Request $request)
+            {
+
+//                dd($request->userid);
+
+                    $user = User_meta::where('user_id', $request->userid)->where('meta_key', 'role')->first();
+                    if ($user)
+                        {
+                            return unserialize($user->meta_value);
+                        }
+                    else
+                        {
+                            return ['users' => ['roles' => FALSE, 'status' => FALSE, 'view' => FALSE], 'moderate' => FALSE, 'rates' => ["add" => FALSE, "update" => FALSE, "delete" => FALSE]];
+                        }
+
+            }
+        public function edituserroles(Request $request)
+            {
+                $data['users']['roles']     =   isset($request->roles['users']['roles'])?(bool)$request->roles['users']['roles']:FALSE;
+                $data['users']['status']    =   isset($request->roles['users']['status'])?(bool)$request->roles['users']['status']:FALSE;
+                $data['users']['view']      =   isset($request->roles['users']['view'])?(bool)$request->roles['users']['view']:FALSE;
+                $data['moderate']           =   isset($request->roles['moderate'])?(bool)$request->roles['moderate']:FALSE;
+                $data['rates']['add']       =   isset($request->roles['rates']['add'])?(bool)$request->roles['rates']['add']:FALSE;
+                $data['rates']['update']    =   isset($request->roles['rates']['update'])?(bool)$request->roles['rates']['update']:FALSE;
+                $data['rates']['delete']    =   isset($request->roles['rates']['delete'])?(bool)$request->roles['rates']['delete']:FALSE;
+                $data['rates']['view']      =   isset($request->roles['rates']['view'])?(bool)$request->roles['rates']['view']:FALSE;
+                $status                     =   User_meta::updateOrCreate(['user_id'=>$request->userid,'meta_key'=>'role'],['meta_value'=>serialize($data)])->save();
+                if($status)
+                    {
+                        $result = array('status'=>TRUE,'msg'=>'User Role manipulation successful','header'=>'User Role');
+                    }
+                else
+                    {
+                        $result = array('status'=>False,'msg'=>'User Role manipulation failed','header'=>'User Role');
+                    }
+                return $result;
             }
     }

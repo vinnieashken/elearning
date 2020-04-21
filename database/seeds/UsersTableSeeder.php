@@ -24,11 +24,11 @@ class UsersTableSeeder extends Seeder
             'user_id'      =>   $id,
             'meta_key'     =>   'role',
             'meta_value'   =>   serialize(
-                                            array(
-                                                    'user'      =>  ['activate','deactivate','assign','delete'],
-                                                    'moderate',
-                                                    'rate'      =>  ['add','update','delete']
-                                                )
+                                            [
+                                                'users'=>['roles'=>TRUE,'status'=>TRUE,"view"=>TRUE],
+                                                'moderate'=>TRUE,
+                                                'rates'=>["add"=>TRUE,"update"=>TRUE,"delete"=>TRUE,'view'=>TRUE]
+                                            ]
                                         )
         ]);
         DB::table('user_metas')->insert([

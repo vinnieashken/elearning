@@ -52,7 +52,8 @@ Route::post('/questionanswers','Cms@questionanswers');
 Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
     return view('cms.modules.setquestion',['module_id'=>$postId,'title'=>$title]);
 });
-
+Route::post('cms/getuserroles','Cms@getuserroles');
+Route::post('cms/edituserroles','Cms@edituserroles');
 Route::get('{any}', function ($any = null) {
 
     return view('app');

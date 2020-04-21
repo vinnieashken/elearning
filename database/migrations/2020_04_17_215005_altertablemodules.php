@@ -5,33 +5,32 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class Altertablemodules extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->boolean('status')->default(False);
-            $table->integer('creator')->unsigned();
-            $table->text("moderation_msg")->nullable();
-            $table->integer('moderator')->nullable();
-            $table->integer('publisher')->unsigned();
-            $table->timestamp('date_moderated')->useCurrent();
-        });
-    }
+        /**
+         * Run the migrations.
+         *
+         * @return void
+         */
+        public function up()
+            {
+                Schema::table('modules', function (Blueprint $table) {
+                    $table->boolean('status')->default(False);
+                    $table->integer('creator')->unsigned();
+                    $table->text("moderation_msg")->nullable();
+                    $table->integer('moderator')->nullable();
+                    $table->timestamp('date_moderated')->useCurrent();
+                });
+            }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('modules', function (Blueprint $table) {
-            //
-        });
+        /**
+         * Reverse the migrations.
+         *
+         * @return void
+         */
+        public function down()
+            {
+                Schema::table('modules', function (Blueprint $table) {
+                    //
+                });
+            }
     }
-}

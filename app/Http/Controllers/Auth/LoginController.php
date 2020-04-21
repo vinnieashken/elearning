@@ -118,7 +118,11 @@ class LoginController extends Controller
                                 $meta = new User_meta();
                                 $meta->user_id      =   $user->id;
                                 $meta->meta_key     =   'role';
-                                $meta->meta_value   =   serialize(array());
+                                $meta->meta_value   =   serialize([
+                                                                    'users'=>['roles'=>FALSE,'status'=>FALSE,"view"=>FALSE],
+                                                                    'moderate'=>FALSE,
+                                                                    'rates'=>["add"=>FALSE,"update"=>FALSE,"delete"=>FALSE,"view"=>FALSE]
+                                                                ]);
                                 $meta->save();
 
                                 $meta = new User_meta();

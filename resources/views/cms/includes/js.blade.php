@@ -217,7 +217,7 @@
                     console.log(f);
                 }
             });
-           
+
             $('#editModal').modal('toggle');
         });
 
@@ -425,7 +425,14 @@
                             { "data": "class" },
                             { "data": "created_at" },
                             { "data": "action"}
-                        ]
+                        ],
+            "dom": 'Bfrtip',
+                "buttons": [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
 
         });
         $('#rates').DataTable({
@@ -444,6 +451,13 @@
                     { "data": "description" },
                     { "data": "cost" },
                     { "data": "action"}
+                ],
+                "dom": 'Bfrtip',
+                "buttons": [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
                 ]
 
             });
@@ -459,9 +473,17 @@
             "columns": [
                 { "data": "id" },
                 { "data": "level"},
+                { "data": "publisher"},
                 { "data": "subject" },
                 { "data": "module" },
                 { "data": "action"}
+            ],
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
             ]
 
         });
@@ -479,6 +501,13 @@
                 { "data": "class" },
                 { "data": "subject" },
                 { "data": "action"}
+            ],
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
             ]
 
         });
@@ -496,6 +525,13 @@
                 { "data": "*" },
                 { "data": "question" },
                 { "data": "action"}
+            ],
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
             ]
 
         });
@@ -515,9 +551,60 @@
                     { "data": "phoneno" },
                     { "data": "status" },
                     { "data": "action"}
+                ],
+                "dom": 'Bfrtip',
+                "buttons": [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
                 ]
 
             });
+    });
+    $(document).on('click','.edit-user-roles',function(e){
+        e.preventDefault();
+        $('#userid').val($(this).data("user").id);
+        $.ajax ({
+            data: {"userid":$(this).data("user").id},
+            type: "POST",
+            url:  '{{ url('cms/getuserroles')  }}',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function(data) {
+
+
+                        var users = data.users;
+                        var rates = data.rates;
+                        console.log(users.roles);
+                        if(users.roles == true)
+                            $('#add-user-roles').attr('checked', true);
+                        else
+                             $('#add-user-roles').attr('checked', false);
+
+                        if(users.view == true)
+                            $('#add-view-user').attr('checked', true);
+                        else
+                            $('#add-view-user').attr('checked', false);
+
+                        (users.status) ? $('#add-user_status').prop('checked', true) : $('#add-user_status').prop('checked', false);
+                        (data.moderate) ? $('#add-moderation').prop('checked', true) : $('#add-moderation').prop('checked', false);
+                        (rates.add) ? $('#add-rates').prop('checked', true) : $('#add-rates').prop('checked', false);
+                        (rates.update) ? $('#add-rates-update').prop('checked', true) : $('#add-rates-update').prop('checked', false);
+                        (rates.delete) ? $('#add-rates-delete').prop('checked', true) : $('#add-rates-delete').prop('checked', false);
+                        (rates.view) ? $('#add-rates-view').prop('checked', true) : $('#add-rates-view').prop('checked', false);
+
+                $('#addModal').modal('toggle');
+            },
+            error: function(f) {
+                toastr.error(f, 'userroles', {
+                    timeOut: 1000,
+                    closeButton: true,
+                    progressBar: true,
+                    newestOnTop: true
+
+                });
+            }
+        });
     });
     $(document).on("show.bs.modal", '.modal', function (event) {
     console.log("Global show.bs.modal fire");
