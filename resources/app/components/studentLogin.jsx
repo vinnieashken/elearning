@@ -27,40 +27,34 @@ export default function Login(props) {
 
     const dispatch = useDispatch();
 
-    const dummySubmit = (e) => {
-        e.preventDefault();
-        const thisUser = {
-            id: 0,
-            name: "Dummy Student"
-        };
-        dispatch({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
-        props.setUser(thisUser);
-        localStorage.setItem('user', JSON.stringify(thisUser));
-        props.history.push({
-            pathname: `${next}`,
-            state: {user: thisUser},
-        });
-    };
+    // const dummySubmit = (e) => {
+    //     e.preventDefault();
+    //     const thisUser = {
+    //         id: 0,
+    //         name: "Dummy Student"
+    //     };
+    //     dispatch({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
+    //     props.setUser(thisUser);
+    //     localStorage.setItem('user', JSON.stringify(thisUser));
+    //     props.history.push({
+    //         pathname: `${next}`,
+    //         state: {user: thisUser},
+    //     });
+    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setProcessing(true);
         setMessage(false);
-        let password = $('#password').val();
+        let login_code = $('#login_code').val();
         $.ajax({
-            url: `${API}/app/login`,
-            method: 'post',
-            data: {
-                username: email,
-                password: password,
-            },
+            url: `${API}/institution/student/login/${login_code}`,
+            method: 'get',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                try{
-                    response = JSON.parse(xhr['responseText'])['message'];
-                } catch (e) {
-
-                }
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -68,15 +62,14 @@ export default function Login(props) {
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
-                const thisUser = JSON.parse(res);
                 dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
-                dispatch(fetchSubscription(thisUser));
-                props.setUser(thisUser);
-                localStorage.setItem('user', res);
+                dispatch(fetchSubscription(res));
+                props.setUser(res);
+                localStorage.setItem('user', JSON.stringify(res));
                 console.log(next);
                 props.history.push({
                     pathname: `${next}`,
-                    state: {user: thisUser},
+                    state: {user: res},
                 });
             }.bind(this)
         })
@@ -93,7 +86,7 @@ export default function Login(props) {
 
                     <div className="row">
                         <div className="mx-auto mt-5 col-md-5 col-sm-12">
-                            <form onSubmit={dummySubmit} autoComplete="off">
+                            <form onSubmit={handleSubmit} autoComplete="off">
                                 <div className="card weekly">
                                     <h5 className="card-header text-center">STUDENT LOGIN</h5>
                                     <div className="card-body">
@@ -109,17 +102,17 @@ export default function Login(props) {
                                                     </div>
                                                 </div> : ''
                                         }
-                                        <div className="input-group mb-3 mt-3">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-user" />
-                                            </span>
-                                            </div>
-                                            <input type="text" className="form-control loginput" placeholder="Admission Number"
-                                                   id='adm_no'
-                                                   aria-label="Admission Number"
-                                                   aria-describedby="basic-addon1" />
-                                        </div>
+                                        {/*<div className="input-group mb-3 mt-3">*/}
+                                        {/*    <div className="input-group-prepend">*/}
+                                        {/*    <span className="input-group-text">*/}
+                                        {/*        <i className="fa fa-user" />*/}
+                                        {/*    </span>*/}
+                                        {/*    </div>*/}
+                                        {/*    <input type="text" className="form-control loginput" placeholder="Admission Number"*/}
+                                        {/*           id='adm_no'*/}
+                                        {/*           aria-label="Admission Number"*/}
+                                        {/*           aria-describedby="basic-addon1" />*/}
+                                        {/*</div>*/}
                                         <div className="input-group mb-3 mt-4">
                                             <div className="input-group-prepend">
                                             <span className="input-group-text">

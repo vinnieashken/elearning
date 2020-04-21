@@ -9,6 +9,7 @@ import Loading from "../common/loading";
 const { SearchBar } = Search;
 import { Helmet } from 'react-helmet';
 import EditExamModal from "./editExamModal";
+import {useSelector} from "react-redux";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -19,10 +20,13 @@ export default function (props) {
     const [selectedExam, setSelectedExam] = useState({})
     const [classes, setClasses] = useState([])
     const [subjects, setSubjects] = useState([])
+    const [user, setUser] = useState(props.user)
+    const subscription = useSelector(state => state.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
         setLoading(true);
+        setUser(props.user)
         getModules();
     }, [props.match.params.subject]);
 
@@ -33,7 +37,9 @@ export default function (props) {
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                setLoading(false);
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}                setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
@@ -76,21 +82,32 @@ export default function (props) {
     };
 
     const selected = (row, isSelected) =>{
-        setSelectedExam(row);
+        let exam = row;
+        exam['institution_id'] = props.user.institution.id
+        setSelectedExam(exam);
     };
+
+    const addExam = (exam) => {
+        setModules(modules.push(exam))
+    }
 
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
-                    {row.done ? `Revise Paper` : `Take Test`}
-                </Link>
-                <Link to={`${ENV}exams/exam/edit/${row.id}`} className='float-right p-2'>
-                    <i className="fa fa-plus" />
-                </Link>
-                <Link to={'#'} className='float-right p-2' data-toggle="modal" data-target="#exampleModal">
-                    <i className="fa fa-pencil" />
-                </Link>
+                {
+                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
+                        <React.Fragment>
+                            <Link to={`${ENV}exams/exam/edit/${row.id}`} className='btn btn-sm btn-rounded btn-outline-success mr-1'>
+                                Edit Paper <i className="fa fa-plus" />
+                            </Link>
+                            <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success' data-toggle="modal" data-target="#exampleModal">
+                                Add Question <i className="fa fa-pencil" />
+                            </Link>
+                        </React.Fragment> :
+                        <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
+                            {row.done ? `Revise Paper` : `Take Test`}
+                        </Link>
+                }
             </div>
         )
     };
@@ -136,7 +153,9 @@ export default function (props) {
                                                 </div> :
                                                 <ToolkitProvider
                                                     keyField="id"
-                                                    data={ modules }
+                                                    data={ modules.filter(el => {
+                                                        return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
+                                                    }) }
                                                     columns={
                                                         [
                                                             {dataField: 'id',      text: 'ID',    sort: true },
@@ -155,10 +174,26 @@ export default function (props) {
                                                                             <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
                                                                         </div>
                                                                         <div className='col-md-8 ' >
-                                                                            <button className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                            {
+                                                                                subscription.hasOwnProperty('id') ?
+                                                                                user.teacher || user.owner ?
+                                                                                    <button onClick={e => {
+                                                                                        let exam = {};
+                                                                                        exam['institution_id'] = user.institution.id
+                                                                                        setSelectedExam(exam);
+                                                                                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                    : ''
+                                                                                : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
+                                                                            }
+
                                                                         </div>
                                                                     </div>
-                                                                    <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
+                                                                    {
+                                                                        (user.teacher || user.owner) ?
+                                                                            <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
+                                                                            : <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
+
+                                                                    }
 
                                                                 </React.Fragment>
                                                             )
@@ -172,7 +207,7 @@ export default function (props) {
                     }
                 </div>
             </div>
-            <EditExamModal exam={selectedExam} classes={classes} subjects={subjects} />
+            <EditExamModal exam={selectedExam} classes={classes} subjects={subjects} getModules={getModules}/>
         </React.Fragment>
     )
 }

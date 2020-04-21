@@ -29,12 +29,10 @@ export default function (props) {
             processData: false,
             contentType: false,
             error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
-                    response = JSON.parse(xhr['responseText'])['message'];
-                }catch (e) {
-
-                }
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');

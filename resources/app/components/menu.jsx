@@ -95,6 +95,16 @@ const Students = Loadable({
     loading: Loading
 })
 
+const EditQuestion = Loadable({
+    loader: () => import('./editQuestion'),
+    loading: Loading
+})
+
+const MyPapers = Loadable({
+    loader: () => import('./myPapers'),
+    loading: Loading
+})
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -123,12 +133,10 @@ export default function (props) {
             url: `${API}/payments/subscriptions`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = "Sorry an error has occurred. We are working on it. ";
-
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
-                else if (xhr.hasOwnProperty('responseText'))
-                    response = JSON.parse(xhr['responseText'])['message'];
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
 
                 // setLoading(false);
                 setMessage(true);
@@ -151,9 +159,10 @@ export default function (props) {
             url: `${API}/classes/list`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -301,16 +310,19 @@ export default function (props) {
                                                     (typeof user.institution !== "undefined" && user.institution.hasOwnProperty('id')) ?
                                                         <React.Fragment>
                                                             {
-                                                                parseInt(user.teacher) === 1 ?
-                                                                    <li className="nav-item ">
-                                                                        <Link className="nav-link" to={`${ENV}students`}>STUDENTS </Link>
-                                                                    </li> : ''
-                                                            }
-                                                            {
-                                                                parseInt(user.owner) === 1 ?
-                                                                <li className="nav-item ">
-                                                                    <Link className="nav-link" to={`${ENV}teachers`}>TEACHERS </Link>
-                                                                </li> : ''
+                                                                parseInt(user.owner) || parseInt(user.teacher)  ?
+                                                                    <React.Fragment>
+                                                                        <li className="nav-item ">
+                                                                            <Link className="nav-link" to={`${ENV}students`}>STUDENTS </Link>
+                                                                        </li>
+                                                                        <li className="nav-item ">
+                                                                            <Link className="nav-link" to={`${ENV}teachers`}>TEACHERS </Link>
+                                                                        </li>
+                                                                        <li className="nav-item ">
+                                                                            <Link className="nav-link" to={`${ENV}exams/mine`}>MY PAPERS </Link>
+                                                                        </li>
+                                                                    </React.Fragment>
+                                                                : ''
                                                             }
                                                         </React.Fragment> : ''
                                                 }
@@ -480,6 +492,25 @@ export default function (props) {
                                                        })
                                                }/>
 
+                                        <Route exact={true} path={`${props.match.url}exams/mine`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <MyPapers {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+
                                         <Route exact={true} path={`${props.match.url}exams/exam/edit/:exam`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
@@ -503,6 +534,42 @@ export default function (props) {
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <Exam {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}questions/question/new`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <EditQuestion {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}questions/question/:question/edit`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <EditQuestion {...props} user={user}/>
                                                            : props.history.push({
                                                                pathname: `${ENV}subscriptions`,
                                                                state: {

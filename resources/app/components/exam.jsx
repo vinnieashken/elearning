@@ -36,9 +36,10 @@ export default function (props) {
             url: `${API}/questions/module/${props.match.params.exam}?userid=2`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -61,7 +62,9 @@ export default function (props) {
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                setLoading(false);
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}                setLoading(false);
                 // setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
@@ -98,8 +101,10 @@ export default function (props) {
             data: data,
             method: 'POST',
             error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
-                setProcessing(false);
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}                setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
@@ -282,7 +287,7 @@ export default function (props) {
                                                                                                                            disabled={answer.hasOwnProperty('user_option')}
                                                                                                                            value={ans.id} name={el.id} />
                                                                                                                     <label htmlFor={`${ans.id}`}>
-                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${ans.option}`} }
+                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${ans.option.replace(/(<br>\s*)+$/)}`} }
                                                                                                                               className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />
                                                                                                                         {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
                                                                                                                     </label>

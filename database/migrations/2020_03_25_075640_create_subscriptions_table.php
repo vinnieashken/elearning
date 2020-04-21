@@ -18,6 +18,8 @@ class CreateSubscriptionsTable extends Migration
             $table->string('subscription');
             $table->integer('days')->default(0);
             $table->integer('cost');
+            $table->integer('persons')->default(1);
+            $table->integer('institution')->default(0);
             $table->string('description')->nullable();
             $table->timestamps();
         });

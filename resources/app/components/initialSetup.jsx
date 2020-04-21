@@ -29,12 +29,10 @@ export default function (props) {
             processData: false,
             contentType: false,
             error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
-                    response = JSON.parse(xhr['responseText'])['message'];
-                }catch (e) {
-
-                }
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -63,7 +61,7 @@ export default function (props) {
                     <div className="row">
                         <div className="mx-auto mt-5 col-md-10 col-sm-12">
                             <div className="card weekly">
-                                <h5 className="card-header text-center">REGISTER SCHOOL</h5>
+                                <h5 className="card-header text-center">REGISTER INSTITUTION</h5>
                                 <form onSubmit={handleSubmit} id='register'>
                                     <div className="card-body">
                                         {

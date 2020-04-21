@@ -26,13 +26,10 @@ export default function (props) {
             url: `${API}/payments/subscriptions`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = "Sorry an error has occurred. We are working on it. ";
-
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
-                else if (xhr.hasOwnProperty('responseText'))
-                    response = JSON.parse(xhr['responseText'])['message'];
-
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -64,8 +61,10 @@ export default function (props) {
             contentType: false,
             method: 'POST',
             error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
-                setProcessing(false);
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}                setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);

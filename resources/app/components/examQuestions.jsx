@@ -3,7 +3,6 @@ import {API, APPNAME, ENV, PUBLIC_URL} from "../common/constants";
 import Loading from "../common/loading";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
-import ExamQuestionModal from './editQuestionModal';
 
 export default function (props) {
     const [exam, setExam] = useState([]);
@@ -25,9 +24,10 @@ export default function (props) {
             url: `${API}/questions/module/${props.match.params.exam}?userid=2`,
             method: 'GET',
             error: function (xhr, status, error) {
-                var response = JSON.parse(xhr['responseText'])['message'];
-                if (xhr.status === 405)
-                    response = "Sorry an error has occurred. We are working on it. (405)";
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
                 setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
@@ -64,8 +64,10 @@ export default function (props) {
             data: data,
             method: 'POST',
             error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. ${xhr.status}`;
-                setProcessing(false);
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}                setProcessing(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
@@ -186,7 +188,7 @@ export default function (props) {
                                         {
                                             loading ? <Loading/> :
                                                 <div className='col-md-12'>
-                                                    <form onSubmit={handleSubmit}>
+                                                    <div>
                                                         {
                                                             message ?
                                                                 <div className='row'>
@@ -201,6 +203,17 @@ export default function (props) {
                                                                     </div>
                                                                 </div> : ''
                                                         }
+                                                        <div className="row">
+                                                            <div className='col-md-12'>
+                                                                    <Link to={{
+                                                                        pathname: `${ENV}questions/question/new`,
+                                                                        state : {
+                                                                            question: {},
+                                                                            module: {'id': exam.id, name: exam.name}
+                                                                        }
+                                                                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success'>New Question</Link>
+                                                            </div>
+                                                        </div>
                                                         {
                                                             exam.questions.length > 0 ?
                                                                 <React.Fragment>
@@ -216,13 +229,15 @@ export default function (props) {
                                                                                         <div className="card examcard my-4 mt-md-0 w-100" >
                                                                                             <ul className="bg-white float-right" >
                                                                                                 <li className="text-center p-1">
-                                                                                                    <button type='button' className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#questionModal" onClick={e=> {
-                                                                                                        let question = el;
-                                                                                                        question['module'] = exam.name;
-                                                                                                        setQuestion(question);
-                                                                                                    }}>
+                                                                                                    <Link to={{
+                                                                                                        pathname: `${ENV}questions/question/${el.id}/edit`,
+                                                                                                        state : {
+                                                                                                            question: el,
+                                                                                                            module: {'id': exam.id, name: exam.name}
+                                                                                                        }
+                                                                                                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success'>
                                                                                                         Edit<br /><i className='fa fa-pencil' />
-                                                                                                    </button>
+                                                                                                    </Link>
                                                                                                    </li>
                                                                                             </ul>
                                                                                             <ul className="list-group list-group-flush">
@@ -262,13 +277,13 @@ export default function (props) {
                                                                         processing ? <ClipLoader /> : showAns ? '' :
                                                                             <div className='row'>
                                                                                 <div className="col-md-12">
-                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit</button>
+                                                                                    <Link to={`${ENV}exams/modules`} className="text-center float-right btn btn-success btn-rounded">Finish</Link>
                                                                                 </div>
                                                                             </div>
                                                                     }
                                                                 </React.Fragment> : ''
                                                         }
-                                                    </form>
+                                                    </div>
                                                 </div>
                                         }
                                     </div>
@@ -277,7 +292,6 @@ export default function (props) {
                     }
                 </div>
             </div>
-            <ExamQuestionModal question={question} />
         </React.Fragment>
     )
 }

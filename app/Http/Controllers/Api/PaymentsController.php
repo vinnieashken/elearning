@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\UserSubscription;
@@ -18,7 +19,14 @@ class PaymentsController extends Controller
     {
         $model  = new Subscription();
 
-        return $model->get(['id','subscription','description','cost','days']);
+        return $model->where('institution',0)->get(['id','subscription','description','cost','days']);
+    }
+
+    public function getInstitutionsPackages()
+    {
+        $model  = new Subscription();
+
+        return $model->where('institution',1)->get(['id','subscription','description','cost','persons','days']);
     }
 
     public function startTransaction(Request $request)
@@ -52,7 +60,19 @@ class PaymentsController extends Controller
 
         if(!is_null($existing))
         {
-            $existing->amount = $package->cost;
+            if($package->institution == 1)
+            {
+                $customer = Customer::where('id',$userid)->get()->first();
+                $institutionid = $customer->institution_id;
+                $students = Customer::where('institution_id',$institutionid)->where('owner',0)->where('teacher',0)->count();
+                //Log::info('Students count = '.$students);
+                $cost = $package->cost * ceil($students/ $package->persons);
+                $existing->amount = $cost;
+            }
+            else
+            {
+                $existing->amount = $package->cost;
+            }
             $existing->packageid = $package->id;
             $existing->save();
 
@@ -64,10 +84,23 @@ class PaymentsController extends Controller
 
             return $transaction;
         }
+
         $payment->user_id = $userid;
         $payment->packageid = $package->id;
         $payment->channel = 'MPESA';
-        $payment->amount = $package->cost;
+
+        if($package->institution == 1)
+        {
+            $customer = Customer::where('id',$userid)->get()->first();
+            $institutionid = $customer->institution_id;
+            $students = Customer::where('institution_id',$institutionid)->where('owner',0)->where('teacher',0)->count();//
+            $cost = $package->cost * ceil($students/ $package->persons);
+            $payment->amount = $cost;
+        }
+        else
+        {
+            $payment->amount = $package->cost;
+        }
         $payment->save();
 
         $result = $mpesa-> pushStk($package->cost,$phone,$url,"ELE".$payment->id);

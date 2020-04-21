@@ -2,7 +2,7 @@ import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, API } from 
 
 export function fetchSubscription(user) {
     return function (dispatch) {
-        if ([2,3].includes(parseInt(user.user_id))) {
+        if (['dkarimi@standardmedia.co.ke','mshahi@standardmedia.co.ke', 'lkinyanjui@standardmedia.co.ke'].includes((user.email.toLowerCase()))) {
             dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
         } else {
             dispatch({type: LOADING_SUBSCRIPTION, payload: true});
