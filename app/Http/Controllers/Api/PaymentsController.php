@@ -19,7 +19,7 @@ class PaymentsController extends Controller
     {
         $model  = new Subscription();
 
-        return $model->get(['id','subscription','description','cost','days']);
+        return $model->where('institution',0)->get(['id','subscription','description','cost','days']);
     }
 
     public function getInstitutionsPackages()
