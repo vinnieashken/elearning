@@ -42,6 +42,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
 
     Route::get('/payments/subscriptions','Api\PaymentsController@getSubscriptions');
+    Route::get('/payments/institutions/subscriptions','Api\PaymentsController@getInstitutionsPackages');
     Route::post('/payments/subscribe','Api\PaymentsController@startTransaction'); //post
     Route::post('/payments/mpesa/stk','Api\PaymentsController@startMpesaStkPush');
 
