@@ -277,7 +277,7 @@ class Datatable extends Controller
 
                                                ->count();
                     }
-
+                 
                 $data = array();
                 if(!empty($posts))
                     {
