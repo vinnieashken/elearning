@@ -27,8 +27,8 @@ export default function (props) {
     }, []);
 
     const getSubscriptions = () => {
-        // const url = (props.user.owner || props.user.teacher) ? `${API}/payments/institutions/subscriptions` : `${API}/payments/subscriptions`;
-        const url = `${API}/payments/subscriptions`;
+        const url = (props.user.owner || props.user.teacher) ? `${API}/payments/institutions/subscriptions` : `${API}/payments/subscriptions`;
+        // const url = `${API}/payments/subscriptions`;
         console.log(url);
         $.ajax({
             url: url,

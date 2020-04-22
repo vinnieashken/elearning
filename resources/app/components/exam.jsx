@@ -18,7 +18,7 @@ const images = [
 export default function (props) {
     const oldState = props.history.location.state;
 
-    const student = oldState.hasOwnProperty('student') ? oldState.student : props.user
+    const student = (typeof oldState !== "undefined" && oldState.hasOwnProperty('student')) ? oldState.student : props.user
     const [exam, setExam] = useState([]);
     const [userAnswers, setUserAnswers] = useState([]);
     const [showAns, setShowAns] = useState(false);
@@ -60,7 +60,7 @@ export default function (props) {
 
     const getUserAnswers = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.exam}/user/${props.user.id}`,
+            url: `${API}/modules/${props.match.params.exam}/user/${student.id}`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             error: function (xhr, status, error) {

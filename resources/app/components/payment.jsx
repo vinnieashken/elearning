@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {API, APPNAME, PUBLIC_URL, ENV} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import Loading from "../common/loading";
+import {forEach} from "react-bootstrap/cjs/ElementChildren";
 
 export default function (props) {
     const oldState = props.history.location.state;
@@ -17,6 +18,7 @@ export default function (props) {
     const [response, setResponse] = useState('');
     const [selectedPackage, setPackage] = useState({})
     const [selectedPublishers, setSelectedPublishers] = useState([])
+    const [students, setStudents] = useState(50);
     const [cost, setCost] = useState(0);
 
 
@@ -26,8 +28,8 @@ export default function (props) {
     }, []);
 
     const getSubscriptions = () => {
-        // const url = (props.user.owner || props.user.teacher) ? `${API}/payments/institutions/subscriptions` : `${API}/payments/subscriptions`;
-        const url = `${API}/payments/subscriptions`;
+        const url = (plan.id !== 4) ? `${API}/payments/subscriptions` : `${API}/payments/institutions/subscriptions`;
+        // const url = `${API}/payments/subscriptions`;
         $.ajax({
             url: url,
             method: 'GET',
@@ -47,6 +49,7 @@ export default function (props) {
                 const selectedPlan = res.filter(el => {
                     return el.id === parseInt(plan.id)
                 })
+                setCost(plan.id === 4 ? plan.cost : 0)
                 setPackage(selectedPlan.length > 0 ? selectedPlan[0] : {})
                 if (plan.id !== 4)
                     getPublishers();
@@ -81,10 +84,20 @@ export default function (props) {
             return el.id === parseInt(package_id)
         })[0]
 
-        setPackage(selectedPackage)
-        setCost(selectedPackage['cost'] * selectedPublishers.length)
-        setPayment({})
+        if (plan.id !== 4) {
+            setPackage(selectedPackage)
+            setCost(selectedPackage['cost'] * selectedPublishers.length)
+            setPayment({})
+        } else {
+            setCost(selectedPackage['cost'] * Math.ceil($(`input[name="students"]`).val() / 50))
+        }
     };
+
+    const handleStudentsChanged = (e) => {
+        const noOfStudents = $(`input[name="students"]`).val();
+        setStudents(noOfStudents)
+        setCost(selectedPackage['cost'] * Math.ceil(noOfStudents / 50))
+    }
 
     const handlePublisherChanged = (e) => {
         const sel = [];
@@ -106,7 +119,11 @@ export default function (props) {
         var formData = new FormData($('form#sub')[0]);
         formData.append('user_id', props.user.id);
         formData.append('package_id', package_id);
-        formData.append('publishers', selectedPublishers.map(el => {return el.id}));
+        if (plan.id !== 4) {
+            selectedPublishers.forEach(el => {
+                formData.append('publishers[]', el.id);
+            })
+        }
         $.ajax({
             url: `${API}/payments/subscribe`,
             data: formData,
@@ -182,13 +199,13 @@ export default function (props) {
                                                     </div>
                                                     <div className="form-group">
                                                         <label className="form-control-label">
-                                                            <strong>Packages <small>(Per Publisher)</small></strong>
+                                                            <strong>Packages {plan.id !== 4 ? <small>(Per Publisher)</small> : ''}</strong>
                                                         </label>
                                                         <div className="row">
                                                             {
                                                                 subscriptions.map(el => {
                                                                     return (
-                                                                        <div className="col-md-4 col-sm-6">
+                                                                        <div className="col-md-4 col-sm-6 ">
                                                                             <div className="custom-control custom-checkbox">
                                                                                 <input type="radio" className="custom-control-input" value={el.id} onChange={handleChanged}
                                                                                        name="package_id" id={`${el.id}`} defaultChecked={parseInt(plan.id) === parseInt(el.id)}  required/>
@@ -202,28 +219,38 @@ export default function (props) {
                                                             }
                                                         </div>
                                                     </div>
-                                                    <div className='form-group'>
-                                                        <label className='form-control-label'>
-                                                            <strong>Publishers</strong>
-                                                        </label>
-                                                        <div className='row'>
-                                                            {
-                                                                publishers.map(el => {
-                                                                    return (
-                                                                        <div className='col-md-4 col-sm-6'>
-                                                                            <div className='custom-control custom-checkbox'>
-                                                                                <input type="checkbox" className="custom-control-input" value={el.id} onChange={handlePublisherChanged}
-                                                                                       name="publisher_id" id={`${el.id}`} defaultChecked={parseInt(plan.id) === parseInt(el.id)}  required={true}/>
-                                                                                <label
-                                                                                    className="custom-control-label form-control-label text-muted"
-                                                                                    htmlFor={`${el.id}`}>{el.name}</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </div>
-                                                    </div>
+                                                    {
+                                                        plan.id === 4 ?
+                                                            <div>
+                                                                <label className='form-control-label'>
+                                                                    <strong>Number Of Students</strong>
+                                                                </label>
+                                                                <input type="number" step={1} placeholder="Enter Number Of Students" name='students' required
+                                                                       className="w-100 mb-4 loginput" defaultValue={students} onChange={handleStudentsChanged} />
+                                                            </div>
+                                                            : <div className='form-group'>
+                                                                <label className='form-control-label'>
+                                                                    <strong>Publishers</strong>
+                                                                </label>
+                                                                <div className='row'>
+                                                                    {
+                                                                        publishers.map(el => {
+                                                                            return (
+                                                                                <div className='col-md-4 col-sm-6'>
+                                                                                    <div className='custom-control custom-checkbox'>
+                                                                                        <input type="checkbox" className="custom-control-input" value={el.id} onChange={handlePublisherChanged}
+                                                                                               name="publisher_id" id={`${el.id}`} defaultChecked={parseInt(plan.id) === parseInt(el.id)}/>
+                                                                                        <label
+                                                                                            className="custom-control-label form-control-label text-muted"
+                                                                                            htmlFor={`${el.id}`}>{el.name}</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                    }
                                                     <div className='form-group'>
                                                         <label className='form-control-label'><strong>Total Cost:</strong> {cost}</label>
                                                     </div>

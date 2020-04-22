@@ -91,6 +91,12 @@ export default function (props) {
         setModules(modules.push(exam))
     }
 
+    const provider = (cell, row) => {
+        return (
+            row.institution_name !== null ? row.institution_name : 'Standard Group'
+        )
+    }
+
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
@@ -188,6 +194,7 @@ export default function (props) {
                                                             {dataField: 'module',      text: 'Exam',    sort: true, style: { textAlign: 'left' }},
                                                             {dataField: 'class',        text: 'Class',      sort: true},
                                                             {dataField: 'subject',        text: 'Subject',      sort: true},
+                                                            {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
                                                             {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
                                                         ]
                                                     } search={true}>
@@ -201,15 +208,15 @@ export default function (props) {
                                                                         </div>
                                                                         <div className='col-md-8 ' >
                                                                             {
-                                                                                subscription.hasOwnProperty('id') ?
-                                                                                user.teacher || user.owner ?
-                                                                                    <button onClick={e => {
-                                                                                        let exam = {};
-                                                                                        exam['institution_id'] = user.institution.id
-                                                                                        setSelectedExam(exam);
-                                                                                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                (user.teacher || user.owner) ?
+                                                                                    subscription.hasOwnProperty('id') ?
+                                                                                        <button onClick={e => {
+                                                                                            let exam = {};
+                                                                                            exam['institution_id'] = user.institution.id
+                                                                                            setSelectedExam(exam);
+                                                                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
                                                                                     : ''
-                                                                                : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
                                                                             }
 
                                                                         </div>
