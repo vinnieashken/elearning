@@ -57,7 +57,7 @@ Route::post('cms/edituserroles','Cms@edituserroles');
 Route::post('cms/delete','Cms@delete');
 Route::post('cms/payments','Datatable@payments');
 Route::get('{any}', function ($any = null) {
-    return view('app');
+    return view('newApp');
 })->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|admin|upload).)*$');
 
 
