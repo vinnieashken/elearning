@@ -3,6 +3,8 @@ import {Link} from "react-router-dom";
 import {API, APPNAME, ENV, PUBLIC_URL} from "../common/constants";
 import moment from "moment";
 import {Helmet} from "react-helmet";
+import OwlCarousel from 'react-owl-carousel2';
+
 
 const images = [
     `${PUBLIC_URL}/static/app/images/math.png`,
@@ -12,6 +14,16 @@ const images = [
     `${PUBLIC_URL}/static/app/images/chem.png`,
     `${PUBLIC_URL}/static/app/images/cre.png`
 ];
+
+const options = {
+    items: 5,
+    loop: true,
+    margin: 10,
+    rewind: true,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true
+};
 
 export default function (props) {
     const [subscriptions, setSubscriptions] = useState([]);
@@ -73,24 +85,14 @@ export default function (props) {
             </div>
             <div id="sliders">
                 <div className="full-width">
-                    <div id="light-slider" className="carousel slide">
+                    <div className="carousel slide" id="light-slider">
                         <div id="carousel-area">
-                            <div id="carousel-slider" className="carousel slide" data-ride="carousel">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
 
-                                <div className="carousel-inner mt-5" role="listbox">
+                                <div className="carousel-inner smaller" role="listbox">
                                     <div className="carousel-item active">
-                                        <img src={`${PUBLIC_URL}/static/app/images/slider/bg-1.png`} alt={APPNAME} />
-                                        <div className="carousel-caption">
-                                            <h3 className="slide-title animated fadeInDown"><span className="red"> Keep Learning</span>
-                                                - Anywhere Anytime</h3>
-                                            <h5 className="slide-text animated fadeIn">We make learning easy, fun,
-                                                engaging and
-                                                accessible for every child</h5>
-                                            <Link to={`${ENV}signin`} className="btn btn-lg btn-common animated fadeInUp">Get
-                                                Started</Link>
-                                            <a href="#services" className="btn btn-lg btn-border animated fadeInUp">Learn
-                                                More</a>
-                                        </div>
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
                                     </div>
                                 </div>
 
@@ -99,229 +101,176 @@ export default function (props) {
                     </div>
                 </div>
             </div>
-            <div id="about" className="section-padding">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="about block text-center">
-                                <img src={`${PUBLIC_URL}/static/app/images/image%20(1).png`} alt={APPNAME} />
-                                <h5><a href="#">Past Papers</a></h5>
-                                <p>Get all the KCPE past papers from 2000 to date</p>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="about block text-center">
-                                <img src={`${PUBLIC_URL}/static/app/images/image%20(2).png`} alt={APPNAME} />
-                                <h5><a href="#">Revision Materials</a></h5>
-                                <p>Access revision materials for Primary Schools, MOCKs Past Papers with marking schemes.</p>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="about block text-center">
-                                <img src={`${PUBLIC_URL}/static/app/images/image%20(5).png`} alt={APPNAME} />
-                                <h5><a href="#">Prediction Questions</a></h5>
-                                <p>We provide predictive questions and answers on all primary school subjects</p>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="about block text-center">
-                                <img src={`${PUBLIC_URL}/static/app/images/image%20(4).png`} alt={APPNAME} />
-                                <h5><a href="#">Quick Test</a></h5>
-                                <p>Take quick tests on the platform to help improve yourself.</p>
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '460px', objectFit: 'cover'}} />
+                                            <div className="container">
+                                                <div className="carousel-caption text-left mt-5 mt-md-0">
+
+                                                    <div className="slide-title animated fadeInDown mb-4"><span
+                                                        className="red"> Keep Learning</span>
+                                                        <br /> <font class="slidebottext">Anywhere
+                                                            Anytime</font></div>
+                                                    <Link className="btn btn-lg btn-common animated fadeInUp" to={`${ENV}signin`}>Get
+                                                        Started</Link>
+                                                    <a className="btn btn-lg btn-border animated fadeInUp" href="#services">Learn
+                                                        More</a>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="feature" className="section-padding">
+            <div className="section-padding" id="about">
+                <div className="container">
+                    <div className="row m12">
+                        <div className="col-lg-3 col-md-6 col-sm-6">
+                            <div className="card shad">
+                                <div className="card-body">
+                                    <div className="d-flex mb-2">
+                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                        <div className="card-title icontop">Revision <br /> <font
+                                            class="lighttext">Materials</font></div>
+                                    </div>
+                                    <p className="card-text"> We make learning fun, engaging and accessible for curious
+                                        children all
+                                        over Kenya</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6">
+                            <div className="card shad">
+                                <div className="card-body">
+                                    <div className="d-flex mb-2">
+                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                        <div className="card-title icontop">Quick <br /> <font
+                                            class="lighttext">Test</font></div>
+                                    </div>
+                                    <p className="card-text">
+
+                                        Take quick tests on the platform to help improve yourself.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6">
+                            <div className="card shad">
+                                <div className="card-body">
+                                    <div className="d-flex mb-2">
+                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                        <div className="card-title icontop">Prediction <br /> <font
+                                            class="lighttext">Questions</font></div>
+                                    </div>
+                                    <p className="card-text">
+                                        We provide predictive questions and answers on all primary school subjects</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6">
+                            <div className="card shad">
+                                <div className="card-body">
+                                    <div className="d-flex mb-2">
+                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                        <div className="card-title icontop">Past <br /> <font
+                                            class="lighttext">Papers</font></div>
+                                    </div>
+                                    <p className="card-text">
+                                        Get all the KCPE past papers from 2000 to date</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div className="section-padding" id="feature">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">Subjects</h2>
+                            <h2 className="section-title wow fadeInDown animated text-md-left text-center mx-md-5"
+                                data-wow-delay="0.3s">Subjects</h2>
                         </div>
                     </div>
-                    <ul className="nav nav-pills mb-3 mx-5 col-12" id="pills-tab" role="tablist">
-                        <li className="nav-item">
-                            <a className="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
-                               role="tab"
-                               aria-controls="pills-home" aria-selected="true">Primary School</a>
-                        </li>
-                        {/*<li className="nav-item">*/}
-                        {/*    <a className="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"*/}
-                        {/*       role="tab"*/}
-                        {/*       aria-controls="pills-profile" aria-selected="false">High School</a>*/}
-                        {/*</li>*/}
-                    </ul>
-                    <div className="tab-content border-0" id="pills-tabContent">
-                        <div className="tab-pane fade show active" id="pills-home" role="tabpanel"
-                             aria-labelledby="pills-home-tab">
-                            <div className="row">
-                                {
-
-
-                                    props.subjects.slice(0, 6).map((el, index) => {
-                                        return (
-                                            <div className="col-lg-4 col-md-6 col-xs-12">
-                                                <div className="featured-box-item">
-                                                    <div className="featured-icon">
-                                                        <img src={images[index]} alt={APPNAME} className="icons" />
-                                                    </div>
-                                                    <div className="featured-content">
-                                                        <h4>{el.subject}</h4>
-
-                                                        <p>Grade 1 to Grade 8</p></div>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-
-
+                    <div className="row mx-md-5">
+                        <div className="col-lg-4 col-md-6 col-sm-6">
+                            <div className="card subj">
+                                <div className="card-body">
+                                    <div className="mb-2">
+                                        <i className="fa fa-star-o topicons mr-3 redicon" />
+                                        <div className="card-title bold">Mathematics</div>
+                                    </div>
+                                    <p className="card-text">Grade 1 to Grade 8</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="tab-pane fade" id="pills-profile" role="tabpanel"
-                             aria-labelledby="pills-profile-tab">
-                            <div className="row">
-
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/math.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Mathematics</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
+                        <div className="col-lg-4 col-md-6 col-sm-6">
+                            <div className="card subj">
+                                <div className="card-body">
+                                    <div className="mb-2">
+                                        <i className="fa fa-star-o topicons mr-3 redicon" />
+                                        <div className="card-title bold">English</div>
                                     </div>
+                                    <p className="card-text">Grade 1 to Grade 8</p>
                                 </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/eng.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>English</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6 col-sm-6">
+                            <div className="card subj">
+                                <div className="card-body">
+                                    <div className="mb-2">
+                                        <i className="fa fa-star-o topicons mr-3 redicon" />
+                                        <div className="card-title bold">Kiswahili</div>
                                     </div>
+                                    <p className="card-text">Grade 1 to Grade 8</p>
                                 </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/chem.png`} alt={APPNAME} className="icons"/>
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Chemistry</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6 col-sm-6">
+                            <div className="card subj">
+                                <div className="card-body">
+                                    <div className="mb-2">
+                                        <i className="fa fa-star-o topicons mr-3 redicon" />
+                                        <div className="card-title bold">Science</div>
                                     </div>
+                                    <p className="card-text">Grade 1 to Grade 8</p>
                                 </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/phyc.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Physics</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6 col-sm-6">
+                            <div className="card subj">
+                                <div className="card-body">
+                                    <div className="mb-2">
+                                        <i className="fa fa-star-o topicons mr-3 redicon" />
+                                        <div className="card-title bold">Social Studies and Religious Education</div>
                                     </div>
+                                    <p className="card-text">Grade 1 to Grade 8</p>
                                 </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/bio.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Biology</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6 col-sm-6">
+                            <div className="card subj">
+                                <div className="card-body">
+                                    <div className="mb-2">
+                                        <i className="fa fa-star-o topicons mr-3 redicon" />
+                                        <div className="card-title bold">Mathematics</div>
                                     </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/hist.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>History</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/geo.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Geography</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/agric.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Agriculture</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/comp.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Computer Studies</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/cre.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>CRE/IRE</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/bus.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Business Studies</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-md-6 col-xs-12">
-                                    <div className="featured-box-item">
-                                        <div className="featured-icon">
-                                            <img src={`${PUBLIC_URL}/static/app/images/prac.png`} alt={APPNAME} className="icons" />
-                                        </div>
-                                        <div className="featured-content">
-                                            <h4>Practicals</h4>
-                                            <p>Form 1 to Form 4</p>
-                                        </div>
-                                    </div>
+                                    <p className="card-text">Grade 1 to Grade 8</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <section id="services" className="section-padding bg-light">
+            <section className="section-padding bg-light d-lg-none d-md-none d-block" id="services">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -336,9 +285,11 @@ export default function (props) {
                                     <i className="fa fa-cogs" />
                                 </div>
                                 <div className="service-content">
-                                    <h4><a href="#"> Stay Relevant in a Quickly Changing World</a></h4>
+                                    <h4><a href="#"> Innovations to think about during this period</a></h4>
                                     <p>
-                                        We provide lifelong learning available any time, anywhere and at your pace.
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
+                                        officiis
+                                        consequuntur vero error excepturi.
                                     </p>
                                 </div>
                             </div>
@@ -350,9 +301,11 @@ export default function (props) {
                                     <i className="fa fa-book" />
                                 </div>
                                 <div className="service-content">
-                                    <h4><a href="#">Engaging exams with a timer</a></h4>
+                                    <h4><a href="#">Engaging with your teachers online</a></h4>
                                     <p>
-                                        Our exams come with a timer to help you improve your speed.
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
+                                        officiis
+                                        consequuntur vero error excepturi.
                                     </p>
                                 </div>
                             </div>
@@ -364,9 +317,11 @@ export default function (props) {
                                     <i className="fa fa-check" />
                                 </div>
                                 <div className="service-content">
-                                    <h4><a href="#">Keep track of your performance</a></h4>
+                                    <h4><a href="#">Keeping track of your performance</a></h4>
                                     <p>
-                                        We help you keep track of your performance and measure whether you are achieving your targets.
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
+                                        officiis
+                                        consequuntur vero error excepturi.
                                     </p>
                                 </div>
                             </div>
@@ -375,12 +330,14 @@ export default function (props) {
                         <div className="col-md-6 col-lg-4 col-xs-12">
                             <div className="service-box">
                                 <div className="service-icon">
-                                    <i className="fa fa-line-chart" />
+                                    <i className="fa fa-check" />
                                 </div>
                                 <div className="service-content">
-                                    <h4><a href="#">A great place to grow</a></h4>
+                                    <h4><a href="#">Improving Memorising capability</a></h4>
                                     <p>
-                                        TutorSoma helps you increase your understanding of a particular subject by focusing your learning for that discipline. Our exams are meant to help you improve on areas that need focus.
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
+                                        officiis
+                                        consequuntur vero error excepturi.
                                     </p>
                                 </div>
                             </div>
@@ -392,9 +349,11 @@ export default function (props) {
                                     <i className="fa fa-folder-open" />
                                 </div>
                                 <div className="service-content">
-                                    <h4><a href="#">Improve memorising capability</a></h4>
+                                    <h4><a href="#">Things to avoid when studying from home</a></h4>
                                     <p>
-                                        Tutor Soma supplement your reading culture to help you easily recall what you have read.
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
+                                        officiis
+                                        consequuntur vero error excepturi.
                                     </p>
                                 </div>
                             </div>
@@ -406,15 +365,179 @@ export default function (props) {
                                     <i className="fa fa-hand-pointer-o" />
                                 </div>
                                 <div className="service-content">
-                                    <h4><a href="#">Things to avoid when studying from home</a></h4>
-                                    <ul>
-                                        <li>Don't wait for the last minute to start an assignment.</li>
-                                        <li>Don't be distracted by social media and cellphone notification.</li>
-                                        <li>Switch off the Television</li>
-                                    </ul>
+                                    <h4><a href="#">Fact checking</a></h4>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
+                                        officiis
+                                        consequuntur vero error excepturi.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+            <section className="section-padding bg-light d-none d-md-block d-lg-block" id="services">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <h2 className="section-title wow fadeInDown animated text-md-left text-center mx-md-5"
+                                data-wow-delay="0.3s">Important Notes</h2>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <OwlCarousel options={options}>
+
+                            <div>
+                                <div className="flip-card">
+                                    <div className="flip-card-inner">
+                                        <div className="flip-card-front">
+                                            <div className="card bg-dark text-white">
+                                                <img
+                                                    src="https://p0.pxfuel.com/preview/364/649/267/asia-space-earth-dark.jpg"
+                                                    className="card-img" alt="..." />
+                                                    <div className="card-img-overlay">
+                                                        <h5 className="card-title text-white">Stay Relevant in a Quickly
+                                                            Changing World</h5>
+                                                        <p className="card-text">Learn More</p>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flip-card-back">
+                                            <p style={{fontSize: '20px', color: 'white'}}>
+                                                We provide lifelong learning available any time, anywhere and at your
+                                                pace.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flip-card">
+                                    <div className="flip-card-inner">
+                                        <div className="flip-card-front">
+                                            <div className="card bg-dark text-white">
+                                                <img
+                                                    src="https://secure.img1-fg.wfcdn.com/im/97073733/compr-r85/3254/32544386/plain-hourglass-sand-timer-60-minutes.jpg"
+                                                    className="card-img" alt="..." />
+                                                    <div className="card-img-overlay">
+                                                        <h5 className="card-title text-white">
+                                                            Engaging exams with a timer</h5>
+                                                        <p className="card-text">Learn More</p>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flip-card-back">
+                                            <p style={{fontSize: '20px', color: 'white'}}>
+                                                Our exams come with a timer to help you improve your speed.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flip-card">
+                                    <div className="flip-card-inner">
+                                        <div className="flip-card-front">
+                                            <div className="card bg-dark text-white">
+                                                <img
+                                                    src="https://elearningindustry.com/wp-content/uploads/2017/02/advantages-and-disadvantages-of-elearning.jpg"
+                                                    className="card-img" alt="..." />
+                                                    <div className="card-img-overlay">
+                                                        <h5 className="card-title text-white">
+                                                            Keep track of your performance</h5>
+                                                        <p className="card-text">Learn More</p>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flip-card-back">
+                                            <p style={{fontSize: '20px', color: 'white'}}>
+                                                We help you keep track of your performance and measure whether you are
+                                                achieving your
+                                                targets.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flip-card">
+                                    <div className="flip-card-inner">
+                                        <div className="flip-card-front">
+                                            <div className="card bg-dark text-white">
+                                                <img
+                                                    src="https://assets.entrepreneur.com/content/3x2/2000/20181119204233-GettyImages-140892148-edit.jpeg"
+                                                    className="card-img" alt="..." />
+                                                    <div className="card-img-overlay">
+                                                        <h5 className="card-title text-white">
+                                                            Improve memorising capability</h5>
+                                                        <p className="card-text">Learn More</p>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flip-card-back">
+                                            <p style={{fontSize: '20px', color: 'white'}}>
+                                                Tutor Soma supplement your reading culture to help you easily recall
+                                                what you have read.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flip-card">
+                                    <div className="flip-card-inner">
+                                        <div className="flip-card-front">
+                                            <div className="card bg-dark text-white">
+                                                <img
+                                                    src="https://previews.123rf.com/images/underverse/underverse1506/underverse150600640/41155719-avoid-word-on-notes-paper-with-cork-background-.jpg"
+                                                    className="card-img" alt="..." />
+                                                    <div className="card-img-overlay">
+                                                        <h5 className="card-title text-white">
+                                                            Things to avoid when studying from home</h5>
+                                                        <p className="card-text">Learn More</p>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flip-card-back">
+                                            <p style={{fontSize: '20px', color: 'white'}}>
+                                                Don't wait for the last minute to start an assignment.
+                                                Don't be distracted by social media and cellphone notification.
+                                                Switch off the Television</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flip-card">
+                                    <div className="flip-card-inner">
+                                        <div className="flip-card-front">
+                                            <div className="card bg-dark text-white">
+                                                <img
+                                                    src="https://markmanson.net/wp-content/uploads/2020/03/6-books-to-help-you-grow-from-your-pain.jpg"
+                                                    className="card-img" alt="..." />
+                                                    <div className="card-img-overlay">
+                                                        <h5 className="card-title text-white">
+                                                            A great place to grow</h5>
+                                                        <p className="card-text">Learn More</p>
+                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flip-card-back">
+                                            <p style={{fontSize: '20px', color: 'white'}}>
+                                                TutorSoma helps you increase your
+                                                understanding of a
+                                                particular subject by focusing your learning for that discipline. Our
+                                                exams are meant to
+                                                help you improve on areas that need focus.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </OwlCarousel>
                     </div>
                 </div>
             </section>

@@ -97,6 +97,14 @@ export default function (props) {
                 {
                     ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
                         <React.Fragment>
+                            <Link to={{
+                                pathname: `${ENV}exams/exam/${row.id}/performance`,
+                                state: {
+                                    exam: row
+                                }
+                            }} className='btn btn-sm btn-rounded btn-outline-success mr-1'>
+                                Performance <i className="fa fa-graduation-cap" />
+                            </Link>
                             <Link to={`${ENV}exams/exam/edit/${row.id}`} className='btn btn-sm btn-rounded btn-outline-success mr-1'>
                                 Edit Paper <i className="fa fa-plus" />
                             </Link>
@@ -128,8 +136,26 @@ export default function (props) {
                     <meta property="og:url" content={pathname} />
                 </Helmet>
             </div>
-            <div id="about" className="section-padding mt-5 profile">
-                <div className="container mt-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding profile">
+                <div className="container">
                     {
                         <React.Fragment>
                             <div className="row">
@@ -190,8 +216,8 @@ export default function (props) {
                                                                     </div>
                                                                     {
                                                                         (user.teacher || user.owner) ?
-                                                                            <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
-                                                                            : <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
+                                                                            <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" headerWrapperClasses ="pt-0 shadowtable bg-danger" headerClasses="border-0" rowClasses="border-0" rowStyle={ { borderRadius: '18px' } } selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
+                                                                            : <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" headerWrapperClasses ="pt-0 shadowtable bg-danger" headerClasses="border-0" rowClasses="border-0" rowStyle={ { borderRadius: '18px' } }/>
 
                                                                     }
 

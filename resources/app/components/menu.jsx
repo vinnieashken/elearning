@@ -105,6 +105,11 @@ const MyPapers = Loadable({
     loading: Loading
 })
 
+const ExamPerformance = Loadable({
+    loader: () => import('./examPerformance'),
+    loading: Loading
+})
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -195,23 +200,22 @@ export default function (props) {
             {
                 <React.Fragment>
                     <header id="header-wrap">
-                        <nav className="navbar navbar-expand-md bg-white fixed-top scrolling-navbar indigo py-3">
-                            <div className="w-100 d-block d-lg-none d-md-none mr-md-5">
+                        <nav className="navbar navbar-expand-md text-white  fixed-top scrolling-navbar indigo">
+                            <div className="w-100 d-block d-lg-none d-md-none ml-2">
                                 <a className="nav-link" href="#">
-
                                     <span style={{fontSize: "20px", cursor:"pointer"}} className="float-right opennav" onClick={toggleSideBar}>&#9776;</span>
-                                    <img src={`${PUBLIC_URL}/static/app/images/logo.png`} className="w-25 float-left" alt={APPNAME} />
+                                    <img className="w-25 float-left logotop" src={`${PUBLIC_URL}/static/new/img/logo.png`} alt={''} />
                                 </a>
-                                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
-                                        aria-controls="navbarTogglerDemo02" aria-expanded="false"
-                                        aria-label="Toggle navigation" >
-
+                                <button aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                                        aria-label="Toggle navigation"
+                                        className="navbar-toggler"
+                                        data-target="#navbar" data-toggle="collapse" type="button">
                                 </button>
                             </div>
 
-                            <div id="mySidenav" className="sidenav">
-                                <a href="#" className="closebtn border-0" onClick={toggleSideBar}>&times;</a>
-                                <a href="#">HOME</a>
+                            <div className="sidenav" id="mySidenav">
+                                <a href="#" className="closebtn border-0" onClick={toggleSideBar}>&times; </a>
+                                <Link to={`${ENV}`}>HOME</Link>
 
                                 <div className="dropdown">
                                     <a className=" dropdown-toggle" data-toggle="dropdown">CLASSES
@@ -242,7 +246,6 @@ export default function (props) {
                                     </ul>
                                 </div>
                                 <Link to={`${ENV}exams/modules`}>EXAMINATION PAPERS</Link>
-                                {/*<a href="#">KCSE</a>*/}
                                 {
                                     user.hasOwnProperty('id') ?
                                         <React.Fragment>
@@ -255,25 +258,38 @@ export default function (props) {
                                         </React.Fragment>
                                 }
                             </div>
+
+
+                            {/*<script>*/}
+                            {/*    function openNav() {*/}
+                            {/*    document.getElementById("mySidenav").style.width = "250px";*/}
+                            {/*}*/}
+
+                            {/*    function closeNav() {*/}
+                            {/*    document.getElementById("mySidenav").style.width = "0";*/}
+                            {/*}*/}
+                            {/*</script>*/}
+
+
                             <div className="collapse navbar-collapse flex-column " id="navbar">
-                                <ul className="navbar-nav  w-100 justify-content-center p-0">
-                                    <li className="nav-item active p-0 m-0">
-                                        <a className="nav-link" href="#">
-                                            <img src={`${PUBLIC_URL}/static/app/images/logo.png`} className="w-75" alt={APPNAME} /></a>
-                                    </li>
-                                </ul>
+
 
                                 <ul className="navbar-nav justify-content-around w-75">
-                                    <li className="nav-item active">
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to={`${ENV}`}>
+                                            <img className="logo" src={`${PUBLIC_URL}/static/new/img/logo.png`} alt={`${APPNAME}`} />
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item active mt-4">
                                         <Link className="nav-link" to={ENV}>HOME </Link>
                                     </li>
-                                    <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" href="#"
-                                           id="navbarDropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <li className="nav-item dropdown mt-4">
+                                        <a aria-expanded="false" aria-haspopup="true"
+                                           className="nav-link dropdown-toggle"
+                                           data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
                                             CLASSES
                                         </a>
-                                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
                                             {
                                                 classes.slice(0, 4).map(el => {
                                                     return (
@@ -283,13 +299,13 @@ export default function (props) {
                                             }
                                         </div>
                                     </li>
-                                    <li className="nav-item dropdown">
-                                        <a className="nav-link dropdown-toggle" href="#"
-                                           id="navbarDropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <li className="nav-item dropdown mt-4">
+                                        <a aria-expanded="false" aria-haspopup="true"
+                                           className="nav-link dropdown-toggle"
+                                           data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
                                             SUBJECTS
                                         </a>
-                                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
                                             {
                                                 subjects.slice(0, 4).map(el => {
                                                     return (
@@ -299,10 +315,12 @@ export default function (props) {
                                             }
                                         </div>
                                     </li>
-                                    <li className="nav-item ">
+                                    <li className="nav-item mt-4">
                                         <Link className="nav-link" to={`${ENV}exams/modules`}>EXAMINATION PAPERS </Link>
                                     </li>
-
+                                    {/*<li className="nav-item mt-4">*/}
+                                    {/*    <a className="nav-link" href="#">KCSE </a>*/}
+                                    {/*</li>*/}
                                     {
                                         user.hasOwnProperty('id') ?
                                             <React.Fragment>
@@ -311,19 +329,38 @@ export default function (props) {
                                                         <React.Fragment>
                                                             {
                                                                 parseInt(user.owner) || parseInt(user.teacher)  ?
-                                                                    <React.Fragment>
-                                                                        <li className="nav-item ">
-                                                                            <Link className="nav-link" to={`${ENV}students`}>STUDENTS </Link>
-                                                                        </li>
-                                                                        <li className="nav-item ">
-                                                                            <Link className="nav-link" to={`${ENV}teachers`}>TEACHERS </Link>
-                                                                        </li>
-                                                                        <li className="nav-item ">
-                                                                            <Link className="nav-link" to={`${ENV}exams/mine`}>MY PAPERS </Link>
-                                                                        </li>
-                                                                    </React.Fragment>
-                                                                : ''
+                                                                    <li className="nav-item dropdown">
+                                                                        <Link className="nav-link dropdown-toggle"
+                                                                              to={`${ENV}profile`} id="reports"
+                                                                              data-toggle="dropdown" aria-haspopup="true"
+                                                                              aria-expanded="false">
+                                                                            REPORTS
+                                                                        </Link>
+                                                                        <div className="dropdown-menu"
+                                                                             aria-labelledby="reports">
+                                                                            <Link className="dropdown-item" to={`${ENV}students`}>Registered Students </Link>
+                                                                            <Link className="dropdown-item" to={`${ENV}teachers`}>Registered Teachers </Link>
+                                                                            {/*<Link className="dropdown-item" to={`${ENV}exams/performance`}>Student Performance </Link>*/}
+                                                                            <Link className="dropdown-item" to={`${ENV}exams/mine`}>My Papers</Link>
+                                                                        </div>
+                                                                    </li> : ''
                                                             }
+
+                                                            {/*{*/}
+                                                            {/*    parseInt(user.owner) || parseInt(user.teacher)  ?*/}
+                                                            {/*        <React.Fragment>*/}
+                                                            {/*            <li className="nav-item ">*/}
+                                                            {/*                <Link className="nav-link" to={`${ENV}students`}>STUDENTS </Link>*/}
+                                                            {/*            </li>*/}
+                                                            {/*            <li className="nav-item ">*/}
+                                                            {/*                <Link className="nav-link" to={`${ENV}teachers`}>TEACHERS </Link>*/}
+                                                            {/*            </li>*/}
+                                                            {/*            <li className="nav-item ">*/}
+                                                            {/*                <Link className="nav-link" to={`${ENV}exams/mine`}>MY PAPERS </Link>*/}
+                                                            {/*            </li>*/}
+                                                            {/*        </React.Fragment>*/}
+                                                            {/*        : ''*/}
+                                                            {/*}*/}
                                                         </React.Fragment> : ''
                                                 }
                                                 <li className="nav-item dropdown">
@@ -357,9 +394,14 @@ export default function (props) {
                                                 }
                                             </React.Fragment>
                                     }
+
                                 </ul>
+
+
                             </div>
+
                         </nav>
+
                     </header>
                     {
                         (loading || loadingSubscription) ?
@@ -534,6 +576,24 @@ export default function (props) {
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <Exam {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/exam/:exam/performance`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <ExamPerformance {...props} user={user}/>
                                                            : props.history.push({
                                                                pathname: `${ENV}subscriptions`,
                                                                state: {
