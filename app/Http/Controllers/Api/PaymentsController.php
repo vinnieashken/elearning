@@ -8,12 +8,14 @@ use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\UserSubscription;
 use App\Utils\Mpesa;
+use App\Utils\PaymentAssist;
 use DateInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PaymentsController extends Controller
 {
+    use PaymentAssist;
     //
     public function getSubscriptions()
     {
@@ -64,7 +66,7 @@ class PaymentsController extends Controller
             {
                 $customer = Customer::where('id',$userid)->get()->first();
                 $institutionid = $customer->institution_id;
-                $students = Customer::where('institution_id',$institutionid)->where('owner',0)->where('teacher',0)->count();
+                $students = $this->getStudentsCount($institutionid);
                 //Log::info('Students count = '.$students);
                 $cost = $package->cost * ceil($students/ $package->persons);
                 $existing->amount = $cost;
@@ -93,7 +95,7 @@ class PaymentsController extends Controller
         {
             $customer = Customer::where('id',$userid)->get()->first();
             $institutionid = $customer->institution_id;
-            $students = Customer::where('institution_id',$institutionid)->where('owner',0)->where('teacher',0)->count();//
+            $students = $this->getStudentsCount($institutionid);
             $cost = $package->cost * ceil($students/ $package->persons);
             $payment->amount = $cost;
         }
@@ -151,6 +153,7 @@ class PaymentsController extends Controller
 
         $packagemodel = new Subscription();
         $package = $packagemodel->find($payment->packageid);
+        $customer = Customer::find($payment->user_id);
 
         //if(!is_null($package))
             //Log::info("package found of id".$package->id);
@@ -166,6 +169,17 @@ class PaymentsController extends Controller
             $subscription->startdate = date_create('now');
             $subscription->enddate = date_create('now')->add(new DateInterval('P' . $package->days . 'D'));
             $subscription->status = 1;
+            if($package->institution == 1)
+            {
+                $students = $this->getStudentsCount($customer->institution_id);
+                $maximum = $this->getPaidforCount($payment->packageid,$payment->amount_received);
+                $subscription->persons = $students;
+                $subscription->remainder = ($maximum - $students);
+                $subscription->save();
+
+                $this->updateStudentsExpiry($customer->institution_id,$subscription->enddate,$students);
+                return;
+            }
             $subscription->save();
             //Log::info("subscription saved");
         }
