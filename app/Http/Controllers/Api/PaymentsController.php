@@ -37,15 +37,16 @@ class PaymentsController extends Controller
         $userid = $request->user_id;
         $packageid = $request->package_id;
         $phone = $request->mobile;
-        $publishers = $request->publishers;
+        $publishers = [];
 
-        if(count($publishers) < 1)
-        {
-            return response()->json(["message"=> "Please provide atleast one publisher"] , 400);
-        }
 
         $multiplier = 1;
-        $multiplier = count($publishers);
+        if($request->has('publishers'))
+        {
+            $publishers = $request->publishers;
+            $multiplier = count($publishers);
+        }
+
 
         $digit = substr($phone,0,1);
 
@@ -79,7 +80,7 @@ class PaymentsController extends Controller
                 $institutionid = $customer->institution_id;
                 $students = $this->getStudentsCount($institutionid);
                 //Log::info('Students count = '.$students);
-                $cost = ($package->cost * ceil($students/ $package->persons)) * $multiplier;
+                $cost = ($package->cost * ceil($students/ $package->persons));
 
                 if($cost == 0)
                 {
@@ -89,6 +90,10 @@ class PaymentsController extends Controller
             }
             else
             {
+                if(count($publishers) < 1)
+                {
+                    return response()->json(["message"=> "Please provide atleast one publisher"] , 400);
+                }
                 $existing->amount = $package->cost * $multiplier;
             }
             $existing->packageid = $package->id;
@@ -113,7 +118,7 @@ class PaymentsController extends Controller
             $customer = Customer::where('id',$userid)->get()->first();
             $institutionid = $customer->institution_id;
             $students = $this->getStudentsCount($institutionid);
-            $cost = ($package->cost * ceil($students/ $package->persons)) * $multiplier;
+            $cost = ($package->cost * ceil($students/ $package->persons));
 
             if($cost == 0)
             {
@@ -123,6 +128,11 @@ class PaymentsController extends Controller
         }
         else
         {
+            if(count($publishers) < 1)
+            {
+                return response()->json(["message"=> "Please provide atleast one publisher"] , 400);
+            }
+
             $payment->amount = $package->cost * $multiplier;
         }
         $payment->save();
