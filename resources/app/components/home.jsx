@@ -89,24 +89,6 @@ export default function (props) {
                         <div id="carousel-area">
                             <div className="carousel slide" data-ride="carousel" id="carousel-slider">
 
-                                <div className="carousel-inner smaller" role="listbox">
-                                    <div className="carousel-item active">
-                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="sliders">
-                <div className="full-width">
-                    <div className="carousel slide" id="light-slider">
-                        <div id="carousel-area">
-                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
-
                                 <div className="carousel-inner" role="listbox">
                                     <div className="carousel-item active">
                                         <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '460px', objectFit: 'cover'}} />

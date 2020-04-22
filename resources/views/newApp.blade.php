@@ -31,10 +31,10 @@
     <meta property="og:site_name" content="Tutor-Soma Tu" />
     <meta name="site-live" content="02:00:45 11-04-2020" />
 
-{{--    <link rel="image_src" href="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
-{{--    <meta property="twitter:image" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
-{{--    <meta property="og:image" content="http://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
-{{--    <meta property="og:image:secure_url" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+    {{--    <link rel="image_src" href="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+    {{--    <meta property="twitter:image" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+    {{--    <meta property="og:image" content="http://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+    {{--    <meta property="og:image:secure_url" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
 
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset('static/app/images/favicon/apple-icon-57x57.png')}}">
@@ -77,6 +77,28 @@
 
         gtag('config', 'UA-9511843-21');
     </script>
+    <style>
+        /*.btn-sm {*/
+        /*    font-size: 12px;*/
+        /*    min-width: 122px;*/
+        /*    padding: 5px 11px;*/
+        /*    background: #3eac3e;*/
+        /*}*/
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-size: 12px;
+            margin-right: 18px;
+            font-weight: 400;
+            padding: 9px 0px !important;
+        }
+        @media (min-width: 768px) {
+            .login {
+                border: 1px solid grey;
+                margin-top: 32px !important;
+            }
+        }
+
+    </style>
 </head>
 <body>
 <div class="main h-100 w-100" id="app" >

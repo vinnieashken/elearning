@@ -195,6 +195,14 @@ export default function (props) {
         });
     };
 
+    const openNav = (e) => {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    const closeNav = (e) => {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+
     return (
         <React.Fragment>
             {
@@ -309,7 +317,7 @@ export default function (props) {
                                             {
                                                 subjects.slice(0, 4).map(el => {
                                                     return (
-                                                        <Link className="dropdown-item" to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link>
+                                                        <Link className="dropdown-item " to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link>
                                                     )
                                                 })
                                             }
@@ -378,18 +386,18 @@ export default function (props) {
                                                 </li>
                                             </React.Fragment> :
                                             <React.Fragment>
-                                                <li className="nav-item ">
-                                                    <Link className="nav-link login" to={`${ENV}signin`}>LOGIN</Link>
+                                                <li className="nav-item mt-4">
+                                                    <Link className="nav-link" to={`${ENV}signin`}>LOGIN</Link>
                                                 </li>
-                                                <li className="nav-item ">
-                                                    <Link className="nav-link login " to={`${ENV}signup`}>SIGN UP</Link>
+                                                <li className="nav-item mt-4">
+                                                    <Link className="nav-link " to={`${ENV}signup`}>SIGN UP</Link>
                                                 </li>
-                                                <li className="nav-item ">
-                                                    <Link className="nav-link login " to={`${ENV}initialSetup`}>REGISTER SCHOOL</Link>
+                                                <li className="nav-item mt-4">
+                                                    <Link className="nav-link " to={`${ENV}initialSetup`}>REGISTER SCHOOL</Link>
                                                 </li>
                                                 {
-                                                    subscriptionShown.hasOwnProperty('cost') > 0 ? <li className="nav-item ">
-                                                        <Link className="nav-link login" to={`${ENV}signin`}>Get {subscriptionShown['days']} day for Ksh.{subscriptionShown['cost']} </Link>
+                                                    subscriptionShown.hasOwnProperty('cost') > 0 ? <li className="nav-item mt-4">
+                                                        <Link className="nav-link" to={`${ENV}signin`}>Get {subscriptionShown['days']} day for Ksh.{subscriptionShown['cost']} </Link>
                                                     </li> : ''
                                                 }
                                             </React.Fragment>
