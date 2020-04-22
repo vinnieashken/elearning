@@ -36,12 +36,14 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/modules/{id}/user/{user_id}','Api\ModulesController@getUserModuleAnswers');
     Route::get('/modules/{id}/marks/user/{user_id}','Api\ModulesController@getUserModuleMarks');
     Route::get('/modules/user/{user_id}','Api\ModulesController@getUserModules');
+    Route::get('/modules/users/{module_id}','Api\ModulesController@getModuleStudents');
 
     Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
     Route::post('/questions/module/user/answers','Api\QuestionsController@saveUserAnswers');
 
 
     Route::get('/payments/subscriptions','Api\PaymentsController@getSubscriptions');
+    Route::get('/payments/institutions/subscriptions','Api\PaymentsController@getInstitutionsPackages');
     Route::post('/payments/subscribe','Api\PaymentsController@startTransaction'); //post
     Route::post('/payments/mpesa/stk','Api\PaymentsController@startMpesaStkPush');
 
@@ -73,6 +75,8 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::post('/institution/modules/questions/add','Api\InstitutionsController@addModuleQuestions');
     Route::post('/institution/modules/questions/edit','Api\InstitutionsController@editModuleQuestions');
     Route::get('/publishers/list','Api\InstitutionsController@getPublishers');
+
+    Route::get('testsub','Api\LoginController@testSubscribe');
 
 //});
 

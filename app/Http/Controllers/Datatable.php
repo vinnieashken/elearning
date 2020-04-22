@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institution;
 use App\Models\Level;
 use App\Models\Question;
 use App\Models\Subject;
@@ -10,9 +11,17 @@ use App\Models\Subscription;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Session;
 
 class Datatable extends Controller
     {
+        public $roles;
+        public function __construct()
+            {
+
+                $this->roles = unserialize(session('role'));
+            }
+
         public function get_classes(Request $request)
             {
                 $columns = array(
@@ -61,10 +70,11 @@ class Datatable extends Controller
                         $nestedData['id']           =   $post->id;
                         $nestedData['class']        =   $post->class;
                         $nestedData['created_at']   =   date('j M Y h:i a',strtotime($post->created_at));
-                        $nestedData['action']       =   '<a href="#" class="edit-class text-dark" data-level=\''.$post.'\' >
-                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle">
-                                                         <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon>
-                                                         </svg>
+                        $nestedData['action']       =   '<a href="#" class="edit-class text-dark mr-2" data-level=\''.$post.'\' >
+                                                            <i class="fas fa-edit"></i>
+                                                         </a>
+                                                         <a href="" class="delete-record text-dark" data-id="'.$post->id.'" data-table="classes">
+                                                            <i class="fas fa-trash"></i>
                                                          </a>';
                         $data[] = $nestedData;
                     }
@@ -130,8 +140,11 @@ class Datatable extends Controller
                                 $nestedData['id']           =   $post->id;
                                 $nestedData['class']        =   Level::where('id',$post->class_id)->first()->class;
                                 $nestedData['subject']      =   $post->subject;
-                                $nestedData['action']       =   '<a href="#" class="edit-subject text-dark"  data-subject=\''.$post.'\' >
-                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
+                                $nestedData['action']       =   '<a href="#" class="edit-subject text-dark mr-2"  data-subject=\''.$post.'\' >
+                                                                    <i class="fas fa-edit"></i>
+                                                                 </a>
+                                                                 <a href="" class="delete-record text-dark" data-id="'.$post->id.'" data-table="subjects">
+                                                                    <i class="fas fa-trash"></i>
                                                                  </a>';
                                 $data[] = $nestedData;
                             }
@@ -199,14 +212,18 @@ class Datatable extends Controller
                                 $subject                    =   Subject::where('id',$post->subject_id)->first();
                                 $nestedData['id']           =   $post->id;
                                 $nestedData['level']        =   Level::where('id',$subject->class_id)->first()->class;
+                                $nestedData['publisher']    =   ($post->institution_id < 1)?"":Institution::where('id',$post->institution_id)->first()->name;
                                 $nestedData['subject']      =   $subject->subject;
                                 $nestedData['module']       =   $post->module;
-                                $nestedData['action']       =   '<a href="#" class="edit-module text-dark" data-module=\''.$post.'\' >
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
+                                $nestedData['action']       =   '<a href="#" class="edit-module text-dark mr-3" data-module=\''.$post.'\' >
+                                                                    <i class="fas fa-edit"></i>
                                                                  </a>
                                                                  <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark" title="Questions">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                                                                </a>';
+                                                                    <i class="fas fa-plus-square"></i>
+                                                                 </a>
+                                                                 <a href="" class="delete-record text-dark ml-3" data-id="'.$post->id.'" data-table="modules">
+                                                                    <i class="fas fa-trash"></i>
+                                                                 </a>';
                                 $data[] = $nestedData;
                             }
                     }
@@ -277,8 +294,12 @@ class Datatable extends Controller
 
                                 $nestedData['*']            =   $post->listorder;
                                 $nestedData['question']     =   $post->question;
-                                $nestedData['action']       =   '<a href="#" class="edit-question text-dark" data-question=\''.$post.'\' >
-                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
+                                $nestedData['action']       =   '<a href="#" class="edit-question text-dark mr-2" data-question=\''.$post.'\' >
+                                                                     <i class="fas fa-edit"></i>
+                                                                </a>
+
+                                                                <a href="" class="delete-record text-dark" data-id="'.$post->id.'" data-table="questions">
+                                                                    <i class="fas fa-trash"></i>
                                                                 </a>';
 
                                 $data[] = $nestedData;
@@ -350,15 +371,19 @@ class Datatable extends Controller
                         $x= $start + 1;
                         foreach ($posts as $post)
                             {
+                                $updatebtn                  =   ($this->roles["rates"]["update"])?'<a href="#" class="edit-rate text-dark mr-2" data-rate=\''.$post.'\' >
+                                                                    <i class="fas fa-edit"></i>
+                                                                 </a>':NULL;
+                                $deletebtn                  =   ($this->roles["rates"]["delete"])?'<a href="#" class="delete-record text-dark" data-id=\''.$post->id.'\' data-table="subscriptions" >
+                                                                    <i class="fas fa-trash"></i>
+                                                                 </a>':NULL;
 
                                 $nestedData['*']            =   $x;
                                 $nestedData['subscription'] =   $post->subscription;
                                 $nestedData['days']         =   $post->days;
                                 $nestedData['description']  =   $post->description;
                                 $nestedData['cost']         =   $post->cost;
-                                $nestedData['action']       =   '<a href="#" class="edit-rate text-dark" data-rate=\''.$post.'\' >
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
-                                                                 </a>';
+                                $nestedData['action']       =   $updatebtn.$deletebtn;
 
                                 $data[] = $nestedData;
                                 $x++;
@@ -376,6 +401,7 @@ class Datatable extends Controller
             }
         public function get_users(Request $request)
             {
+
                 $columns = array(
                     0   =>  'name',
                     1   =>  'email',
@@ -422,26 +448,31 @@ class Datatable extends Controller
 
                 $data = array();
                 if(!empty($posts))
-                {
-                    $x= $start + 1;
-                    foreach ($posts as $post)
                     {
+                        $x= $start + 1;
+                        foreach ($posts as $post)
+                            {
 
-                        $nestedData['*']        =   $x;
-                        $nestedData['name']     =   $post->name;
-                        $nestedData['email']    =   $post->email;
-                        $nestedData["phoneno"]  =   $post->phoneno;
-                        $nestedData['status']   =   $post->status == 0?'inactive':'Active';
-                        $nestedData['action']   =   $post->status == 0?'<a href="" class="usermgt btn btn-success" data-type="1" data-user=\''.$post.'\' >
-                                                                           Activate
-                                                                         </a>':'<a href="#" class="usermgt btn btn-danger" data-type="0" data-user=\''.$post.'\' >
-                                                                           Deactivate
-                                                                         </a>';
+                                $rolesbtn               =   ($this->roles['users']["roles"] == TRUE)?'<a href="#" class="edit-user-roles text-dark mr-2" data-user=\''.$post.'\' >
+                                                                    <i class="fas fa-edit"></i>
+                                                             </a>':NULL;
+                                $actionbtn              =    ($this->roles['users']["status"] == TRUE)?$post->status == 0?'<a href="" class="usermgt text-dark" data-type="1" data-user=\''.$post.'\' >
+                                                                                   <i class="fas fa-user-plus"></i>
+                                                                                 </a>':'<a href="#" class="usermgt text-dark" data-type="0" data-user=\''.$post.'\' >
+                                                                                   <i class="fas fa-user-minus"></i>
+                                                                                 </a>':NULL;
 
-                        $data[] = $nestedData;
-                        $x++;
+                                $nestedData['*']        =   $x;
+                                $nestedData['name']     =   $post->name;
+                                $nestedData['email']    =   $post->email;
+                                $nestedData["phoneno"]  =   $post->phoneno;
+                                $nestedData['status']   =   $post->status == 0?'inactive':'Active';
+                                $nestedData['action']   =   $rolesbtn.$actionbtn;
+
+                                $data[] = $nestedData;
+                                $x++;
+                            }
                     }
-                }
 
                 $json_data = array(
                     "draw"            => intval($request->input('draw')),
@@ -451,5 +482,9 @@ class Datatable extends Controller
                 );
 
                 echo json_encode($json_data);
+            }
+        public function payments(Request $request)
+            {
+
             }
     }

@@ -2,7 +2,11 @@
 @section('title', 'Rates')
 @section('subtitle','Rates')
 @section('content')
+    @php
+        $role = unserialize(session('role'))
+    @endphp
     <div class="card">
+        @if($role['rates']['add'])
         <div class="card-header">
             <div class="text-right">
                 <button class="btn btn-default" data-toggle="modal" data-target="#addModal">
@@ -10,6 +14,7 @@
                 </button>
             </div>
         </div>
+        @endif
         <div class="card-body">
             <table class="table table-hover table-striped" id="rates">
                 <thead>

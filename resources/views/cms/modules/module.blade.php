@@ -16,6 +16,7 @@
                 <tr>
                     <th>id</th>
                     <th>Class/Level</th>
+                    <th>Publisher</th>
                     <th>Subject</th>
                     <th>Exam</th>
                     <th>Action</th>
@@ -25,6 +26,7 @@
                 <tr>
                     <th>id</th>
                     <th>Class/Level</th>
+                    <th>Publisher</th>
                     <th>Subject</th>
                     <th>Exam</th>
                     <th>Action</th>
@@ -44,6 +46,14 @@
                     <form action="{{ url('cms/addmodule') }}" method="post" class="form form-horizontal create-form" data-modal="#addModal">
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="add-publisher" class="control-label">Publisher</label>
+                        <select name="publisher_id" id="add-publisher" class="custom-select m-class">
+                            @foreach(App\Models\Institution::all() as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="add-classroom" class="control-label">Class</label>
                         <select name="class" id="add-classroom" class="custom-select m-class">
@@ -84,6 +94,14 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="id" id="edit-id">
+                    <div class="form-group">
+                        <label for="edit-publisher" class="control-label">Publisher</label>
+                        <select name="publisher_id" id="edit-publisher" class="custom-select m-class">
+                            @foreach(App\Models\Institution::all() as $value)
+                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="edit-classroom" class="control-label">Class</label>
                         <select name="class" id="edit-classroom" readonly="true" class="custom-select m-class">

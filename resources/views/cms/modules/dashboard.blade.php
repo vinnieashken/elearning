@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col-8">
                         <h3 class="mb-2">{{ $users }}</h3>
-                        <div class="mb-0">Admin Users</div>
+                        <div class="mb-0">Users</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
                         <div class="d-inline-block mt-2">
@@ -77,6 +77,31 @@
     </div>
     </div>
     <div class="row">
-
+        <div class="card w-100">
+            <div class="card-header">Payments</div>
+            <div class="card-body">
+                {{--<input type="text" id="min" placeholder="startdate"> -  <input type="text" id="max"  placeholder="enddate">--}}
+                <table class="table table-striped table-responsive mt-3" id="payments">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
