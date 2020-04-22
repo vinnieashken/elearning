@@ -535,7 +535,7 @@
             ]
 
         });
-            $('#users').DataTable({
+        $('#users').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax":{
@@ -561,6 +561,34 @@
                 ]
 
             });
+        $('#payments').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+                "url": "{{ url('get_payments') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data":{ _token: "{{csrf_token()}}"}
+            },
+            "columns": [
+                { "data": "*" },
+                { "data": "name" },
+                { "data": "email" },
+                { "data": "phoneno" },
+                { "data": "status" },
+                { "data": "action"}
+            ],
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+
+        });
+
+
     });
     $(document).on('click','.edit-user-roles',function(e){
         e.preventDefault();
@@ -606,6 +634,59 @@
             }
         });
     });
+    $(document).on('click','.delete-record',function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{{ url('cms/delete') }}',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {"id":$(this).data("id"),"table":$(this).data("table")},
+            success: function (Mess) {
+                if (Mess.status == true) {
+                    toastr.success(Mess.msg, Mess.header, {
+                        timeOut: 1000,
+                        closeButton: true,
+                        progressBar: true,
+                        newestOnTop: true,
+                        onHidden: function () {
+                            window.location.reload();
+                        }
+                    });
+
+
+                } else {
+                    toastr.error(Mess.msg, Mess.header, {
+                        timeOut: 1000,
+                        closeButton: true,
+                        progressBar: true,
+                        newestOnTop: true,
+                        onHidden: function () {
+                            window.location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (f) {
+                console.log(f);
+                $.each(f.responseJSON.errors, function (key, val) {
+                    toastr.error(val[0], f.responseJSON.message, {
+                        timeOut: 1000,
+                        closeButton: true,
+                        progressBar: true,
+                        newestOnTop: true,
+                        onHidden: function () {
+                            window.location.reload();
+                        }
+                    });
+
+                });
+
+
+            }
+
+        });
+
+    });
     $(document).on("show.bs.modal", '.modal', function (event) {
     console.log("Global show.bs.modal fire");
     var zIndex = 100000 + (10 * $(".modal:visible").length);
@@ -614,19 +695,22 @@
         $(".modal-backdrop").not(".modal-stack").first().css("z-index", zIndex - 1).addClass("modal-stack");
     }, 0);
     }).on("hidden.bs.modal", '.modal', function (event) {
-        console.log("Global hidden.bs.modal fire");
+        // console.log("Global hidden.bs.modal fire");
         $(".modal:visible").length && $("body").addClass("modal-open");
     });
     $(document).on('inserted.bs.tooltip', function (event) {
-        console.log("Global show.bs.tooltip fire");
+        // console.log("Global show.bs.tooltip fire");
         var zIndex = 100000 + (10 * $(".modal:visible").length);
         var tooltipId = $(event.target).attr("aria-describedby");
         $("#" + tooltipId).css("z-index", zIndex);
     });
     $(document).on('inserted.bs.popover', function (event) {
-        console.log("Global inserted.bs.popover fire");
+        // console.log("Global inserted.bs.popover fire");
         var zIndex = 100000 + (10 * $(".modal:visible").length);
         var popoverId = $(event.target).attr("aria-describedby");
         $("#" + popoverId).css("z-index", zIndex);
     });
+
+
+
 </script>

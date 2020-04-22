@@ -11,7 +11,7 @@ use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Subscription;
 use App\Models\User_meta;
-use App\Models\Usermeta;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -558,5 +558,17 @@ class Cms extends Controller
                         $result = array('status'=>False,'msg'=>'User Role manipulation failed','header'=>'User Role');
                     }
                 return $result;
+            }
+        public function delete(Request $request)
+            {
+                $res = DB::table($request->table)->where('id',$request->id)->delete();
+                if($res)
+                    {
+                        return array('status'=>TRUE,'msg'=>'Record deletion successful','header'=>ucfirst($request->table));
+                    }
+                else
+                    {
+                        return array('status'=>False,'msg'=>'Record deletion failed','header'=>ucfirst($request->table));
+                    }
             }
     }
