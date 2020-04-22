@@ -6,6 +6,7 @@ namespace App\Utils;
 
 use App\Models\Customer;
 use App\Models\Subscription;
+use App\Models\UserPublisher;
 use App\Models\UserSubscription;
 use Illuminate\Support\Facades\Log;
 
@@ -44,9 +45,26 @@ trait PaymentAssist
             $student->subscription_expiry = $subscription->enddate;
             $student->save();
 
-            return ['message'=>"Successfull update"];
+            return ['message'=>"Successful update"];
         }
         return ['message'=>"No update done"];
+    }
+
+    public function storePublishers($publishers,$userid,$packageid,$amount,$transactionid)
+    {
+        foreach ($publishers as $item)
+        {
+            $publisher = new UserPublisher();
+            $publisher->user_id = $userid;
+            $publisher->transactionid = $transactionid;
+            $publisher->publisher_id = $item;
+            $publisher->package_id = $packageid;
+            $publisher->amount = $amount;
+            $publisher->save();
+        }
+
+
+
     }
 
 }
