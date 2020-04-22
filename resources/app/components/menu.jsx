@@ -337,7 +337,7 @@ export default function (props) {
                                                         <React.Fragment>
                                                             {
                                                                 parseInt(user.owner) || parseInt(user.teacher)  ?
-                                                                    <li className="nav-item dropdown">
+                                                                    <li className="nav-item dropdown mt-4">
                                                                         <Link className="nav-link dropdown-toggle"
                                                                               to={`${ENV}profile`} id="reports"
                                                                               data-toggle="dropdown" aria-haspopup="true"
@@ -371,7 +371,7 @@ export default function (props) {
                                                             {/*}*/}
                                                         </React.Fragment> : ''
                                                 }
-                                                <li className="nav-item dropdown">
+                                                <li className="nav-item dropdown mt-4">
                                                     <Link className="nav-link dropdown-toggle"
                                                           to={`${ENV}profile`} id="navbarDropdownMenuLink"
                                                           data-toggle="dropdown" aria-haspopup="true"
