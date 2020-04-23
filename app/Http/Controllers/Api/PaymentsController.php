@@ -38,13 +38,18 @@ class PaymentsController extends Controller
         $packageid = $request->package_id;
         $phone = $request->mobile;
         $publishers = [];
-
+        $students = 1;
 
         $multiplier = 1;
         if($request->has('publishers'))
         {
             $publishers = $request->publishers;
             $multiplier = count($publishers);
+        }
+
+        if($request->has('students'))
+        {
+            $students = $request->students;
         }
 
 
@@ -76,9 +81,9 @@ class PaymentsController extends Controller
         {
             if($package->institution == 1)
             {
-                $customer = Customer::where('id',$userid)->get()->first();
-                $institutionid = $customer->institution_id;
-                $students = $this->getStudentsCount($institutionid);
+                //$customer = Customer::where('id',$userid)->get()->first();
+                //$institutionid = $customer->institution_id;
+                //$students = $this->getStudentsCount($institutionid);
                 //Log::info('Students count = '.$students);
                 $cost = ($package->cost * ceil($students/ $package->persons));
 
@@ -87,6 +92,7 @@ class PaymentsController extends Controller
                     return response()->json(["message"=> "No active students to be paid for. total cost is 0"] , 400);
                 }
                 $existing->amount = $cost;
+                $existing->institution_count = $students;
             }
             else
             {
@@ -115,9 +121,9 @@ class PaymentsController extends Controller
 
         if($package->institution == 1)
         {
-            $customer = Customer::where('id',$userid)->get()->first();
-            $institutionid = $customer->institution_id;
-            $students = $this->getStudentsCount($institutionid);
+            //$customer = Customer::where('id',$userid)->get()->first();
+            //$institutionid = $customer->institution_id;
+            //$students = $this->getStudentsCount($institutionid);
             $cost = ($package->cost * ceil($students/ $package->persons));
 
             if($cost == 0)
@@ -125,6 +131,7 @@ class PaymentsController extends Controller
                 return response()->json(["message"=> "No active students to be paid for. total cost is 0"] , 400);
             }
             $payment->amount = $cost;
+            $payment->institution_count = $students;
         }
         else
         {
@@ -205,7 +212,7 @@ class PaymentsController extends Controller
             $subscription->status = 1;
             if($package->institution == 1)
             {
-                $students = $this->getStudentsCount($customer->institution_id);
+                $students = $payment->institution_count;
                 $maximum = $this->getPaidforCount($payment->packageid,$payment->amount_received);
                 $subscription->persons = $students;
                 $subscription->remainder = ($maximum - $students);
