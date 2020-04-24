@@ -5756,3 +5756,28 @@ th, td {
 }
 
 /*new changes*/
+.drop-down:hover {
+    color: white !important;
+}
+
+.react-bootstrap-table-pagination {
+    margin-top: 2% !important;
+}
+
+.react-bootstrap-table-pagination
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #ec7160 !important;
+    border-color: #ec7160 !important;
+}
+
+.react-bootstrap-table-pagination .page-link {
+    color: #ec7160 !important;;
+}
+
+.select-filter {
+    margin-bottom: 0 !important;
+    padding: 6px 20px;
+    min-height: 35px;
+}

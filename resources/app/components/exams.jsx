@@ -246,7 +246,6 @@ export default function (props) {
                                                                                               rowStyle={ { borderRadius: '18px' } }
                                                                                               pagination={ paginationFactory() }
                                                                                               filter={ filterFactory() }/>
-
                                                                     }
 
                                                                 </React.Fragment>
