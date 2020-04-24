@@ -5,7 +5,7 @@ import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
 import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED} from "../common/constants";
 import { useSelector } from 'react-redux'
-import { fetchSubscription, fetchSubjects } from "../common/actions";
+import { fetchSubscription, fetchSubjects, fetchClasses } from "../common/actions";
 import { useDispatch } from "react-redux";
 import {ClipLoader} from "react-spinners";
 
@@ -116,7 +116,7 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
-    const [classes, setClasses] = useState([]);
+    const [classes, setClasses] = useSelector(state => state.classes);
     const subscription = useSelector(state => state.subscription);
     const subjects = useSelector(state => state.subjects);
     const loadingSubscription = useSelector(state => state.loadingSubscription);
@@ -128,9 +128,9 @@ export default function (props) {
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
+        dispatch(fetchClasses());
         dispatch(fetchSubjects());
         getSubscriptions();
-        getClasses();
     }, []);
 
     const getSubscriptions = () => {
@@ -143,7 +143,7 @@ export default function (props) {
                     response = JSON.parse(xhr['responseText'])['message']
                 }catch (e) {}
 
-                // setLoading(false);
+                setLoading(false);
                 setMessage(true);
                 setMessageType('alert alert-danger');
                 setResponse(response);
@@ -154,7 +154,7 @@ export default function (props) {
                 });
                 if (filterd.length > 0)
                     setSubscriptionShown(filterd[0]);
-                // setLoading(false);
+                setLoading(false);
             }.bind(this)
         })
     };
@@ -230,13 +230,15 @@ export default function (props) {
                                         <span className="caret" />
                                     </a>
                                     <ul className="dropdown-menu">
-                                        {
-                                            classes.slice(0, 4).map(el => {
-                                                return (
-                                                    <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>
-                                                )
-                                            })
-                                        }
+                                        <li><Link to={`${ENV}exams/classes/2/subjects`}>Class 8</Link></li>
+
+                                        {/*{*/}
+                                        {/*    classes.slice(0, 4).map(el => {*/}
+                                        {/*        return (*/}
+                                        {/*            <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>*/}
+                                        {/*        )*/}
+                                        {/*    })*/}
+                                        {/*}*/}
                                     </ul>
                                 </div>
                                 <div className="dropdown">
@@ -245,7 +247,7 @@ export default function (props) {
                                     </a>
                                     <ul className="dropdown-menu">
                                         {
-                                            subjects.slice(0, 4).map(el => {
+                                            subjects.filter(el => {return [2,4,5,6,7,8].includes(el.id)}).map(el => {
                                                 return (
                                                     <li><Link to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link></li>
                                                 )
@@ -282,7 +284,7 @@ export default function (props) {
                             <div className="collapse navbar-collapse flex-column " id="navbar">
 
 
-                                <ul className="navbar-nav justify-content-around w-75">
+                                <ul className="navbar-nav justify-content-around w-90">
                                     <li className="nav-item">
                                         <Link className="nav-link" to={`${ENV}`}>
                                             <img className="logo" src={`${PUBLIC_URL}/static/new/img/logo.png`} alt={`${APPNAME}`} />
@@ -298,13 +300,15 @@ export default function (props) {
                                             CLASSES
                                         </a>
                                         <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
-                                            {
-                                                classes.slice(0, 4).map(el => {
-                                                    return (
-                                                        <Link className="dropdown-item" to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link>
-                                                    )
-                                                })
-                                            }
+                                            <Link className="dropdown-item" to={`${ENV}exams/classes/2/subjects`}>Class 8</Link>
+
+                                            {/*{*/}
+                                            {/*    classes.slice(0, 4).map(el => {*/}
+                                            {/*        return (*/}
+                                            {/*            <Link className="dropdown-item" to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link>*/}
+                                            {/*        )*/}
+                                            {/*    })*/}
+                                            {/*}*/}
                                         </div>
                                     </li>
                                     <li className="nav-item dropdown mt-4">
@@ -315,7 +319,7 @@ export default function (props) {
                                         </a>
                                         <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
                                             {
-                                                subjects.slice(0, 4).map(el => {
+                                                subjects.filter(el => {return [2,4,5,6,7,8].includes(el.id)}).map(el => {
                                                     return (
                                                         <Link className="dropdown-item " to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link>
                                                     )

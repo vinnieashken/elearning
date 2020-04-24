@@ -4,6 +4,8 @@ import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import moment from "moment";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+import filterFactory, { selectFilter, customFilter } from 'react-bootstrap-table2-filter';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
 const { SearchBar } = Search;
@@ -18,8 +20,10 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [selectedExam, setSelectedExam] = useState({})
-    const [classes, setClasses] = useState([])
-    const [subjects, setSubjects] = useState([])
+    const classes = useSelector(state => state.classes);
+    const subjects = useSelector(state => state.subjects);
+    const [subjectOptions, setSubjectOptions] = useState({})
+    const [classOptions, setClassOptions] = useState({})
     const [user, setUser] = useState(props.user)
     const subscription = useSelector(state => state.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
@@ -27,6 +31,16 @@ export default function (props) {
     useEffect(() => {
         setLoading(true);
         setUser(props.user)
+        const subjectArray = {}
+        const classArray = {}
+        subjects.forEach(el => {
+            subjectArray[el.id] = el.subject
+        })
+        classes.forEach(el => {
+            classArray[el.class] = el.class
+        })
+        setSubjectOptions(subjectArray)
+        setClassOptions(classArray)
         getModules();
     }, [props.match.params.subject]);
 
@@ -51,32 +65,6 @@ export default function (props) {
                     getClasses();
                     getSubjects();
                 }
-            }.bind(this)
-        })
-    };
-
-    const getClasses = () => {
-        $.ajax({
-            url: `${API}/classes/list`,
-            method: 'GET',
-            error: function (xhr, status, error) {
-
-            }.bind(this),
-            success: function (res) {
-                setClasses(res);
-            }.bind(this)
-        })
-    };
-
-    const getSubjects = () => {
-        $.ajax({
-            url: `${API}/subjects/${props.match.params.hasOwnProperty('class') ? `class/${props.match.params.class}` : 'list'}`,
-            method: 'GET',
-            error: function (xhr, status, error) {
-
-            }.bind(this),
-            success: function (res) {
-                setSubjects(res);
             }.bind(this)
         })
     };
@@ -191,9 +179,27 @@ export default function (props) {
                                                     columns={
                                                         [
                                                             {dataField: 'id',      text: 'ID',    sort: true },
-                                                            {dataField: 'module',      text: 'Exam',    sort: true, style: { textAlign: 'left' }},
-                                                            {dataField: 'class',        text: 'Class',      sort: true},
-                                                            {dataField: 'subject',        text: 'Subject',      sort: true},
+                                                            {
+                                                                dataField: 'module',
+                                                                text: 'Exam',
+                                                                sort: true,
+                                                                style: { textAlign: 'left' }},
+                                                            {
+                                                                dataField: 'class',
+                                                                text: 'Class',
+                                                                formatter: cell => classOptions[cell],
+                                                                filter: selectFilter({
+                                                                    options: classOptions
+                                                                })
+                                                            },
+                                                            {
+                                                                dataField: 'subject_id',
+                                                                text: 'Subject',
+                                                                formatter: cell => subjectOptions[cell],
+                                                                filter: selectFilter({
+                                                                    options: subjectOptions
+                                                                })
+                                                            },
                                                             {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
                                                             {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
                                                         ]
@@ -223,8 +229,23 @@ export default function (props) {
                                                                     </div>
                                                                     {
                                                                         (user.teacher || user.owner) ?
-                                                                            <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" headerWrapperClasses ="pt-0 shadowtable bg-danger" headerClasses="border-0" rowClasses="border-0" rowStyle={ { borderRadius: '18px' } } selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
-                                                                            : <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" headerWrapperClasses ="pt-0 shadowtable bg-danger" headerClasses="border-0" rowClasses="border-0" rowStyle={ { borderRadius: '18px' } }/>
+                                                                            <BootstrapTable { ...props.baseProps }
+                                                                                            wrapperClasses="table-responsive"
+                                                                                            headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                            headerClasses="border-0"
+                                                                                            rowClasses="border-0"
+                                                                                            rowStyle={ { borderRadius: '18px' } }
+                                                                                            selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
+                                                                                            pagination={ paginationFactory() }
+                                                                                            filter={ filterFactory() }/>
+                                                                            : <BootstrapTable { ...props.baseProps }
+                                                                                              wrapperClasses="table-responsive"
+                                                                                              headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                              headerClasses="border-0"
+                                                                                              rowClasses="border-0"
+                                                                                              rowStyle={ { borderRadius: '18px' } }
+                                                                                              pagination={ paginationFactory() }
+                                                                                              filter={ filterFactory() }/>
 
                                                                     }
 
@@ -240,7 +261,7 @@ export default function (props) {
                     }
                 </div>
             </div>
-            <EditExamModal exam={selectedExam} classes={classes} subjects={subjects} getModules={getModules}/>
+            <EditExamModal exam={selectedExam} getModules={getModules}/>
         </React.Fragment>
     )
 }

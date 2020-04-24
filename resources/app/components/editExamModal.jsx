@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {API, APPNAME, ENV} from "../common/constants";
 import Loading from "../common/loading";
 import Select from "react-select";
+import {useSelector} from "react-redux";
 
 const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +18,8 @@ export default function (props) {
     const [messageType, setMessageType] = useState('');
     const [response, setResponse] = useState('');
     const [exam, setExam] = useState({});
+    const classes = useSelector(state => state.classes);
+    const subjects = useSelector(state => state.subjects);
     const [selectedClass, setSelectedClass] = useState({});
     const [selectedSubject, setSelectedSubject] = useState({});
     const [complete, setComplete] = useState(false);
@@ -24,7 +27,7 @@ export default function (props) {
     useEffect((e) => {
         setComplete(false)
         setMessage(false)
-        console.log(props);
+        console.log(classes);
         if (props.exam.hasOwnProperty('id'))
             getExam()
         else setLoading(false)
@@ -144,7 +147,7 @@ export default function (props) {
                                                             <Select name="classid"
                                                                     defaultValue={selectedClass}
                                                                     onChange={setSelectedClass}
-                                                                    options={props.classes.map(el => {
+                                                                    options={classes.map(el => {
                                                                         return {value: el.id, label: el.class}
                                                                     })}
                                                             />
@@ -154,7 +157,7 @@ export default function (props) {
                                                             <Select name="subjectid"
                                                                     defaultValue={selectedSubject}
                                                                     onChange={setSelectedSubject}
-                                                                    options={props.subjects.map(el => {
+                                                                    options={subjects.map(el => {
                                                                         return {value: el.id, label: el.subject}
                                                                     })}
                                                             />

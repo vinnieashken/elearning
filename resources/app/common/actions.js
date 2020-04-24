@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, API } from "./constants";
+import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, CLASSES_LOADED, API } from "./constants";
 
 export function fetchSubscription(user) {
     return function (dispatch) {
@@ -30,6 +30,19 @@ export function fetchSubjects() {
             dataType: 'json',
             success: function (res) {
                 dispatch ({ type: SUBJECTS_LOADED, payload: res });
+            }.bind(this)
+        })
+    };
+}
+
+export function fetchClasses() {
+    return function (dispatch) {
+        return $.ajax({
+            url: `${API}/classes/list`,
+            method: 'get',
+            dataType: 'json',
+            success: function (res) {
+                dispatch ({ type: CLASSES_LOADED, payload: res });
             }.bind(this)
         })
     };

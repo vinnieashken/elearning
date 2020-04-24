@@ -183,72 +183,23 @@ export default function (props) {
                         </div>
                     </div>
                     <div className="row mx-md-5">
-                        <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="card subj">
-                                <div className="card-body">
-                                    <div className="mb-2">
-                                        <i className="fa fa-star-o topicons mr-3 redicon" />
-                                        <div className="card-title bold">Mathematics</div>
+                        {
+                            props.subjects.slice(0, 6).map(el => {
+                                return(
+                                    <div className="col-lg-4 col-md-6 col-sm-6">
+                                        <div className="card subj">
+                                            <div className="card-body">
+                                                <div className="mb-2">
+                                                    <i className="fa fa-star-o topicons mr-3 redicon" />
+                                                    <div className="card-title bold">{el.subject}</div>
+                                                </div>
+                                                <p className="card-text">Class 1 to Class 8</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p className="card-text">Grade 1 to Grade 8</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="card subj">
-                                <div className="card-body">
-                                    <div className="mb-2">
-                                        <i className="fa fa-star-o topicons mr-3 redicon" />
-                                        <div className="card-title bold">English</div>
-                                    </div>
-                                    <p className="card-text">Grade 1 to Grade 8</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="card subj">
-                                <div className="card-body">
-                                    <div className="mb-2">
-                                        <i className="fa fa-star-o topicons mr-3 redicon" />
-                                        <div className="card-title bold">Kiswahili</div>
-                                    </div>
-                                    <p className="card-text">Grade 1 to Grade 8</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="card subj">
-                                <div className="card-body">
-                                    <div className="mb-2">
-                                        <i className="fa fa-star-o topicons mr-3 redicon" />
-                                        <div className="card-title bold">Science</div>
-                                    </div>
-                                    <p className="card-text">Grade 1 to Grade 8</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="card subj">
-                                <div className="card-body">
-                                    <div className="mb-2">
-                                        <i className="fa fa-star-o topicons mr-3 redicon" />
-                                        <div className="card-title bold">Social Studies and Religious Education</div>
-                                    </div>
-                                    <p className="card-text">Grade 1 to Grade 8</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6">
-                            <div className="card subj">
-                                <div className="card-body">
-                                    <div className="mb-2">
-                                        <i className="fa fa-star-o topicons mr-3 redicon" />
-                                        <div className="card-title bold">Mathematics</div>
-                                    </div>
-                                    <p className="card-text">Grade 1 to Grade 8</p>
-                                </div>
-                            </div>
-                        </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>
