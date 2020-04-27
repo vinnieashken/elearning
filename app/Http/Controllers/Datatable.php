@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Institution;
 use App\Models\Level;
+use App\Models\Payment;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Module;
@@ -240,8 +242,6 @@ class Datatable extends Controller
 
         public function get_questions(Request $request)
             {
-
-//                return $request->input('id');
                 $columns = array(
                     0   =>  'listorder',
                     1   =>  'question'
@@ -399,6 +399,7 @@ class Datatable extends Controller
 
                 echo json_encode($json_data);
             }
+
         public function get_users(Request $request)
             {
 
@@ -483,8 +484,85 @@ class Datatable extends Controller
 
                 echo json_encode($json_data);
             }
-        public function payments(Request $request)
-            {
 
+        public function get_payments(Request $request)
+            {
+                $columns = array(
+                    0   =>  'id',
+                    1   =>  'user_id',
+                    2   =>  'transactioncode',
+                    3   =>  'channel'
+
+                );
+
+                $totalData      = Payment::where('amount_received',"!=",0)
+                                          ->count();
+
+                $totalFiltered  = $totalData;
+
+                $limit  =   $request->input('length');
+                $start  =   $request->input('start');
+                $order  =   $columns[$request->input('order.0.column')];
+                $dir    =   $request->input('order.0.dir');
+
+                if(empty($request->input('search.value')))
+                    {
+                        $posts = Payment::where('amount_received',"!=",0)
+                                        ->offset($start)
+                                        ->limit($limit)
+                                        ->orderBy($order,$dir)
+                                        ->get();
+                    }
+                else
+                    {
+                        $search     =   $request->input('search.value');
+
+                        //
+
+                        $posts      =   Payment::where('amount_received',"!=",0)
+                                                ->where('transactioncode','LIKE',"%{$search}%")
+                                                ->orwhere('amount_received','LIKE',"%{$search}%")
+                                                ->orwhere('phoneno','LIKE',"%{$search}%")
+                                                ->offset($start)
+                                                ->limit($limit)
+                                                ->orderBy($order,$dir)
+                                                ->get();
+
+                        $totalFiltered =  Payment::where('amount_received',"!=",0)
+                                                    ->where('transactioncode','LIKE',"%{$search}%")
+                                                    ->orwhere('amount_received','LIKE',"%{$search}%")
+                                                    ->orwhere('phoneno','LIKE',"%{$search}%")
+                                                    ->count();
+                    }
+
+                $data = array();
+                if(!empty($posts))
+                    {
+                        $x= $start + 1;
+                        foreach ($posts as $post)
+                            {
+                                $customer                       =   Customer::where('id',$post->user_id)->first();
+                                $institution                    =   Institution::where('id',$post->user_id)->first();
+                                $nestedData['*']                =   $x;
+                                $nestedData['name']             =   is_object($customer)?$customer->name:"No Name";
+                                $nestedData['phone']            =   $post->phone;
+                                $nestedData['institution']      =   is_object($institution)?$institution->name:"Standard Group";
+                                $nestedData["transactioncode"]  =   $post->transactioncode;
+                                $nestedData['amount']           =   $post->amount;
+                                $nestedData['date']             =   date('dS M Y h:ia',strtotime($post->created_at));
+
+                                $data[] = $nestedData;
+                                $x++;
+                            }
+                    }
+
+                $json_data = array(
+                    "draw"            => intval($request->input('draw')),
+                    "recordsTotal"    => intval($totalData),
+                    "recordsFiltered" => intval($totalFiltered),
+                    "data"            => $data
+                );
+
+                echo json_encode($json_data);
             }
     }
