@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
+use App\Models\Customer;
 use App\Models\Institution;
 use App\Models\Level;
 use App\Models\Payment;
