@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label for="add-publisher" class="control-label">Publisher</label>
                         <select name="publisher_id" id="add-publisher" class="custom-select m-class">
-                            @foreach(App\Models\Institution::all() as $value)
+                            @foreach(App\Models\Institution::where('publisher',1)->all() as $value)
                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
                         </select>
