@@ -544,7 +544,7 @@ class Datatable extends Controller
                                 $customer                       =   Customer::where('id',$post->user_id)->first();
                                 $institution                    =   Institution::where('id',$post->user_id)->first();
                                 $nestedData['*']                =   $x;
-                                $nestedData['name']             =   is_object($customer)?$customer->name:"";
+                                $nestedData['name']             =   is_object($customer)?$customer->name:"No Name";
                                 $nestedData['phone']            =   $post->phone;
                                 $nestedData['institution']      =   is_object($institution)?$institution->name:"Standard Group";
                                 $nestedData["transactioncode"]  =   $post->transactioncode;
