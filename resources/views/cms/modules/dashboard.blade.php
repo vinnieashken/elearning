@@ -89,8 +89,8 @@
                             <th>Phone Number</th>
                             <th>Publisher</th>
                             <th>Transaction Code</th>
-                            <th>Amount</th>
                             <th>Date</th>
+                            <th>Amount</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -100,8 +100,8 @@
                             <th>Phone Number</th>
                             <th>Publisher</th>
                             <th>Transaction Code</th>
-                            <th>Amount</th>
                             <th>Date</th>
+                            <th>Amount</th>
                         </tr>
                     </tfoot>
                 </table>

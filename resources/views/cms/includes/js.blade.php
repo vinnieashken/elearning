@@ -576,8 +576,9 @@
                 { "data": "phone" },
                 { "data": "institution" },
                 { "data": "transactioncode" },
-                { "data": "amount" },
-                { "data": "date"}
+                { "data": "date"},
+                { "data": "amount" }
+
 
             ],
             "dom": 'Bfrtip',
