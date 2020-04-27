@@ -5781,3 +5781,7 @@ th, td {
     padding: 6px 20px;
     min-height: 35px;
 }
+
+.toggled{
+    width: 250px;
+}
