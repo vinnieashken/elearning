@@ -549,7 +549,7 @@ class Datatable extends Controller
                                 $nestedData['institution']      =   is_object($institution)?$institution->name:"";
                                 $nestedData["transactioncode"]  =   $post->transactioncode;
                                 $nestedData['amount']           =   $post->amount;
-                                $nestedData['date']             =   $post->created_at;
+                                $nestedData['date']             =   date('dS M Y h:ia',strtotime($post->created_at));
 
                                 $data[] = $nestedData;
                                 $x++;
