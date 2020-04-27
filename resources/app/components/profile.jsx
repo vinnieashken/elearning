@@ -6,6 +6,7 @@ import moment from "moment";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
+import {PUBLIC_URL} from "../../app-old/common/constants";
 const { SearchBar } = Search;
 
 export default function (props) {
@@ -98,8 +99,26 @@ export default function (props) {
 
     return (
         <React.Fragment>
-            <div id="about" className="section-padding mt-5 profile">
-                <div className="container mt-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding profile">
+                <div className="container ">
                     {
                         loading ? <Loading/> :
                             <div className="row">

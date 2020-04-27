@@ -317,9 +317,11 @@ class ModulesController extends Controller
     public function getModuleStudents($moduleid)
     {
         $sheetsmodel = new AnswerSheet();
-        $users = $sheetsmodel->where('module_id',$moduleid)->distinct('user_id')
+        $users = $sheetsmodel->where('module_id',$moduleid)->where('marks.marks_module_id',$moduleid)->distinct('user_id')
             ->leftJoin('customers','customers.id','=','user_answers.user_id')
-            ->select('customers.id','customers.user_id','customers.name','customers.email','customers.institution_id','customers.owner','customers.teacher','customers.adm_no','customers.login_code','customers.teacher_id','customers.publisher','customers.active')
+            ->leftJoin('marks','marks.marks_user_id','=','customers.id')
+            ->select('customers.id','customers.user_id','customers.name','customers.email','customers.institution_id','customers.owner','customers.teacher','customers.adm_no','customers.login_code','customers.teacher_id','customers.publisher','customers.active',
+                'marks.score','marks.percentage','marks.questions')
             ->get();
 
         return $users;

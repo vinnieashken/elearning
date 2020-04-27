@@ -7,12 +7,14 @@ use App\Models\Customer;
 use App\Models\Institution;
 use App\Models\Teacher;
 use App\Models\Student;
+use App\Utils\PaymentAssist;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
+    use PaymentAssist;
     //
     private $api;
 
@@ -299,6 +301,7 @@ class LoginController extends Controller
             $student->login_code = $student->institution_id.'-'.$student->adm_no;
             $student->save();
             $student = $student->where('id',$student->id)->first();
+            $this->SubscribeStudent($institution,$student->id);
         }
         else{
 
@@ -308,6 +311,7 @@ class LoginController extends Controller
             $existing->adm_no = $adm_no;
             $existing->login_code = $existing->institution_id.'-'.$existing->adm_no;
             $existing->save();
+
         }
         return $existing ?? $student;
     }
@@ -323,6 +327,11 @@ class LoginController extends Controller
         }
 
         return $student;
+    }
+
+    public function testSubscribe()
+    {
+        return $this->SubscribeStudent(6,1);
     }
 
 }

@@ -4,6 +4,8 @@ import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import moment from "moment";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+import filterFactory, { selectFilter, customFilter } from 'react-bootstrap-table2-filter';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
 const { SearchBar } = Search;
@@ -18,8 +20,10 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [selectedExam, setSelectedExam] = useState({})
-    const [classes, setClasses] = useState([])
-    const [subjects, setSubjects] = useState([])
+    const classes = useSelector(state => state.classes);
+    const subjects = useSelector(state => state.subjects);
+    const [subjectOptions, setSubjectOptions] = useState({})
+    const [classOptions, setClassOptions] = useState({})
     const [user, setUser] = useState(props.user)
     const subscription = useSelector(state => state.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
@@ -27,6 +31,16 @@ export default function (props) {
     useEffect(() => {
         setLoading(true);
         setUser(props.user)
+        const subjectArray = {}
+        const classArray = {}
+        subjects.forEach(el => {
+            subjectArray[el.id] = el.subject
+        })
+        classes.forEach(el => {
+            classArray[el.class] = el.class
+        })
+        setSubjectOptions(subjectArray)
+        setClassOptions(classArray)
         getModules();
     }, [props.match.params.subject]);
 
@@ -55,32 +69,6 @@ export default function (props) {
         })
     };
 
-    const getClasses = () => {
-        $.ajax({
-            url: `${API}/classes/list`,
-            method: 'GET',
-            error: function (xhr, status, error) {
-
-            }.bind(this),
-            success: function (res) {
-                setClasses(res);
-            }.bind(this)
-        })
-    };
-
-    const getSubjects = () => {
-        $.ajax({
-            url: `${API}/subjects/${props.match.params.hasOwnProperty('class') ? `class/${props.match.params.class}` : 'list'}`,
-            method: 'GET',
-            error: function (xhr, status, error) {
-
-            }.bind(this),
-            success: function (res) {
-                setSubjects(res);
-            }.bind(this)
-        })
-    };
-
     const selected = (row, isSelected) =>{
         let exam = row;
         exam['institution_id'] = props.user.institution.id
@@ -91,20 +79,34 @@ export default function (props) {
         setModules(modules.push(exam))
     }
 
+    const provider = (cell, row) => {
+        return (
+            row.institution_name !== null ? row.institution_name : 'Standard Group'
+        )
+    }
+
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
                 {
                     ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
                         <React.Fragment>
-                            <Link to={`${ENV}exams/exam/edit/${row.id}`} className='btn btn-sm btn-rounded btn-outline-success mr-1'>
+                            <Link to={{
+                                pathname: `${ENV}exams/exam/${row.id}/performance`,
+                                state: {
+                                    exam: row
+                                }
+                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success mr-1'>
+                                Performance <i className="fa fa-graduation-cap" />
+                            </Link>
+                            <Link to={`${ENV}exams/exam/edit/${row.id}`} className='btn btn-sm btn-rounded btn-outline-success btn-success mr-1'>
                                 Edit Paper <i className="fa fa-plus" />
                             </Link>
-                            <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success' data-toggle="modal" data-target="#exampleModal">
+                            <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success' data-toggle="modal" data-target="#exampleModal">
                                 Add Question <i className="fa fa-pencil" />
                             </Link>
                         </React.Fragment> :
-                        <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`}`}>
+                        <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>
                             {row.done ? `Revise Paper` : `Take Test`}
                         </Link>
                 }
@@ -128,8 +130,26 @@ export default function (props) {
                     <meta property="og:url" content={pathname} />
                 </Helmet>
             </div>
-            <div id="about" className="section-padding mt-5 profile">
-                <div className="container mt-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding profile">
+                <div className="container">
                     {
                         <React.Fragment>
                             <div className="row">
@@ -159,9 +179,28 @@ export default function (props) {
                                                     columns={
                                                         [
                                                             {dataField: 'id',      text: 'ID',    sort: true },
-                                                            {dataField: 'module',      text: 'Exam',    sort: true, style: { textAlign: 'left' }},
-                                                            {dataField: 'class',        text: 'Class',      sort: true},
-                                                            {dataField: 'subject',        text: 'Subject',      sort: true},
+                                                            {
+                                                                dataField: 'module',
+                                                                text: 'Exam',
+                                                                sort: true,
+                                                                style: { textAlign: 'left' }},
+                                                            {
+                                                                dataField: 'class',
+                                                                text: 'Class',
+                                                                formatter: cell => classOptions[cell],
+                                                                filter: selectFilter({
+                                                                    options: classOptions
+                                                                })
+                                                            },
+                                                            {
+                                                                dataField: 'subject_id',
+                                                                text: 'Subject',
+                                                                formatter: cell => subjectOptions[cell],
+                                                                filter: selectFilter({
+                                                                    options: subjectOptions
+                                                                })
+                                                            },
+                                                            {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
                                                             {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
                                                         ]
                                                     } search={true}>
@@ -175,24 +214,38 @@ export default function (props) {
                                                                         </div>
                                                                         <div className='col-md-8 ' >
                                                                             {
-                                                                                subscription.hasOwnProperty('id') ?
-                                                                                user.teacher || user.owner ?
-                                                                                    <button onClick={e => {
-                                                                                        let exam = {};
-                                                                                        exam['institution_id'] = user.institution.id
-                                                                                        setSelectedExam(exam);
-                                                                                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                (user.teacher || user.owner) ?
+                                                                                    subscription.hasOwnProperty('id') ?
+                                                                                        <button onClick={e => {
+                                                                                            let exam = {};
+                                                                                            exam['institution_id'] = user.institution.id
+                                                                                            setSelectedExam(exam);
+                                                                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
                                                                                     : ''
-                                                                                : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
                                                                             }
 
                                                                         </div>
                                                                     </div>
                                                                     {
                                                                         (user.teacher || user.owner) ?
-                                                                            <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive" selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}/>
-                                                                            : <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
-
+                                                                            <BootstrapTable { ...props.baseProps }
+                                                                                            wrapperClasses="table-responsive"
+                                                                                            headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                            headerClasses="border-0"
+                                                                                            rowClasses="border-0"
+                                                                                            rowStyle={ { borderRadius: '18px' } }
+                                                                                            selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
+                                                                                            pagination={ paginationFactory() }
+                                                                                            filter={ filterFactory() }/>
+                                                                            : <BootstrapTable { ...props.baseProps }
+                                                                                              wrapperClasses="table-responsive"
+                                                                                              headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                              headerClasses="border-0"
+                                                                                              rowClasses="border-0"
+                                                                                              rowStyle={ { borderRadius: '18px' } }
+                                                                                              pagination={ paginationFactory() }
+                                                                                              filter={ filterFactory() }/>
                                                                     }
 
                                                                 </React.Fragment>
@@ -207,7 +260,7 @@ export default function (props) {
                     }
                 </div>
             </div>
-            <EditExamModal exam={selectedExam} classes={classes} subjects={subjects} getModules={getModules}/>
+            <EditExamModal exam={selectedExam} getModules={getModules}/>
         </React.Fragment>
     )
 }

@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Select from "react-select";
+import {PUBLIC_URL} from "../../app-old/common/constants";
 
 function Row(props) {
     const [data, setData] = useState('');
@@ -182,8 +183,26 @@ export default function (props) {
 
     return (
         <React.Fragment>
-            <div id="about" className="section-padding mt-md-5 exam">
-                <div className="container mt-md-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding exam">
+                <div className="container">
                     {
                             <form onSubmit={handleSubmit} >
                                 {

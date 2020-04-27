@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
 import {Helmet} from "react-helmet";
+import {PUBLIC_URL} from "../../app-old/common/constants";
 
 export default function (props) {
 
@@ -26,8 +27,11 @@ export default function (props) {
     }, []);
 
     const getSubscriptions = () => {
+        const url = (props.user.owner || props.user.teacher) ? `${API}/payments/institutions/subscriptions` : `${API}/payments/subscriptions`;
+        // const url = `${API}/payments/subscriptions`;
+        console.log(url);
         $.ajax({
-            url: `${API}/payments/subscriptions`,
+            url: url,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
@@ -61,8 +65,26 @@ export default function (props) {
                 <meta property="og:description" content="Tutor-Soma Tu - Membership Plans " />
                 <meta property="og:url" content={pathname} />
             </Helmet>
-            <div id="about" className="section-padding mt-5 pricing">
-                <div className="container mt-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding pricing">
+                <div className="container">
                     <div className="row">
                         <div className="col-md-12">
                             <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">Our Membership Plans</h2>
@@ -81,7 +103,7 @@ export default function (props) {
                                                 <div className="card-body">
                                                     <h5 className="card-title text-center">Ksh. {el.cost}</h5>
                                                     <h6 className="card-title text-center">Also Recieve</h6>
-                                                    <p className="card-text text-center">- Complimentary e-paper.<br />- Regular email bulletins.</p>
+                                                    <p className="card-text text-center">- {el.description}</p>
                                                     <div className="text-center">
                                                         <Link to={{
                                                             pathname: `${ENV}subscription/payment`,

@@ -68,8 +68,26 @@ export default function (props) {
                 <meta property="og:description" content="Tutor-Soma Tu - Subjects " />
                 <meta property="og:url" content={pathname} />
             </Helmet>
-            <div id="about" className="section-padding mt-5 profile">
-                <div className="container mt-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding profile">
+                <div className="container">
                     {
                         <React.Fragment>
                             <div className="row">
@@ -109,7 +127,11 @@ export default function (props) {
                                                                             <SearchBar className='col-md-4 form-control-sm float-right mb-3' { ...props.searchProps } />
                                                                         </div>
                                                                     </div>
-                                                                    <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
+                                                                    <BootstrapTable { ...props.baseProps }
+                                                                                    headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                    headerClasses="border-0" rowClasses="border-0"
+                                                                                    rowStyle={ { borderRadius: '18px' } }
+                                                                                    wrapperClasses="table-responsive" />
 
                                                                 </React.Fragment>
                                                             )

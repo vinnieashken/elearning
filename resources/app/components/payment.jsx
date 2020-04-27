@@ -2,18 +2,24 @@ import React, {useEffect, useState} from 'react';
 import {API, APPNAME, PUBLIC_URL, ENV} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import Loading from "../common/loading";
+import {forEach} from "react-bootstrap/cjs/ElementChildren";
 
 export default function (props) {
     const oldState = props.history.location.state;
 
     const [plan, setPlan] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('plan') ? oldState.plan : {});
     const [subscriptions, setSubscriptions] = useState([]);
+    const [publishers, setPublishers] = useState([]);
     const [payment, setPayment] = useState({});
     const [processing, setProcessing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const [selectedPackage, setPackage] = useState({})
+    const [selectedPublishers, setSelectedPublishers] = useState([])
+    const [students, setStudents] = useState(50);
+    const [cost, setCost] = useState(0);
 
 
     useEffect(() => {
@@ -22,8 +28,10 @@ export default function (props) {
     }, []);
 
     const getSubscriptions = () => {
+        const url = (plan.id !== 4) ? `${API}/payments/subscriptions` : `${API}/payments/institutions/subscriptions`;
+        // const url = `${API}/payments/subscriptions`;
         $.ajax({
-            url: `${API}/payments/subscriptions`,
+            url: url,
             method: 'GET',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
@@ -37,14 +45,71 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setSubscriptions(res);
+                setLoading(parseInt(plan.id) !== 4 );
+                const selectedPlan = res.filter(el => {
+                    return el.id === parseInt(plan.id)
+                })
+                setCost(plan.id === 4 ? plan.cost : 0)
+                setPackage(selectedPlan.length > 0 ? selectedPlan[0] : {})
+                if (plan.id !== 4)
+                    getPublishers();
+            }.bind(this)
+        })
+    };
+
+    const getPublishers = () => {
+        $.ajax({
+            url: `${API}/publishers/list`,
+            method: 'GET',
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
+                setLoading(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+            }.bind(this),
+            success: function (res) {
+                setPublishers(res);
                 setLoading(false);
             }.bind(this)
         })
     };
 
     const handleChanged = (e) => {
-       setPayment({})
+        const package_id = $(`input[name="package_id"]:checked`).val();
+        const selectedPackage = subscriptions.filter(el => {
+            return el.id === parseInt(package_id)
+        })[0]
+
+        if (plan.id !== 4) {
+            setPackage(selectedPackage)
+            setCost(selectedPackage['cost'] * selectedPublishers.length)
+            setPayment({})
+        } else {
+            setCost(selectedPackage['cost'] * Math.ceil($(`input[name="students"]`).val() / 50))
+        }
     };
+
+    const handleStudentsChanged = (e) => {
+        const noOfStudents = $(`input[name="students"]`).val();
+        setStudents(noOfStudents)
+        setCost(selectedPackage['cost'] * Math.ceil(noOfStudents / 50))
+    }
+
+    const handlePublisherChanged = (e) => {
+        const sel = [];
+        $.each($("input[name='publisher_id']:checked"), function(){
+            const selpub = publishers.filter(el => {
+                return el.id === parseInt($(this).val())
+            })[0]
+            sel.push(selpub)
+        });
+        setSelectedPublishers(sel)
+        setCost(selectedPackage['cost'] * sel.length)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -54,6 +119,11 @@ export default function (props) {
         var formData = new FormData($('form#sub')[0]);
         formData.append('user_id', props.user.id);
         formData.append('package_id', package_id);
+        if (plan.id !== 4) {
+            selectedPublishers.forEach(el => {
+                formData.append('publishers[]', el.id);
+            })
+        }
         $.ajax({
             url: `${API}/payments/subscribe`,
             data: formData,
@@ -78,8 +148,26 @@ export default function (props) {
 
     return(
         <React.Fragment>
-            <div id="about" className="section-padding mt-5 payment">
-                <div className="container mt-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding payment">
+                <div className="container">
 
                     <div className="row">
                         <div className="mx-auto mt-5 col-md-5 col-sm-12">
@@ -104,20 +192,20 @@ export default function (props) {
                                                 <React.Fragment>
                                                     <div className="form-group">
                                                         <label className="form-control-label">
-                                                            Mobile Number
+                                                            <strong>Mobile Number</strong>
                                                         </label>
                                                         <input type="text" placeholder="Enter Mobile Number" name='mobile' required
                                                                className="w-100 mb-4 loginput" />
                                                     </div>
                                                     <div className="form-group">
                                                         <label className="form-control-label">
-                                                            Packages
+                                                            <strong>Packages {plan.id !== 4 ? <small>(Per Publisher)</small> : ''}</strong>
                                                         </label>
                                                         <div className="row">
                                                             {
                                                                 subscriptions.map(el => {
                                                                     return (
-                                                                        <div className="col-md-4 col-sm-6">
+                                                                        <div className="col-md-4 col-sm-6 ">
                                                                             <div className="custom-control custom-checkbox">
                                                                                 <input type="radio" className="custom-control-input" value={el.id} onChange={handleChanged}
                                                                                        name="package_id" id={`${el.id}`} defaultChecked={parseInt(plan.id) === parseInt(el.id)}  required/>
@@ -132,6 +220,41 @@ export default function (props) {
                                                         </div>
                                                     </div>
                                                     {
+                                                        plan.id === 4 ?
+                                                            <div>
+                                                                <label className='form-control-label'>
+                                                                    <strong>Number Of Students</strong>
+                                                                </label>
+                                                                <input type="number" step={1} placeholder="Enter Number Of Students" name='students' required
+                                                                       className="w-100 mb-4 loginput" defaultValue={students} onChange={handleStudentsChanged} />
+                                                            </div>
+                                                            : <div className='form-group'>
+                                                                <label className='form-control-label'>
+                                                                    <strong>Publishers</strong>
+                                                                </label>
+                                                                <div className='row'>
+                                                                    {
+                                                                        publishers.map(el => {
+                                                                            return (
+                                                                                <div className='col-md-4 col-sm-6'>
+                                                                                    <div className='custom-control custom-checkbox'>
+                                                                                        <input type="checkbox" className="custom-control-input" value={el.id} onChange={handlePublisherChanged}
+                                                                                               name="publisher_id" id={`${el.id}`} defaultChecked={parseInt(plan.id) === parseInt(el.id)}/>
+                                                                                        <label
+                                                                                            className="custom-control-label form-control-label text-muted"
+                                                                                            htmlFor={`${el.id}`}>{el.name}</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                    }
+                                                    <div className='form-group'>
+                                                        <label className='form-control-label'><strong>Total Cost:</strong> {cost}</label>
+                                                    </div>
+                                                    {
                                                         payment.hasOwnProperty('id') ?
                                                             <React.Fragment>
                                                                 <div className='row'>
@@ -139,7 +262,7 @@ export default function (props) {
                                                                         <h5>Click <b onClick={(event) => {
                                                                             location.href=`${ENV}exams/modules`;
                                                                         }
-                                                                                            }>Confirm Payment</b> after paying</h5>
+                                                                        }>Confirm Payment</b> after paying</h5>
                                                                     </div>
                                                                     <div className='col-md-12'>
                                                                         <img className='mt-5 mb-5' style={{display: 'block', margin:'auto', width: '70%'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>

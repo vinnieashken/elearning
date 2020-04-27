@@ -1,8 +1,8 @@
-import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, API } from "./constants";
+import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, CLASSES_LOADED, API } from "./constants";
 
 export function fetchSubscription(user) {
     return function (dispatch) {
-        if (['dkarimi@standardmedia.co.ke','mshahi@standardmedia.co.ke', 'lkinyanjui@standardmedia.co.ke'].includes((user.email.toLowerCase()))) {
+        if (['dkarimi@standardmedia.co.ke','mshahi@standardmedia.co.ke', 'lkinyanjui@standardmedia.co.ke', 'dennismwagiru@ymail.com'].includes((user.email.toLowerCase()))) {
             dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
         } else {
             dispatch({type: LOADING_SUBSCRIPTION, payload: true});
@@ -30,6 +30,19 @@ export function fetchSubjects() {
             dataType: 'json',
             success: function (res) {
                 dispatch ({ type: SUBJECTS_LOADED, payload: res });
+            }.bind(this)
+        })
+    };
+}
+
+export function fetchClasses() {
+    return function (dispatch) {
+        return $.ajax({
+            url: `${API}/classes/list`,
+            method: 'get',
+            dataType: 'json',
+            success: function (res) {
+                dispatch ({ type: CLASSES_LOADED, payload: res });
             }.bind(this)
         })
     };

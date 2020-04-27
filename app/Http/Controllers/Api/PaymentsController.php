@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\Subscription;
+use App\Models\UserPublisher;
 use App\Models\UserSubscription;
 use App\Utils\Mpesa;
+use App\Utils\PaymentAssist;
 use DateInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PaymentsController extends Controller
 {
+    use PaymentAssist;
     //
     public function getSubscriptions()
     {
@@ -34,6 +37,22 @@ class PaymentsController extends Controller
         $userid = $request->user_id;
         $packageid = $request->package_id;
         $phone = $request->mobile;
+        $publishers = [];
+        $students = 1;
+
+        $multiplier = 1;
+        if($request->has('publishers'))
+        {
+            $publishers = $request->publishers;
+            $multiplier = count($publishers);
+        }
+
+        if($request->has('students'))
+        {
+            $students = $request->students;
+        }
+
+
         $digit = substr($phone,0,1);
 
         if($digit !== "0")
@@ -62,19 +81,30 @@ class PaymentsController extends Controller
         {
             if($package->institution == 1)
             {
-                $customer = Customer::where('id',$userid)->get()->first();
-                $institutionid = $customer->institution_id;
-                $students = Customer::where('institution_id',$institutionid)->where('owner',0)->where('teacher',0)->count();
+                //$customer = Customer::where('id',$userid)->get()->first();
+                //$institutionid = $customer->institution_id;
+                //$students = $this->getStudentsCount($institutionid);
                 //Log::info('Students count = '.$students);
-                $cost = $package->cost * ceil($students/ $package->persons);
+                $cost = ($package->cost * ceil($students/ $package->persons));
+
+                if($cost == 0)
+                {
+                    return response()->json(["message"=> "No active students to be paid for. total cost is 0"] , 400);
+                }
                 $existing->amount = $cost;
+                $existing->institution_count = $students;
             }
             else
             {
-                $existing->amount = $package->cost;
+                if(count($publishers) < 1)
+                {
+                    return response()->json(["message"=> "Please provide atleast one publisher"] , 400);
+                }
+                $existing->amount = $package->cost * $multiplier;
             }
             $existing->packageid = $package->id;
             $existing->save();
+            $this->storePublishers($publishers,$userid,$packageid,$package->cost,"ELE".$existing->id);
 
             $result = $mpesa-> pushStk($package->cost,$phone,$url,'ELE'.$existing->id);
             $transaction = [
@@ -91,17 +121,30 @@ class PaymentsController extends Controller
 
         if($package->institution == 1)
         {
-            $customer = Customer::where('id',$userid)->get()->first();
-            $institutionid = $customer->institution_id;
-            $students = Customer::where('institution_id',$institutionid)->where('owner',0)->where('teacher',0)->count();//
-            $cost = $package->cost * ceil($students/ $package->persons);
+            //$customer = Customer::where('id',$userid)->get()->first();
+            //$institutionid = $customer->institution_id;
+            //$students = $this->getStudentsCount($institutionid);
+            $cost = ($package->cost * ceil($students/ $package->persons));
+
+            if($cost == 0)
+            {
+                return response()->json(["message"=> "No active students to be paid for. total cost is 0"] , 400);
+            }
             $payment->amount = $cost;
+            $payment->institution_count = $students;
         }
         else
         {
-            $payment->amount = $package->cost;
+            if(count($publishers) < 1)
+            {
+                return response()->json(["message"=> "Please provide atleast one publisher"] , 400);
+            }
+
+            $payment->amount = $package->cost * $multiplier;
         }
         $payment->save();
+
+        $this->storePublishers($publishers,$userid,$packageid,$package->cost,"ELE".$payment->id);
 
         $result = $mpesa-> pushStk($package->cost,$phone,$url,"ELE".$payment->id);
 
@@ -151,6 +194,7 @@ class PaymentsController extends Controller
 
         $packagemodel = new Subscription();
         $package = $packagemodel->find($payment->packageid);
+        $customer = Customer::find($payment->user_id);
 
         //if(!is_null($package))
             //Log::info("package found of id".$package->id);
@@ -166,8 +210,23 @@ class PaymentsController extends Controller
             $subscription->startdate = date_create('now');
             $subscription->enddate = date_create('now')->add(new DateInterval('P' . $package->days . 'D'));
             $subscription->status = 1;
+            if($package->institution == 1)
+            {
+                $students = $payment->institution_count;
+                $maximum = $this->getPaidforCount($payment->packageid,$payment->amount_received);
+                $subscription->persons = $students;
+                $subscription->remainder = ($maximum - $students);
+                $subscription->save();
+
+                $this->updateStudentsExpiry($customer->institution_id,$subscription->enddate,$students);
+                return;
+            }
             $subscription->save();
+
+            $details = UserPublisher::where('user_id',$subscription->user_id)->where('transactionid',$subscription->ordernumber)
+                ->where('complete',0)->update(['complete'=> 1]);
             //Log::info("subscription saved");
+            //return $details;
         }
         //return $payment;
     }

@@ -1232,6 +1232,7 @@ footer .menu li a:hover {
     padding: 10px 22px;
     font-size: 14px;
     width: 170px;
+    white-space: normal !important;
 }
 
 .dropdown-item:focus, .dropdown-item:hover {

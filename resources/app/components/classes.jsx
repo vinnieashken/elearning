@@ -8,6 +8,7 @@ const { SearchBar } = Search;
 import BootstrapTable from "react-bootstrap-table-next";
 import moment from "moment";
 import {Helmet} from "react-helmet";
+import {PUBLIC_URL} from "../../app-old/common/constants";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -66,21 +67,39 @@ export default function (props) {
     return (
         <React.Fragment>
             <div className="application">
-            <Helmet>
-                <link rel="canonical" href={pathname} />
-                <meta name="keywords" content="Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili" />
-                <meta name="author" content="Standard Group" />
-                <meta name="description" content="Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more" />
-                <meta property="twitter:title" content="Tutor-Soma Tu : Classes : The Standard" />
-                <meta property="twitter:description" content="Tutor-Soma Tu - Classes " />
-                <meta property="twitter:url" content={pathname} />
-                <meta property="og:title" content="Tutor-Soma Tu : Classes : The Standard" />
-                <meta property="og:description" content="Tutor-Soma Tu - Classes " />
-                <meta property="og:url" content={pathname} />
-            </Helmet>
+                <Helmet>
+                    <link rel="canonical" href={pathname} />
+                    <meta name="keywords" content="Tutorsoma Tu, Kenya, KCSE, KCPE, elearning, past revision papers, online courses, Education in Kenya, Maths, Science, Technology, English, Kiswahili" />
+                    <meta name="author" content="Standard Group" />
+                    <meta name="description" content="Tutorsoma Tu is an e-learning platform targeting students in the Kenya education system. Learn Maths, English, Kiswahili, Social Studies, Science and many more" />
+                    <meta property="twitter:title" content="Tutor-Soma Tu : Classes : The Standard" />
+                    <meta property="twitter:description" content="Tutor-Soma Tu - Classes " />
+                    <meta property="twitter:url" content={pathname} />
+                    <meta property="og:title" content="Tutor-Soma Tu : Classes : The Standard" />
+                    <meta property="og:description" content="Tutor-Soma Tu - Classes " />
+                    <meta property="og:url" content={pathname} />
+                </Helmet>
             </div>
-            <div id="about" className="section-padding mt-5 profile">
-                <div className="container mt-5">
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about" className="section-padding profile">
+                <div className="container">
                     {
                         <React.Fragment>
                             <div className="row">
@@ -126,6 +145,9 @@ export default function (props) {
                                                                         </div>
                                                                     </div>
                                                                     <BootstrapTable {...props.baseProps}
+                                                                                    headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                    headerClasses="border-0" rowClasses="border-0"
+                                                                                    rowStyle={ { borderRadius: '18px' } }
                                                                                     wrapperClasses="table-responsive"/>
 
                                                                 </React.Fragment>

@@ -61,6 +61,24 @@ export default function (props) {
 
     return (
         <React.Fragment>
+            <div id="sliders">
+                <div className="full-width">
+                    <div className="carousel slide" id="light-slider">
+                        <div id="carousel-area">
+                            <div className="carousel slide" data-ride="carousel" id="carousel-slider">
+
+                                <div className="carousel-inner smaller" role="listbox">
+                                    <div className="carousel-item active">
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/rendered.png`} style={{height: '76px', objectFit: 'cover'}} />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="page-title">
                 <div className="row justify-content-between align-items-center">
                     <div
@@ -110,7 +128,11 @@ export default function (props) {
                                                                 <SearchBar className='col-md-4 float-right mb-3' { ...props.searchProps } />
                                                             </div>
                                                         </div>
-                                                        <BootstrapTable { ...props.baseProps } wrapperClasses="table-responsive"/>
+                                                        <BootstrapTable { ...props.baseProps }
+                                                                        headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                        headerClasses="border-0" rowClasses="border-0"
+                                                                        rowStyle={ { borderRadius: '18px' } }
+                                                                        wrapperClasses="table-responsive"/>
 
                                                     </React.Fragment>
                                                 )

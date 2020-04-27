@@ -4,18 +4,27 @@ import {
     SUBJECTS_LOADED,
     SUBSCRIPTION_LOADED,
     SUBSCRIPTION_DELETED,
-    LOADING_SUBSCRIPTION
+    LOADING_SUBSCRIPTION,
+    CLASSES_LOADED,
+    USER_UPDATED
 } from "./constants";
 
 const initialState = {
     next: `${ENV}exams/modules`,
     loadingSubscription: false,
+    user: {},
     subscription: {},
     subjects: [],
+    classes: []
 };
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
+        case USER_UPDATED:
+            return Object.assign({
+                user: action.payload
+            })
+
         case NEXT_CHANGED:
             return Object.assign({
                 next: action.payload
@@ -41,6 +50,12 @@ function rootReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 subjects: action.payload
             });
+
+        case CLASSES_LOADED:
+            console.log(action)
+            return Object.assign({}, state, {
+                classes: action.payload
+            })
 
         default:
             return state;
