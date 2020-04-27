@@ -81,23 +81,27 @@
             <div class="card-header">Payments</div>
             <div class="card-body">
                 {{--<input type="text" id="min" placeholder="startdate"> -  <input type="text" id="max"  placeholder="enddate">--}}
-                <table class="table table-striped table-responsive mt-3" id="payments">
+                <table class="table table-striped mt-3" id="payments">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>#</th>
+                            <th>Customer Name</th>
+                            <th>Phone Number</th>
+                            <th>Publisher</th>
+                            <th>Transaction Code</th>
+                            <th>Amount</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>#</th>
+                            <th>Customer Name</th>
+                            <th>Phone Number</th>
+                            <th>Publisher</th>
+                            <th>Transaction Code</th>
+                            <th>Amount</th>
+                            <th>Date</th>
                         </tr>
                     </tfoot>
                 </table>

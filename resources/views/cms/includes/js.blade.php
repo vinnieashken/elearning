@@ -565,7 +565,7 @@
             "processing": true,
             "serverSide": true,
             "ajax":{
-                "url": "{{ url('get_payments') }}",
+                "url": "{{ url('cms/get_payments') }}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: "{{csrf_token()}}"}
@@ -573,10 +573,12 @@
             "columns": [
                 { "data": "*" },
                 { "data": "name" },
-                { "data": "email" },
-                { "data": "phoneno" },
-                { "data": "status" },
-                { "data": "action"}
+                { "data": "phone" },
+                { "data": "institution" },
+                { "data": "transactioncode" },
+                { "data": "amount" },
+                { "data": "date"}
+
             ],
             "dom": 'Bfrtip',
             "buttons": [
