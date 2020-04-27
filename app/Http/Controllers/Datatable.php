@@ -495,8 +495,7 @@ class Datatable extends Controller
 
                 );
 
-                $totalData      = Payment::where('status',1)
-                                          ->count();
+                $totalData      = Payment::count();
 
                 $totalFiltered  = $totalData;
 
@@ -507,8 +506,7 @@ class Datatable extends Controller
 
                 if(empty($request->input('search.value')))
                     {
-                        $posts = Payment::where('status',1)
-                                        ->offset($start)
+                        $posts = Payment::offset($start)
                                         ->limit($limit)
                                         ->orderBy($order,$dir)
                                         ->get();
@@ -519,8 +517,7 @@ class Datatable extends Controller
 
                         //
 
-                        $posts      =   Payment::where('status',1)
-                                                ->where('transactioncode','LIKE',"%{$search}%")
+                        $posts      =   Payment::where('transactioncode','LIKE',"%{$search}%")
                                                 ->orwhere('amount_received','LIKE',"%{$search}%")
                                                 ->orwhere('phoneno','LIKE',"%{$search}%")
                                                 ->offset($start)
@@ -528,8 +525,7 @@ class Datatable extends Controller
                                                 ->orderBy($order,$dir)
                                                 ->get();
 
-                        $totalFiltered =  Payment::where('status',1)
-                                                    ->where('transactioncode','LIKE',"%{$search}%")
+                        $totalFiltered =  Payment::where('transactioncode','LIKE',"%{$search}%")
                                                     ->orwhere('amount_received','LIKE',"%{$search}%")
                                                     ->orwhere('phoneno','LIKE',"%{$search}%")
                                                     ->count();
