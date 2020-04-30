@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Module;
 use App\Models\Option;
 use App\Models\Question;
+use App\Models\UserPublisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -86,7 +87,7 @@ class InstitutionsController extends Controller
         $student = new Customer();
         $existing = $student->where('id',$request->id)->first();
 
-        if(is_null($id) || is_null($institution) || is_null($name) || is_null($adm_no))
+        if(is_null($id) || is_null($institution) || is_null($name))
         {
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
@@ -99,7 +100,9 @@ class InstitutionsController extends Controller
         //$existing->teacher_id = $teacher;
         $existing->email = $email;
         $existing->name = $name;
-        $existing->adm_no = $adm_no;
+        if($request->has('adm_no'))
+            $existing->adm_no = $adm_no;
+
         $existing->login_code = $existing->institution_id.'-'.$existing->adm_no;
         if($convert == 1)
             $existing->teacher = 1;
@@ -279,6 +282,37 @@ class InstitutionsController extends Controller
         $students = $list->where('publisher',1)->get();
 
         return $students;
+    }
+
+    public function getPublishersPayments(Request $request,$id)
+    {
+        $payments = new UserPublisher();
+
+        if($request->has('size') && $request->has('page')) {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results = $payments->where('publisher_id',$id)->
+            leftJoin('customers','user_publishers.user_id','=','customers.user_id')
+                ->select('customers.name','user_publishers.transactionid','user_publishers.amount','user_publishers.created_at as date')->paginate($size)->items();
+
+            $totalrecords = $payments->where('publisher_id',$id)->count();
+
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+            $data ["rows"] = $results;
+            return $data;
+        }
+
+        return $payments->where('publisher_id',$id)->
+        leftJoin('customers','user_publishers.user_id','=','customers.user_id')
+        ->select('customers.name','user_publishers.transactionid','user_publishers.amount','user_publishers.created_at as date')->get();
     }
 
 }
