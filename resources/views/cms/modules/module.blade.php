@@ -17,6 +17,7 @@
                     <th>id</th>
                     <th>Class/Level</th>
                     <th>Publisher</th>
+                    <th>Creator</th>
                     <th>Subject</th>
                     <th>Exam</th>
                     <th>Action</th>
@@ -27,6 +28,7 @@
                     <th>id</th>
                     <th>Class/Level</th>
                     <th>Publisher</th>
+                    <th>Creator</th>
                     <th>Subject</th>
                     <th>Exam</th>
                     <th>Action</th>
