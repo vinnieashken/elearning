@@ -218,7 +218,7 @@ class Datatable extends Controller
                                 $nestedData['creator']      =   ($post->creator!=NULL)?User::where('id',$post->creator)->first()->name:"";
                                 $nestedData['subject']      =   $subject->subject;
                                 $nestedData['module']       =   $post->module;
-                                $nestedData['action']       =   '<a href="#" class="edit-module text-dark mr-3" data-module=\''.$post.'\' >
+                                $nestedData['action']       =   '<div class="d-flex flex-row"><a href="#" class="edit-module text-dark mr-3" data-module=\''.$post.'\' >
                                                                     <i class="fas fa-edit"></i>
                                                                  </a>
                                                                  <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark" title="Questions">
@@ -226,7 +226,7 @@ class Datatable extends Controller
                                                                  </a>
                                                                  <a href="" class="delete-record text-dark ml-3" data-id="'.$post->id.'" data-table="modules">
                                                                     <i class="fas fa-trash"></i>
-                                                                 </a>';
+                                                                 </a></div>';
                                 $data[] = $nestedData;
                             }
                     }
