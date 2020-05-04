@@ -75,6 +75,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::post('/institution/modules/questions/add','Api\InstitutionsController@addModuleQuestions');
     Route::post('/institution/modules/questions/edit','Api\InstitutionsController@editModuleQuestions');
     Route::get('/publishers/list','Api\InstitutionsController@getPublishers');
+    Route::get('/publishers/payments/{publisherid}','Api\InstitutionsController@getPublishersPayments');
 
     Route::get('testsub','Api\LoginController@testSubscribe');
 
