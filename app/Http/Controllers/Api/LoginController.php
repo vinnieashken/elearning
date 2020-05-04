@@ -208,6 +208,8 @@ class LoginController extends Controller
             $institution->name = $request->institution_name;
             $institution->phone = $request->institution_phone;
             $institution->address = $request->institution_address;
+            if($request->has('publisher'))
+                $institution->publisher = 1;
             $institution->save();
 
             $customer->user_id = $objbody->id;
@@ -215,6 +217,8 @@ class LoginController extends Controller
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
             $customer->owner = 1;
+            if($request->has('publisher'))
+                $customer->publisher = 1;
             $customer->save();
 
             $customer = $customer->with('institution')->where('id',$customer->id)->first();
