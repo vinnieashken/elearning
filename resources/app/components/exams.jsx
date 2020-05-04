@@ -154,7 +154,7 @@ export default function (props) {
                         <React.Fragment>
                             <div className="row">
                                 <div className="col-md-12">
-                                    <h2 className="section-title wow fadeInDown animated text-center mt-5"
+                                    <h2 className="section-title wow fadeInDown animated text-center "
                                         data-wow-delay="0.3s">Examination papers</h2>
                                 </div>
 
@@ -173,9 +173,10 @@ export default function (props) {
                                                 </div> :
                                                 <ToolkitProvider
                                                     keyField="id"
-                                                    data={ modules.filter(el => {
-                                                        return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
-                                                    }) }
+                                                    data={modules.reverse()}
+                                                    // data={ modules.filter(el => {
+                                                    //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
+                                                    // }) }
                                                     columns={
                                                         [
                                                             {dataField: 'id',      text: 'ID',    sort: true },

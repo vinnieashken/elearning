@@ -164,7 +164,7 @@ export default function (props) {
                                 </Helmet>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <h2 className="section-title wow fadeInDown animated mt-5" data-wow-delay="0.3s">{`${exam.name}`}</h2>
+                                        <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.name}`}</h2>
                                     </div>
                                 </div>
                                 {

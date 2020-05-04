@@ -110,6 +110,11 @@ const ExamPerformance = Loadable({
     loading: Loading
 })
 
+const PaymentReport = Loadable({
+    loader: () => import('./paymentReport'),
+    loading: Loading
+})
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -354,6 +359,7 @@ export default function (props) {
                                                                             <Link className="dropdown-item" to={`${ENV}teachers`}>Registered Teachers </Link>
                                                                             {/*<Link className="dropdown-item" to={`${ENV}exams/performance`}>Student Performance </Link>*/}
                                                                             <Link className="dropdown-item" to={`${ENV}exams/mine`}>My Papers</Link>
+                                                                            <Link className="dropdown-item" to={`${ENV}report/payments`}>Payments</Link>
                                                                         </div>
                                                                     </li> : ''
                                                             }
@@ -678,6 +684,24 @@ export default function (props) {
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <Teachers {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}report/payments`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <PaymentReport {...props} user={user}/>
                                                            : props.history.push({
                                                                pathname: `${ENV}subscriptions`,
                                                                state: {
