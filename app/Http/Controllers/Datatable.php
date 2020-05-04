@@ -215,6 +215,7 @@ class Datatable extends Controller
                                 $nestedData['id']           =   $post->id;
                                 $nestedData['level']        =   Level::where('id',$subject->class_id)->first()->class;
                                 $nestedData['publisher']    =   ($post->institution_id < 1)?"":Institution::where('id',$post->institution_id)->first()->name;
+                                $nestedData['creator']      =   ($post->creator!=NULL)?User::where('id',$post->creator)->first()->name:"";
                                 $nestedData['subject']      =   $subject->subject;
                                 $nestedData['module']       =   $post->module;
                                 $nestedData['action']       =   '<a href="#" class="edit-module text-dark mr-3" data-module=\''.$post.'\' >

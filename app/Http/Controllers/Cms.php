@@ -86,7 +86,7 @@ class Cms extends Controller
                         $module->module         =   $request->module;
                         $module->subject_id     =   $request->subject;
                         $module->institution_id =   $request->publisher_id;
-                        $module->creator        =   \Auth::User()->id;
+                        // $module->creator        =   \Auth::User()->id;
                         $req                    =   $module->save();
                         if($req)
                             {
