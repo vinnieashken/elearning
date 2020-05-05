@@ -67,8 +67,7 @@
                     <div class="form-group">
                         <label for="add-subject" class="control-label">Subject</label>
                         <select name="subject" id="add-subject" class="custom-select m-subject">
-                            <option value="all">All</option>
-
+                           
                         </select>
                     </div>
                     <div class="form-group">
@@ -99,7 +98,7 @@
                     <div class="form-group">
                         <label for="edit-publisher" class="control-label">Publisher</label>
                         <select name="publisher_id" id="edit-publisher" class="custom-select m-class">
-                            @foreach(App\Models\Institution::all() as $value)
+                            @foreach(App\Models\Institution::where('publisher',1)->get() as $value)
                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
                         </select>
