@@ -16,7 +16,7 @@ import { fetchSubscription } from "../common/actions";
 import { useDispatch } from "react-redux";
 
 export default function Login(props) {
-    const oldState = props.history.location.state;
+    const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
 
     const [processing, setProcessing] = useState(false);
     const [message, setMessage] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('message') ? oldState.message : false);

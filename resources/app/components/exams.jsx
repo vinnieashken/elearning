@@ -89,7 +89,7 @@ export default function (props) {
         return (
             <div className="actions ml-3">
                 {
-                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
+                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id)) && parseInt(user.institution_id) !== 11) ?
                         <React.Fragment>
                             <Link to={{
                                 pathname: `${ENV}exams/exam/${row.id}/performance`,
