@@ -78,6 +78,7 @@ export default function (props) {
         })
     };
 
+
     const handleChanged = (e) => {
         const package_id = $(`input[name="package_id"]:checked`).val();
         const selectedPackage = subscriptions.filter(el => {
@@ -103,7 +104,7 @@ export default function (props) {
         const sel = [];
         $.each($("input[name='publisher_id']:checked"), function(){
             const selpub = publishers.filter(el => {
-                return el.id === parseInt($(this).val())
+                return el.institution_id === parseInt($(this).val())
             })[0]
             sel.push(selpub)
         });
@@ -195,7 +196,7 @@ export default function (props) {
                                                             <strong>Mobile Number</strong>
                                                         </label>
                                                         <input type="text" placeholder="Enter Mobile Number" name='mobile' required
-                                                               className="w-100 mb-4 loginput" />
+                                                               className="w-100 mb-4 loginput" onChange={handleChanged}/>
                                                     </div>
                                                     <div className="form-group">
                                                         <label className="form-control-label">
@@ -238,11 +239,11 @@ export default function (props) {
                                                                             return (
                                                                                 <div className='col-md-4 col-sm-6'>
                                                                                     <div className='custom-control custom-checkbox'>
-                                                                                        <input type="checkbox" className="custom-control-input" value={el.id} onChange={handlePublisherChanged}
-                                                                                               name="publisher_id" id={`${el.id}`} defaultChecked={parseInt(plan.id) === parseInt(el.id)}/>
+                                                                                        <input type="checkbox" className="custom-control-input" value={el.institution_id} onChange={handlePublisherChanged}
+                                                                                               name="publisher_id" id={`${el.institution_id}`} />
                                                                                         <label
                                                                                             className="custom-control-label form-control-label text-muted"
-                                                                                            htmlFor={`${el.id}`}>{el.name}</label>
+                                                                                            htmlFor={`${el.institution_id}`}>{el.name}</label>
                                                                                     </div>
                                                                                 </div>
                                                                             )
