@@ -86,7 +86,6 @@ class Mpesa
             'TransactionDesc' => 'Elearning',
         ];
 
-        throw new ValidationException("", $data);
         try{
 
 			//'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
