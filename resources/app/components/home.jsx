@@ -91,7 +91,7 @@ export default function (props) {
 
                                 <div className="carousel-inner" role="listbox">
                                     <div className="carousel-item active">
-                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/banner.jpg`} style={{height: '460px', objectFit: 'cover'}} />
+                                        <img alt="" src={`${PUBLIC_URL}/static/new/img/banner.jpg?ss`} style={{height: '460px', objectFit: 'cover'}} />
                                             <div className="container">
                                                 <div className="carousel-caption text-left mt-5 mt-md-0">
 
