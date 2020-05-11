@@ -191,7 +191,7 @@ strong {
 
 .bg-danger {
     color: #fff;
-    background: #ec7160;
+    background-color: #e30613!important;
     padding: 3px 4px;
 }
 
@@ -881,9 +881,9 @@ footer .menu li a:hover {
 /* / End Default Button */
 /* Success Button */
 .btn-success, .btn-success:active, .btn-success:focus {
-    color: #87c056;
-    border: 2px solid #87c056;
-    background: transparent;
+    color: #f3f8ee;
+    border: 2px solid #e33906;
+    background: #e33906;
 }
 
 .btn-success:hover {
@@ -894,14 +894,14 @@ footer .menu li a:hover {
 
 .btn-success-filled, .btn-success-filled:active, .btn-success-filled:focus {
     color: #fff;
-    background: #87c056;
-    border: 2px solid #87c056;
+    background: #2d3084;
+    border: 2px solid #2d3084;
 }
 
 .btn-success-filled:hover {
     color: #fff;
-    background: #74a44a;
-    border: 2px solid #74a44a;
+    background: #e40f1b;
+    border: 2px solid #e40f1b;
 }
 
 /* End Success Button */
@@ -2043,6 +2043,11 @@ nav#menu span.fa.fa-bars:hover {
     padding: 30px 0;
 }
 
+.section-padding {
+    padding: 60px 0!important;
+}
+
+
 .about h5 {
     font-size: 18px;
 }
@@ -2605,10 +2610,18 @@ nav#menu span.fa.fa-bars:hover {
 
 .card-title {
     color: #444;
-    font-size: 18px;
+    font-size: 26px;
+    line-height: 0.9;
     margin-top: 0;
     margin-bottom: 15px;
 }
+
+/*.card-title {*/
+/*    color: #444;*/
+/*    font-size: 18px;*/
+/*    margin-top: 0;*/
+/*    margin-bottom: 15px;*/
+/*}*/
 
 .card-text {
     font-size: 14px;
@@ -3039,9 +3052,9 @@ nav#menu span.fa.fa-bars:hover {
 }
 
 /* / Sliders */
-#carousel-area {
-    background: #2c3e50;
-}
+/*#carousel-area {*/
+/*    background: #2c3e50;*/
+/*}*/
 
 #carousel-area .btn-lg {
     margin: 10px;
@@ -4220,15 +4233,18 @@ figure {
 }
 
 .table-bordered > thead > tr > th {
-    text-align: center;
-    /*background: #373d4a;*/
+    text-align: left;
+    /* background: #373d4a; */
     font-size: 16px;
     font-weight: 700;
-    padding: 26px 10px;
+    /* padding: 26px 10px; */
 }
 
+
 .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
-    border: 1px solid #f1f1f1;
+    border: 5px solid #2f3286;
+    margin-bottom: 10px;
+    /* border-radius: 20px; */
 }
 
 .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -4979,10 +4995,11 @@ nav a {
 .examcard .list-group-item {
     position: relative;
     display: block;
-    padding: 3px 1.25rem;
+    padding: 3px 3px;
     margin-bottom: -1px;
-    background-color: #fff;
+    background-color: #fad93f;
     border: none;
+    /* border-radius: 20px; */
 }
 
 .number {
@@ -5358,11 +5375,13 @@ em {
 }
 .m12 .card-body {
     -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
     height: 185px;
+    background: #fff;
+    border-radius: 8px;
 }
+
 .lighttext {
     font-weight: 200 !important;
 }
@@ -5510,11 +5529,15 @@ em {
 
 .exam .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     padding: 10px;
-    color: #444;
-    text-align: center;
+    color: #7f2106;
+    background: #fad93f;
+    text-align: left;
+    padding-left: 42px!important;
     font-size: 14px;
-    border-right: 2px solid #ffffff;
+    border-right: 5px solid #2f3286;
+    font-weight: 600;
 }
+
 
 .table td, .table th {
     padding: .75rem;
@@ -5674,15 +5697,18 @@ th, td {
     }
 
     .exam .section-title, .profile .section-title, .pricing .section-title {
-        color: #0665b0;
-        font-size: 24px;
-        text-align: center;
+        color: #181818;
+        font-size: 45px;
+        text-align: left!important;
+        font-family: raleway;
+        font-weight: 800;
         letter-spacing: 1px;
         line-height: 1;
         margin-bottom: 16px;
-        padding: 0 10px;
+        /* padding: 0 10px; */
         position: relative;
     }
+
 
     .topicons {
         font-size: 30px;

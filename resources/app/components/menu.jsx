@@ -121,7 +121,7 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
-    const [classes, setClasses] = useSelector(state => state.classes);
+    const classes = useSelector(state => state.classes);
     const subscription = useSelector(state => state.subscription);
     const subjects = useSelector(state => state.subjects);
     const loadingSubscription = useSelector(state => state.loadingSubscription);
@@ -235,15 +235,15 @@ export default function (props) {
                                         <span className="caret" />
                                     </a>
                                     <ul className="dropdown-menu">
-                                        <li><Link to={`${ENV}exams/classes/2/subjects`}>Class 8</Link></li>
+                                        {/*<li><Link to={`${ENV}exams/classes/2/subjects`}>Class 8</Link></li>*/}
 
-                                        {/*{*/}
-                                        {/*    classes.slice(0, 4).map(el => {*/}
-                                        {/*        return (*/}
-                                        {/*            <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>*/}
-                                        {/*        )*/}
-                                        {/*    })*/}
-                                        {/*}*/}
+                                        {
+                                            classes.slice(0, 4).map(el => {
+                                                return (
+                                                    <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>
+                                                )
+                                            })
+                                        }
                                     </ul>
                                 </div>
                                 <div className="dropdown">
@@ -305,15 +305,15 @@ export default function (props) {
                                             CLASSES
                                         </a>
                                         <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
-                                            <Link className="dropdown-item" to={`${ENV}exams/classes/2/subjects`}>Class 8</Link>
+                                            {/*<Link className="dropdown-item" to={`${ENV}exams/classes/2/subjects`}>Class 8</Link>*/}
 
-                                            {/*{*/}
-                                            {/*    classes.slice(0, 4).map(el => {*/}
-                                            {/*        return (*/}
-                                            {/*            <Link className="dropdown-item" to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link>*/}
-                                            {/*        )*/}
-                                            {/*    })*/}
-                                            {/*}*/}
+                                            {
+                                                classes.slice(0, 4).map(el => {
+                                                    return (
+                                                        <Link className="dropdown-item" to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link>
+                                                    )
+                                                })
+                                            }
                                         </div>
                                     </li>
                                     <li className="nav-item dropdown mt-4">
