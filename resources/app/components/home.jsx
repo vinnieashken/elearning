@@ -101,8 +101,8 @@ export default function (props) {
                                                             Anytime</font></div>
                                                     <Link className="btn btn-lg btn-common animated fadeInUp" to={`${ENV}signin`}>Get
                                                         Started</Link>
-                                                    <a className="btn btn-lg btn-border animated fadeInUp" href="#services">Learn
-                                                        More</a>
+                                                    {/*<a className="btn btn-lg btn-border animated fadeInUp" href="#services">Learn*/}
+                                                    {/*    More</a>*/}
                                                 </div>
                                             </div>
                                     </div>
@@ -113,7 +113,7 @@ export default function (props) {
                     </div>
                 </div>
             </div>
-            <div className="section-padding" id="about">
+            <div className="" id="">
                 <div className="container">
                     <div className="row m12">
                         <div className="col-lg-3 col-md-6 col-sm-6">
@@ -174,7 +174,7 @@ export default function (props) {
 
                 </div>
             </div>
-            <div className="section-padding" id="feature">
+            <div className="" id="feature">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -182,7 +182,7 @@ export default function (props) {
                                 data-wow-delay="0.3s">Subjects</h2>
                         </div>
                     </div>
-                    <div className="row mx-md-5">
+                    <div className="row">
                         {
                             props.subjects.slice(0, 6).map(el => {
                                 return(

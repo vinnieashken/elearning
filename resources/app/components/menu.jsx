@@ -213,7 +213,7 @@ export default function (props) {
             {
                 <React.Fragment>
                     <header id="header-wrap">
-                        <nav className="navbar navbar-expand-md text-white  fixed-top scrolling-navbar indigo">
+                        <nav className="navbar navbar-expand-md text-white  fixed-top scrolling-navbar indigo top-nav-collapse">
                             <div className="w-100 d-block d-lg-none d-md-none ml-2">
                                 <a className="nav-link" href="#">
                                     <span style={{fontSize: "20px", cursor:"pointer"}} className="float-right opennav" onClick={toggleSideBar}>&#9776;</span>
