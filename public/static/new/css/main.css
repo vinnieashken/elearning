@@ -355,7 +355,7 @@ strong {
 }
 
 .red {
-    color: #ffffff;
+    color: #424590;
     text-transform: uppercase;
 }
 
@@ -5033,7 +5033,7 @@ nav a {
 .exam .section-title,
 .profile .section-title,
 .pricing .section-title {
-    color: #0665b0;
+    color: #fff;
     font-size: 29px;
     text-align: center;
     letter-spacing: 1px;
