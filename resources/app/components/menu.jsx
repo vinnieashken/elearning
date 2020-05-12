@@ -286,7 +286,7 @@ export default function (props) {
                             {/*</script>*/}
 
 
-                            <div className="collapse navbar-collapse flex-column " id="navbar">
+                            <div className="collapse navbar-collapse flex-column " id="navbar" style={{background: 'red'}}>
 
 
                                 <ul className="navbar-nav justify-content-around w-90">
