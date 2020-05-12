@@ -34,6 +34,14 @@ export default function (props) {
         getExam();
     }, []);
 
+    const removeTags = (str) => {
+        if ((str===null) || (str===''))
+            return false;
+        else
+            str = str.toString();
+        return str.replace( /(<([^>]+)>)/ig, '');
+    }
+
     const getExam = () => {
         $.ajax({
             url: `${API}/questions/module/${props.match.params.exam}?userid=${student.id}`,
@@ -307,14 +315,14 @@ export default function (props) {
                                                                                                         const selected = answer.hasOwnProperty('user_option') && answer.user_option === ans.id
                                                                                                         return (
                                                                                                             <React.Fragment>
-                                                                                                                <li className="list-group-item ml-4">
+                                                                                                                <li className="list-group-item ">
                                                                                                                     <input type="radio" id={`${ans.id}`} required={true}
                                                                                                                            defaultChecked={selected}
                                                                                                                            disabled={answer.hasOwnProperty('user_option')}
                                                                                                                            value={ans.id} name={el.id} />
                                                                                                                     <label htmlFor={`${ans.id}`}>
-                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${ans.option.replace(/(<br>\s*)+$/)}`} }
-                                                                                                                              className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />
+                                                                                                                        {/*<span dangerouslySetInnerHTML={ {__html: `${ans.option.replace(/(<br>\s*)+$/)}`} } className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />*/}
+                                                                                                                        <span className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} > {removeTags(ans.option)} </span>
                                                                                                                         {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
                                                                                                                     </label>
                                                                                                                 </li>
