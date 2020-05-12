@@ -95,10 +95,10 @@ export default function (props) {
                                             <div className="container">
                                                 <div className="carousel-caption text-left mt-5 mt-md-0">
 
-                                                    <div className="slide-title animated fadeInDown mb-4"><span
-                                                        className="red"> Keep Learning</span>
-                                                        <br /> <font class="slidebottext">Anywhere
-                                                            Anytime</font></div>
+                                                    {/*<div className="slide-title animated fadeInDown mb-4"><span*/}
+                                                    {/*    className="red"> Keep Learning</span>*/}
+                                                    {/*    <br /> <font class="slidebottext">Anywhere*/}
+                                                    {/*        Anytime</font></div>*/}
                                                     <Link className="btn btn-lg btn-common animated fadeInUp" to={`${ENV}signin`}>Get
                                                         Started</Link>
                                                     {/*<a className="btn btn-lg btn-border animated fadeInUp" href="#services">Learn*/}

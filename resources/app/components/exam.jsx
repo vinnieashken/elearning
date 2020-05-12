@@ -360,7 +360,7 @@ export default function (props) {
                                                                         processing ? <ClipLoader /> : showAns ? '' :
                                                                             <div className='row'>
                                                                                 <div className="col-md-12">
-                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit</button>
+                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit For Marking</button>
                                                                                 </div>
                                                                             </div>
                                                                     }
