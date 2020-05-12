@@ -39,7 +39,7 @@ export default function (props) {
             return false;
         else
             str = str.toString();
-        return str.replace( /(<([^>]+)>)/ig, '');
+        return str.replace( /(<([^>]+)>)/ig, '').replace(/&nbsp;/g, '');
     }
 
     const getExam = () => {
