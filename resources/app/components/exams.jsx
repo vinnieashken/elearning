@@ -99,14 +99,24 @@ export default function (props) {
                             }} className='btn btn-sm btn-rounded btn-outline-success btn-success mr-1'>
                                 Performance <i className="fa fa-graduation-cap" />
                             </Link>
-                            <Link to={`${ENV}exams/exam/edit/${row.id}`} className='btn btn-sm btn-rounded btn-outline-success btn-success mr-1'>
+                            <Link to={{
+                                pathname: `${ENV}exams/exam/edit/${row.id}`,
+                                state: {
+                                    exam: row
+                                }
+                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success mr-1'>
                                 Edit Paper <i className="fa fa-plus" />
                             </Link>
                             <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success' data-toggle="modal" data-target="#exampleModal">
                                 Add Question <i className="fa fa-pencil" />
                             </Link>
                         </React.Fragment> :
-                        <Link to={`${ENV}exams/exam/${row.id}`} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>
+                        <Link to={{
+                            pathname: `${ENV}exams/exam/${row.id}`,
+                            state: {
+                                exam: row
+                            }
+                        }} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>
                             {row.done ? `Revise Paper` : `Take Test`}
                         </Link>
                 }
