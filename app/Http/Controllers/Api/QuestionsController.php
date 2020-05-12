@@ -7,6 +7,7 @@ use App\Jobs\SendResultsEmail;
 use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
 use App\Models\Customer;
+use App\Models\Institution;
 use App\Models\Level;
 use App\Models\Marks;
 use App\Models\Module;
@@ -26,10 +27,19 @@ class QuestionsController extends Controller
     public function getModuleQuestions(Request $request,$moduleid)
     {
 
+        $institution = new Institution();
+
         $model = new Question();
         //$userid = $request->userid;
         $modulesmodel = new Module();
         $module = $modulesmodel->with('subject')->where('id',$moduleid)->first();
+        $publisher = $institution->where('name','like','standard group')->first();
+
+        if($module->institution_id !== NULL)
+        {
+
+            $publisher = $institution->find($module->institution_id);
+        }
         $class = Level::find($module->subject->class_id);
 
         if($request->has('size') && $request->has('page'))
@@ -64,12 +74,14 @@ class QuestionsController extends Controller
             ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')
             ->get();
         $data = [
+            'publisher' => $publisher,
             'id'=> $module->id,
             'class' => $class,
             'subject' => $module->subject,
             'done' => false,
             'name'=> $module->module,
             'questions'=> $results,
+
         ];
 
         if($request->has('userid'))
