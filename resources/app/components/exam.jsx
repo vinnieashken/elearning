@@ -187,8 +187,8 @@ export default function (props) {
                                     </div>
                                     {
                                         examData.hasOwnProperty('institution_name') ?
-                                            <div className='col-md-12'>
-                                                <span className='section-desc'>{`${examData.class}`}</span><span className='section-desc'>{`${examData.subject}`}</span>
+                                            <div className='col-md-12 text-center mb-3'>
+                                                <span className='section-desc '>{`${examData.class} `}</span><span className='section-desc'>{` ${examData.subject}`}</span>
                                             </div> : ''
                                     }
 

@@ -2041,7 +2041,7 @@ nav#menu span.fa.fa-bars:hover {
 /* About */
 #about {
     padding: 30px 0;
-    background: #e5eafd;
+    background: #e5eafd !important;
 }
 
 .section-padding {
@@ -3082,9 +3082,9 @@ nav#menu span.fa.fa-bars:hover {
 }
 
 #carousel-area .carousel-item .carousel-caption {
-    top: 28%;
-    right: 10%;
-    left: 10%;
+    top: 50%;
+    right: 16%;
+    left: 13%;
     text-shadow: none;
 }
 
@@ -4222,7 +4222,7 @@ figure {
 }
 
 .table-bordered.table-2 > thead > tr > th {
-    background: #232833;
+    background: #e5eafd;
     font-weight: 700;
     color: #f3132b;
 }
@@ -4243,7 +4243,7 @@ figure {
 
 
 .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
-    border: 5px solid #2f3286;
+    border: 5px solid #e5eafd;
     margin-bottom: 10px;
     /* border-radius: 20px; */
 }
@@ -4996,15 +4996,23 @@ nav a {
 .examcard .list-group-item {
     position: relative;
     display: block;
-    padding: 3px 3px;
+    padding: 2px 15px 2px 20px;
     margin-bottom: -1px;
-    background-color: #fad93f;
+    /*margin-left: 20px;*/
+    background-color: #fffacd;
     border: none;
     /* border-radius: 20px; */
 }
 
 .number {
     font-weight: bolder;
+}
+
+.section-desc {
+    font-size: 24px;
+    font-weight: 600;
+    color: #e6202c;
+    text-align: center;
 }
 
 .examcard {
@@ -5034,7 +5042,7 @@ nav a {
 .exam .section-title,
 .profile .section-title,
 .pricing .section-title {
-    color: #fff;
+    color: #000000;
     font-size: 29px;
     text-align: center;
     letter-spacing: 1px;
@@ -5531,7 +5539,7 @@ em {
 .exam .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     padding: 10px;
     color: #000;
-    background: #fcfd95;
+    background: #fffacd !important;
     text-align: left;
     padding-left: 10px !important;
     font-size: 14px;
