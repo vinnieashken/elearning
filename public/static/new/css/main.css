@@ -191,7 +191,7 @@ strong {
 
 .bg-danger {
     color: #fff;
-    background-color: #e30613!important;
+    background-color: #1865f1!important;
     padding: 3px 4px;
 }
 
@@ -894,8 +894,8 @@ footer .menu li a:hover {
 
 .btn-success-filled, .btn-success-filled:active, .btn-success-filled:focus {
     color: #fff;
-    background: #2d3084;
-    border: 2px solid #2d3084;
+    background: #e30613;
+    border: 2px solid #e30613;
 }
 
 .btn-success-filled:hover {
@@ -2041,6 +2041,7 @@ nav#menu span.fa.fa-bars:hover {
 /* About */
 #about {
     padding: 30px 0;
+    background: #e5eafd;
 }
 
 .section-padding {
@@ -5529,13 +5530,13 @@ em {
 
 .exam .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     padding: 10px;
-    color: #7f2106;
-    background: #fad93f;
+    color: #000;
+    background: #fcfd95;
     text-align: left;
     padding-left: 10px !important;
     font-size: 14px;
-    border-right: 5px solid #2f3286;
-    font-weight: 600;
+    border-right: 5px solid #e5eafd;
+    font-weight: 600
 }
 
 
@@ -5670,12 +5671,14 @@ th, td {
 
 @media (max-width: 767px) {
     .exam .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-        padding: 4px;
-        color: #444;
-        text-align: center;
-        font-size: 8px;
-        border-right: 2px solid #ffffff;
-        line-height: 16px;
+        padding: 10px;
+        color: #000;
+        background: #fcfd95;
+        text-align: left;
+        padding-left: 10px !important;
+        font-size: 14px;
+        border-right: 5px solid #e5eafd;
+        font-weight: 600
     }
 
     .subj .card-body {
@@ -5697,15 +5700,13 @@ th, td {
     }
 
     .exam .section-title, .profile .section-title, .pricing .section-title {
-        color: #181818;
-        font-size: 45px;
-        text-align: left!important;
-        font-family: raleway;
-        font-weight: 800;
+        color: #000;
+        font-size: 29px;
+        text-align: center;
         letter-spacing: 1px;
         line-height: 1;
         margin-bottom: 16px;
-        /* padding: 0 10px; */
+        padding: 0 10px;
         position: relative;
     }
 
