@@ -99,8 +99,9 @@ export default function (props) {
                                                     {/*    className="red"> Keep Learning</span>*/}
                                                     {/*    <br /> <font class="slidebottext">Anywhere*/}
                                                     {/*        Anytime</font></div>*/}
-                                                    <Link className="btn btn-lg btn-common animated fadeInUp" to={`${ENV}signin`}>Get
-                                                        Started</Link>
+                                                    <Link className="btn btn-lg btn-common animated fadeInUp" to={{
+                                                        pathname:  (props.user && props.user.hasOwnProperty('id')) ? `${ENV}exams/modules` : `${ENV}signin`}}>Get Started
+                                                    </Link>
                                                     {/*<a className="btn btn-lg btn-border animated fadeInUp" href="#services">Learn*/}
                                                     {/*    More</a>*/}
                                                 </div>
