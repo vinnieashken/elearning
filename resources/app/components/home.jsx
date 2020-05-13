@@ -92,20 +92,20 @@ export default function (props) {
                                 <div className="carousel-inner" role="listbox">
                                     <div className="carousel-item active">
                                         <img alt="" src={`${PUBLIC_URL}/static/new/img/banner.jpg?${moment().format('YMMDDHHmmss')}`} style={{objectFit: 'cover'}} />
-                                            <div className="container">
-                                                <div className="carousel-caption text-left mt-5 mt-md-0">
+                                        <div className="container">
+                                            <div className="carousel-caption text-left mt-5 mt-md-0">
 
-                                                    {/*<div className="slide-title animated fadeInDown mb-4"><span*/}
-                                                    {/*    className="red"> Keep Learning</span>*/}
-                                                    {/*    <br /> <font class="slidebottext">Anywhere*/}
-                                                    {/*        Anytime</font></div>*/}
-                                                    <Link className="btn btn-lg btn-common animated fadeInUp" to={{
-                                                        pathname:  (props.user && props.user.hasOwnProperty('id')) ? `${ENV}exams/modules` : `${ENV}signin`}}>Get Started
-                                                    </Link>
-                                                    {/*<a className="btn btn-lg btn-border animated fadeInUp" href="#services">Learn*/}
-                                                    {/*    More</a>*/}
-                                                </div>
+                                                {/*<div className="slide-title animated fadeInDown mb-4"><span*/}
+                                                {/*    className="red"> Keep Learning</span>*/}
+                                                {/*    <br /> <font class="slidebottext">Anywhere*/}
+                                                {/*        Anytime</font></div>*/}
+                                                <Link className="btn btn-lg btn-common animated fadeInUp" to={{
+                                                    pathname:  (props.user && props.user.hasOwnProperty('id')) ? `${ENV}exams/modules` : `${ENV}signin`}}>Get Started
+                                                </Link>
+                                                {/*<a className="btn btn-lg btn-border animated fadeInUp" href="#services">Learn*/}
+                                                {/*    More</a>*/}
                                             </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -117,60 +117,71 @@ export default function (props) {
             <div className="" id="">
                 <div className="container">
                     <div className="row m12">
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="card shad">
-                                <div className="card-body">
-                                    <div className="d-flex mb-2">
-                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
-                                        <div className="card-title icontop">Revision <br /> <font
-                                            class="lighttext">Materials</font></div>
+                        <Link to={{ pathname:  `${ENV}exams/modules` }}>
+                            <div className="col-lg-3 col-md-6 col-sm-6">
+                                <div className="card shad">
+                                    <div className="card-body">
+                                        <div className="d-flex mb-2">
+                                            <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                            <div className="card-title icontop">Revision <br /> <font
+                                                class="lighttext">Materials</font></div>
+                                        </div>
+                                        <p className="card-text"> We make learning fun, engaging and accessible for curious
+                                            children all
+                                            over Kenya</p>
                                     </div>
-                                    <p className="card-text"> We make learning fun, engaging and accessible for curious
-                                        children all
-                                        over Kenya</p>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="card shad">
-                                <div className="card-body">
-                                    <div className="d-flex mb-2">
-                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
-                                        <div className="card-title icontop">Quick <br /> <font
-                                            class="lighttext">Test</font></div>
-                                    </div>
-                                    <p className="card-text">
+                        </Link>
+                        <Link to={{ pathname:  `${ENV}exams/modules` }}>
 
-                                        Take quick tests on the platform to help improve yourself.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="card shad">
-                                <div className="card-body">
-                                    <div className="d-flex mb-2">
-                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
-                                        <div className="card-title icontop">Prediction <br /> <font
-                                            class="lighttext">Questions</font></div>
+                            <div className="col-lg-3 col-md-6 col-sm-6">
+                                <div className="card shad">
+                                    <div className="card-body">
+                                        <div className="d-flex mb-2">
+                                            <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                            <div className="card-title icontop">Quick <br /> <font
+                                                class="lighttext">Test</font></div>
+                                        </div>
+                                        <p className="card-text">
+
+                                            Take quick tests on the platform to help improve yourself.</p>
                                     </div>
-                                    <p className="card-text">
-                                        We provide predictive questions and answers on all primary school subjects</p>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6">
-                            <div className="card shad">
-                                <div className="card-body">
-                                    <div className="d-flex mb-2">
-                                        <i className="fa fa-book topicons mr-md-3 mr-1" />
-                                        <div className="card-title icontop">Past <br /> <font
-                                            class="lighttext">Papers</font></div>
+                        </Link>
+                        <Link to={{ pathname:  `${ENV}exams/modules` }}>
+
+                            <div className="col-lg-3 col-md-6 col-sm-6">
+                                <div className="card shad">
+                                    <div className="card-body">
+                                        <div className="d-flex mb-2">
+                                            <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                            <div className="card-title icontop">Prediction <br /> <font
+                                                class="lighttext">Questions</font></div>
+                                        </div>
+                                        <p className="card-text">
+                                            We provide predictive questions and answers on all primary school subjects</p>
                                     </div>
-                                    <p className="card-text">
-                                        Get all the KCPE past papers from 2000 to date</p>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
+                        <Link to={{ pathname:  `${ENV}exams/modules` }}>
+
+                            <div className="col-lg-3 col-md-6 col-sm-6">
+                                <div className="card shad">
+                                    <div className="card-body">
+                                        <div className="d-flex mb-2">
+                                            <i className="fa fa-book topicons mr-md-3 mr-1" />
+                                            <div className="card-title icontop">Past <br /> <font
+                                                class="lighttext">Papers</font></div>
+                                        </div>
+                                        <p className="card-text">
+                                            Get all the KCPE past papers from 2000 to date</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
 
                 </div>
@@ -187,17 +198,19 @@ export default function (props) {
                         {
                             props.subjects.slice(0, 6).map(el => {
                                 return(
-                                    <div className="col-lg-4 col-md-6 col-sm-6">
-                                        <div className="card subj">
-                                            <div className="card-body">
-                                                <div className="mb-2">
-                                                    <i className="fa fa-star-o topicons mr-3 redicon" />
-                                                    <div className="card-title bold">{el.subject}</div>
+                                    <Link to={{ pathname:  `${ENV}exams/subjects/${el.id}/modules` }}>
+                                        <div className="col-lg-4 col-md-6 col-sm-6">
+                                            <div className="card subj">
+                                                <div className="card-body">
+                                                    <div className="mb-2">
+                                                        <i className="fa fa-star-o topicons mr-3 redicon" />
+                                                        <div className="card-title bold">{el.subject}</div>
+                                                    </div>
+                                                    <p className="card-text">Class 1 to Class 8</p>
                                                 </div>
-                                                <p className="card-text">Class 1 to Class 8</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 )
                             })
                         }
@@ -330,11 +343,11 @@ export default function (props) {
                                                 <img
                                                     src="https://p0.pxfuel.com/preview/364/649/267/asia-space-earth-dark.jpg"
                                                     className="card-img" alt="..." />
-                                                    <div className="card-img-overlay">
-                                                        <h5 className="card-title text-white">Stay Relevant in a Quickly
-                                                            Changing World</h5>
-                                                        <p className="card-text">Learn More</p>
-                                                    </div>
+                                                <div className="card-img-overlay">
+                                                    <h5 className="card-title text-white">Stay Relevant in a Quickly
+                                                        Changing World</h5>
+                                                    <p className="card-text">Learn More</p>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -354,11 +367,11 @@ export default function (props) {
                                                 <img
                                                     src="https://secure.img1-fg.wfcdn.com/im/97073733/compr-r85/3254/32544386/plain-hourglass-sand-timer-60-minutes.jpg"
                                                     className="card-img" alt="..." />
-                                                    <div className="card-img-overlay">
-                                                        <h5 className="card-title text-white">
-                                                            Engaging exams with a timer</h5>
-                                                        <p className="card-text">Learn More</p>
-                                                    </div>
+                                                <div className="card-img-overlay">
+                                                    <h5 className="card-title text-white">
+                                                        Engaging exams with a timer</h5>
+                                                    <p className="card-text">Learn More</p>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -377,11 +390,11 @@ export default function (props) {
                                                 <img
                                                     src="https://elearningindustry.com/wp-content/uploads/2017/02/advantages-and-disadvantages-of-elearning.jpg"
                                                     className="card-img" alt="..." />
-                                                    <div className="card-img-overlay">
-                                                        <h5 className="card-title text-white">
-                                                            Keep track of your performance</h5>
-                                                        <p className="card-text">Learn More</p>
-                                                    </div>
+                                                <div className="card-img-overlay">
+                                                    <h5 className="card-title text-white">
+                                                        Keep track of your performance</h5>
+                                                    <p className="card-text">Learn More</p>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -402,11 +415,11 @@ export default function (props) {
                                                 <img
                                                     src="https://assets.entrepreneur.com/content/3x2/2000/20181119204233-GettyImages-140892148-edit.jpeg"
                                                     className="card-img" alt="..." />
-                                                    <div className="card-img-overlay">
-                                                        <h5 className="card-title text-white">
-                                                            Improve memorising capability</h5>
-                                                        <p className="card-text">Learn More</p>
-                                                    </div>
+                                                <div className="card-img-overlay">
+                                                    <h5 className="card-title text-white">
+                                                        Improve memorising capability</h5>
+                                                    <p className="card-text">Learn More</p>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -426,11 +439,11 @@ export default function (props) {
                                                 <img
                                                     src="https://previews.123rf.com/images/underverse/underverse1506/underverse150600640/41155719-avoid-word-on-notes-paper-with-cork-background-.jpg"
                                                     className="card-img" alt="..." />
-                                                    <div className="card-img-overlay">
-                                                        <h5 className="card-title text-white">
-                                                            Things to avoid when studying from home</h5>
-                                                        <p className="card-text">Learn More</p>
-                                                    </div>
+                                                <div className="card-img-overlay">
+                                                    <h5 className="card-title text-white">
+                                                        Things to avoid when studying from home</h5>
+                                                    <p className="card-text">Learn More</p>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -451,11 +464,11 @@ export default function (props) {
                                                 <img
                                                     src="https://markmanson.net/wp-content/uploads/2020/03/6-books-to-help-you-grow-from-your-pain.jpg"
                                                     className="card-img" alt="..." />
-                                                    <div className="card-img-overlay">
-                                                        <h5 className="card-title text-white">
-                                                            A great place to grow</h5>
-                                                        <p className="card-text">Learn More</p>
-                                                    </div>
+                                                <div className="card-img-overlay">
+                                                    <h5 className="card-title text-white">
+                                                        A great place to grow</h5>
+                                                    <p className="card-text">Learn More</p>
+                                                </div>
                                             </div>
                                         </div>
 
