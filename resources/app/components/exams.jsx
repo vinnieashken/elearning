@@ -34,9 +34,9 @@ export default function (props) {
     useEffect(() => {
         setLoading(true);
         setUser(props.user)
-        if (props.user && props.user.id) {
-            dispatch(fetchSubscription(props.user));
-        }
+        // if (props.user && props.user.id) {
+        //     dispatch(fetchSubscription(props.user));
+        // }
         const subjectArray = {}
         const classArray = {}
         subjects.forEach(el => {
