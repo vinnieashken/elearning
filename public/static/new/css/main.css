@@ -4902,8 +4902,8 @@ nav a {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #151515;
-    overflow-x: hidden;
+    background-color: #faf9f9;
+    overflow-x:hidden;
     transition: 0.5s;
     padding-top: 60px;
 }
@@ -4911,12 +4911,13 @@ nav a {
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
-    color: rgba(129, 129, 129, 0.89) !important;
+    /*font-size: 25px;*/
+    color: #2b2e83!important;
     display: block;
     transition: 0.3s;
-    border-bottom: 1px solid #808080ab;
+    border-bottom: 1px solid #8080802e!important;
     margin-left: 10%;
+    font-size: 14px!important;
 }
 
 .sidenav a:hover {
@@ -5656,8 +5657,6 @@ th, td {
          padding: 9px 0px !important;
      }
 
-    element.style {
-    }
     .navbar li.active a.nav-link {
         color: #f3132b;
     }
@@ -5674,6 +5673,10 @@ th, td {
          font-weight: 600;
          line-height: 1.1;
      }
+    .btn {
+        font-size: 46px;
+        padding: 12px 88px;
+    }
 }
 .smaller{
     height: 70px !important;

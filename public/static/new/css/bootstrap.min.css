@@ -3363,16 +3363,17 @@ tbody.collapse.show {
     display: none;
     float: left;
     min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
+    padding-right: 0px!important;
+    margin-left: 18px!important;
     font-size: 1rem;
-    color: #212529;
+    color: #faf9f9!important;
+    width: 193px;
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: #eae9e9;
     background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: .25rem
+    border: 1px solid rgba(255, 255, 255, 0.8)!important;
+    border-radius: 5px!important;
 }
 
 .dropup .dropdown-menu {
