@@ -122,7 +122,7 @@ export default function (props) {
         formData.append('package_id', package_id);
         if (plan.id !== 4) {
             selectedPublishers.forEach(el => {
-                formData.append('publishers[]', el.id);
+                formData.append('publishers[]', el.institution_id);
             })
         }
         $.ajax({
