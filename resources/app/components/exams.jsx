@@ -11,9 +11,12 @@ import Loading from "../common/loading";
 const { SearchBar } = Search;
 import { Helmet } from 'react-helmet';
 import EditExamModal from "./editExamModal";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchSubscription} from "../common/actions";
 
 export default function (props) {
+    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(true);
     const [modules, setModules] = useState([]);
     const [message, setMessage] = useState(false);
@@ -31,6 +34,9 @@ export default function (props) {
     useEffect(() => {
         setLoading(true);
         setUser(props.user)
+        if (props.user && props.user.id) {
+            dispatch(fetchSubscription(props.user));
+        }
         const subjectArray = {}
         const classArray = {}
         subjects.forEach(el => {
