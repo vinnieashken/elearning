@@ -16,10 +16,10 @@ const images = [
 ];
 
 export default function (props) {
-    const oldState = typeof props.history.location.state ? props.history.location.state : {};
+    const oldState = props.history.location.state ? props.history.location.state : {};
 
     const student = (typeof oldState !== "undefined" && oldState.hasOwnProperty('student')) ? oldState.student : props.user
-    const [examData, setExamData] = useState(oldState.hasOwnProperty('exam') ? oldState.exam : {});
+    // const [examData, setExamData] = useState(oldState.hasOwnProperty('exam') ? oldState.exam : {});
     const [exam, setExam] = useState([]);
     const [userAnswers, setUserAnswers] = useState([]);
     const [showAns, setShowAns] = useState(false);
@@ -33,7 +33,6 @@ export default function (props) {
 
     useEffect(() => {
         console.log(props)
-        console.log(examData)
         getExam();
     }, []);
 
@@ -176,9 +175,9 @@ export default function (props) {
                                 <div className="row">
                                     <div className="col-md-12">
                                         {
-                                            examData.hasOwnProperty('institution_name') ?
+                                            exam.hasOwnProperty('publisher') ?
                                                 <React.Fragment>
-                                                    <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${examData.institution_name}`.toUpperCase()}</h2>
+                                                    <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.publisher.name}`.toUpperCase()}</h2>
                                                     <h4 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.name}`}</h4>
                                                 </React.Fragment> :
                                                 <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.name}`}</h2>
@@ -186,9 +185,9 @@ export default function (props) {
                                         }
                                     </div>
                                     {
-                                        examData.hasOwnProperty('institution_name') ?
+                                        exam.hasOwnProperty('class') && exam.hasOwnProperty('subject') ?
                                             <div className='col-md-12 text-center mb-3'>
-                                                <span className='section-desc '>{`${examData.class} `}</span><span className='section-desc'>{` ${examData.subject}`}</span>
+                                                <span className='section-desc '>{`${exam.class.class} `}</span><span className='section-desc'>{` ${exam.subject.subject}`}</span>
                                             </div> : ''
                                     }
 
