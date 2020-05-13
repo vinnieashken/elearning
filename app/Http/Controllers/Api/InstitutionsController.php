@@ -292,7 +292,7 @@ class InstitutionsController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results = $payments->where('publisher_id',$id)->
+            $results = $payments->where('publisher_id',$id)->where('complete', 1)->
             leftJoin('customers','user_publishers.user_id','=','customers.user_id')
                 ->select('customers.name','user_publishers.transactionid','user_publishers.amount','user_publishers.created_at as date')->paginate($size)->items();
 
