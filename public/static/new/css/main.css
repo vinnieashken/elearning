@@ -5645,9 +5645,10 @@ th, td {
 }
 @media (min-width: 1441px) {
 
-    .carousel-caption{
-        text-align: center !important;
-    }.navbar-nav .nav-link {
+    .carousel-caption {
+        text-align: left !important;
+    }
+    .navbar-nav .nav-link {
          color: #fff !important;
          font-size: 25px;
          margin-right: 18px;
