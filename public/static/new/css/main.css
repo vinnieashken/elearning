@@ -5674,7 +5674,7 @@ th, td {
          line-height: 1.1;
      }
     .btn {
-        font-size: 46px;
+        /*font-size: 46px;*/
         padding: 12px 88px;
     }
 }
