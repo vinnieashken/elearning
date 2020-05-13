@@ -71,7 +71,21 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setPublishers(res);
+                let pubs = [];
+                let selPubs = [];
+                res.forEach(el => {
+                    const thisPub = el;
+                    thisPub['selected'] = false;
+                    if (parseInt(el.institution_id) === 11) {
+                        thisPub['selected'] = true;
+                        selPubs.push(thisPub)
+                    }
+                    pubs.push(thisPub)
+
+                })
+                setCost(isNaN(plan.cost) ? 0 : plan.cost * selPubs.length)
+                setPublishers(pubs);
+                setSelectedPublishers(selPubs);
                 setLoading(false);
             }.bind(this)
         })
@@ -239,7 +253,7 @@ export default function (props) {
                                                                                 <div className='col-md-6 col-sm-12'>
                                                                                     <div className='custom-control custom-checkbox'>
                                                                                         <input type="checkbox" className="custom-control-input" value={el.institution_id} onChange={handlePublisherChanged}
-                                                                                               name="publisher_id" id={`${el.institution_id}`} required={true}/>
+                                                                                               name="publisher_id" id={`${el.institution_id}`} required={true} defaultChecked={el.selected}/>
                                                                                         <label
                                                                                             className="custom-control-label form-control-label text-muted"
                                                                                             htmlFor={`${el.institution_id}`}>{el.name}</label>
