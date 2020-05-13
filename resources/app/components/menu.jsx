@@ -739,10 +739,7 @@ export default function (props) {
                                                }/>
 
                                         <Route exact={true} path={`${props.match.url}*`}
-                                               render={(props) =>
-                                                   <Home {...props} user={user}/>
-
-                                               }/>
+                                               render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
                                     </Switch>
                                 }
                                 <ul className="nav from text-center bg-light d-flex">
