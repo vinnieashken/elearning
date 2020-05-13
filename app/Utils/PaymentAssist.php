@@ -52,15 +52,29 @@ trait PaymentAssist
 
     public function storePublishers($publishers,$userid,$packageid,$amount,$transactionid)
     {
+        $existing = UserPublisher::where('transactionid',$transactionid)->delete();
+
         foreach ($publishers as $item)
         {
             $publisher = new UserPublisher();
-            $publisher->user_id = $userid;
-            $publisher->transactionid = $transactionid;
-            $publisher->publisher_id = $item;
-            $publisher->package_id = $packageid;
-            $publisher->amount = $amount;
-            $publisher->save();
+
+//            $existing = $publisher->where('transactionid',$transactionid)->where('publisher_id',$item)->first();
+//            if(!is_null($existing))
+//            {
+//                $existing->package_id = $packageid;
+//                $existing->amount = $amount;
+//                $existing->save();
+//            }
+//         else
+            {
+                $publisher->user_id = $userid;
+                $publisher->transactionid = $transactionid;
+                $publisher->publisher_id = $item;
+                $publisher->package_id = $packageid;
+                $publisher->amount = $amount;
+                $publisher->save();
+            }
+
         }
 
 
