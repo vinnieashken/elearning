@@ -737,6 +737,12 @@ export default function (props) {
                                                            },
                                                        })
                                                }/>
+
+                                        <Route exact={true} path={`${props.match.url}*`}
+                                               render={(props) =>
+                                                   <Home {...props} user={user}/>
+
+                                               }/>
                                     </Switch>
                                 }
                                 <ul className="nav from text-center bg-light d-flex">
