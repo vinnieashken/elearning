@@ -5645,33 +5645,34 @@ th, td {
 }
 @media (min-width: 1441px) {
 
-.carousel-caption{
-    text-align: center !important;
-}.navbar-nav .nav-link {
-     color: #fff !important;
-     font-size: 25px;
-     margin-right: 18px;
-     font-weight: 400;
-     padding: 9px 0px !important;
- }
+    .carousel-caption{
+        text-align: center !important;
+    }.navbar-nav .nav-link {
+         color: #fff !important;
+         font-size: 25px;
+         margin-right: 18px;
+         font-weight: 400;
+         padding: 9px 0px !important;
+     }
 
     element.style {
     }
     .navbar li.active a.nav-link {
         color: #f3132b;
     }
-        .navbar-expand-md .navbar-nav .nav-link {
-            padding: 11px 15px !important;
-            margin: 10px 1px;
-        }
-        .carousel-inner img {
-            height: 600px !important;
-            object-fit: cover;
-        }.slide-title {
-             font-size: 60px;
-             font-weight: 600;
-             line-height: 1.1;
-         }
+    .navbar-expand-md .navbar-nav .nav-link {
+        padding: 11px 15px !important;
+        margin: 10px 1px;
+    }
+    .carousel-inner img {
+        /* height: 600px !important; */
+        object-fit: cover;
+    }
+    .slide-title {
+         font-size: 60px;
+         font-weight: 600;
+         line-height: 1.1;
+     }
 }
 .smaller{
     height: 70px !important;
