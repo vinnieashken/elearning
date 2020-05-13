@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {API, APPNAME, PUBLIC_URL, ENV} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import Loading from "../common/loading";
-import {forEach} from "react-bootstrap/cjs/ElementChildren";
 
 export default function (props) {
     const oldState = props.history.location.state;
@@ -240,7 +239,7 @@ export default function (props) {
                                                                                 <div className='col-md-4 col-sm-6'>
                                                                                     <div className='custom-control custom-checkbox'>
                                                                                         <input type="checkbox" className="custom-control-input" value={el.institution_id} onChange={handlePublisherChanged}
-                                                                                               name="publisher_id" id={`${el.institution_id}`} />
+                                                                                               name="publisher_id" id={`${el.institution_id}`} required={true}/>
                                                                                         <label
                                                                                             className="custom-control-label form-control-label text-muted"
                                                                                             htmlFor={`${el.institution_id}`}>{el.name}</label>
