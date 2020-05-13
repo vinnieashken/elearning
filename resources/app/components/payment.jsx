@@ -236,7 +236,7 @@ export default function (props) {
                                                                     {
                                                                         publishers.map(el => {
                                                                             return (
-                                                                                <div className='col-md-4 col-sm-6'>
+                                                                                <div className='col-md-6 col-sm-12'>
                                                                                     <div className='custom-control custom-checkbox'>
                                                                                         <input type="checkbox" className="custom-control-input" value={el.institution_id} onChange={handlePublisherChanged}
                                                                                                name="publisher_id" id={`${el.institution_id}`} required={true}/>
