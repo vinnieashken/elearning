@@ -238,7 +238,7 @@ export default function (props) {
                                         {/*<li><Link to={`${ENV}exams/classes/2/subjects`}>Class 8</Link></li>*/}
 
                                         {
-                                            classes.slice(0, 4).map(el => {
+                                            classes.map(el => {
                                                 return (
                                                     <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>
                                                 )
