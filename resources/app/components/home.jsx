@@ -198,9 +198,10 @@ export default function (props) {
                         {
                             props.subjects.slice(0, 6).map(el => {
                                 return(
-                                    <Link to={{ pathname:  `${ENV}exams/subjects/${el.id}/modules` }}>
-                                        <div className="col-lg-4 col-md-6 col-sm-6">
-                                            <div className="card subj">
+                                    <div className="col-lg-4 col-md-6 col-sm-6">
+                                        <div className="card subj">
+                                            <Link to={{ pathname:  `${ENV}exams/subjects/${el.id}/modules` }}>
+
                                                 <div className="card-body">
                                                     <div className="mb-2">
                                                         <i className="fa fa-star-o topicons mr-3 redicon" />
@@ -208,9 +209,9 @@ export default function (props) {
                                                     </div>
                                                     <p className="card-text">Class 1 to Class 8</p>
                                                 </div>
-                                            </div>
+                                            </Link>
                                         </div>
-                                    </Link>
+                                    </div>
                                 )
                             })
                         }
