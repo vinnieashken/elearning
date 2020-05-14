@@ -40,11 +40,12 @@ export default function (props) {
         const subjectArray = {}
         const classArray = {}
         subjects.forEach(el => {
-            subjectArray[el.id] = el.subject
+            subjectArray[`${el.subject}`] = `${el.subject}`
         })
         classes.forEach(el => {
             classArray[el.class] = el.class
         })
+        debugger
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
         getModules();
@@ -95,14 +96,14 @@ export default function (props) {
         return (
             <div className="actions ml-3">
                 {
-                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id)) && parseInt(user.institution_id) !== 11) ?
+                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
                         <React.Fragment>
                             <Link to={{
                                 pathname: `${ENV}exams/exam/${row.id}/performance`,
                                 state: {
                                     exam: row
                                 }
-                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success mr-1'>
+                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
                                 Performance <i className="fa fa-graduation-cap" />
                             </Link>
                             <Link to={{
@@ -110,11 +111,11 @@ export default function (props) {
                                 state: {
                                     exam: row
                                 }
-                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success mr-1'>
-                                Edit Paper <i className="fa fa-plus" />
+                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
+                                Add Question <i className="fa fa-plus" />
                             </Link>
-                            <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success' data-toggle="modal" data-target="#exampleModal">
-                                Add Question <i className="fa fa-pencil" />
+                            <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">
+                                Edit Paper <i className="fa fa-pencil" />
                             </Link>
                         </React.Fragment> :
                         <Link to={{
@@ -210,7 +211,7 @@ export default function (props) {
                                                                 })
                                                             },
                                                             {
-                                                                dataField: 'subject_id',
+                                                                dataField: 'subject',
                                                                 text: 'Subject',
                                                                 formatter: cell => subjectOptions[cell],
                                                                 filter: selectFilter({

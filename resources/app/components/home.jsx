@@ -212,7 +212,8 @@ export default function (props) {
                                                 <i className="fa fa-star-o topicons mr-3 redicon" />
                                                 <div className="card-title bold">{el.subject}</div>
                                             </div>
-                                            <p className="card-text">Class 1 to Class 8</p>
+                                            <p className="card-text">{el.class}</p>
+                                            {/*<p className="card-text">Class 1 to Class 8</p>*/}
                                         </div>
                                     </Link>
                                 </div>

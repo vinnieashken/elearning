@@ -122,63 +122,73 @@ export default function (props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setMessage(false);
-        setProcessing(true);
-        let data = {moduleid: module.id};
-        data["questions"] = [
-            question.hasOwnProperty('id') ?
-                {
-                    "id": question.id,
-                    "module_id": module.id,
-                    "question": questionData,
-                    "answer": correctAnswer.value,
-                    "options":
-                        answerOptions.map( el=> {
-                            const data = {
-                                "question_id": question.id,
-                                "option": el.option,
-                            }
-                            if (el.hasOwnProperty('id'))
-                                data['id'] = el.id
-                            return data
-                        })
+        if (!correctAnswer.value) {
+            setProcessing(false);
+            setMessage(true);
+            setMessageType('alert alert-danger');
+            setResponse("Please select the correct answer.");
+        } else {
+            setMessage(false);
+            setProcessing(true);
+            let data = {
+                moduleid: module.id
+            };
+            data["questions"] = [
+                question.hasOwnProperty('id') ?
+                    {
+                        "id": question.id,
+                        "module_id": module.id,
+                        "question": questionData,
+                        "answer": correctAnswer.value,
+                        "options":
+                            answerOptions.map(el => {
+                                const data = {
+                                    "question_id": question.id,
+                                    "option": el.option,
+                                }
+                                if (el.hasOwnProperty('id'))
+                                    data['id'] = el.id
+                                return data
+                            })
 
-                } :
-                {
-                    "question": questionData,
-                    "options":
-                        answerOptions.map(el => {
-                            return el.option
-                        }),
-                    "answer": correctAnswer.value
-                }
-        ];
-        console.log(data)
-        $.ajax({
-            url: `${API}/institution/modules/questions/${question.hasOwnProperty('id') ? 'edit' : 'add'}`,
-            method: 'post',
-            data: data,
-            error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                try {
-                    response = JSON.parse(xhr['responseText'])['message']
-                }catch (e) {}                setProcessing(false);
-                setMessage(true);
-                setMessageType('alert alert-danger');
-                setResponse(response);
-                $("html, body").animate({scrollTop: 0}, 200);
-            }.bind(this),
-            success: function (res) {
-                props.history.push({
-                    pathname: `/exams/exam/edit/${module.id}`,
-                    state: {
-                        message: true,
-                        message_type: 'alert alert-success',
-                        response: "Question updated successfully.",
+                    } :
+                    {
+                        "question": questionData,
+                        "options":
+                            answerOptions.map(el => {
+                                return el.option
+                            }),
+                        "answer": correctAnswer.value
                     }
-                })
-            }.bind(this)
-        })
+            ];
+            $.ajax({
+                url: `${API}/institution/modules/questions/${question.hasOwnProperty('id') ? 'edit' : 'add'}`,
+                method: 'post',
+                data: data,
+                error: function (xhr, status, error) {
+                    var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                    try {
+                        response = JSON.parse(xhr['responseText'])['message']
+                    } catch (e) {
+                    }
+                    setProcessing(false);
+                    setMessage(true);
+                    setMessageType('alert alert-danger');
+                    setResponse(response);
+                    $("html, body").animate({scrollTop: 0}, 200);
+                }.bind(this),
+                success: function (res) {
+                    props.history.push({
+                        pathname: `/exams/exam/edit/${module.id}`,
+                        state: {
+                            message: true,
+                            message_type: 'alert alert-success',
+                            response: "Question updated successfully.",
+                        }
+                    })
+                }.bind(this)
+            })
+        }
     };
 
     return (
