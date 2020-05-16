@@ -745,68 +745,65 @@ export default function (props) {
                                 <ul className="nav from text-center bg-light d-flex">
 
                                     <li className="nav-item ">
-                                        <a className="nav-link px-0 fromtext" href="#">E-Learning from
+                                        <a className="nav-link px-0 fromtext" href="#">Tutor Soma from
                                             <img src={`${PUBLIC_URL}/static/app/images/thestandardlogo.png`} alt={APPNAME}
                                                  className="footerlogo" />
                                         </a>
                                     </li>
                                 </ul>
                                 <footer className="footer">
-                                    <div className="container">
-                                        <div className="row">
-
-                                            <div className="mx-auto col-xs-12">
-                                                <ul className="nav nav-inline ">
-                                                    <li className="nav-item">
-                                                        <a className="nav-link active" href="http://www.btvkenya.ke/">BTV</a>
-                                                    </li>
-                                                    <li className="nav-item">
-                                                        <a className="nav-link active" href="http://www.evewoman.co.ke/">
-                                                            EVE WOMAN</a>
-                                                    </li>
-                                                    <li className="nav-item">
-                                                        <a className="nav-link active" href="http://www.spicefm.co.ke/">
-                                                            SPICE RADIO</a>
-                                                    </li>
-                                                    <li className="nav-item">
-
-                                                        <a className="nav-link" href="http://www.travelog.ke/">TRAVEL</a>
-                                                    </li>
-
-                                                    <li className="nav-item">
-                                                        <a className="nav-link" href="https://www.farmers.co.ke/">FARMERS</a>
-                                                    </li>
-                                                    <li className="nav-item">
-                                                        <a className="nav-link" href="https://www.digger.co.ke/">DIGGER</a>
-                                                    </li>
-                                                    <li className="nav-item">
-                                                        <a className="nav-link"
-                                                           href="https://www.vas.standardmedia.co.ke/">VAS</a>
-                                                    </li>
-                                                    <li className="nav-item">
-                                                        <a className="nav-link"
-                                                           href="https://www.newsstand.standardmedia.co.ke/">EPAPER</a>
-                                                    </li>
-                                                    <li className="nav-item border-0">
-                                                        <a className="nav-link"
-                                                           href="https://www.standardmedia.co.ke/corporate">CORPORATE</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="copyright">
-                                        <div className="container text-center p-0">
-                                            <div className="row p-0">
-                                                <div className="col-12 mx-auto p-0">
-                                                    <p className="text-center">© 2020 The Standard Group PLC All rights reserved
-                                                    </p>
+                                    <div className=" bg-grey pl-3 w-100">
+                                        <div className="container">
+                                            <div className="row  bg-grey w-100">
+                                                <div className="mx-auto col-xs-12">
+                                                    <ul className="nav nav-inline ">
+                                                        <li className="nav-item">
+                                                            <a className="nav-link active"
+                                                               href="http://www.standardmedia.co.ke/">THE STANDARD |</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link active"
+                                                               href="https://www.standardmedia.co.ke/ktnnews">
+                                                                KTN NEWS |</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link active"
+                                                               href="https://www.standardmedia.co.ke/radiomaisha">
+                                                                RADIO MAISHA |</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link"
+                                                               href="https://www.vas.standardmedia.co.ke/">VAS |</a>
+                                                        </li>
+                                                        <li className="nav-item">
+                                                            <a className="nav-link"
+                                                               href="https://newsstand.standardmedia.co.ke/">E-PAPER |</a>
+                                                        </li>
+                                                        <li className="nav-item border-0">
+                                                            <a className="nav-link"
+                                                               href="https://www.standardmedia.co.ke/corporate">CORPORATE
+                                                                |</a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <nav className="text-center bg-black">
+                                        <ul className="navbar-nav justify-content-center p-3">
+                                            <li className="nav-item">
+                                                <a className="text-white"
+                                                   href="https://new.standardmedia.co.ke/privacy-policy">Privacy policy</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="text-white"
+                                                   href=" https://new.standardmedia.co.ke/terms-and-conditions">Terms &amp; Conditions</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                © 2020 Standard Group PLC
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </footer>
                                 <a href="#" className="back-to-top">
                                     <i className="fa fa-arrow-up" />
