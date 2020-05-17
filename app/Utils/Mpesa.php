@@ -4,6 +4,7 @@
 namespace App\Utils;
 
 
+use App\Exceptions\ValidationException;
 use GuzzleHttp\Client;
 
 class Mpesa

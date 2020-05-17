@@ -96,7 +96,7 @@ export default function (props) {
                                                     <div className='row'>
                                                         <div className='form-group col-md-12'>
                                                             <label>Admission Number</label>
-                                                            <input type='text' name='adm_no' className='form-control' defaultValue={student.adm_no} required/>
+                                                            <input type='text' name='adm_no' className='form-control' defaultValue={student.adm_no}/>
                                                         </div>
                                                         <div className='form-group col-md-12'>
                                                             <label>Name</label>

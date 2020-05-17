@@ -19,7 +19,7 @@ class ClassesController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results =  $model->paginate($size,['id','class'])->items();
+            $results =  $model->orderBy('class', 'DESC')->paginate($size,['id','class'])->items();
 
             $totalrecords = $model->count();
             $totalpages = ceil($totalrecords / $size);
@@ -36,7 +36,7 @@ class ClassesController extends Controller
             return $data;
         }
 
-        $data = $model->get(['id','class']);
+        $data = $model->orderBy('class', 'ASC')->get(['id','class']);
 
         return $data;
     }

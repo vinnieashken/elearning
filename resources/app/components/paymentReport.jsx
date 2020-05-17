@@ -130,9 +130,9 @@ export default function (props) {
                                                     data={payments}
                                                     columns={
                                                         [
-                                                            {dataField: 'adm_no', text: 'Receipt. No.', sort: true},
-                                                            {dataField: 'login_code', text: 'Student', sort: true},
-                                                            {dataField: 'name', text: 'Amount', sort: true}
+                                                            {dataField: 'transactionid', text: 'Receipt. No.', sort: true},
+                                                            {dataField: 'name', text: 'Student', sort: true},
+                                                            {dataField: 'amount', text: 'Amount', sort: true}
                                                             // {
                                                             //     dataField: 'created_at',
                                                             //     text: 'Actions',

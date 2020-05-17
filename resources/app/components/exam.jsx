@@ -16,9 +16,10 @@ const images = [
 ];
 
 export default function (props) {
-    const oldState = props.history.location.state;
+    const oldState = props.history.location.state ? props.history.location.state : {};
 
     const student = (typeof oldState !== "undefined" && oldState.hasOwnProperty('student')) ? oldState.student : props.user
+    // const [examData, setExamData] = useState(oldState.hasOwnProperty('exam') ? oldState.exam : {});
     const [exam, setExam] = useState([]);
     const [userAnswers, setUserAnswers] = useState([]);
     const [showAns, setShowAns] = useState(false);
@@ -31,8 +32,17 @@ export default function (props) {
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
+        console.log(props)
         getExam();
     }, []);
+
+    const removeTags = (str) => {
+        if ((str===null) || (str===''))
+            return false;
+        else
+            str = str.toString();
+        return str.replace( /(<([^>]+)>)/ig, '').replace(/&nbsp;/g, '');
+    }
 
     const getExam = () => {
         $.ajax({
@@ -164,8 +174,23 @@ export default function (props) {
                                 </Helmet>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.name}`}</h2>
+                                        {
+                                            exam.hasOwnProperty('publisher') ?
+                                                <React.Fragment>
+                                                    <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.publisher.name}`.toUpperCase()}</h2>
+                                                    <h4 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.name}`}</h4>
+                                                </React.Fragment> :
+                                                <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">{`${exam.name}`}</h2>
+
+                                        }
                                     </div>
+                                    {
+                                        exam.hasOwnProperty('class') && exam.hasOwnProperty('subject') ?
+                                            <div className='col-md-12 text-center mb-3'>
+                                                <span className='section-desc '>{`${exam.class.class} `}</span><span className='section-desc'>{` ${exam.subject.subject}`}</span>
+                                            </div> : ''
+                                    }
+
                                 </div>
                                 {
                                     <div className="row">
@@ -293,7 +318,11 @@ export default function (props) {
                                                                                             <ul className="list-group list-group-flush">
                                                                                                 <li className="list-group-item">
 
-                                                                                                    <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
+                                                                                                    {
+                                                                                                        el.question === null
+                                                                                                            ? <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>.`} } />
+                                                                                                            : <span dangerouslySetInnerHTML={ {__html: `<b>${index+1}</b>. ${el.question}`} } />
+                                                                                                    }
                                                                                                     {/*<font class="number">.</font> What is meant by the term binomial nomenclature?*/}
 
                                                                                                 </li>
@@ -303,14 +332,14 @@ export default function (props) {
                                                                                                         const selected = answer.hasOwnProperty('user_option') && answer.user_option === ans.id
                                                                                                         return (
                                                                                                             <React.Fragment>
-                                                                                                                <li className="list-group-item ml-4">
+                                                                                                                <li className="list-group-item ">
                                                                                                                     <input type="radio" id={`${ans.id}`} required={true}
                                                                                                                            defaultChecked={selected}
                                                                                                                            disabled={answer.hasOwnProperty('user_option')}
                                                                                                                            value={ans.id} name={el.id} />
                                                                                                                     <label htmlFor={`${ans.id}`}>
-                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${ans.option.replace(/(<br>\s*)+$/)}`} }
-                                                                                                                              className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />
+                                                                                                                        {/*<span dangerouslySetInnerHTML={ {__html: `${ans.option.replace(/(<br>\s*)+$/)}`} } className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />*/}
+                                                                                                                        <span className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} > {removeTags(ans.option)} </span>
                                                                                                                         {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
                                                                                                                     </label>
                                                                                                                 </li>
@@ -330,7 +359,7 @@ export default function (props) {
                                                                         processing ? <ClipLoader /> : showAns ? '' :
                                                                             <div className='row'>
                                                                                 <div className="col-md-12">
-                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit</button>
+                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit For Marking</button>
                                                                                 </div>
                                                                             </div>
                                                                     }

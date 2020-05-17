@@ -191,7 +191,7 @@ strong {
 
 .bg-danger {
     color: #fff;
-    background: #ec7160;
+    background-color: #1865f1!important;
     padding: 3px 4px;
 }
 
@@ -355,7 +355,7 @@ strong {
 }
 
 .red {
-    color: #ffffff;
+    color: #424590;
     text-transform: uppercase;
 }
 
@@ -881,9 +881,9 @@ footer .menu li a:hover {
 /* / End Default Button */
 /* Success Button */
 .btn-success, .btn-success:active, .btn-success:focus {
-    color: #87c056;
-    border: 2px solid #87c056;
-    background: transparent;
+    color: #f3f8ee;
+    border: 2px solid #e33906;
+    background: #e33906;
 }
 
 .btn-success:hover {
@@ -894,14 +894,14 @@ footer .menu li a:hover {
 
 .btn-success-filled, .btn-success-filled:active, .btn-success-filled:focus {
     color: #fff;
-    background: #87c056;
-    border: 2px solid #87c056;
+    background: #e30613;
+    border: 2px solid #e30613;
 }
 
 .btn-success-filled:hover {
     color: #fff;
-    background: #74a44a;
-    border: 2px solid #74a44a;
+    background: #e40f1b;
+    border: 2px solid #e40f1b;
 }
 
 /* End Success Button */
@@ -2041,7 +2041,13 @@ nav#menu span.fa.fa-bars:hover {
 /* About */
 #about {
     padding: 30px 0;
+    background: #e5eafd !important;
 }
+
+.section-padding {
+    padding: 60px 0!important;
+}
+
 
 .about h5 {
     font-size: 18px;
@@ -2605,10 +2611,18 @@ nav#menu span.fa.fa-bars:hover {
 
 .card-title {
     color: #444;
-    font-size: 18px;
+    font-size: 26px;
+    line-height: 0.9;
     margin-top: 0;
     margin-bottom: 15px;
 }
+
+/*.card-title {*/
+/*    color: #444;*/
+/*    font-size: 18px;*/
+/*    margin-top: 0;*/
+/*    margin-bottom: 15px;*/
+/*}*/
 
 .card-text {
     font-size: 14px;
@@ -3039,9 +3053,9 @@ nav#menu span.fa.fa-bars:hover {
 }
 
 /* / Sliders */
-#carousel-area {
-    background: #2c3e50;
-}
+/*#carousel-area {*/
+/*    background: #2c3e50;*/
+/*}*/
 
 #carousel-area .btn-lg {
     margin: 10px;
@@ -3068,9 +3082,9 @@ nav#menu span.fa.fa-bars:hover {
 }
 
 #carousel-area .carousel-item .carousel-caption {
-    top: 28%;
-    right: 10%;
-    left: 10%;
+    top: 50%;
+    right: 16%;
+    left: 13%;
     text-shadow: none;
 }
 
@@ -4208,7 +4222,7 @@ figure {
 }
 
 .table-bordered.table-2 > thead > tr > th {
-    background: #232833;
+    background: #e5eafd;
     font-weight: 700;
     color: #f3132b;
 }
@@ -4220,15 +4234,18 @@ figure {
 }
 
 .table-bordered > thead > tr > th {
-    text-align: center;
-    /*background: #373d4a;*/
+    text-align: left;
+    /* background: #373d4a; */
     font-size: 16px;
     font-weight: 700;
-    padding: 26px 10px;
+    /* padding: 26px 10px; */
 }
 
+
 .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
-    border: 1px solid #f1f1f1;
+    border: 5px solid #e5eafd;
+    margin-bottom: 10px;
+    /* border-radius: 20px; */
 }
 
 .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -4885,8 +4902,8 @@ nav a {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #151515;
-    overflow-x: hidden;
+    background-color: #faf9f9;
+    overflow-x:hidden;
     transition: 0.5s;
     padding-top: 60px;
 }
@@ -4894,12 +4911,13 @@ nav a {
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
-    color: rgba(129, 129, 129, 0.89) !important;
+    /*font-size: 25px;*/
+    color: #2b2e83!important;
     display: block;
     transition: 0.3s;
-    border-bottom: 1px solid #808080ab;
+    border-bottom: 1px solid #8080802e!important;
     margin-left: 10%;
+    font-size: 14px!important;
 }
 
 .sidenav a:hover {
@@ -4979,14 +4997,23 @@ nav a {
 .examcard .list-group-item {
     position: relative;
     display: block;
-    padding: 3px 1.25rem;
+    padding: 2px 15px 2px 20px;
     margin-bottom: -1px;
-    background-color: #fff;
+    /*margin-left: 20px;*/
+    background-color: #fffacd;
     border: none;
+    /* border-radius: 20px; */
 }
 
 .number {
     font-weight: bolder;
+}
+
+.section-desc {
+    font-size: 24px;
+    font-weight: 600;
+    color: #e6202c;
+    text-align: center;
 }
 
 .examcard {
@@ -5016,7 +5043,7 @@ nav a {
 .exam .section-title,
 .profile .section-title,
 .pricing .section-title {
-    color: #0665b0;
+    color: #000000;
     font-size: 29px;
     text-align: center;
     letter-spacing: 1px;
@@ -5358,11 +5385,13 @@ em {
 }
 .m12 .card-body {
     -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
     height: 185px;
+    background: #fff;
+    border-radius: 8px;
 }
+
 .lighttext {
     font-weight: 200 !important;
 }
@@ -5510,11 +5539,15 @@ em {
 
 .exam .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     padding: 10px;
-    color: #444;
-    text-align: center;
+    color: #000;
+    background: #fffacd !important;
+    text-align: left;
+    padding-left: 10px !important;
     font-size: 14px;
-    border-right: 2px solid #ffffff;
+    border-right: 5px solid #e5eafd;
+    font-weight: 600
 }
+
 
 .table td, .table th {
     padding: .75rem;
@@ -5613,33 +5646,37 @@ th, td {
 }
 @media (min-width: 1441px) {
 
-.carousel-caption{
-    text-align: center !important;
-}.navbar-nav .nav-link {
-     color: #fff !important;
-     font-size: 25px;
-     margin-right: 18px;
-     font-weight: 400;
-     padding: 9px 0px !important;
- }
-
-    element.style {
+    .carousel-caption {
+        text-align: left !important;
     }
+    .navbar-nav .nav-link {
+         color: #fff !important;
+         font-size: 25px;
+         margin-right: 18px;
+         font-weight: 400;
+         padding: 9px 0px !important;
+     }
+
     .navbar li.active a.nav-link {
         color: #f3132b;
     }
-        .navbar-expand-md .navbar-nav .nav-link {
-            padding: 11px 15px !important;
-            margin: 10px 1px;
-        }
-        .carousel-inner img {
-            height: 600px !important;
-            object-fit: cover;
-        }.slide-title {
-             font-size: 60px;
-             font-weight: 600;
-             line-height: 1.1;
-         }
+    .navbar-expand-md .navbar-nav .nav-link {
+        padding: 11px 15px !important;
+        margin: 10px 1px;
+    }
+    .carousel-inner img {
+        /* height: 600px !important; */
+        object-fit: cover;
+    }
+    .slide-title {
+         font-size: 60px;
+         font-weight: 600;
+         line-height: 1.1;
+     }
+    .btn {
+        /*font-size: 46px;*/
+        /*padding: 12px 88px;*/
+    }
 }
 .smaller{
     height: 70px !important;
@@ -5647,12 +5684,14 @@ th, td {
 
 @media (max-width: 767px) {
     .exam .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-        padding: 4px;
-        color: #444;
-        text-align: center;
-        font-size: 8px;
-        border-right: 2px solid #ffffff;
-        line-height: 16px;
+        padding: 10px;
+        color: #000;
+        background: #fcfd95;
+        text-align: left;
+        padding-left: 10px !important;
+        font-size: 14px;
+        border-right: 5px solid #e5eafd;
+        font-weight: 600
     }
 
     .subj .card-body {
@@ -5674,8 +5713,8 @@ th, td {
     }
 
     .exam .section-title, .profile .section-title, .pricing .section-title {
-        color: #0665b0;
-        font-size: 24px;
+        color: #000;
+        font-size: 29px;
         text-align: center;
         letter-spacing: 1px;
         line-height: 1;
@@ -5683,6 +5722,7 @@ th, td {
         padding: 0 10px;
         position: relative;
     }
+
 
     .topicons {
         font-size: 30px;

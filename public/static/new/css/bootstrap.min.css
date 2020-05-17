@@ -249,7 +249,8 @@ th {
 
 label {
     display: inline-block;
-    margin-bottom: .5rem
+    margin-bottom: 0.5rem;
+    margin-left: 15px;
 }
 
 button {
@@ -300,7 +301,7 @@ button::-moz-focus-inner {
 input[type=checkbox],
 input[type=radio] {
     box-sizing: border-box;
-    padding: 0
+    margin-left: 30px;
 }
 
 input[type=date],
@@ -2740,8 +2741,8 @@ fieldset:disabled a.btn {
 .btn-success:not(:disabled):not(.disabled):active,
 .show>.btn-success.dropdown-toggle {
     color: #fff;
-    background-color: #1e7e34;
-    border-color: #1c7430
+    background-color: #e33906;
+    border-color: #e33906;
 }
 
 .btn-success:not(:disabled):not(.disabled).active:focus,
@@ -3362,16 +3363,17 @@ tbody.collapse.show {
     display: none;
     float: left;
     min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
+    padding-right: 0px!important;
+    margin-left: 18px!important;
     font-size: 1rem;
-    color: #212529;
+    color: #faf9f9!important;
+    width: 193px;
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: #eae9e9;
     background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: .25rem
+    border: 1px solid rgba(255, 255, 255, 0.8)!important;
+    border-radius: 5px!important;
 }
 
 .dropup .dropdown-menu {

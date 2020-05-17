@@ -2,7 +2,9 @@ import { SUBSCRIPTION_LOADED, LOADING_SUBSCRIPTION, SUBJECTS_LOADED, CLASSES_LOA
 
 export function fetchSubscription(user) {
     return function (dispatch) {
-        if (['dkarimi@standardmedia.co.ke','mshahi@standardmedia.co.ke', 'lkinyanjui@standardmedia.co.ke', 'dennismwagiru@ymail.com'].includes((user.email.toLowerCase()))) {
+        if (['dkarimi@standardmedia.co.ke','mshahi@standardmedia.co.ke', 'lkinyanjui@standardmedia.co.ke', 'dennismwagiru@ymail.com', 'mbuthiaw001@gmail.com'].includes((user.email.toLowerCase()))) {
+            dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
+        } else if(parseInt(user.institution_id) === 11 && (parseInt(user.owner) === 1 || parseInt(user.teacher) === 1)) {
             dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
         } else {
             dispatch({type: LOADING_SUBSCRIPTION, payload: true});

@@ -40,6 +40,8 @@ class SubjectsController extends Controller
             ->select('subjects.id','subjects.class_id','subjects.subject','classes.class')->get();
     }
 
+
+
     public function getClassSubjects(Request $request, $classid)
     {
         $model = new Subject();
@@ -68,5 +70,37 @@ class SubjectsController extends Controller
         }
         return $model->where('class_id',$classid)->leftJoin('classes','subjects.class_id','=','classes.id')
             ->select('subjects.id','subjects.class_id','subjects.subject','classes.class')->get();
+    }
+
+    public function uniquelist(Request $request)
+    {
+        $model = new Subject();
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results =  $model->distinct('subject')
+                ->select('subjects.subject')->paginate($size)->items();
+
+            $totalrecords = $model->count();
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $data ["rows"] = $results;
+
+            return $data;
+        }
+        return $model->distinct('subject')
+            //->leftJoin('classes','subjects.class_id','=','classes.id')
+            //->select('subjects.id','subjects.class_id','subjects.subject')
+            ->get(['subject']);
     }
 }

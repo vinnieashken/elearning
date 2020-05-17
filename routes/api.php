@@ -29,6 +29,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 
     Route::get('/subjects/list','Api\SubjectsController@list');
+    Route::get('/subjects/distinct','Api\SubjectsController@uniquelist');
     Route::get('/subjects/class/{id}','Api\SubjectsController@getClassSubjects');
 
     Route::get('/modules/list','Api\ModulesController@list');
