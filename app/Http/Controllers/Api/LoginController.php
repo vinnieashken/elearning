@@ -98,14 +98,26 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
-        $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+        if(is_null($email) || is_null($name) )
+        {
+            return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+        }
 
-        //return $params;
+        $params = [];
         $no = preg_match_all("!(7[0-9]{8})!",$email,$matches);
         if($no > 0)
         {
             $phone = '254'.$matches[0][0];
             $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
+        }
+        else
+        {
+            if(is_null($password) || is_null($password_confirmation))
+            {
+                return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+            }
+
+            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
         }
 
         //return ['data'=>$params,'count'=>$no];
@@ -184,6 +196,10 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
+        if(is_null($email) || is_null($name) )
+        {
+            return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+        }
         $params = [];
         $no = preg_match_all("!(7[0-9]{8})!",$email,$matches);
         if($no > 0)
@@ -193,7 +209,7 @@ class LoginController extends Controller
         }
         else{
 
-            if(is_null($email) || is_null($name) || is_null($password) || is_null($password_confirmation))
+            if(is_null($password) || is_null($password_confirmation))
             {
                 return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
             }
@@ -261,6 +277,9 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
+        if (is_null($institution) || is_null($email) || is_null($name) ) {
+            return response()->json(['message' => 'Invalid or missing parameters', 'data' => $request->all()], 400);
+        }
         $params = [];
         $no = preg_match_all("!(7[0-9]{8})!",$email,$matches);
         if($no > 0)
@@ -269,7 +288,7 @@ class LoginController extends Controller
             $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
         }
         else {
-            if (is_null($institution) || is_null($email) || is_null($name) || is_null($password) || is_null($password_confirmation)) {
+            if (is_null($password) || is_null($password_confirmation)) {
                 return response()->json(['message' => 'Invalid or missing parameters', 'data' => $request->all()], 400);
             }
             $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
