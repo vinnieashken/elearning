@@ -238,7 +238,9 @@ export default function (props) {
                                         {/*<li><Link to={`${ENV}exams/classes/2/subjects`}>Class 8</Link></li>*/}
 
                                         {
-                                            classes.map(el => {
+                                            classes.filter(el => {
+                                                return [2, 5, 6, 7, 8].includes(el.id)
+                                            }).map(el => {
                                                 return (
                                                     <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>
                                                 )
@@ -308,7 +310,9 @@ export default function (props) {
                                             {/*<Link className="dropdown-item" to={`${ENV}exams/classes/2/subjects`}>Class 8</Link>*/}
 
                                             {
-                                                classes.map(el => {
+                                                classes.filter(el => {
+                                                    return [2, 5, 6, 7, 8].includes(el.id)
+                                                }).map(el => {
                                                     return (
                                                         <Link className="dropdown-item" to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link>
                                                     )
