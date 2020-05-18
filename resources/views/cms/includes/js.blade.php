@@ -173,7 +173,7 @@
 
                         ],
                         callbacks : {
-                           /* onImageUpload: function(dt) {
+                            onImageUpload: function(dt) {
                                 var $summernote = $(this);
                                 var image = dt[0];
                                 var dat = new FormData();
@@ -207,7 +207,7 @@
                                     }
                                 });
 
-                            }*/
+                            }
                         }
                     }).on('summernote.change', function(we, contents, $editable) {
                         $(this).val(contents);
@@ -285,7 +285,7 @@
 
                             ],
                             callbacks: {
-                                /*onImageUpload: function (dt) {
+                                onImageUpload: function (dt) {
                                     $summernote = $(this);
                                     var image = dt[0];
                                     var dat = new FormData();
@@ -314,7 +314,7 @@
                                         }
                                     });
 
-                                }*/
+                                }
                             }
                         });
                     },
