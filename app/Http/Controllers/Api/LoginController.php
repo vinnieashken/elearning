@@ -461,7 +461,10 @@ class LoginController extends Controller
         if($no > 0)
             $phone = '0'.$matches[0][0];
 
-        $customer = Customer::where('phone',$phone)->first();
+
+        //return $objbody;
+
+        $customer = Customer::where('user_id',$objbody->id)->first();
 
         if(is_null($customer))
         {
