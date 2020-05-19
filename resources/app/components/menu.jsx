@@ -341,6 +341,18 @@ export default function (props) {
                                             }
                                         </div>
                                     </li>
+                                    <li className="nav-item dropdown mt-4">
+                                        <a aria-expanded="false" aria-haspopup="true"
+                                           className="nav-link dropdown-toggle"
+                                           data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
+                                            HOW IT WORKS
+                                        </a>
+                                        <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
+                                            <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/Desgin.pdf`}>For Students</a>
+                                            <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/2Desgin.pdf`}>For Teachers</a>
+                                            <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/3Desgin.pdf`}>For Your School's Students</a>
+                                        </div>
+                                    </li>
                                     <li className="nav-item mt-4">
                                         <Link className="nav-link" to={`${ENV}exams/modules`}>EXAMINATION PAPERS </Link>
                                     </li>
@@ -518,25 +530,25 @@ export default function (props) {
                                         <Route exact={true} path={`${props.match.url}exams/modules`}
                                                render={(props) =>
                                                    // user.hasOwnProperty('id') ?
-                                                       <Modules {...props} user={user}/>
-                                                       // : props.history.push({
-                                                       //     pathname: `${ENV}signin`,
-                                                       //     state: {
-                                                       //         next: props.location.pathname
-                                                       //     },
-                                                       // })
+                                                   <Modules {...props} user={user}/>
+                                                   // : props.history.push({
+                                                   //     pathname: `${ENV}signin`,
+                                                   //     state: {
+                                                   //         next: props.location.pathname
+                                                   //     },
+                                                   // })
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
-                                                       <Modules {...props} user={user}/>
-                                                       : props.history.push({
-                                                           pathname: `${ENV}subscriptions`,
-                                                           state: {
-                                                               next: props.location.pathname
-                                                           },
-                                                       })
+                                                           <Modules {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
                                                        : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
