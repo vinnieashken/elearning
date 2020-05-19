@@ -9,7 +9,8 @@ export function fetchSubscription(user) {
         } else {
             dispatch({type: LOADING_SUBSCRIPTION, payload: true});
             return $.ajax({
-                url: `${API}/payments/subscription/user/${user.id}`,
+                // url: `${API}/payments/subscription/user/2`,
+                url: `${API}/payments/subscription/user/${user.user_id}`,
                 method: 'get',
                 dataType: 'json',
                 error: function (xhr, status, error) {
