@@ -103,6 +103,20 @@ export default function (props) {
                                                             <label>Email</label>
                                                             <input type='email' name='email' className='form-control' defaultValue={teacher.email}/>
                                                         </div>
+                                                        {
+                                                            teacher.name ? '' :
+                                                                <React.Fragment>
+                                                                    <div className='form-group col-md-12'>
+                                                                        <label>Password</label>
+                                                                        <input type='password' name='password' className='form-control' />
+                                                                    </div>
+                                                                    <div className='form-group col-md-12'>
+                                                                        <label>Password Confirmation</label>
+                                                                        <input type='password' name='password_confirmation' className='form-control' />
+                                                                    </div>
+                                                                </React.Fragment>
+                                                        }
+
                                                     </div>
                                                     <div className='row'>
                                                         <div className='col-md-12'>

@@ -14,6 +14,11 @@ const Login = Loadable({
     loading: Loading
 });
 
+const VerifyOtp = Loadable({
+    loader: () => import('./verifyOtp'),
+    loading: Loading
+})
+
 const SchoolLogin = Loadable({
     loader: () => import('./studentLogin'),
     loading: Loading
@@ -435,6 +440,8 @@ export default function (props) {
                                                render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
                                         <Route exact={true} path={`${props.match.url}signin`}
                                                render={(props) => <Login{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}otp`}
+                                               render={(props) => <VerifyOtp{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}school`}
                                                render={(props) => <SchoolLogin{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}reset`}

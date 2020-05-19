@@ -16,37 +16,33 @@ import { fetchSubscription } from "../common/actions";
 import { useDispatch } from "react-redux";
 
 export default function Login(props) {
-    const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
+    const oldState = props.history.location.state ? props.history.location.state : {};
 
     const [processing, setProcessing] = useState(false);
+    const [resend, setResend] = useState(false);
     const [message, setMessage] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('message') ? oldState.message : false);
+    const [phone, setPhone] = useState(oldState.hasOwnProperty('phone') ? oldState.phone : null);
     const [next, setNext] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('next') ? oldState.next : `${ENV}exams/modules`);
     const [messageType, setMessageType] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('messageType') ? oldState.messageType : '');
     const [response, setResponse] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('response') ? oldState.response : '');
     const [passwordType, setPasswordType] = useState('password');
-    const [loginType, setLoginType] = useState('email');
-
 
     const dispatch = useDispatch();
+    useEffect(() => {
+        console.log(props)
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setProcessing(true);
         setMessage(false);
-        let data = {};
-        let url = `${API}/app/login`;
-        if (loginType === 'email'){
-            data['email'] = $('#email').val()
-            data['password'] = $('#password').val()
-        } else {
-            data['phone'] = $('#phone').val();
-            url = `${API}/app/otp/request`;
-        }
-
         $.ajax({
-            url: url,
+            url: `${API}/app/otp/verify`,
             method: 'post',
-            data: data,
+            data: {
+                phone: phone,
+                otp: $('#otp').val(),
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -59,29 +55,52 @@ export default function Login(props) {
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
-                if (loginType === 'otp') {
-                    props.history.push({
-                        pathname: `${ENV}otp`,
-                        state: {
-                            ...data,
-                            next: next
-                        },
-                    });
-                } else {
-                    const thisUser = res;
-                    dispatch({type: LOADING_SUBSCRIPTION, payload: true});
-                    dispatch(fetchSubscription(thisUser));
-                    props.setUser(thisUser);
-                    localStorage.setItem('user', JSON.stringify(res));
-                    console.log(next);
-                    props.history.push({
-                        pathname: `${next}`,
-                        state: {user: thisUser},
-                    });
-                }
+                const thisUser = res;
+                dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
+                dispatch(fetchSubscription(thisUser));
+                props.setUser(thisUser);
+                localStorage.setItem('user', JSON.stringify(res));
+                console.log(next);
+                props.history.push({
+                    pathname: `${next}`,
+                    state: {user: thisUser},
+                });
             }.bind(this)
         })
     };
+
+    const resendOtp = (e) => {
+        e.preventDefault();
+        setProcessing(true);
+        setMessage(false);
+
+        $.ajax({
+            url: `${API}/app/otp/request`,
+            method: 'post',
+            data: {
+                phone: phone
+            },
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+                $("html, body").animate({scrollTop: 0}, 200);
+            }.bind(this),
+            success: function (res) {
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-success');
+                setResponse(`A One Time Password has been sent to ${phone}.`);
+                $("html, body").animate({scrollTop: 0}, 200);
+            }.bind(this)
+        })
+    };
+
 
     const togglePasswordType = (toggle, e) => {
         setPasswordType(toggle ? 'text' : 'password')
@@ -128,45 +147,34 @@ export default function Login(props) {
                                                     </div>
                                                 </div> : ''
                                         }
+                                        <h6>A One Time Password has been sent to {phone}. Enter the code below to login</h6>
                                         {
-                                            loginType === 'otp' ?
-                                                <div className="input-group mb-3 mt-3">
+                                            resend ?
+                                                <div className="input-group mb-3 mt-4">
                                                     <div className="input-group-prepend">
-                                                        <span className="input-group-text">
-                                                            <i className="fa fa-mobile" />
-                                                        </span>
+                                            <span className="input-group-text">
+                                                <i className="fa fa-key" />
+                                            </span>
                                                     </div>
                                                     <input type="text" className="form-control loginput" placeholder="Phone Number"
-                                                           id='phone' required={true}
+                                                           id='phone' required={true} defaultValue={phone} onChange={event => {
+                                                               console.log(event.target)
+                                                    } }
                                                            aria-label="Phone"
                                                            aria-describedby="basic-addon1" />
-                                                </div> :
-                                                <React.Fragment>
-                                                    <div className="input-group mb-3 mt-3">
-                                                        <div className="input-group-prepend">
-                                                            <span className="input-group-text">
-                                                                <i className="fa fa-user" />
-                                                            </span>
-                                                        </div>
-                                                        <input type="email" className="form-control loginput" placeholder="Email"
-                                                               id='email' required={true}
-                                                               aria-label="Email"
-                                                               aria-describedby="basic-addon1" />
-                                                    </div>
-                                                    <div className="input-group mb-3 mt-4">
-                                                        <div className="input-group-prepend">
-                                                            <span className="input-group-text">
-                                                                <i className="fa fa-key" />
-                                                            </span>
-                                                        </div>
-                                                        <input type="password" className="form-control loginput" placeholder="Password"
-                                                               id='password' required={true}
-                                                               aria-label="Password"
-                                                               aria-describedby="basic-addon1" />
-                                                    </div>
-                                                </React.Fragment>
+                                                </div> : ''
                                         }
-
+                                        <div className="input-group mb-3 mt-4">
+                                            <div className="input-group-prepend">
+                                            <span className="input-group-text">
+                                                <i className="fa fa-key" />
+                                            </span>
+                                            </div>
+                                            <input type="number" className="form-control loginput" placeholder="One Time Password"
+                                                   id='otp'
+                                                   aria-label="One Time Password"
+                                                   aria-describedby="basic-addon1" />
+                                        </div>
                                         {/*<p className="card-text grey">*/}
                                         {/*    <input type="checkbox" aria-label="Checkbox for following text input" /> Remember*/}
                                         {/*        Me</p>*/}
@@ -179,19 +187,9 @@ export default function Login(props) {
                                                     <div className="text-center mt-2">
                                                         <button type='submit' className="btn btn-primary">Login</button>
                                                     </div>
-                                                    {
-                                                        loginType === 'otp' ?
-                                                            <h6 className="card-title text-center mt-4">
-                                                                <button type='button' className='btn btn-primary' onClick={e=> {
-                                                                    setLoginType('email')
-                                                                }}>Login Using Your Email</button>
-                                                            </h6> :
-                                                            <h6 className="card-title text-center mt-4">
-                                                                <button type='button' className='btn btn-primary' onClick={e=> {
-                                                                    setLoginType('otp')
-                                                                }}>Login Using Your Phone Number</button>
-                                                            </h6>
-                                                    }
+                                                    <div className="text-center mt-2">
+                                                        <button type='button' className="btn btn-primary" onClick={resendOtp}>Resend OTP</button>
+                                                    </div>
                                                     <h6 className="card-title text-center mt-4">
                                                         Login To Your
                                                         <Link class="green" to={`${ENV}school`}> Student Account</Link>
@@ -213,5 +211,5 @@ export default function Login(props) {
                 </div>
             </div>
         </React.Fragment>
-    )
+)
 }
