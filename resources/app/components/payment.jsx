@@ -131,7 +131,7 @@ export default function (props) {
         setMessage(false);
         const package_id = $(`input[name="package_id"]:checked`).val();
         var formData = new FormData($('form#sub')[0]);
-        formData.append('user_id', props.user.id);
+        formData.append('user_id', props.user.user_id);
         formData.append('package_id', package_id);
         if (plan.id !== 4) {
             selectedPublishers.forEach(el => {
