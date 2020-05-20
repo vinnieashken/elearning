@@ -62,10 +62,10 @@
     <link href="{{ asset('static/new/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/main.css?').date('Ymdhis') }}" rel="stylesheet">
-    <link href="{{ asset('static/new/css/extras.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/new/css/extras.css?').date('Ymdhis') }}" rel="stylesheet">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
