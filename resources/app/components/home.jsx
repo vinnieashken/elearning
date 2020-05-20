@@ -224,7 +224,7 @@ export default function (props) {
             </div>
         </div>
     </div>
-    <section className="section-padding bg-light d-lg-none d-md-none d-block" id="services">
+    <section className="section-padding bg-light d-lg-none d-md-none d-block" id="services" style={{display: "none"}}>
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
