@@ -40,6 +40,16 @@ class PaymentsController extends Controller
         $publishers = [];
         $students = 1;
 
+        if(!is_numeric($userid))
+        {
+            return response()->json(["message"=> "Incorrect value for user id"] , 400);
+        }
+
+        if(!is_numeric($packageid))
+        {
+            return response()->json(["message"=> "Incorrect value for package id"] , 400);
+        }
+
         $multiplier = 1;
         if($request->has('publishers'))
         {
