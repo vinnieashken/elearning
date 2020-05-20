@@ -69,6 +69,10 @@ a a:focus {
     color: #fff51e!important;
 }
 
+.top-nav-collapse .navbar-nav li a.nav-link:hover {
+    color: #fff51e!important;
+}
+
 .indigo {
   background: transparent;
 }
