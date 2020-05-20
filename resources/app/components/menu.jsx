@@ -341,18 +341,7 @@ export default function (props) {
                                             }
                                         </div>
                                     </li>
-                                    <li className="nav-item dropdown mt-4">
-                                        <a aria-expanded="false" aria-haspopup="true"
-                                           className="nav-link dropdown-toggle"
-                                           data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
-                                            HOW IT WORKS
-                                        </a>
-                                        <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
-                                            <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/Desgin.pdf`}>For Students</a>
-                                            <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/2Desgin.pdf`}>For Teachers</a>
-                                            <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/3Desgin.pdf`}>For Your School's Students</a>
-                                        </div>
-                                    </li>
+
                                     <li className="nav-item mt-4">
                                         <Link className="nav-link" to={`${ENV}exams/modules`}>EXAMINATION PAPERS </Link>
                                     </li>
@@ -400,6 +389,18 @@ export default function (props) {
                                                             {/*        </React.Fragment>*/}
                                                             {/*        : ''*/}
                                                             {/*}*/}
+                                                            <li className="nav-item dropdown mt-4">
+                                                                <a aria-expanded="false" aria-haspopup="true"
+                                                                   className="nav-link dropdown-toggle"
+                                                                   data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
+                                                                    HOW IT WORKS
+                                                                </a>
+                                                                <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
+                                                                    <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/Design.pdf`}>For Students</a>
+                                                                    <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/2Design.pdf`}>For Teachers</a>
+                                                                    <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/3Design.pdf`}>For Your School's Students</a>
+                                                                </div>
+                                                            </li>
                                                         </React.Fragment> : ''
                                                 }
                                                 <li className="nav-item dropdown mt-4">
@@ -425,6 +426,18 @@ export default function (props) {
                                                 </li>
                                                 <li className="nav-item mt-4">
                                                     <Link className="nav-link " to={`${ENV}initialSetup`}>REGISTER SCHOOL</Link>
+                                                </li>
+                                                <li className="nav-item dropdown mt-4">
+                                                    <a aria-expanded="false" aria-haspopup="true"
+                                                       className="nav-link dropdown-toggle"
+                                                       data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
+                                                        HOW IT WORKS
+                                                    </a>
+                                                    <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
+                                                        <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/Design.pdf`}>For Students</a>
+                                                        <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/2Design.pdf`}>For Teachers</a>
+                                                        <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/3Design.pdf`}>For Your School's Students</a>
+                                                    </div>
                                                 </li>
                                                 {
                                                     subscriptionShown.hasOwnProperty('cost') > 0 ? <li className="nav-item mt-4">

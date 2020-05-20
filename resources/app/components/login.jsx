@@ -36,7 +36,7 @@ export default function Login(props) {
         let data = {};
         let url = `${API}/app/login`;
         if (loginType === 'email'){
-            data['email'] = $('#email').val()
+            data['username'] = $('#email').val()
             data['password'] = $('#password').val()
         } else {
             data['phone'] = $('#phone').val();
