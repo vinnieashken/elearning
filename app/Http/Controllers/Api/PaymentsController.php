@@ -114,6 +114,7 @@ class PaymentsController extends Controller
                 $existing->amount = $package->cost * $multiplier;
             }
             $existing->packageid = $package->id;
+            $existing->phone = $phone;
             $existing->save();
             $this->storePublishers($publishers,$userid,$packageid,$package->cost,"ELE".$existing->id);
 
@@ -129,6 +130,7 @@ class PaymentsController extends Controller
         $payment->user_id = $userid;
         $payment->packageid = $package->id;
         $payment->channel = 'MPESA';
+        $payment->phone = $phone;
 
         if($package->institution == 1)
         {
