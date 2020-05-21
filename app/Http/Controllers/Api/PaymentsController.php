@@ -166,7 +166,6 @@ class PaymentsController extends Controller
             'amount' => $payment->amount,
         ];
 
-
         //$this->autoPay('ELE'.$payment->id,$payment->amount,$phone);
 
         return $transaction;
@@ -188,6 +187,7 @@ class PaymentsController extends Controller
 
     public function mpesaCallback(Request $request)
     {
+        Log::info($request);
         $transactionid = $request->transaction;
         $mpesacode = $request->mpesa_code;
         $phone = $request->sender_phone;
