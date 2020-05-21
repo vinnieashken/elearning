@@ -39,12 +39,12 @@ export default function (props) {
         $.ajax({
             url: `${API}/app/password/reset`,
             method: 'post',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             data: {
                 email: $('#email').val(),
                 redirect_url: 'https://tutorsoma.standardmedia.co.ke/signin' ,
-            },
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;

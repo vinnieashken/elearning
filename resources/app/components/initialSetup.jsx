@@ -25,6 +25,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/institution/register`,
             method: 'post',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             data: formData,
             processData: false,
             contentType: false,

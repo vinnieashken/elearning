@@ -29,6 +29,9 @@ export default function (props) {
             url: `${API}/app/register`,
             method: 'post',
             data: formData,
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             processData: false,
             contentType: false,
             error: function (xhr, status, error) {

@@ -50,6 +50,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/payments/subscriptions`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {

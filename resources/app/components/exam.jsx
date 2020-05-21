@@ -48,6 +48,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/questions/module/${props.match.params.exam}?userid=${student.id}`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -73,6 +76,9 @@ export default function (props) {
             url: `${API}/modules/${props.match.params.exam}/user/${student.id}`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -113,6 +119,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/questions/module/user/answers`,
             data: data,
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             method: 'POST',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;

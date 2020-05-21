@@ -39,6 +39,9 @@ export default function Login(props) {
         $.ajax({
             url: `${API}/app/otp/verify`,
             method: 'post',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             data: {
                 phone: phone,
                 otp: $('#otp').val(),
@@ -77,6 +80,9 @@ export default function Login(props) {
         $.ajax({
             url: `${API}/app/otp/request`,
             method: 'post',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             data: {
                 phone: phone
             },

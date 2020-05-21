@@ -164,6 +164,9 @@ export default function (props) {
             $.ajax({
                 url: `${API}/institution/modules/questions/${question.hasOwnProperty('id') ? 'edit' : 'add'}`,
                 method: 'post',
+                headers: {
+                    'appkey': 'ELE-2020-XCZ3'
+                },
                 data: data,
                 error: function (xhr, status, error) {
                     var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;

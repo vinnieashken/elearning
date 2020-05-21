@@ -12,6 +12,9 @@ export function fetchSubscription(user) {
                 // url: `${API}/payments/subscription/user/2`,
                 url: `${API}/payments/subscription/user/${user.user_id}`,
                 method: 'get',
+                headers: {
+                    'appkey': 'ELE-2020-XCZ3'
+                },
                 dataType: 'json',
                 error: function (xhr, status, error) {
                     dispatch({type: LOADING_SUBSCRIPTION, payload: false});
@@ -30,6 +33,9 @@ export function fetchSubjects() {
         return $.ajax({
             url: `${API}/subjects/list`,
             method: 'get',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             dataType: 'json',
             success: function (res) {
                 dispatch ({ type: SUBJECTS_LOADED, payload: res });
@@ -43,6 +49,9 @@ export function fetchClasses() {
         return $.ajax({
             url: `${API}/classes/list`,
             method: 'get',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             dataType: 'json',
             success: function (res) {
                 dispatch ({ type: CLASSES_LOADED, payload: res });

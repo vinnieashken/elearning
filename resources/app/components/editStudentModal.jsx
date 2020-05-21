@@ -34,12 +34,12 @@ export default function (props) {
         $.ajax({
             url: `${API}/institution/student/${student.hasOwnProperty('id') ? 'edit' : 'register' }`,
             method: 'post',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             processData: false,
             contentType: false,
             data:formData,
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
