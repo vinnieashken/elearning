@@ -402,7 +402,7 @@ export default function (props) {
                                                                     HOW IT WORKS
                                                                 </a>
                                                                 <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
-                                                                    <a className="dropdown-item " href={`https://tutorsoma.standardmedia.co.ke/docs/Design.pdf`}>For Students</a>
+                                                                    <a className="dropdown-item " href={`https://tutorsoma.standardmedia.co.ke/docs/4Design.pdf`}>For Students</a>
                                                                     <a className="dropdown-item " href={`https://tutorsoma.standardmedia.co.ke/docs/2Design.pdf`}>For Teachers</a>
                                                                     <a className="dropdown-item " href={`https://tutorsoma.standardmedia.co.ke/docs/3Design.pdf`}>For Your School's Students</a>
                                                                 </div>
