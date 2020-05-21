@@ -114,6 +114,7 @@ class PaymentsController extends Controller
                 $existing->amount = $package->cost * $multiplier;
             }
             $existing->packageid = $package->id;
+            $existing->phone = $phone;
             $existing->save();
             $this->storePublishers($publishers,$userid,$packageid,$package->cost,"ELE".$existing->id);
 
@@ -129,6 +130,7 @@ class PaymentsController extends Controller
         $payment->user_id = $userid;
         $payment->packageid = $package->id;
         $payment->channel = 'MPESA';
+        $payment->phone = $phone;
 
         if($package->institution == 1)
         {
@@ -164,8 +166,7 @@ class PaymentsController extends Controller
             'amount' => $payment->amount,
         ];
 
-
-        $this->autoPay('ELE'.$payment->id,$payment->amount,$phone);
+        //$this->autoPay('ELE'.$payment->id,$payment->amount,$phone);
 
         return $transaction;
     }
@@ -186,6 +187,7 @@ class PaymentsController extends Controller
 
     public function mpesaCallback(Request $request)
     {
+        Log::info($request);
         $transactionid = $request->transaction;
         $mpesacode = $request->mpesa_code;
         $phone = $request->sender_phone;
