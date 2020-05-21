@@ -167,7 +167,7 @@ class PaymentsController extends Controller
         ];
 
 
-        $this->autoPay('ELE'.$payment->id,$payment->amount,$phone);
+        //$this->autoPay('ELE'.$payment->id,$payment->amount,$phone);
 
         return $transaction;
     }
