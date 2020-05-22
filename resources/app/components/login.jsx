@@ -24,6 +24,8 @@ export default function Login(props) {
     const [messageType, setMessageType] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('messageType') ? oldState.messageType : '');
     const [response, setResponse] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('response') ? oldState.response : '');
     const [passwordType, setPasswordType] = useState('password');
+    const [loginType, setLoginType] = useState('email');
+
 
     const dispatch = useDispatch();
 
@@ -31,14 +33,22 @@ export default function Login(props) {
         e.preventDefault();
         setProcessing(true);
         setMessage(false);
-        let email = $('#email').val();
-        let password = $('#password').val();
+        let data = {};
+        let url = `${API}/app/login`;
+        if (loginType === 'email'){
+            data['username'] = $('#email').val()
+            data['password'] = $('#password').val()
+        } else {
+            data['phone'] = $('#phone').val();
+            url = `${API}/app/otp/request`;
+        }
+
         $.ajax({
-            url: `${API}/app/login`,
+            url: url,
             method: 'post',
-            data: {
-                username: email,
-                password: password,
+            data: data,
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
             },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
@@ -52,16 +62,26 @@ export default function Login(props) {
                 $("html, body").animate({scrollTop: 0}, 200);
             }.bind(this),
             success: function (res) {
-                const thisUser = res;
-                dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
-                dispatch(fetchSubscription(thisUser));
-                props.setUser(thisUser);
-                localStorage.setItem('user', JSON.stringify(res));
-                console.log(next);
-                props.history.push({
-                    pathname: `${next}`,
-                    state: {user: thisUser},
-                });
+                if (loginType === 'otp') {
+                    props.history.push({
+                        pathname: `${ENV}otp`,
+                        state: {
+                            ...data,
+                            next: next
+                        },
+                    });
+                } else {
+                    const thisUser = res;
+                    dispatch({type: LOADING_SUBSCRIPTION, payload: true});
+                    dispatch(fetchSubscription(thisUser));
+                    props.setUser(thisUser);
+                    localStorage.setItem('user', JSON.stringify(res));
+                    console.log(next);
+                    props.history.push({
+                        pathname: `${next}`,
+                        state: {user: thisUser},
+                    });
+                }
             }.bind(this)
         })
     };
@@ -111,28 +131,45 @@ export default function Login(props) {
                                                     </div>
                                                 </div> : ''
                                         }
-                                        <div className="input-group mb-3 mt-3">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-user" />
-                                            </span>
-                                            </div>
-                                            <input type="email" className="form-control loginput" placeholder="Email"
-                                                   id='email'
-                                                   aria-label="Email"
-                                                   aria-describedby="basic-addon1" />
-                                        </div>
-                                        <div className="input-group mb-3 mt-4">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-key" />
-                                            </span>
-                                            </div>
-                                            <input type="password" className="form-control loginput" placeholder="Password"
-                                                   id='password'
-                                                   aria-label="Password"
-                                                   aria-describedby="basic-addon1" />
-                                        </div>
+                                        {
+                                            loginType === 'otp' ?
+                                                <div className="input-group mb-3 mt-3">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-mobile" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" className="form-control loginput" placeholder="Phone Number"
+                                                           id='phone' required={true}
+                                                           aria-label="Phone"
+                                                           aria-describedby="basic-addon1" />
+                                                </div> :
+                                                <React.Fragment>
+                                                    <div className="input-group mb-3 mt-3">
+                                                        <div className="input-group-prepend">
+                                                            <span className="input-group-text">
+                                                                <i className="fa fa-user" />
+                                                            </span>
+                                                        </div>
+                                                        <input type="email" className="form-control loginput" placeholder="Email"
+                                                               id='email' required={true}
+                                                               aria-label="Email"
+                                                               aria-describedby="basic-addon1" />
+                                                    </div>
+                                                    <div className="input-group mb-3 mt-4">
+                                                        <div className="input-group-prepend">
+                                                            <span className="input-group-text">
+                                                                <i className="fa fa-key" />
+                                                            </span>
+                                                        </div>
+                                                        <input type="password" className="form-control loginput" placeholder="Password"
+                                                               id='password' required={true}
+                                                               aria-label="Password"
+                                                               aria-describedby="basic-addon1" />
+                                                    </div>
+                                                </React.Fragment>
+                                        }
+
                                         {/*<p className="card-text grey">*/}
                                         {/*    <input type="checkbox" aria-label="Checkbox for following text input" /> Remember*/}
                                         {/*        Me</p>*/}
@@ -145,6 +182,19 @@ export default function Login(props) {
                                                     <div className="text-center mt-2">
                                                         <button type='submit' className="btn btn-primary">Login</button>
                                                     </div>
+                                                    {
+                                                        loginType === 'otp' ?
+                                                            <h6 className="card-title text-center mt-4">
+                                                                <button type='button' className='btn btn-primary' onClick={e=> {
+                                                                    setLoginType('email')
+                                                                }}>Login Using Your Email</button>
+                                                            </h6> :
+                                                            <h6 className="card-title text-center mt-4">
+                                                                <button type='button' className='btn btn-primary' onClick={e=> {
+                                                                    setLoginType('otp')
+                                                                }}>Login Using Your Phone Number</button>
+                                                            </h6>
+                                                    }
                                                     <h6 className="card-title text-center mt-4">
                                                         Login To Your
                                                         <Link class="green" to={`${ENV}school`}> Student Account</Link>
@@ -166,5 +216,5 @@ export default function Login(props) {
                 </div>
             </div>
         </React.Fragment>
-)
+    )
 }

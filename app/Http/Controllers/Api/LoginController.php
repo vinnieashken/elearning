@@ -98,9 +98,29 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
-        $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+        if(is_null($email) || is_null($name) )
+        {
+            return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+        }
 
-        //return $params;
+        $params = [];
+        $no = preg_match_all("!(7[0-9]{8})!",$email,$matches);
+        if($no > 0)
+        {
+            $phone = '254'.$matches[0][0];
+            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
+        }
+        else
+        {
+            if(is_null($password) || is_null($password_confirmation))
+            {
+                return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+            }
+
+            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+        }
+
+        //return ['data'=>$params,'count'=>$no];
 
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
         try {
@@ -121,6 +141,8 @@ class LoginController extends Controller
             return response()->json($objbody , 400);
         }
         //$body = json_decode($body);
+        //return $body;
+
         $customer = new Customer();
         $exists = $customer->where('user_id',$objbody->id)->first();
         if(is_null($exists))
@@ -128,11 +150,15 @@ class LoginController extends Controller
             $customer->user_id = $objbody->id;
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
+            $no = preg_match_all("!(7[0-9]{8})!",$objbody->phone,$matches);
+            if($no > 0)
+                $customer->phone = '0'.$matches[0][0];
             $customer->save();
         }
 
         return $body;
     }
+
     public function resetPassword(Request $request)
     {
         $email = $request->email;
@@ -170,14 +196,27 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
-        if(is_null($email) || is_null($name) || is_null($password) || is_null($password_confirmation))
+        if(is_null($email) || is_null($name) )
         {
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
+        $params = [];
+        $no = preg_match_all("!(7[0-9]{8})!",$email,$matches);
+        if($no > 0)
+        {
+            $phone = '254'.$matches[0][0];
+            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
+        }
+        else{
 
-        $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+            if(is_null($password) || is_null($password_confirmation))
+            {
+                return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+            }
 
-        //return $params;
+            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+        }
+
 
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
         try {
@@ -216,6 +255,9 @@ class LoginController extends Controller
             $customer->institution_id = $institution->id;
             $customer->name = $objbody->name;
             $customer->email = $objbody->email;
+            $no = preg_match_all("!(7[0-9]{8})!",$objbody->phone,$matches);
+            if($no > 0)
+                $customer->phone = '0'.$matches[0][0];
             $customer->owner = 1;
             if($request->has('publisher'))
                 $customer->publisher = 1;
@@ -235,13 +277,22 @@ class LoginController extends Controller
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
 
-        if(is_null($institution) || is_null($email) || is_null($name) || is_null($password) || is_null($password_confirmation))
-        {
-            return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
+        if (is_null($institution) || is_null($email) || is_null($name) ) {
+            return response()->json(['message' => 'Invalid or missing parameters', 'data' => $request->all()], 400);
         }
-
-        $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
-
+        $params = [];
+        $no = preg_match_all("!(7[0-9]{8})!",$email,$matches);
+        if($no > 0)
+        {
+            $phone = '254'.$matches[0][0];
+            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
+        }
+        else {
+            if (is_null($password) || is_null($password_confirmation)) {
+                return response()->json(['message' => 'Invalid or missing parameters', 'data' => $request->all()], 400);
+            }
+            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+        }
         //return $params;
 
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
@@ -271,6 +322,9 @@ class LoginController extends Controller
             $teacher->user_id = $objbody->id;
             $teacher->name = $objbody->name;
             $teacher->email = $objbody->email;
+            $no = preg_match_all("!(7[0-9]{8})!",$objbody->phone,$matches);
+            if($no > 0)
+                $teacher->phone = '0'.$matches[0][0];
             $teacher->teacher = 1;
             $teacher->save();
 
@@ -337,5 +391,96 @@ class LoginController extends Controller
     {
         return $this->SubscribeStudent(6,1);
     }
+
+
+    public function otpRequest(Request $request)
+    {
+        $phone = $request->phone;
+        $no = preg_match_all("!(7[0-9]{8})!",$phone,$matches);
+        if($no > 0)
+            $phone = '254'.$matches[0][0];
+
+        $params =["body"=>json_encode(['phone'=>$phone ])];
+
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
+        try {
+
+            $response = $client->request('POST', 'https://vas.standardmedia.co.ke/api/otp/request', $params);
+
+        }catch (Exception $e)
+        {
+            Log::error("Otp Request error".$params['body'].' Details'.$e->getMessage());
+        }
+
+        $headers = $response->getHeaders();
+        $statusCode = $response->getStatusCode();
+        $body = $response->getBody()->getContents();
+        $objbody = json_decode($body);
+
+        //return ['code'=>$statusCode,'body'=>$objbody];
+
+        if((int)$statusCode > 250 )
+        {
+            return response()->json($objbody , 400);
+        }
+
+        return ['message'=>$objbody->message];
+    }
+
+    public function otpVerify(Request $request)
+    {
+        $phone = $request->phone;
+        $otp = $request->otp;
+
+        $no = preg_match_all("!(7[0-9]{8})!",$phone,$matches);
+        if($no > 0)
+            $phone = '254'.$matches[0][0];
+
+        $params =["body"=>json_encode(['phone'=>$phone ,'otp'=> $otp])];
+
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
+        try {
+
+            $response = $client->request('POST', 'https://vas.standardmedia.co.ke/api/otp/verify', $params);
+
+        }catch (Exception $e)
+        {
+            Log::error("Otp verify error".$params['body'].' Details'.$e->getMessage());
+        }
+
+        $headers = $response->getHeaders();
+        $body = $response->getBody()->getContents();
+        $objbody = json_decode($body);
+
+        if(property_exists($objbody ,'message'))
+        {
+            return response()->json($objbody , 400);
+        }
+
+        $no = preg_match_all("!(7[0-9]{8})!",$objbody->phone,$matches);
+        if($no > 0)
+            $phone = '0'.$matches[0][0];
+
+
+        //return $objbody;
+
+        $customer = Customer::where('user_id',$objbody->id)->first();
+
+        if(is_null($customer))
+        {
+            $customer = new Customer();
+            $customer->user_id = $objbody->id;
+            $customer->name = $objbody->name;
+            $customer->email = $objbody->email;
+            $no = preg_match_all("!(7[0-9]{8})!",$objbody->phone,$matches);
+            if($no > 0)
+                $customer->phone = '0'.$matches[0][0];
+            $customer->save();
+            $customer = Customer::where('phone',$phone)->first();
+        }
+
+        return $customer;
+    }
+
 
 }

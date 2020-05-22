@@ -62,10 +62,10 @@
     <link href="{{ asset('static/new/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/main.css?').date('Ymdhis') }}" rel="stylesheet">
-    <link href="{{ asset('static/new/css/extras.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/new/css/extras.css?').date('Ymdhis') }}" rel="stylesheet">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
@@ -98,6 +98,20 @@
         }
 
     </style>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/5ec67dda6f7d401ccbb8a970/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
 </head>
 <body>
 <div class="main h-100 w-100" id="app" >

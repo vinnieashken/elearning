@@ -14,6 +14,11 @@ const Login = Loadable({
     loading: Loading
 });
 
+const VerifyOtp = Loadable({
+    loader: () => import('./verifyOtp'),
+    loading: Loading
+})
+
 const SchoolLogin = Loadable({
     loader: () => import('./studentLogin'),
     loading: Loading
@@ -142,6 +147,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/payments/subscriptions`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -168,6 +176,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/classes/list`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -238,7 +249,9 @@ export default function (props) {
                                         {/*<li><Link to={`${ENV}exams/classes/2/subjects`}>Class 8</Link></li>*/}
 
                                         {
-                                            classes.map(el => {
+                                            classes.filter(el => {
+                                                return [2, 6, 7, 8].includes(el.id)
+                                            }).map(el => {
                                                 return (
                                                     <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>
                                                 )
@@ -308,7 +321,9 @@ export default function (props) {
                                             {/*<Link className="dropdown-item" to={`${ENV}exams/classes/2/subjects`}>Class 8</Link>*/}
 
                                             {
-                                                classes.map(el => {
+                                                classes.filter(el => {
+                                                    return [2, 6, 7, 8].includes(el.id)
+                                                }).map(el => {
                                                     return (
                                                         <Link className="dropdown-item" to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link>
                                                     )
@@ -332,6 +347,7 @@ export default function (props) {
                                             }
                                         </div>
                                     </li>
+
                                     <li className="nav-item mt-4">
                                         <Link className="nav-link" to={`${ENV}exams/modules`}>EXAMINATION PAPERS </Link>
                                     </li>
@@ -379,6 +395,18 @@ export default function (props) {
                                                             {/*        </React.Fragment>*/}
                                                             {/*        : ''*/}
                                                             {/*}*/}
+                                                            <li className="nav-item dropdown mt-4">
+                                                                <a aria-expanded="false" aria-haspopup="true"
+                                                                   className="nav-link dropdown-toggle"
+                                                                   data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
+                                                                    HOW IT WORKS
+                                                                </a>
+                                                                <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
+                                                                    <a className="dropdown-item " href={`https://tutorsoma.standardmedia.co.ke/docs/4Design.pdf`}>For Students</a>
+                                                                    <a className="dropdown-item " href={`https://tutorsoma.standardmedia.co.ke/docs/2Design.pdf`}>For Teachers</a>
+                                                                    <a className="dropdown-item " href={`https://tutorsoma.standardmedia.co.ke/docs/3Design.pdf`}>For Your School's Students</a>
+                                                                </div>
+                                                            </li>
                                                         </React.Fragment> : ''
                                                 }
                                                 <li className="nav-item dropdown mt-4">
@@ -404,6 +432,18 @@ export default function (props) {
                                                 </li>
                                                 <li className="nav-item mt-4">
                                                     <Link className="nav-link " to={`${ENV}initialSetup`}>REGISTER SCHOOL</Link>
+                                                </li>
+                                                <li className="nav-item dropdown mt-4">
+                                                    <a aria-expanded="false" aria-haspopup="true"
+                                                       className="nav-link dropdown-toggle"
+                                                       data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
+                                                        HOW IT WORKS
+                                                    </a>
+                                                    <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
+                                                        <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/Design.pdf`}>For Students</a>
+                                                        <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/2Design.pdf`}>For Teachers</a>
+                                                        <a className="dropdown-item " target='_blank' href={`https://tutorsoma.standardmedia.co.ke/docs/3Design.pdf`}>For Your School's Students</a>
+                                                    </div>
                                                 </li>
                                                 {
                                                     subscriptionShown.hasOwnProperty('cost') > 0 ? <li className="nav-item mt-4">
@@ -431,6 +471,8 @@ export default function (props) {
                                                render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
                                         <Route exact={true} path={`${props.match.url}signin`}
                                                render={(props) => <Login{...props} setUser={setUser} />}/>
+                                        <Route exact={true} path={`${props.match.url}otp`}
+                                               render={(props) => <VerifyOtp{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}school`}
                                                render={(props) => <SchoolLogin{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}reset`}
@@ -507,25 +549,25 @@ export default function (props) {
                                         <Route exact={true} path={`${props.match.url}exams/modules`}
                                                render={(props) =>
                                                    // user.hasOwnProperty('id') ?
-                                                       <Modules {...props} user={user}/>
-                                                       // : props.history.push({
-                                                       //     pathname: `${ENV}signin`,
-                                                       //     state: {
-                                                       //         next: props.location.pathname
-                                                       //     },
-                                                       // })
+                                                   <Modules {...props} user={user}/>
+                                                   // : props.history.push({
+                                                   //     pathname: `${ENV}signin`,
+                                                   //     state: {
+                                                   //         next: props.location.pathname
+                                                   //     },
+                                                   // })
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
-                                                       <Modules {...props} user={user}/>
-                                                       : props.history.push({
-                                                           pathname: `${ENV}subscriptions`,
-                                                           state: {
-                                                               next: props.location.pathname
-                                                           },
-                                                       })
+                                                           <Modules {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
                                                        : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {

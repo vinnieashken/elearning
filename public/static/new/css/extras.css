@@ -66,7 +66,11 @@ a a:focus {
 }
 
 .top-nav-collapse .navbar-nav li.active a.nav-link {
-  color: #f3132b !important;
+    color: #fff51e!important;
+}
+
+.top-nav-collapse .navbar-nav li a.nav-link:hover {
+    color: #fff51e!important;
 }
 
 .indigo {

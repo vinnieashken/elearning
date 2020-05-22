@@ -50,6 +50,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/payments/subscriptions`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -224,113 +227,6 @@ export default function (props) {
             </div>
         </div>
     </div>
-    <section className="section-padding bg-light d-lg-none d-md-none d-block" id="services">
-        <div className="container">
-            <div className="row">
-                <div className="col-md-12">
-                    <h2 className="section-title wow fadeInDown animated" data-wow-delay="0.3s">Important
-                        Notes</h2>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-6 col-lg-4 col-xs-12">
-                    <div className="service-box">
-                        <div className="service-icon">
-                            <i className="fa fa-cogs" />
-                        </div>
-                        <div className="service-content">
-                            <h4><a href="#"> Innovations to think about during this period</a></h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
-                                officiis
-                                consequuntur vero error excepturi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-lg-4 col-xs-12">
-                    <div className="service-box">
-                        <div className="service-icon">
-                            <i className="fa fa-book" />
-                        </div>
-                        <div className="service-content">
-                            <h4><a href="#">Engaging with your teachers online</a></h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
-                                officiis
-                                consequuntur vero error excepturi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-lg-4 col-xs-12">
-                    <div className="service-box">
-                        <div className="service-icon">
-                            <i className="fa fa-check" />
-                        </div>
-                        <div className="service-content">
-                            <h4><a href="#">Keeping track of your performance</a></h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
-                                officiis
-                                consequuntur vero error excepturi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-lg-4 col-xs-12">
-                    <div className="service-box">
-                        <div className="service-icon">
-                            <i className="fa fa-check" />
-                        </div>
-                        <div className="service-content">
-                            <h4><a href="#">Improving Memorising capability</a></h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
-                                officiis
-                                consequuntur vero error excepturi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-lg-4 col-xs-12">
-                    <div className="service-box">
-                        <div className="service-icon">
-                            <i className="fa fa-folder-open" />
-                        </div>
-                        <div className="service-content">
-                            <h4><a href="#">Things to avoid when studying from home</a></h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
-                                officiis
-                                consequuntur vero error excepturi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-lg-4 col-xs-12">
-                    <div className="service-box">
-                        <div className="service-icon">
-                            <i className="fa fa-hand-pointer-o" />
-                        </div>
-                        <div className="service-content">
-                            <h4><a href="#">Fact checking</a></h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto
-                                officiis
-                                consequuntur vero error excepturi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <section className="section-padding bg-light d-none d-md-block d-lg-block" id="services">
         <div className="container">
             <div className="row">

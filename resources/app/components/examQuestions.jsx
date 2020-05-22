@@ -23,6 +23,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/questions/module/${props.match.params.exam}?userid=2`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -62,6 +65,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/questions/module/user/answers`,
             data: data,
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             method: 'POST',
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;

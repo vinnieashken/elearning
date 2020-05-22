@@ -37,6 +37,9 @@ export default function (props) {
             url: `${API}/modules/user/${props.user.id}`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -63,6 +66,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/payments/subscriptions/user/${props.user.id}`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -122,7 +128,7 @@ export default function (props) {
                     {
                         loading ? <Loading/> :
                             <div className="row">
-                                <div className="col-md-3">
+                                <div className="col-md-3" style={{display: 'none'}}>
                                     <div className="sticky-top pt-md-5">
                                         <div className="mt-5 pt-5 d-none d-md-block d-lg-block" />
                                         <table className="table mb-4 border-0">
@@ -147,7 +153,7 @@ export default function (props) {
                                         </table>
                                     </div>
                                 </div>
-                                <div className="col-md-9">
+                                <div className="col-md-12">
                                     <div className="row mt-5">
                                         <div className="col-md-12">
                                             <h2 className="section-title wow fadeInDown animated text-center"
@@ -169,11 +175,11 @@ export default function (props) {
                                         {modules.map(el => {
                                             return (
                                                 <tr key={`m${el.id}`}>
-                                                    <th scope="row">{el.class}</th>
-                                                    <td>{el.subject}</td>
-                                                    <td>{el.module}</td>
-                                                    <td>{el.score}</td>
-                                                    <td>{`${el.percentage}%`}</td>
+                                                    <th scope="row">{el.class ? el.class : ''}</th>
+                                                    <td>{el.subject ? el.subject : ''}</td>
+                                                    <td>{el.module ? el.module : ''}</td>
+                                                    <td>{el.score ? el.score : ''}</td>
+                                                    <td>{el.percentage ? `${el.percentage}%` : ''}</td>
                                                     <td>
                                                         <Link to={`${ENV}exams/exam/${el.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
                                                         Revise Exam

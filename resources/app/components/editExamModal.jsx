@@ -38,6 +38,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/questions/module/${props.exam.id}?userid=2`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -69,12 +72,12 @@ export default function (props) {
         $.ajax({
             url: `${API}/institution/modules/${props.exam.hasOwnProperty('id') ? 'edit' : 'add'}`,
             method: 'post',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             processData: false,
             contentType: false,
             data:formData,
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {

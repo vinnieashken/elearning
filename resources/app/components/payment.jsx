@@ -32,6 +32,9 @@ export default function (props) {
         $.ajax({
             url: url,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -60,6 +63,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/publishers/list`,
             method: 'GET',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             error: function (xhr, status, error) {
                 var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
                 try {
@@ -131,7 +137,7 @@ export default function (props) {
         setMessage(false);
         const package_id = $(`input[name="package_id"]:checked`).val();
         var formData = new FormData($('form#sub')[0]);
-        formData.append('user_id', props.user.id);
+        formData.append('user_id', props.user.user_id);
         formData.append('package_id', package_id);
         if (plan.id !== 4) {
             selectedPublishers.forEach(el => {
@@ -141,6 +147,9 @@ export default function (props) {
         $.ajax({
             url: `${API}/payments/subscribe`,
             data: formData,
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             processData: false,
             contentType: false,
             method: 'POST',

@@ -25,6 +25,8 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::post('/app/login','Api\LoginController@login');
     Route::post('/app/register','Api\LoginController@register');
     Route::post('/app/password/reset','Api\LoginController@resetPassword');
+    Route::post('/app/otp/request','Api\LoginController@otpRequest');
+    Route::post('/app/otp/verify','Api\LoginController@otpVerify');
 
     Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 

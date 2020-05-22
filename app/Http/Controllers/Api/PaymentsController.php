@@ -11,6 +11,7 @@ use App\Models\UserSubscription;
 use App\Utils\Mpesa;
 use App\Utils\PaymentAssist;
 use DateInterval;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -39,6 +40,16 @@ class PaymentsController extends Controller
         $phone = $request->mobile;
         $publishers = [];
         $students = 1;
+
+        if(!is_numeric($userid))
+        {
+            return response()->json(["message"=> "Incorrect value for user id"] , 400);
+        }
+
+        if(!is_numeric($packageid))
+        {
+            return response()->json(["message"=> "Incorrect value for package id"] , 400);
+        }
 
         $multiplier = 1;
         if($request->has('publishers'))
@@ -103,6 +114,7 @@ class PaymentsController extends Controller
                 $existing->amount = $package->cost * $multiplier;
             }
             $existing->packageid = $package->id;
+            $existing->phone = $phone;
             $existing->save();
             $this->storePublishers($publishers,$userid,$packageid,$package->cost,"ELE".$existing->id);
 
@@ -118,6 +130,7 @@ class PaymentsController extends Controller
         $payment->user_id = $userid;
         $payment->packageid = $package->id;
         $payment->channel = 'MPESA';
+        $payment->phone = $phone;
 
         if($package->institution == 1)
         {
@@ -153,6 +166,8 @@ class PaymentsController extends Controller
             'amount' => $payment->amount,
         ];
 
+        //$this->autoPay('ELE'.$payment->id,$payment->amount,$phone);
+
         return $transaction;
     }
 
@@ -172,6 +187,7 @@ class PaymentsController extends Controller
 
     public function mpesaCallback(Request $request)
     {
+        Log::info($request);
         $transactionid = $request->transaction;
         $mpesacode = $request->mpesa_code;
         $phone = $request->sender_phone;
@@ -311,6 +327,29 @@ class PaymentsController extends Controller
             ->leftJoin('subscriptions','subscriptions.id','=','user_subscriptions.package_id')
             ->select('user_subscriptions.ordernumber','user_subscriptions.transactionid as receipt','user_subscriptions.paymentchannel as method','subscriptions.subscription as package','user_subscriptions.startdate','user_subscriptions.enddate as expiry_date')
             ->get();
+    }
+
+    public function autoPay($transaction,$amount,$phone)
+    {
+        $params = ["body"=>json_encode([
+                'transaction'=> $transaction,
+                'sender_phone'=>$phone,
+                "mpesa_code"=> "PROMO",
+                "amount" => $amount
+            ]
+        )];
+
+        //return $params;
+
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
+        try {
+
+            $response = $client->request('POST', 'https://tutorsoma.standardmedia.co.ke/api/payments/mpesa/callback', $params);
+
+        }catch (Exception $e)
+        {
+
+        }
     }
 
     // for debugging purpose

@@ -14,6 +14,7 @@ export default function (props) {
     const [messageType, setMessageType] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('messageType') ? oldState.messageType : '');
     const [response, setResponse] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('response') ? oldState.response : '');
     const [passwordType, setPasswordType] = useState('password');
+    const [registrationType, setRegistrationType] = useState('email');
 
     const dispatch = useDispatch();
 
@@ -22,10 +23,15 @@ export default function (props) {
         setProcessing(true);
         setMessage(false);
         var formData = new FormData($('form#register')[0]);
+        if (registrationType === 'otp')
+            formData.append('otp', 1)
         $.ajax({
             url: `${API}/app/register`,
             method: 'post',
             data: formData,
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
             processData: false,
             contentType: false,
             error: function (xhr, status, error) {
@@ -41,15 +47,30 @@ export default function (props) {
 
             }.bind(this),
             success: function (res) {
-                localStorage.setItem('user', res);
-                const thisUser = JSON.parse(res);
-                dispatch(fetchSubscription(thisUser));
-                props.setUser(thisUser);
-                props.history.push({
-                    pathname: `${next}`,
-                    state: {user: thisUser},
-                });
-                setProcessing(false);
+                if (registrationType === 'otp') {
+                    var object = {};
+                    formData.forEach(function(value, key){
+                        object[key === 'email' ? 'phone' : key] = value;
+                    });
+                    props.history.push({
+                        pathname: `${ENV}otp`,
+                        state: {
+                            ...object,
+                            next: next
+                        },
+                    });
+
+                } else {
+                    localStorage.setItem('user', res);
+                    const thisUser = JSON.parse(res);
+                    dispatch(fetchSubscription(thisUser));
+                    props.setUser(thisUser);
+                    props.history.push({
+                        pathname: `${next}`,
+                        state: {user: thisUser},
+                    });
+                    setProcessing(false);
+                }
             }.bind(this)
         })
     };
@@ -81,77 +102,153 @@ export default function (props) {
                         <div className="mx-auto mt-5 col-md-5 col-sm-12">
                             <div className="card weekly">
                                 <h5 className="card-header text-center">SIGN UP</h5>
-                                <form onSubmit={handleSubmit} id='register'>
-                                    <div className="card-body">
-                                        {
-                                            message ?
-                                                <div className='col-md-12'>
-                                                    <div className="text-center mt-2">
-                                                        <div className={messageType} role="alert">
-                                                            <div className="alert-message">
-                                                                {response}
+                                {
+                                    registrationType === 'email' ?
+                                        <form onSubmit={handleSubmit} id='register'>
+                                            <div className="card-body">
+                                                {
+                                                    message ?
+                                                        <div className='col-md-12'>
+                                                            <div className="text-center mt-2">
+                                                                <div className={messageType} role="alert">
+                                                                    <div className="alert-message">
+                                                                        {response}
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </div> : ''
+                                                }
+                                                <div className="input-group mb-3 mt-3">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-user" />
+                                                        </span>
                                                     </div>
-                                                </div> : ''
-                                        }
-                                        <div className="input-group mb-3 mt-3">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-user" />
-                                            </span>
+                                                    <input type="text" className="form-control loginput" placeholder="Full Name" name='name' />
+                                                </div>
+                                                <div className="input-group mb-3 mt-3">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">@</span>
+                                                    </div>
+                                                    <input type="email" className="form-control loginput" placeholder="Email" name='email'/>
+                                                </div>
+                                                <div className="input-group mb-3 mt-4">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-key" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" className="form-control loginput" placeholder="Password" name='password' />
+                                                </div>
+                                                <div className="input-group mb-3 mt-4">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-key" />
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" className="form-control loginput"
+                                                           placeholder="Confirm Password" aria-label="Confirm Password"
+                                                           name='password_confirmation' />
+                                                </div>
+                                                <p className="card-text grey">
+                                                    <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
+                                                    I agree to the terms and conditions
+                                                </p>
+                                                <p className="card-text grey">
+                                                    <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
+                                                    I agree to the privacy policy
+                                                </p>
+                                                <div className="text-center mt-2">
+                                                    {
+                                                        processing ? <ClipLoader /> : <button type='submit' className="btn btn-primary">Register</button>
+                                                    }
+                                                </div>
+                                                <h6 className="card-title text-center mt-4">
+                                                    <button className='btn btn-primary' onClick={e=> {
+                                                        setRegistrationType('otp')
+                                                    }}>Register Using Your Phone Number</button>
+                                                </h6>
+                                                <h6 className="card-title text-center mt-4">
+                                                    Forgot Password?
+                                                    <Link class="green" to={`${ENV}reset`}> Reset Password</Link>
+                                                </h6>
+                                                <h6 className="card-title text-center mt-4">Have an Account?<br />
+                                                    <Link class="green" to={`${ENV}signin`}>Sign in</Link>
+                                                </h6>
                                             </div>
-                                            <input type="text" className="form-control loginput" placeholder="Full Name"
-                                                   name='name' />
-                                        </div>
-                                        <div className="input-group mb-3 mt-3">
-                                            <div className="input-group-prepend">
-                                                <span className="input-group-text">@</span>
+                                        </form> :
+                                        registrationType === 'otp' ?
+                                            <form onSubmit={handleSubmit} id='register'>
+                                                <div className="card-body">
+                                                    {
+                                                        message ?
+                                                            <div className='col-md-12'>
+                                                                <div className="text-center mt-2">
+                                                                    <div className={messageType} role="alert">
+                                                                        <div className="alert-message">
+                                                                            {response}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> : ''
+                                                    }
+                                                    <div className="input-group mb-3 mt-3">
+                                                        <div className="input-group-prepend">
+                                                            <span className="input-group-text">
+                                                                <i className="fa fa-user" />
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" className="form-control loginput" placeholder="Full Name" name='name' />
+                                                    </div>
+                                                    <div className="input-group mb-3 mt-3">
+                                                        <div className="input-group-prepend">
+                                                            <span className="input-group-text">
+                                                                <i className="fa fa-mobile" />
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" className="form-control loginput" placeholder="Phone Number" name='email'/>
+                                                    </div>
+                                                    <span className='danger'>Note: OTP (One Time Password) only served to Safaricom users.</span>
+
+                                                    <p className="card-text grey">
+                                                        <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
+                                                        I agree to the terms and conditions
+                                                    </p>
+                                                    <p className="card-text grey">
+                                                        <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
+                                                        I agree to the privacy policy
+                                                    </p>
+                                                    <div className="text-center mt-2">
+                                                        {
+                                                            processing ? <ClipLoader /> : <button type='submit' className="btn btn-primary">Register</button>
+                                                        }
+                                                    </div>
+                                                    <h6 className="card-title text-center mt-4">
+                                                        <button className='btn btn-primary' onClick={e=> {
+                                                            setRegistrationType('email')
+                                                        }}>Register Using Your Email</button>
+                                                    </h6>
+                                                    <h6 className="card-title text-center mt-4">Have an Account?<br />
+                                                        <Link class="green" to={`${ENV}signin`}>Sign in</Link>
+                                                    </h6>
+                                                </div>
+                                            </form> :
+                                            <div className="card-body">
+                                                <h6 className="card-title text-center mt-4">
+                                                    <button className='btn btn-primary' onClick={e=> {
+                                                        setRegistrationType('email')
+                                                    }}>Register Using Your Email</button>
+                                                </h6>
+                                                <h6 className="card-title text-center mt-4">
+                                                    OR
+                                                </h6>
+                                                <h6 className="card-title text-center mt-4">
+                                                    <button className='btn btn-primary' onClick={e=> {
+                                                        setRegistrationType('otp')
+                                                    }}>Register Using Your Mobile</button>
+                                                </h6>
                                             </div>
-                                            <input type="email" className="form-control loginput" placeholder="Email"
-                                                   name='email'/>
-                                        </div>
-                                        <div className="input-group mb-3 mt-4">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-key" />
-                                            </span>
-                                            </div>
-                                            <input type="password" className="form-control loginput" placeholder="Password"
-                                                   name='password' />
-                                        </div>
-                                        <div className="input-group mb-3 mt-4">
-                                            <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fa fa-key" />
-                                            </span>
-                                            </div>
-                                            <input type="password" className="form-control loginput"
-                                                   placeholder="Confirm Password" aria-label="Confirm Password"
-                                                   name='password_confirmation' />
-                                        </div>
-                                        <p className="card-text grey">
-                                            <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
-                                            I agree to the terms and conditions
-                                        </p>
-                                        <p className="card-text grey">
-                                            <input type="checkbox" aria-label="Checkbox for following text input" required={true}/>
-                                            I agree to the privacy policy
-                                        </p>
-                                        <div className="text-center mt-2">
-                                            {
-                                                processing ? <ClipLoader /> : <button type='submit' className="btn btn-primary">Register</button>
-                                            }
-                                        </div>
-                                        <h6 className="card-title text-center mt-4">
-                                            Forgot Password?
-                                            <Link class="green" to={`${ENV}reset`}> Reset Password</Link>
-                                        </h6>
-                                        <h6 className="card-title text-center mt-4">Have an Account?<br />
-                                            <Link class="green" to={`${ENV}signin`}>Sign in</Link>
-                                        </h6>
-                                    </div>
-                                </form>
+                                }
                             </div>
                         </div>
                     </div>

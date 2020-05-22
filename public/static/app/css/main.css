@@ -4635,8 +4635,9 @@ ul.nav-tabs li a {
     }
 
     #carousel-area .carousel-item .btn-lg {
-        padding: 7px 10px;
-        min-width: 150px;
+        padding: 6px 9px;
+        min-width: 118px;
+        margin-top: 40px;
     }
 
     .controls .btn {
@@ -5406,6 +5407,9 @@ em {
     }
     .profile{
         padding: 0 0 !important;
+    }
+    #carousel-area .btn-lg {
+        margin: -42px;
     }
 }
 
