@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
-//Route::group(['middleware' => ['appkey']], function () {
+Route::group(['middleware' => ['appkey']], function () {
     //
     Route::post('/app/login','Api\LoginController@login');
     Route::post('/app/register','Api\LoginController@register');
@@ -82,7 +82,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
     Route::get('testsub','Api\LoginController@testSubscribe');
 
-//});
+});
 
 
 
