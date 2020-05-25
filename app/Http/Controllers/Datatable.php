@@ -229,9 +229,6 @@ class Datatable extends Controller
                                                                     <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark" title="Questions">
                                                                         <i class="fas fa-plus-square"></i>
                                                                     </a>
-                                                                    <a href="" class="delete-record text-dark ml-3" data-id="'.$post->id.'" data-table="modules">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </a>
                                                                  </div>';
                                 $data[] = $nestedData;
                             }
