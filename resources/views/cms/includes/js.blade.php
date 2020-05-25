@@ -145,6 +145,7 @@
             var module = $(this).data('module');
             $('#edit-id').val(module.id);
             $('#edit-module').val(module.module);
+            $('#edit-publisher option[value="'+module.publisher_id+'"]').attr("selected","selected");
             $('#edit-subject option[value="'+module.subject_id+'"]').attr("selected","selected");
             $('#edit-status option[value="'+module.status+'"]').attr("selected","selected");
             $('#editModal').modal('toggle');

@@ -124,8 +124,8 @@
                     <div class="form-group">
                         <label for="edit-status" class="control-label">Status</label>
                         <select name="status" id="edit-status" class="custom-select">
-                            <option value="0">Active</option>
-                            <option value="1">Inactive</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                 </div>
