@@ -209,6 +209,11 @@ class Datatable extends Controller
                     {
                         foreach ($posts as $post)
                             {
+                                $statusbtn                  =   ($post->status == 1)?' <a href="Javascript:;" class="text-dark modulestatus" title="Unpublish">
+                                                                        <i class="fas fa-download"></i>
+                                                                    </a>': '<a href="Javascript:;" class="text-dark modulestatus" title="Publish">
+                                                                        <i class="fas fa-upload"></i>
+                                                                    </a>';
                                 $subject                    =   Subject::where('id',$post->subject_id)->first();
                                 $nestedData['id']           =   $post->id;
                                 $nestedData['level']        =   Level::where('id',$subject->class_id)->first()->class;
@@ -216,15 +221,18 @@ class Datatable extends Controller
                                 $nestedData['creator']      =   ($post->creator!=NULL)?User::where('id',$post->creator)->first()->name:"";
                                 $nestedData['subject']      =   $subject->subject;
                                 $nestedData['module']       =   $post->module;
-                                $nestedData['action']       =   '<div class="d-flex flex-row"><a href="#" class="edit-module text-dark mr-3" data-module=\''.$post.'\' >
-                                                                    <i class="fas fa-edit"></i>
-                                                                 </a>
-                                                                 <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark" title="Questions">
-                                                                    <i class="fas fa-plus-square"></i>
-                                                                 </a>
-                                                                 <a href="" class="delete-record text-dark ml-3" data-id="'.$post->id.'" data-table="modules">
-                                                                    <i class="fas fa-trash"></i>
-                                                                 </a></div>';
+                                $nestedData['action']       =   '<div class="d-flex flex-row">
+                                                                    '.$statusbtn.'
+                                                                    <a href="#" class="edit-module text-dark mr-3" data-module=\''.$post.'\' >
+                                                                        <i class="fas fa-edit"></i>
+                                                                    </a>
+                                                                    <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark" title="Questions">
+                                                                        <i class="fas fa-plus-square"></i>
+                                                                    </a>
+                                                                    <a href="" class="delete-record text-dark ml-3" data-id="'.$post->id.'" data-table="modules">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </a>
+                                                                 </div>';
                                 $data[] = $nestedData;
                             }
                     }
