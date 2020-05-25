@@ -123,7 +123,7 @@ class QuestionsController extends Controller
 
         //return $answers;
 
-        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json','appkey'=>'ELE-2020-XCZ3' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
         try {
 
             $path = url('/api/modules/'.$moduleid.'/marks/user/'.$userid);
