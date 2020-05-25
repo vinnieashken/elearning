@@ -146,6 +146,7 @@
             $('#edit-id').val(module.id);
             $('#edit-module').val(module.module);
             $('#edit-subject option[value="'+module.subject_id+'"]').attr("selected","selected");
+            $('#edit-status option[value="'+module.status+'"]').attr("selected","selected");
             $('#editModal').modal('toggle');
         });
         $(document).on('click','.edit-question',function(e){

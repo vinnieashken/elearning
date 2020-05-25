@@ -121,6 +121,13 @@
                         <label for="edit-module" class="control-label">Exam Name</label>
                         <input type="text" name="module" id="edit-module" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label for="edit-status" class="control-label">Status</label>
+                        <select name="" id="edit-status" class="custom-sselect">
+                            <option value="0">Active</option>
+                            <option value="1">Inactive</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save changes</button>
