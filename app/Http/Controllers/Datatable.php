@@ -504,8 +504,8 @@ class Datatable extends Controller
 
                 $limit  =   $request->input('length');
                 $start  =   $request->input('start');
-                $order  =   $columns[$request->input('order.5.column')];
-                $dir    =   $request->input('order.5.dir');
+                $order  =   $columns[$request->input('order.0.column')];
+                $dir    =   $request->input('order.0.dir');
 
                 if(empty($request->input('search.value')))
                     {
