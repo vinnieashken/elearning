@@ -55,6 +55,7 @@ Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
 Route::post('cms/getuserroles','Cms@getuserroles');
 Route::post('cms/edituserroles','Cms@edituserroles');
 Route::post('cms/delete','Cms@delete');
+Route::post('cms/update','Cms@update');
 Route::post('cms/get_payments','Datatable@get_payments');
 
 Route::get('{any}', function ($any = null) {

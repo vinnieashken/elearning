@@ -693,6 +693,59 @@
         });
 
     });
+       $(document).on('click','.updaterecord',function(e){
+           e.preventDefault();
+           $.ajax({
+               type: 'POST',
+               url: '{{ url('cms/update') }}',
+               headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+               data: {"id":$(this).data("id"),"table":$(this).data("table"),"column":$(this).data("column"),"value":$(this).data("value")},
+               success: function (Mess) {
+                   if (Mess.status == true) {
+                       toastr.success(Mess.msg, Mess.header, {
+                           timeOut: 1000,
+                           closeButton: true,
+                           progressBar: true,
+                           newestOnTop: true,
+                           onHidden: function () {
+                               window.location.reload();
+                           }
+                       });
+
+
+                   } else {
+                       toastr.error(Mess.msg, Mess.header, {
+                           timeOut: 1000,
+                           closeButton: true,
+                           progressBar: true,
+                           newestOnTop: true,
+                           onHidden: function () {
+                               window.location.reload();
+                           }
+                       });
+                   }
+               },
+               error: function (f) {
+                   console.log(f);
+                   $.each(f.responseJSON.errors, function (key, val) {
+                       toastr.error(val[0], f.responseJSON.message, {
+                           timeOut: 1000,
+                           closeButton: true,
+                           progressBar: true,
+                           newestOnTop: true,
+                           onHidden: function () {
+                               window.location.reload();
+                           }
+                       });
+
+                   });
+
+
+               }
+
+           });
+
+       });
     $(document).on("show.bs.modal", '.modal', function (event) {
     console.log("Global show.bs.modal fire");
     var zIndex = 100000 + (10 * $(".modal:visible").length);

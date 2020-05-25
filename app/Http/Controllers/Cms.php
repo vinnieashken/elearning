@@ -573,4 +573,18 @@ class Cms extends Controller
                         return array('status'=>False,'msg'=>'Record deletion failed','header'=>ucfirst($request->table));
                     }
             }
+        public function update(Request $request)
+            {
+                $res = DB::table($request->table)
+                            ->where('id', $request->id)
+                            ->update([$request->column => $request->value]);
+                if($res)
+                    {
+                        return array('status'=>TRUE,'msg'=>'Record update successful','header'=>ucfirst($request->table));
+                    }
+                else
+                    {
+                        return array('status'=>False,'msg'=>'Record update failed','header'=>ucfirst($request->table));
+                    }
+            }
     }
