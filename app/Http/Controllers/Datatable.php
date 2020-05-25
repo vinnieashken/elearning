@@ -209,9 +209,9 @@ class Datatable extends Controller
                     {
                         foreach ($posts as $post)
                             {
-                                $statusbtn                  =   ($post->status == 1)?' <a href="Javascript:;" class="text-dark modulestatus" title="Unpublish">
+                                $statusbtn                  =   ($post->status == 1)?' <a href="Javascript:;" class="text-dark modulestatus mr-3" title="Unpublish">
                                                                         <i class="fas fa-download"></i>
-                                                                    </a>': '<a href="Javascript:;" class="text-dark modulestatus" title="Publish">
+                                                                    </a>': '<a href="Javascript:;" class="text-dark modulestatus mr-3" title="Publish">
                                                                         <i class="fas fa-upload"></i>
                                                                     </a>';
                                 $subject                    =   Subject::where('id',$post->subject_id)->first();
