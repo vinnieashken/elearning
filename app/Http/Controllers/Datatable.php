@@ -209,9 +209,9 @@ class Datatable extends Controller
                     {
                         foreach ($posts as $post)
                             {
-                                $statusbtn                  =   ($post->status == 1)?' <a href="Javascript:;" class="text-dark modulestatus mr-3" title="Unpublish">
+                                $statusbtn                  =   ($post->status == 1)?' <a href="Javascript:;" class="text-dark modulestatus ml-3" title="Unpublish" data-id="'.$post->id.'" data-table="modules">
                                                                         <i class="fas fa-download"></i>
-                                                                    </a>': '<a href="Javascript:;" class="text-dark modulestatus mr-3" title="Publish">
+                                                                    </a>': '<a href="Javascript:;" class="text-dark modulestatus ml-3" title="Publish" data-id="'.$post->id.'" data-table="modules">
                                                                         <i class="fas fa-upload"></i>
                                                                     </a>';
                                 $subject                    =   Subject::where('id',$post->subject_id)->first();
@@ -222,13 +222,13 @@ class Datatable extends Controller
                                 $nestedData['subject']      =   $subject->subject;
                                 $nestedData['module']       =   $post->module;
                                 $nestedData['action']       =   '<div class="d-flex flex-row">
-                                                                    '.$statusbtn.'
                                                                     <a href="#" class="edit-module text-dark mr-3" data-module=\''.$post.'\' >
                                                                         <i class="fas fa-edit"></i>
                                                                     </a>
                                                                     <a href="'.url('cms/questions/'.$post->id.'/'.Str::slug($post->module,"-")).'" class="text-dark" title="Questions">
                                                                         <i class="fas fa-plus-square"></i>
                                                                     </a>
+                                                                    '.$statusbtn.'
                                                                  </div>';
                                 $data[] = $nestedData;
                             }
