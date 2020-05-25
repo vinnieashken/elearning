@@ -494,7 +494,7 @@ class Datatable extends Controller
                     4   =>  'transactioncode',
                     5   =>  'created_at',
                     6   =>  'amount_received'
-                    
+
                 );
 
                 $totalData      = Payment::where('amount_received',"!=",0)
@@ -504,8 +504,8 @@ class Datatable extends Controller
 
                 $limit  =   $request->input('length');
                 $start  =   $request->input('start');
-                $order  =   $columns[$request->input('order.0.column')];
-                $dir    =   $request->input('order.0.dir');
+                $order  =   $columns[$request->input('order.5.column')];
+                $dir    =   $request->input('order.5.dir');
 
                 if(empty($request->input('search.value')))
                     {
@@ -543,7 +543,7 @@ class Datatable extends Controller
                         $x= $start + 1;
                         foreach ($posts as $post)
                             {
-                                $customer                       =   Customer::where('id',$post->user_id)->first();
+                                $customer                       =   Customer::where('user_id',$post->user_id)->first();
                                 $institution                    =   Institution::where('id',$post->packageid)->first();
                                 $nestedData['*']                =   $x;
                                 $nestedData['name']             =   is_object($customer)?$customer->name:"No Name";
