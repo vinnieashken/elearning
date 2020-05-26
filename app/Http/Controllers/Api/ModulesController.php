@@ -362,7 +362,7 @@ class ModulesController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results = $sheetsmodel->orderBy('created_at','DESC')->where('user_id',$userid)->distinct('module_id')
+            $results = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
                 ->leftJoin('modules','modules.id','=','user_answers.module_id')
                 ->leftJoin('subjects','subjects.id','=','modules.subject_id')
                 ->leftJoin('classes','classes.id','=','subjects.class_id')
@@ -386,7 +386,7 @@ class ModulesController extends Controller
             return $data;
         }
 
-        $sheets = $sheetsmodel->orderBy('created_at','DESC')->where('user_id',$userid)->distinct('module_id')
+        $sheets = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
             ->leftJoin('modules','modules.id','=','user_answers.module_id')
             ->leftJoin('subjects','subjects.id','=','modules.subject_id')
             ->leftJoin('classes','classes.id','=','subjects.class_id')
