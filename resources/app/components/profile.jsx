@@ -172,7 +172,7 @@ export default function (props) {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {modules.map(el => {
+                                        {modules.reverse().map(el => {
                                             return (
                                                 <tr key={`m${el.id}`}>
                                                     <th scope="row">{el.class ? el.class : ''}</th>
@@ -208,7 +208,7 @@ export default function (props) {
                                         </thead>
                                         <tbody>
                                         {
-                                            subscriptions.map(el => {
+                                            subscriptions.reverse().map(el => {
                                                 return (
                                                     <tr key={`s${el.id}`}>
                                                         <th scope="row">{el.ordernumber}</th>

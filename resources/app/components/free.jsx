@@ -127,7 +127,7 @@ export default function (props) {
                                 exam: row
                             }
                         }} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>
-                            {row.done ? `Revise Paper` : `Take Test`}
+                            {row.done ? `Revise Paper` : parseInt(row.institution_id) === 29 ? `Take Free Test` : `Take Test`}
                         </Link>
                 }
             </div>
@@ -175,7 +175,7 @@ export default function (props) {
                             <div className="row">
                                 <div className="col-md-12">
                                     <h2 className="section-title wow fadeInDown animated text-center "
-                                        data-wow-delay="0.3s">Examination papers</h2>
+                                        data-wow-delay="0.3s">Free Examination papers</h2>
                                 </div>
 
                             </div>
@@ -193,7 +193,7 @@ export default function (props) {
                                                 </div> :
                                                 <ToolkitProvider
                                                     keyField="id"
-                                                    data={modules.filter(el => {return parseInt(el.status) === 1}).reverse()}
+                                                    data={modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse()}
                                                     // data={ modules.filter(el => {
                                                     //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
                                                     // }) }
@@ -243,7 +243,7 @@ export default function (props) {
                                                                                             setSelectedExam(exam);
                                                                                         }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
                                                                                         : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
-                                                                                    : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
+                                                                                    : ''
                                                                             }
 
                                                                         </div>

@@ -5,7 +5,7 @@ import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
 import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED} from "../common/constants";
 import { useSelector } from 'react-redux'
-import { fetchSubscription, fetchSubjects, fetchClasses } from "../common/actions";
+import { fetchSubscription, fetchSubjects, fetchClasses, fetchExams } from "../common/actions";
 import { useDispatch } from "react-redux";
 import {ClipLoader} from "react-spinners";
 
@@ -49,6 +49,10 @@ const Profile = Loadable({
     loading: LoadingWhite
 });
 
+const FreeExams = Loadable({
+    loader: () => import('./free'),
+    loading: LoadingWhite
+});
 
 const Exam = Loadable({
     loader: () => import('./exam'),
@@ -138,6 +142,7 @@ export default function (props) {
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
+        dispatch(fetchExams());
         dispatch(fetchClasses());
         dispatch(fetchSubjects());
         getSubscriptions();
@@ -624,6 +629,21 @@ export default function (props) {
                                                                    next: props.location.pathname
                                                                },
                                                            })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}free/exams`}
+                                               render={(props) =>
+                                                       <FreeExams {...props} user={user}/>
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}free/exam/:exam`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                           <Exam {...props} user={user}/>
                                                        : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
