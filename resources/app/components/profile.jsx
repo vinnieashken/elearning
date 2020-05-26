@@ -163,7 +163,7 @@ export default function (props) {
                                     <table className="table">
                                         <thead className="thead-dark text-center">
                                         <tr>
-                                            <th scope="col">Date</th>
+                                            <th scope="col">Date Completed</th>
                                             <th scope="col">Class</th>
                                             <th scope="col">Subject</th>
                                             <th scope="col">Exam</th>

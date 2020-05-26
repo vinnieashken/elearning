@@ -23,7 +23,9 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [selectedExam, setSelectedExam] = useState({})
+    const [selectedClass, setSelectedClass] = useState('')
     const classes = useSelector(state => state.classes);
+    const [selectedSubject, setSelectedSubject] = useState('')
     const subjects = useSelector(state => state.subjects);
     const [subjectOptions, setSubjectOptions] = useState({})
     const [classOptions, setClassOptions] = useState({})
@@ -43,9 +45,8 @@ export default function (props) {
             subjectArray[`${el.subject}`] = `${el.subject}`
         })
         classes.forEach(el => {
-            classArray[el.class] = el.class
+            classArray[el.id] = el.class
         })
-        debugger
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
         getModules();
@@ -210,7 +211,11 @@ export default function (props) {
                                                                 text: 'Class',
                                                                 formatter: cell => classOptions[cell],
                                                                 filter: selectFilter({
-                                                                    options: classOptions
+                                                                    options: classOptions,
+                                                                    onFilter: (filterValue) => {
+                                                                        setSelectedClass(filterValue)
+                                                                        // const Class = classOptions.
+                                                                    }
                                                                 })
                                                             },
                                                             {
@@ -218,7 +223,32 @@ export default function (props) {
                                                                 text: 'Subject',
                                                                 formatter: cell => subjectOptions[cell],
                                                                 filter: selectFilter({
-                                                                    options: subjectOptions
+                                                                    options: subjectOptions,
+                                                                    onFilter: (filterValue) => {
+                                                                        setSelectedSubject(filterValue)
+                                                                        setLoading(true)
+                                                                        $.ajax({
+                                                                            url: `${API}/modules/subject/name/${filterValue}`,
+                                                                            // url: `${API}/subjects/class/{class_id}`,
+                                                                            method: 'GET',
+                                                                            headers: {
+                                                                                'appkey': 'ELE-2020-XCZ3'
+                                                                            },
+                                                                            error: function (xhr, status, error) {
+                                                                                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                                                                                try {
+                                                                                    response = JSON.parse(xhr['responseText'])['message']
+                                                                                }catch (e) {}                setLoading(false);
+                                                                                setMessage(true);
+                                                                                setMessageType('alert alert-danger');
+                                                                                setResponse(response);
+                                                                            }.bind(this),
+                                                                            success: function (res) {
+                                                                                setModules(res);
+                                                                                setLoading(false);
+                                                                            }.bind(this)
+                                                                        })
+                                                                    }
                                                                 })
                                                             },
                                                             {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
