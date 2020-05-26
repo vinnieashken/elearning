@@ -213,7 +213,7 @@ class ModulesController extends Controller
                 ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                 ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','modules.status','modules.created_at as date')->paginate($size)->items();
 
-            $totalrecords = $model->where('subject_id',$subjectid)->count();
+            $totalrecords = $model->whereIn('subject_id',$subjects)->count();
             $totalpages = ceil($totalrecords / $size);
 
             $data ["pagination"] = [
