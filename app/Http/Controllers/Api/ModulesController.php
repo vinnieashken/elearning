@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
 use App\Models\Customer;
+use App\Models\Marks;
 use App\Models\Module;
 use App\Models\Question;
 use App\Models\Subject;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -367,7 +369,7 @@ class ModulesController extends Controller
                 ->leftJoin('subjects','subjects.id','=','modules.subject_id')
                 ->leftJoin('classes','classes.id','=','subjects.class_id')
                 ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-                ->select('user_answers.id','modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
+                ->select('modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
                 ->paginate($size)->items();
 
             $totalrecords = $sheetsmodel->where('user_id',$userid)->distinct('module_id')->count();
@@ -382,6 +384,11 @@ class ModulesController extends Controller
 
             $data ["rows"] = $results;
 
+            foreach ($results as $module)
+            {
+                $this->RedoMarks($module->id,$userid);
+            }
+
             return $data;
         }
 
@@ -392,6 +399,11 @@ class ModulesController extends Controller
             ->leftJoin('marks','marks.marks_module_id','=','modules.id')
             ->select('modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
+
+        foreach ($sheets as $module)
+        {
+            $this->RedoMarks($module->id,$userid);
+        }
 
         return $sheets;
     }
@@ -413,6 +425,49 @@ class ModulesController extends Controller
     {
         $usermodules = AnswerSheet::where('user_id',$userid)->select('module_id')->distinct()->get();
         return $usermodules;
+    }
+
+    public function RedoMarks($moduleid,$userid)
+    {
+
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json','appkey'=>'ELE-2020-XCZ3' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
+        try {
+
+            $path = url('/api/modules/'.$moduleid.'/marks/user/'.$userid);
+            $response = $client->request('GET', $path);
+
+        }catch (Exception $e)
+        {
+
+        }
+
+        $headers = $response->getHeaders();
+        $body = $response->getBody()->getContents();
+        $result = json_decode($body);
+
+        if(! is_null($result))
+        {
+            $marks = new Marks();
+            $existing = $marks->where('marks_user_id',$userid)->where('marks_module_id',$moduleid)->first();
+            if(!is_null($existing))
+            {
+
+            }
+            else {
+                $marks->marks_module_id = $moduleid;
+                $marks->marks_user_id = $userid;
+                $marks->score = $result->Score;
+                $marks->questions = $result->Questions;
+                $marks->percentage = $result->Percentage;
+                $marks->save();
+            }
+        }
+
+    }
+
+    public function debug($moduleid,$userid)
+    {
+        return $this->RedoMarks($moduleid,$userid);
     }
 
 }
