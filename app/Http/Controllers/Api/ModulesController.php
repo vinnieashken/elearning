@@ -362,7 +362,7 @@ class ModulesController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results = $sheetsmodel->orderBy('user_answers.id','DESC')->where('user_id',$userid)->distinct('module_id')
+            $results = $sheetsmodel->orderBy('marks.id','DESC')->where('user_id',$userid)->distinct('module_id')
                 ->leftJoin('modules','modules.id','=','user_answers.module_id')
                 ->leftJoin('subjects','subjects.id','=','modules.subject_id')
                 ->leftJoin('classes','classes.id','=','subjects.class_id')
@@ -385,12 +385,12 @@ class ModulesController extends Controller
             return $data;
         }
 
-        $sheets = $sheetsmodel->orderBy('user_answers.id','DESC')->where('user_id',$userid)->distinct('module_id')
+        $sheets = $sheetsmodel->orderBy('marks.id','DESC')->where('user_id',$userid)->distinct('module_id')
             ->leftJoin('modules','modules.id','=','user_answers.module_id')
             ->leftJoin('subjects','subjects.id','=','modules.subject_id')
             ->leftJoin('classes','classes.id','=','subjects.class_id')
             ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-            ->select('user_answers.id','modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
+            ->select('modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
         return $sheets;
