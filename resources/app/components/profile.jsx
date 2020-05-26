@@ -176,7 +176,7 @@ export default function (props) {
                                         {modules.reverse().map(el => {
                                             return (
                                                 <tr key={`m${el.id}`}>
-                                                    <th scope="row">{el.date ? el.date : ''}</th>
+                                                    <th scope="row">{el.date ? moment(el.date, 'YYYY-MM-DD HH:mm:ss').format('Y-MM-DD') : ''}</th>
                                                     <th scope="row">{el.class ? el.class : ''}</th>
                                                     <td>{el.subject ? el.subject : ''}</td>
                                                     <td>{el.module ? el.module : ''}</td>
