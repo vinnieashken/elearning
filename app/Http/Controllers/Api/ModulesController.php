@@ -281,7 +281,7 @@ class ModulesController extends Controller
 
             $results = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
                 ->leftJoin('modules','modules.id','=','user_answers.module_id')
-                ->leftJoin('subjects','subjects.id','=','modules.id')
+                ->leftJoin('subjects','subjects.id','=','modules.subject_id')
                 ->leftJoin('classes','classes.id','=','subjects.id')
                 ->leftJoin('marks','marks.marks_module_id','=','modules.id')
                 ->select('modules.id','modules.module','modules.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
@@ -305,7 +305,7 @@ class ModulesController extends Controller
 
         $sheets = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
             ->leftJoin('modules','modules.id','=','user_answers.module_id')
-            ->leftJoin('subjects','subjects.id','=','modules.id')
+            ->leftJoin('subjects','subjects.id','=','modules.subject_id')
             ->leftJoin('classes','classes.id','=','subjects.id')
             ->leftJoin('marks','marks.marks_module_id','=','modules.id')
             ->select('modules.id','modules.module','modules.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
