@@ -284,7 +284,7 @@ class ModulesController extends Controller
                 ->leftJoin('subjects','subjects.id','=','modules.id')
                 ->leftJoin('classes','classes.id','=','subjects.id')
                 ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-                ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
+                ->select('modules.id','modules.module','modules.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
                 ->paginate($size)->items();
 
 
@@ -308,7 +308,7 @@ class ModulesController extends Controller
             ->leftJoin('subjects','subjects.id','=','modules.id')
             ->leftJoin('classes','classes.id','=','subjects.id')
             ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
+            ->select('modules.id','modules.module','modules.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
         return $sheets;
