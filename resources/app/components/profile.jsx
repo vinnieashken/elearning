@@ -163,10 +163,10 @@ export default function (props) {
                                     <table className="table">
                                         <thead className="thead-dark text-center">
                                         <tr>
-                                            <th scope="col">Date</th>
                                             <th scope="col">Class</th>
                                             <th scope="col">Subject</th>
                                             <th scope="col">Exam</th>
+                                            <th scope="col">Date</th>
                                             <th scope="col">Score</th>
                                             <th scope="col">Percentage</th>
                                             <th scope="col">Revise</th>
@@ -176,10 +176,10 @@ export default function (props) {
                                         {modules.reverse().map(el => {
                                             return (
                                                 <tr key={`m${el.id}`}>
-                                                    <th scope="row">{el.date ? moment(el.date, 'YYYY-MM-DD HH:mm:ss').format('Y-MM-DD') : ''}</th>
                                                     <th scope="row">{el.class ? el.class : ''}</th>
                                                     <td>{el.subject ? el.subject : ''}</td>
                                                     <td>{el.module ? el.module : ''}</td>
+                                                    <th>{el.date ? moment(el.date, 'YYYY-MM-DD HH:mm:ss').format('Y-MM-DD') : ''}</th>
                                                     <td>{el.score ? el.score : ''}</td>
                                                     <td>{el.percentage ? `${el.percentage}%` : ''}</td>
                                                     <td>
