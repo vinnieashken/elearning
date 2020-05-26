@@ -179,7 +179,7 @@ export default function (props) {
                                                     <th scope="row">{el.class ? el.class : ''}</th>
                                                     <td>{el.subject ? el.subject : ''}</td>
                                                     <td>{el.module ? el.module : ''}</td>
-                                                    <th>{el.date ? moment(el.date, 'YYYY-MM-DD HH:mm:ss').format('Y-MM-DD') : ''}</th>
+                                                    <td>{el.date ? moment(el.date, 'YYYY-MM-DD HH:mm:ss').format('Y-MM-DD') : ''}</td>
                                                     <td>{el.score ? el.score : ''}</td>
                                                     <td>{el.percentage ? `${el.percentage}%` : ''}</td>
                                                     <td>
