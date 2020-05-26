@@ -465,9 +465,20 @@ class ModulesController extends Controller
 
     }
 
-    public function debug($moduleid,$userid)
+    public function debug($userid)
     {
-        return $this->RedoMarks($moduleid,$userid);
+        foreach(Customer::get() as $customer) {
+            $client = new Client(['headers' => ['Content-Type' => 'application/json', 'appkey' => 'ELE-2020-XCZ3'], 'verify' => base_path('/cacert.pem'), 'http_errors' => false]);
+            try {
+
+                $path = url('api/modules/user/' . $customer->id);
+                $response = $client->request('GET', $path);
+
+            } catch (Exception $e) {
+
+            }
+        }
+        return ['message'=>'done'];
     }
 
 }
