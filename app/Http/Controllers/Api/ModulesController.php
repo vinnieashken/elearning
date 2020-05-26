@@ -8,6 +8,7 @@ use App\Models\AnswerSheet;
 use App\Models\Customer;
 use App\Models\Module;
 use App\Models\Question;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -194,6 +195,88 @@ class ModulesController extends Controller
         return $data;
     }
 
+    public function getModulesBySubjectName(Request $request,$subjectname)
+    {
+        $model = new Module();
+
+        $subjects = Subject::where('subject','like','%'.$subjectname.'%')->pluck('id');
+
+        //return $subjects;
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results =  $model->whereIn('subject_id',$subjects)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','modules.status','modules.created_at as date')->paginate($size)->items();
+
+            $totalrecords = $model->whereIn('subject_id',$subjects)->count();
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+            $temp = [];
+
+            if($request->has('userid'))
+            {
+                $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                foreach ($results as $result)
+                {
+                    $result['done'] = false;
+
+                    foreach ($usermodules as $usermodule)
+                    {
+                        if($result->id === $usermodule->module_id)
+                        {
+                            $result['done'] = true;
+                        }
+                    }
+                    array_push($temp,$result);
+                }
+                $data ["rows"] = $temp;
+            }
+            else
+                $data ["rows"] = $results;
+
+            return $data;
+        }
+
+        $results = $model->whereIn('subject_id',$subjects)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            ->leftJoin('classes','subjects.class_id','=','classes.id')
+            ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+            ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','modules.status','modules.created_at as date')->get();
+        $data = [];
+        if($request->has('userid'))
+        {
+            $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+            foreach ($results as $result)
+            {
+                $result['done'] = false;
+
+                foreach ($usermodules as $usermodule)
+                {
+                    if($result->id === $usermodule->module_id)
+                    {
+                        $result['done'] = true;
+                    }
+
+                }
+                array_push($data,$result);
+            }
+        }
+        else
+            $data = $results;
+
+        return $data;
+    }
+
     public function getUserModuleAnswers(Request $request,$moduleid,$userid)
     {
         $model = new AnswerSheet();
@@ -281,10 +364,10 @@ class ModulesController extends Controller
 
             $results = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
                 ->leftJoin('modules','modules.id','=','user_answers.module_id')
-                ->leftJoin('subjects','subjects.id','=','modules.id')
-                ->leftJoin('classes','classes.id','=','subjects.id')
+                ->leftJoin('subjects','subjects.id','=','modules.subject_id')
+                ->leftJoin('classes','classes.id','=','subjects.class_id')
                 ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-                ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
+                ->select('modules.id','modules.module','modules.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
                 ->paginate($size)->items();
 
 
@@ -305,10 +388,10 @@ class ModulesController extends Controller
 
         $sheets = $sheetsmodel->where('user_id',$userid)->distinct('module_id')
             ->leftJoin('modules','modules.id','=','user_answers.module_id')
-            ->leftJoin('subjects','subjects.id','=','modules.id')
-            ->leftJoin('classes','classes.id','=','subjects.id')
+            ->leftJoin('subjects','subjects.id','=','modules.subject_id')
+            ->leftJoin('classes','classes.id','=','subjects.class_id')
             ->leftJoin('marks','marks.marks_module_id','=','modules.id')
-            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
+            ->select('modules.id','modules.module','modules.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
         return $sheets;

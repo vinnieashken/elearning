@@ -36,6 +36,7 @@ Route::group(['middleware' => ['appkey']], function () {
 
     Route::get('/modules/list','Api\ModulesController@list');
     Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
+    Route::get('/modules/subject/name/{name}','Api\ModulesController@getModulesBySubjectName');
     Route::get('/modules/{id}/user/{user_id}','Api\ModulesController@getUserModuleAnswers');
     Route::get('/modules/{id}/marks/user/{user_id}','Api\ModulesController@getUserModuleMarks');
     Route::get('/modules/user/{user_id}','Api\ModulesController@getUserModules');
