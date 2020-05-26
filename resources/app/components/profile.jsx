@@ -163,6 +163,7 @@ export default function (props) {
                                     <table className="table">
                                         <thead className="thead-dark text-center">
                                         <tr>
+                                            <th scope="col">Date</th>
                                             <th scope="col">Class</th>
                                             <th scope="col">Subject</th>
                                             <th scope="col">Exam</th>
@@ -175,6 +176,7 @@ export default function (props) {
                                         {modules.reverse().map(el => {
                                             return (
                                                 <tr key={`m${el.id}`}>
+                                                    <th scope="row">{el.date ? el.date : ''}</th>
                                                     <th scope="row">{el.class ? el.class : ''}</th>
                                                     <td>{el.subject ? el.subject : ''}</td>
                                                     <td>{el.module ? el.module : ''}</td>
