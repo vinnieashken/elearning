@@ -45,7 +45,7 @@ export default function (props) {
             subjectArray[`${el.subject}`] = `${el.subject}`
         })
         classes.forEach(el => {
-            classArray[el.id] = el.class
+            classArray[el.class] = el.class
         })
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
