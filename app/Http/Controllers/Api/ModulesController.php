@@ -384,10 +384,10 @@ class ModulesController extends Controller
 
             $data ["rows"] = $results;
 
-            foreach ($results as $module)
-            {
-                $this->RedoMarks($module->id,$userid);
-            }
+//            foreach ($results as $module)
+//            {
+//                $this->RedoMarks($module->id,$userid);
+//            }
 
             return $data;
         }
@@ -400,10 +400,10 @@ class ModulesController extends Controller
             ->select('modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
-        foreach ($sheets as $module)
-        {
-            $this->RedoMarks($module->id,$userid);
-        }
+//        foreach ($sheets as $module)
+//        {
+//            $this->RedoMarks($module->id,$userid);
+//        }
 
         return $sheets;
     }
