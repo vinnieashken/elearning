@@ -482,5 +482,16 @@ class LoginController extends Controller
         return $customer;
     }
 
+    public function getUser(Request $request,$id)
+    {
+        $customer = Customer::find($id);
+        if(is_null($customer))
+        {
+            return response()->json(['message'=>'User not found.','data'=> 'user id '.$id ] , 400);
+        }
+
+        return $customer;
+    }
+
 
 }
