@@ -62,12 +62,11 @@ export default function (props) {
 
                 } else {
                     localStorage.setItem('user', res);
-                    const thisUser = JSON.parse(res);
-                    dispatch(fetchSubscription(thisUser));
-                    props.setUser(thisUser);
+                    dispatch(fetchSubscription(res));
+                    props.setUser(res);
                     props.history.push({
                         pathname: `${next}`,
-                        state: {user: thisUser},
+                        state: {user: res},
                     });
                     setProcessing(false);
                 }
