@@ -118,7 +118,7 @@ export default function (props) {
             if (parseInt(el.answer) === parseInt(ans)) {
                 marks += 1;
             }
-            answers.push({"questionid": el.id, "optionid": parseInt(ans)})
+            answers.push({"questionid": el.id, "optionid": isNaN(ans) ? '' : parseInt(ans)})
         });
         let data = {
             "moduleid": props.match.params.exam,
