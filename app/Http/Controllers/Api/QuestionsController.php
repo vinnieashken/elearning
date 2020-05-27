@@ -110,6 +110,9 @@ class QuestionsController extends Controller
             $exists = $answerSheet ->where('question_id',$answer['questionid'])->where('user_id',$userid)->where('module_id',$moduleid)->first();
             $answerSheet->user_id = $userid;
             $answerSheet->module_id = $moduleid;
+
+            //if(!is_numeric($answer['optionid']) )
+                //continue;
             $answerSheet->question_id = $answer['questionid'];
             $answerSheet->option_id = $answer['optionid'];
 

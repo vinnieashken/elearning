@@ -27,6 +27,7 @@ Route::group(['middleware' => ['appkey']], function () {
     Route::post('/app/password/reset','Api\LoginController@resetPassword');
     Route::post('/app/otp/request','Api\LoginController@otpRequest');
     Route::post('/app/otp/verify','Api\LoginController@otpVerify');
+    Route::get('/app/user/{id}','Api\LoginController@getUser');
 
     Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 
