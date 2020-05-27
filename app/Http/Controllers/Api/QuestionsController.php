@@ -111,8 +111,8 @@ class QuestionsController extends Controller
             $answerSheet->user_id = $userid;
             $answerSheet->module_id = $moduleid;
 
-            if(!is_numeric($answer['optionid']) || !is_numeric($answer['questionid']) )
-                continue;
+            //if(!is_numeric($answer['optionid']) )
+                //continue;
             $answerSheet->question_id = $answer['questionid'];
             $answerSheet->option_id = $answer['optionid'];
 

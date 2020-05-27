@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Institution;
 use App\Models\Teacher;
 use App\Models\Student;
+use App\Models\UserSubscription;
 use App\Utils\PaymentAssist;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -485,10 +486,17 @@ class LoginController extends Controller
     public function getUser(Request $request,$id)
     {
         $customer = Customer::find($id);
+
         if(is_null($customer))
         {
             return response()->json(['message'=>'User not found.','data'=> 'user id '.$id ] , 400);
         }
+
+        $subscription = new UserSubscription();
+        $subscription = $subscription->orderby('user_subscriptions.id','DESC')->where('user_id',$customer->user_id)->where('status',1 )->where('enddate','>=',date_create('now'))
+            ->leftJoin('subscriptions','subscriptions.id','=','user_subscriptions.package_id')
+            ->first();
+        $customer->subscription = $subscription;
 
         return $customer;
     }
