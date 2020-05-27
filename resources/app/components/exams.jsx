@@ -94,6 +94,7 @@ export default function (props) {
         setModules(modules.push(exam))
     }
 
+
     const provider = (cell, row) => {
         return (
             row.institution_name !== null ? row.institution_name : 'Standard Group'

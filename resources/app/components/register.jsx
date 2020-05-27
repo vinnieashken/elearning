@@ -61,7 +61,7 @@ export default function (props) {
                     });
 
                 } else {
-                    localStorage.setItem('user', res);
+                    localStorage.setItem('user', JSON.stringify(res));
                     dispatch(fetchSubscription(res));
                     props.setUser(res);
                     props.history.push({
