@@ -208,7 +208,7 @@ export default function (props) {
                         return(
                             <div className="col-lg-4 col-md-6 col-sm-6">
                                 <div className="card subj">
-                                    <Link to={{ pathname:  `${ENV}exams/subjects/${el.id}/modules` }}>
+                                    <Link to={{ pathname:  `${ENV}exams/subjects/${el.subject}/modules` }}>
 
                                         <div className="card-body">
                                             <div className="mb-2">

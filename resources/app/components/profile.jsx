@@ -7,6 +7,8 @@ import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
 import {PUBLIC_URL} from "../../app-old/common/constants";
+import filterFactory, {selectFilter} from "react-bootstrap-table2-filter";
+import paginationFactory from "react-bootstrap-table2-paginator";
 const { SearchBar } = Search;
 
 export default function (props) {
@@ -86,22 +88,14 @@ export default function (props) {
         })
     };
 
-    const reviseButton = (cell, row) => {
+    const actionButton = (cell, row) => {
         return (
-            <div className="actions ml-3">
-                <Link to={`${ENV}exams/exam/${row.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
-                    Revise
-                </Link>
-                {/*<a href="#" className="action-item mr-2" data-toggle="tooltip" title="" data-original-title="Edit">*/}
-                {/*    <i className="fa fa-pencil-alt"></i>*/}
-                {/*</a>*/}
-                {/*<a href="#" className="action-item text-danger mr-2" data-toggle="tooltip" title=""*/}
-                {/*   data-original-title="Move to trash">*/}
-                {/*    <i className="fa fa-trash"></i>*/}
-                {/*</a>*/}
-            </div>
+            <Link to={`${ENV}exams/exam/${row.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
+                Revise Exam
+            </Link>
         )
     };
+
 
     return (
         <React.Fragment>
@@ -160,38 +154,81 @@ export default function (props) {
                                                 data-wow-delay="0.3s">Past Performance</h2>
                                         </div>
                                     </div>
-                                    <table className="table">
-                                        <thead className="thead-dark text-center">
-                                        <tr>
-                                            <th scope="col">Date Completed</th>
-                                            <th scope="col">Class</th>
-                                            <th scope="col">Subject</th>
-                                            <th scope="col">Exam</th>
-                                            <th scope="col">Score</th>
-                                            <th scope="col">Percentage</th>
-                                            <th scope="col">Revise</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {modules.reverse().map(el => {
-                                            return (
-                                                <tr key={`m${el.id}`}>
-                                                    <th scope="row">{el.date ? moment(el.date, 'YYYY-MM-DD HH:mm:ss').format('Y-MM-DD') : ''}</th>
-                                                    <td>{el.class ? el.class : ''}</td>
-                                                    <td>{el.subject ? el.subject : ''}</td>
-                                                    <td>{el.module ? el.module : ''}</td>
-                                                    <td>{el.score ? el.score : ''}</td>
-                                                    <td>{el.percentage ? `${el.percentage}%` : ''}</td>
-                                                    <td>
-                                                        <Link to={`${ENV}exams/exam/${el.id}`} className="btn btn-sm btn-rounded btn-success-filled" >
-                                                        Revise Exam
-                                                    </Link>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                        </tbody>
-                                    </table>
+                                    <ToolkitProvider
+                                        keyField="id"
+                                        data={
+                                            modules.sort(function(a,b){
+                                                // Turn your strings into dates, and then subtract them
+                                                // to get a value that is either negative, positive, or zero.
+                                                return moment(b.date, 'YYYY-MM-DD HH:mm:ss') - (moment(a.date, 'YYYY-MM-DD HH:mm:ss'));
+                                            })
+                                        }
+                                        // data={ modules.filter(el => {
+                                        //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
+                                        // }) }
+                                        columns={
+                                            [
+                                                {
+                                                    dataField: 'date',
+                                                    text: 'Date Completed',
+                                                    sort: true,
+                                                    formatter: (cell, row) => {
+                                                        return moment(row.date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD')
+                                                    } },
+                                                {dataField: 'class',        text: 'Class',      sort: true},
+                                                {dataField: 'subject',        text: 'Subject',      sort: true},
+                                                {dataField: 'module',        text: 'Exam',      sort: true},
+                                                {dataField: 'score',        text: 'Score',      sort: true},
+                                                {dataField: 'percentage',        text: 'Percentage',      sort: true},
+                                                {dataField: 'created_at',   text: 'Revise',      sort: true, formatter: actionButton},
+                                            ]
+                                        } search={true}>
+                                        {
+                                            props =>
+                                                (
+                                                    <React.Fragment>
+                                                        <div className='row  mb-3'>
+                                                            <div className='col-md-4'>
+                                                                <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
+                                                            </div>
+                                                        </div>
+
+                                                        <BootstrapTable { ...props.baseProps }
+                                                                        wrapperClasses="table-responsive"
+                                                                        headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                        headerClasses="border-0"
+                                                                        rowClasses="border-0"
+                                                                        rowStyle={ { borderRadius: '18px' } }
+                                                            // pagination={ paginationFactory() }
+                                                            // filter={ filterFactory() }
+                                                        />
+
+                                                    </React.Fragment>
+                                                )
+                                        }
+                                    </ToolkitProvider>
+                                    {/*<table className="table">*/}
+                                    {/*    */}
+                                    {/*    <tbody>*/}
+                                    {/*    {modules.reverse().map(el => {*/}
+                                    {/*        return (*/}
+                                    {/*            <tr key={`m${el.id}`}>*/}
+                                    {/*                <th scope="row">{el.date ? moment(el.date, 'YYYY-MM-DD HH:mm:ss').format('Y-MM-DD') : ''}</th>*/}
+                                    {/*                <td>{el.class ? el.class : ''}</td>*/}
+                                    {/*                <td>{el.subject ? el.subject : ''}</td>*/}
+                                    {/*                <td>{el.module ? el.module : ''}</td>*/}
+                                    {/*                <td>{el.score ? el.score : ''}</td>*/}
+                                    {/*                <td>{el.percentage ? `${el.percentage}%` : ''}</td>*/}
+                                    {/*                <td>*/}
+                                    {/*                    <Link to={`${ENV}exams/exam/${el.id}`} className="btn btn-sm btn-rounded btn-success-filled" >*/}
+                                    {/*                    Revise Exam*/}
+                                    {/*                </Link>*/}
+                                    {/*                </td>*/}
+                                    {/*            </tr>*/}
+                                    {/*        )*/}
+                                    {/*    })}*/}
+                                    {/*    </tbody>*/}
+                                    {/*</table>*/}
                                     <div className="row">
                                         <div className="col-md-12">
                                             <h2 className="section-title wow fadeInDown animated text-center mt-4"

@@ -45,7 +45,7 @@ export default function (props) {
             subjectArray[`${el.subject}`] = `${el.subject}`
         })
         classes.forEach(el => {
-            classArray[el.class] = el.class
+            classArray[el.id] = el.class
         })
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
@@ -53,8 +53,12 @@ export default function (props) {
     }, [props.match.params.subject]);
 
     const getModules = () => {
+        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`;
+        // if (props.match.params.hasOwnProperty('subject'))
+        //     url = `${API}/modules/subject/name/${filterValue}`;
+
         $.ajax({
-            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`,
+            url: url,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             headers: {
@@ -207,14 +211,17 @@ export default function (props) {
                                                                 sort: true,
                                                                 style: { textAlign: 'left' }},
                                                             {
-                                                                dataField: 'class',
+                                                                dataField: 'class_id',
                                                                 text: 'Class',
                                                                 formatter: cell => classOptions[cell],
                                                                 filter: selectFilter({
                                                                     options: classOptions,
                                                                     onFilter: (filterValue) => {
                                                                         setSelectedClass(filterValue)
-                                                                        // const Class = classOptions.
+                                                                        // props.history.push({
+                                                                        //     pathname: `${ENV}exams/modules`,
+                                                                        //     state: {user: thisUser},
+                                                                        // });
                                                                     }
                                                                 })
                                                             },

@@ -272,7 +272,7 @@ export default function (props) {
                                         {
                                             subjects.filter(el => {return [2,4,5,6,7,8].includes(el.id)}).map(el => {
                                                 return (
-                                                    <li><Link to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link></li>
+                                                    <li><Link to={`${ENV}exams/subjects/${el.subject}/modules`}>{el.subject}</Link></li>
                                                 )
                                             })
                                         }
@@ -346,7 +346,7 @@ export default function (props) {
                                             {
                                                 subjects.filter(el => {return [2,4,5,6,7,8].includes(el.id)}).map(el => {
                                                     return (
-                                                        <Link className="dropdown-item " to={`${ENV}exams/subjects/${el.id}/modules`}>{el.subject}</Link>
+                                                        <Link className="dropdown-item " to={`${ENV}exams/subjects/${el.subject}/modules`}>{el.subject}</Link>
                                                     )
                                                 })
                                             }
