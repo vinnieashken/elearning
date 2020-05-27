@@ -83,7 +83,10 @@ Route::group(['middleware' => ['appkey']], function () {
 
     Route::get('testsub','Api\LoginController@testSubscribe');
 
+
 });
+
+//Route::get('marks/{userid}','Api\ModulesController@debug');
 
 
 
