@@ -89,7 +89,7 @@ class LoginController extends Controller
 
         }
 
-        $customer = $customer->where('user_id',$customer->user_id)->first();
+        //$customer = $customer->where('user_id',$customer->user_id)->first();
 
         return $exists ?? $customer;
     }
