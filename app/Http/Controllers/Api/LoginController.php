@@ -89,6 +89,8 @@ class LoginController extends Controller
 
         }
 
+        $customer = $customer->where('user_id',$customer->user_id)->first();
+
         return $exists ?? $customer;
     }
 
@@ -157,7 +159,9 @@ class LoginController extends Controller
             $customer->save();
         }
 
-        return $body;
+        $customer = $customer->where('user_id',$customer->user_id)->first();
+
+        return $exists ?? $customer;
     }
 
     public function resetPassword(Request $request)
