@@ -600,7 +600,7 @@
         e.preventDefault();
         Pay = $(this).data('user');
         $('#edit-transaction').val(Pay.transaction);
-        $('#edit-sender_phone').val(Pay.sender_phone);
+        $('#edit-sender_phone').val(Pay.phone);
         $("#edit-mpesa_code").val(Pay.mpesa_code);
         $('#edit-amount').val(Pay.amount);
         $('#activate-payment').modal('toggle');
