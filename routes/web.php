@@ -46,6 +46,7 @@ Route::post('/cms/addquestion','Cms@addquestion');
 Route::post('/cms/editquestion','Cms@editquestion');
 Route::post('/cms/addrates','Cms@addrates');
 Route::post('/cms/editrates','Cms@editrates');
+Route::post('/cms/customers','Cms@customers');
 Route::post('/subjectfromclass','Cms@getmodules');
 Route::post('/choices','Cms@choices');
 Route::post('/questionanswers','Cms@questionanswers');
