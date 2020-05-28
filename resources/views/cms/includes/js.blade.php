@@ -468,7 +468,7 @@
                 "url": "{{ url('get_modules') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ "X-CSRF-TOKEN":"{{csrf_token()}}"}
+                "data":{ _token :"{{csrf_token()}}"}
             },
             "columns": [
                 { "data": "id" },
@@ -519,7 +519,7 @@
                 "url": "{{ url('get_questions') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ "id":"{{ $module_id ?? ''}}","X-CSRF-TOKEN":"{{ csrf_token() }}"}
+                "data":{ "id":"{{ $module_id ?? ''}}", _token :"{{ csrf_token() }}"}
             },
             "columns": [
                 { "data": "*" },
