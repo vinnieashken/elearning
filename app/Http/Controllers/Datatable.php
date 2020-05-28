@@ -552,7 +552,7 @@ class Datatable extends Controller
                                 $nestedData['phone']            =   $post->phone;
                                 $nestedData['institution']      =   is_object($institution)?$institution->name:"Standard Group";
                                 $nestedData["transactioncode"]  =   $post->transactioncode;
-                                $nestedData['amount']           =   $post->amount_received;
+                                $nestedData['amount']           =   $post->amount;
                                 $nestedData['balance']          =   ($post->amount - $post->amount_received);
                                 $nestedData['date']             =   date('dS M Y h:ia',strtotime($post->created_at));
                                 $nestedData['status']           =   ($post->status == 0)?"Payment successful":(($post->amount_received > 0)?"Payment Incomplete":"Payment Failed");
