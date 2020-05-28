@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {API, ENV, PUBLIC_URL} from "../common/constants";
+import {API, ENV, LOADING_SUBSCRIPTION, PUBLIC_URL} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -34,6 +34,8 @@ export default function (props) {
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
+        dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
+        dispatch(fetchSubscription(thisUser));
         setLoading(true);
         setUser(props.user)
         // if (props.user && props.user.id) {
