@@ -17,7 +17,7 @@
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('assets/summernote/summernote-bs4.min.js') }}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 @include('cms.includes.js')
 </body>
 
