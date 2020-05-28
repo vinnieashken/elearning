@@ -598,9 +598,10 @@
     });
     $(document).on('click','.activate-payment',function(e) {
         e.preventDefault();
-        var Pay = $(this).data('user');
-        $('#edit-transactions').val(Pay.transaction);
+        Pay = $(this).data('user');
+        $('#edit-transaction').val(Pay.transaction);
         $('#edit-sender_phone').val(Pay.sender_phone);
+        $("#edit-mpesa_code").val(Pay.mpesa_code);
         $('#edit-amount').val(Pay.amount);
         $('#activate-payment').modal('toggle');
     });
