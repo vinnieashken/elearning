@@ -11,7 +11,7 @@
             $.ajax({
                 type: 'POST',
                 url: frm.attr('action'),
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                headers: {_token: "{{csrf_token()}}"},
                 data: $(e.target).serialize(),
                 success: function (Mess) {
                     if (Mess.status == true) {
@@ -67,7 +67,7 @@
             $.ajax({
                 type: 'POST',
                 url: frm.attr('action'),
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                headers: {_token: "{{csrf_token()}}"},
                 data: frm.serialize(),
                 success: function (Mess) {
                     if (Mess.status == true) {
@@ -159,7 +159,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<?=url('questionanswers'); ?>',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                headers: {_token: "{{csrf_token()}}"},
                 data:{'question_id':question.id},
                 success: function (Mess) {
                   $('.choices').html(Mess).find(".ans-editor").summernote({
@@ -237,7 +237,7 @@
         $.ajax({
             type: 'POST',
             url: '<?=url('subjectfromclass'); ?>',
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            headers: {_token: "{{csrf_token()}}"},
             data:{'class_id':str},
             success: function (Mess) {
                 $('.m-subject').html(Mess);
@@ -251,7 +251,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<?=url('subjectfromclass'); ?>',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                headers: {_token: "{{csrf_token()}}"},
                 data:{'class_id':str},
                 success: function (Mess) {
                     $('.m-subject').html(Mess);
@@ -271,7 +271,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '<?=url( 'choices' ); ?>',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    headers: {_token: "{{csrf_token()}}"},
                     data: {'choices': choices,'choicegrp':choicegrp},
                     success: function (Mess) {
                         $('.choices').html(Mess).find(".ans-editor").summernote({
@@ -297,7 +297,7 @@
                                         data: dat,
                                         type: "POST",
                                         url: '<?=url( 'upload' ); ?>',
-                                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                        headers: {_token: "{{csrf_token()}}"},
                                         cache: false,
                                         contentType: false,
                                         processData: false,
@@ -334,7 +334,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<?=url('cms/usermgt'); ?>',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                headers: {_token: "{{csrf_token()}}"},
                 data:{'id':user.id,'type':type},
                 success: function (Mess) {
                     toastr.success('Transaction Successful', 'User Manipulation', {
@@ -391,7 +391,7 @@
                     data: dat,
                     type: "POST",
                     url:  '<?=url('upload'); ?>',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    headers: {_token: "{{csrf_token()}}"},
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -521,8 +521,7 @@
                 "url": "{{ url('get_questions') }}",
                 "dataType": "json",
                 "type": "POST",
-                "headers": {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                "data":{ "id":"{{ $module_id ?? ''}}"}
+                "data":{ "id":"{{ $module_id ?? ''}}",_token: "{{ csrf_token() }}"}
             },
             "columns": [
                 { "data": "*" },
@@ -603,7 +602,7 @@
             data: {"userid":$(this).data("user").id},
             type: "POST",
             url:  '{{ url('cms/getuserroles')  }}',
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            headers: {_token: "{{csrf_token()}}" },
             success: function(data) {
 
 
@@ -645,7 +644,7 @@
         $.ajax({
             type: 'POST',
             url: '{{ url('cms/delete') }}',
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            headers: { _token: "{{ csrf_token() }}"},
             data: {"id":$(this).data("id"),"table":$(this).data("table")},
             success: function (Mess) {
                 if (Mess.status == true) {
@@ -698,7 +697,7 @@
            $.ajax({
                type: 'POST',
                url: '{{ url('cms/update') }}',
-               headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+               headers: { _token: "{{csrf_token()}}" },
                data: {"id":$(this).data("id"),"table":$(this).data("table"),"column":$(this).data("column"),"value":$(this).data("value")},
                success: function (Mess) {
                    if (Mess.status == true) {
