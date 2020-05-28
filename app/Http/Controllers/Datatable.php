@@ -554,7 +554,9 @@ class Datatable extends Controller
                                 $nestedData["transactioncode"]  =   $post->transactioncode;
                                 $nestedData['amount']           =   $post->amount;
                                 $nestedData['date']             =   date('dS M Y h:ia',strtotime($post->created_at));
-
+                                $nestedData['paymentbtn']       =   '<a href="" class="activate-payment" data-userid="'.$post->user_id.'">
+                                                                        Activate Payment
+                                                                    </a>'
                                 $data[] = $nestedData;
                                 $x++;
                             }

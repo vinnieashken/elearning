@@ -91,6 +91,7 @@
                             <th>Transaction Code</th>
                             <th>Date</th>
                             <th>Amount</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -102,6 +103,7 @@
                             <th>Transaction Code</th>
                             <th>Date</th>
                             <th>Amount</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                 </table>
