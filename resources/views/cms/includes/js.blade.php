@@ -542,7 +542,7 @@
                     "url": "{{ url('get_users') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data":{ "X-CSRF-TOKEN":"{{csrf_token()}}"}
+                    "data":{ _token :"{{csrf_token()}}"}
                 },
                 "columns": [
                     { "data": "*" },
