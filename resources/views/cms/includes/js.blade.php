@@ -591,7 +591,7 @@
                 'csvHtml5',
                 'pdfHtml5'
             ],
-            "order": [[ 7, "date" ]]
+            "order": [[ 7, "desc" ]]
 
         });
 
