@@ -136,13 +136,13 @@
                             <label for="edit-mpesa_code" class="control-label">
                                 Transaction No
                             </label>
-                            <input type="text" name="mpesa_code" id="edit-mpesa_code">
+                            <input type="text" name="mpesa_code" id="edit-mpesa_code" class="form-control>
                         </div>
                         <div class="form-group">
                             <label for="edit-amount" class="control-label">
                                 Amount
                             </label>
-                            <input type="text" name="amount" id="edit-amount">
+                            <input type="text" name="amount" id="edit-amount" class="form-control>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
