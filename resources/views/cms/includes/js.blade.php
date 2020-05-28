@@ -779,7 +779,24 @@
         var popoverId = $(event.target).attr("aria-describedby");
         $("#" + popoverId).css("z-index", zIndex);
     });
+   $(document).on('submit','#edit-transaction',function(e){
+       e.preventDefault();
+       $.ajax({
+           type: 'POST',
+           url: $(this).attr('action'),
+           headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
+           data: JSON.stringify( $(this).serializeArray() ),
+           success: function (Mess) {
+              console.log("success");
+           },
+           error: function (f) {
+               console.log(f);
+           }
+       });
 
+
+   });
+   });
 
 
 </script>

@@ -124,7 +124,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('api/payments/mpesa/callback') }}">
+                    <form action="{{ url('api/payments/mpesa/callback') }}" id="edit-transaction">
                         <input type="hidden" name="transaction" id="edit-transaction">
                         <div class="form-group">
                             <label for="edit-sender_phone" class="control-label">
