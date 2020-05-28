@@ -602,7 +602,7 @@
         $('#edit-transaction').val(Pay.transaction);
         $('#edit-sender_phone').val(Pay.phone);
         $("#edit-mpesa_code").val(Pay.mpesa_code);
-        $('#edit-amount').val(Pay.amount);
+        $('#edit-amount').val(Pay.amount - Pay.amount_received);
         $('#activate-payment').modal('toggle');
     });
     $(document).on('click','.edit-user-roles',function(e){
