@@ -787,7 +787,7 @@
            type: 'POST',
            url: $(this).attr('action'),
            headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
-           data: dat,
+           data: JSON.parse(dat),
            success: function (Mess) {
               console.log("success");
            },
