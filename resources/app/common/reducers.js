@@ -6,7 +6,7 @@ import {
     SUBSCRIPTION_DELETED,
     LOADING_SUBSCRIPTION,
     CLASSES_LOADED,
-    USER_UPDATED
+    USER_UPDATED, EXAMS_LOADED
 } from "./constants";
 
 const initialState = {
@@ -15,7 +15,10 @@ const initialState = {
     user: {},
     subscription: {},
     subjects: [],
-    classes: []
+    uniqueSubjects: [],
+    classes: [],
+    uniqueClasses: [],
+    exams: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -47,14 +50,28 @@ function rootReducer(state = initialState, action) {
             });
 
         case SUBJECTS_LOADED:
+            const subjectArray = {}
+            action.payload.forEach(el => {
+                subjectArray[`${el.subject}`] = `${el.subject}`
+            })
             return Object.assign({}, state, {
-                subjects: action.payload
+                subjects: action.payload,
+                uniqueSubjects: subjectArray
             });
 
         case CLASSES_LOADED:
-            console.log(action)
+            const classArray = {}
+            action.payload.forEach(el => {
+                classArray[el.class] = el.class
+            })
             return Object.assign({}, state, {
-                classes: action.payload
+                classes: action.payload,
+                uniqueClasses: classArray
+            })
+
+        case EXAMS_LOADED:
+            return Object.assign({}, state, {
+                exams: action.payload
             })
 
         default:

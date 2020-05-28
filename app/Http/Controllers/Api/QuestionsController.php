@@ -110,6 +110,9 @@ class QuestionsController extends Controller
             $exists = $answerSheet ->where('question_id',$answer['questionid'])->where('user_id',$userid)->where('module_id',$moduleid)->first();
             $answerSheet->user_id = $userid;
             $answerSheet->module_id = $moduleid;
+
+            //if(!is_numeric($answer['optionid']) )
+                //continue;
             $answerSheet->question_id = $answer['questionid'];
             $answerSheet->option_id = $answer['optionid'];
 
@@ -123,7 +126,7 @@ class QuestionsController extends Controller
 
         //return $answers;
 
-        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json','appkey'=>'ELE-2020-XCZ3' ],'verify'=> base_path('/cacert.pem'),'http_errors'=>false]);
         try {
 
             $path = url('/api/modules/'.$moduleid.'/marks/user/'.$userid);

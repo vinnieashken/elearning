@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Institution;
 use App\Models\Teacher;
 use App\Models\Student;
+use App\Models\UserSubscription;
 use App\Utils\PaymentAssist;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -88,6 +89,8 @@ class LoginController extends Controller
 
         }
 
+        //$customer = $customer->where('user_id',$customer->user_id)->first();
+
         return $exists ?? $customer;
     }
 
@@ -156,7 +159,9 @@ class LoginController extends Controller
             $customer->save();
         }
 
-        return $body;
+        $customer = $customer->where('user_id',$customer->user_id)->first();
+
+        return $exists ?? $customer;
     }
 
     public function resetPassword(Request $request)
@@ -478,6 +483,24 @@ class LoginController extends Controller
             $customer->save();
             $customer = Customer::where('phone',$phone)->first();
         }
+
+        return $customer;
+    }
+
+    public function getUser(Request $request,$id)
+    {
+        $customer = Customer::find($id);
+
+        if(is_null($customer))
+        {
+            return response()->json(['message'=>'User not found.','data'=> 'user id '.$id ] , 400);
+        }
+
+        $subscription = new UserSubscription();
+        $subscription = $subscription->orderby('user_subscriptions.id','DESC')->where('user_id',$customer->user_id)->where('status',1 )->where('enddate','>=',date_create('now'))
+            ->leftJoin('subscriptions','subscriptions.id','=','user_subscriptions.package_id')
+            ->first();
+        $customer->subscription = $subscription;
 
         return $customer;
     }

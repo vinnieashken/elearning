@@ -43,6 +43,7 @@ class PaymentsController extends Controller
 
         if(!is_numeric($userid))
         {
+            Log::info('Payment Request = '.json_encode($request->all()));
             return response()->json(["message"=> "Incorrect value for user id"] , 400);
         }
 

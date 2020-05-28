@@ -27,6 +27,7 @@ Route::group(['middleware' => ['appkey']], function () {
     Route::post('/app/password/reset','Api\LoginController@resetPassword');
     Route::post('/app/otp/request','Api\LoginController@otpRequest');
     Route::post('/app/otp/verify','Api\LoginController@otpVerify');
+    Route::get('/app/user/{id}','Api\LoginController@getUser');
 
     Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
 
@@ -36,6 +37,7 @@ Route::group(['middleware' => ['appkey']], function () {
 
     Route::get('/modules/list','Api\ModulesController@list');
     Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
+    Route::get('/modules/subject/name/{name}','Api\ModulesController@getModulesBySubjectName');
     Route::get('/modules/{id}/user/{user_id}','Api\ModulesController@getUserModuleAnswers');
     Route::get('/modules/{id}/marks/user/{user_id}','Api\ModulesController@getUserModuleMarks');
     Route::get('/modules/user/{user_id}','Api\ModulesController@getUserModules');
@@ -82,7 +84,10 @@ Route::group(['middleware' => ['appkey']], function () {
 
     Route::get('testsub','Api\LoginController@testSubscribe');
 
+
 });
+
+//Route::get('marks/{userid}','Api\ModulesController@debug');
 
 
 

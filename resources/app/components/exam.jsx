@@ -19,7 +19,7 @@ export default function (props) {
     const oldState = props.history.location.state ? props.history.location.state : {};
 
     const student = (typeof oldState !== "undefined" && oldState.hasOwnProperty('student')) ? oldState.student : props.user
-    // const [examData, setExamData] = useState(oldState.hasOwnProperty('exam') ? oldState.exam : {});
+    const subscription = useSelector(state => state.subscription);
     const [exam, setExam] = useState([]);
     const [userAnswers, setUserAnswers] = useState([]);
     const [showAns, setShowAns] = useState(false);
@@ -33,6 +33,7 @@ export default function (props) {
 
     useEffect(() => {
         console.log(props)
+        console.log(subscription)
         getExam();
     }, []);
 
@@ -62,10 +63,19 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
-                setExam(res);
-                setLoading(res.done);
-                if (res.done)
-                    getUserAnswers();
+                if (subscription.hasOwnProperty('id') || (res.publisher && parseInt(res.publisher.id) === 29)) {
+                    setExam(res);
+                    setLoading(res.done);
+                    if (res.done)
+                        getUserAnswers();
+                } else {
+                    props.history.push({
+                        pathname: `${ENV}subscriptions`,
+                        state: {
+                            next: props.location.pathname
+                        },
+                    })
+                }
 
             }.bind(this)
         })
@@ -108,7 +118,7 @@ export default function (props) {
             if (parseInt(el.answer) === parseInt(ans)) {
                 marks += 1;
             }
-            answers.push({"questionid": el.id, "optionid": parseInt(ans)})
+            answers.push({"questionid": el.id, "optionid": isNaN(ans) ? '' : parseInt(ans)})
         });
         let data = {
             "moduleid": props.match.params.exam,

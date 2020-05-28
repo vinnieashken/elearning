@@ -23,9 +23,7 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [selectedExam, setSelectedExam] = useState({})
-    const [selectedClass, setSelectedClass] = useState('')
     const classes = useSelector(state => state.classes);
-    const [selectedSubject, setSelectedSubject] = useState('')
     const subjects = useSelector(state => state.subjects);
     const [subjectOptions, setSubjectOptions] = useState({})
     const [classOptions, setClassOptions] = useState({})
@@ -45,20 +43,17 @@ export default function (props) {
             subjectArray[`${el.subject}`] = `${el.subject}`
         })
         classes.forEach(el => {
-            classArray[el.id] = el.class
+            classArray[el.class] = el.class
         })
+        debugger
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
         getModules();
     }, [props.match.params.subject]);
 
     const getModules = () => {
-        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`;
-        // if (props.match.params.hasOwnProperty('subject'))
-        //     url = `${API}/modules/subject/name/${filterValue}`;
-
         $.ajax({
-            url: url,
+            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             headers: {
@@ -93,7 +88,6 @@ export default function (props) {
     const addExam = (exam) => {
         setModules(modules.push(exam))
     }
-
 
     const provider = (cell, row) => {
         return (
@@ -133,7 +127,7 @@ export default function (props) {
                                 exam: row
                             }
                         }} className={`btn btn-sm btn-rounded ${row.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>
-                            {row.done ? `Revise Paper` : `Take Test`}
+                            {row.done ? `Revise Paper` : parseInt(row.institution_id) === 29 ? `Take Free Test` : `Take Test`}
                         </Link>
                 }
             </div>
@@ -181,7 +175,7 @@ export default function (props) {
                             <div className="row">
                                 <div className="col-md-12">
                                     <h2 className="section-title wow fadeInDown animated text-center "
-                                        data-wow-delay="0.3s">Examination papers</h2>
+                                        data-wow-delay="0.3s">Free Examination papers</h2>
                                 </div>
 
                             </div>
@@ -199,7 +193,7 @@ export default function (props) {
                                                 </div> :
                                                 <ToolkitProvider
                                                     keyField="id"
-                                                    data={modules.filter(el => {return parseInt(el.status) === 1}).reverse()}
+                                                    data={modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse()}
                                                     // data={ modules.filter(el => {
                                                     //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
                                                     // }) }
@@ -212,18 +206,11 @@ export default function (props) {
                                                                 sort: true,
                                                                 style: { textAlign: 'left' }},
                                                             {
-                                                                dataField: 'class_id',
+                                                                dataField: 'class',
                                                                 text: 'Class',
                                                                 formatter: cell => classOptions[cell],
                                                                 filter: selectFilter({
-                                                                    options: classOptions,
-                                                                    onFilter: (filterValue) => {
-                                                                        setSelectedClass(filterValue)
-                                                                        // props.history.push({
-                                                                        //     pathname: `${ENV}exams/modules`,
-                                                                        //     state: {user: thisUser},
-                                                                        // });
-                                                                    }
+                                                                    options: classOptions
                                                                 })
                                                             },
                                                             {
@@ -231,32 +218,7 @@ export default function (props) {
                                                                 text: 'Subject',
                                                                 formatter: cell => subjectOptions[cell],
                                                                 filter: selectFilter({
-                                                                    options: subjectOptions,
-                                                                    onFilter: (filterValue) => {
-                                                                        setSelectedSubject(filterValue)
-                                                                        setLoading(true)
-                                                                        $.ajax({
-                                                                            url: `${API}/modules/subject/name/${filterValue}`,
-                                                                            // url: `${API}/subjects/class/{class_id}`,
-                                                                            method: 'GET',
-                                                                            headers: {
-                                                                                'appkey': 'ELE-2020-XCZ3'
-                                                                            },
-                                                                            error: function (xhr, status, error) {
-                                                                                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                                                                                try {
-                                                                                    response = JSON.parse(xhr['responseText'])['message']
-                                                                                }catch (e) {}                setLoading(false);
-                                                                                setMessage(true);
-                                                                                setMessageType('alert alert-danger');
-                                                                                setResponse(response);
-                                                                            }.bind(this),
-                                                                            success: function (res) {
-                                                                                setModules(res);
-                                                                                setLoading(false);
-                                                                            }.bind(this)
-                                                                        })
-                                                                    }
+                                                                    options: subjectOptions
                                                                 })
                                                             },
                                                             {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
@@ -281,7 +243,7 @@ export default function (props) {
                                                                                             setSelectedExam(exam);
                                                                                         }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
                                                                                         : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
-                                                                                    : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
+                                                                                    : ''
                                                                             }
 
                                                                         </div>
