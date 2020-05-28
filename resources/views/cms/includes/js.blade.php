@@ -577,7 +577,8 @@
                 { "data": "institution" },
                 { "data": "transactioncode" },
                 { "data": "date"},
-                { "data": "amount" }
+                { "data": "amount" },
+                { "data": "paymentbtn"}
 
 
             ],
