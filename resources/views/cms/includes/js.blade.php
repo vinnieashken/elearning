@@ -791,23 +791,25 @@
            success: function (Mess) {
 
                toastr.success("Account Activation Successful", "Account", {
-                       timeOut: 1000,
-                       closeButton: true,
-                       progressBar: true,
-                       newestOnTop: true,
-                       onHidden: function () {
-                           window.location.reload();
-                       });
+                   timeOut: 1000,
+                   closeButton: true,
+                   progressBar: true,
+                   newestOnTop: true,
+                   onHidden: function () {
+                       window.location.reload();
+                   }
+               });
            },
            error: function (f) {
-                   toastr.success("Account Activation Failed"+f, "Account", {
+                   toastr.error("Account Activation Failed"+f, "Account", {
                        timeOut: 1000,
                        closeButton: true,
                        progressBar: true,
                        newestOnTop: true,
                        onHidden: function () {
                            window.location.reload();
-                       });
+                       }
+                   });
            }
        });
 
