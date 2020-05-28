@@ -497,10 +497,10 @@ class Datatable extends Controller
                     2   =>  'phone',
                     3   =>  'packageid',
                     4   =>  'transactioncode',
-                    5   =>  'amount',
-                    6   =>  'amount_received',
-                    7   =>  'created_at',
-                    8   =>  'amount_received'
+                    5   =>  'created_at',
+                    6   =>  'amount',
+                    7   =>  'amount_received',
+                    8   =>  'status'
 
                 );
 
