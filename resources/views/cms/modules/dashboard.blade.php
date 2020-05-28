@@ -91,6 +91,7 @@
                             <th>Transaction Code</th>
                             <th>Date</th>
                             <th>Amount</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -103,6 +104,7 @@
                             <th>Transaction Code</th>
                             <th>Date</th>
                             <th>Amount</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>

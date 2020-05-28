@@ -578,6 +578,7 @@
                 { "data": "transactioncode" },
                 { "data": "date"},
                 { "data": "amount" },
+                { "data": "status" },
                 { "data": "paymentbtn"}
 
 
