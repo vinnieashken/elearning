@@ -495,7 +495,7 @@
                 "url": "{{ url('get_subjects') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ "X-CSRF-TOKEN":"{{csrf_token()}}"}
+                "data":{ _token :"{{csrf_token()}}"}
             },
             "columns": [
                 { "data": "id" },
