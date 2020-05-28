@@ -35,7 +35,7 @@ export default function (props) {
 
     useEffect(() => {
         dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
-        dispatch(fetchSubscription(thisUser));
+        dispatch(fetchSubscription(user));
         setLoading(true);
         setUser(props.user)
         // if (props.user && props.user.id) {
