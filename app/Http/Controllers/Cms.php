@@ -587,4 +587,8 @@ class Cms extends Controller
                         return array('status'=>False,'msg'=>'Record update failed','header'=>ucfirst($request->table));
                     }
             }
+        public function customers()
+            {
+                return view('cms/modules/customers');
+            }
     }
