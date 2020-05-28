@@ -71,7 +71,7 @@
             @if($role["users"]["view"])
                 <li class="sidebar-item">
                     <a class="sidebar-link font-weight-bold" href="{{ url('cms/users') }}">
-                        <i class="align-middle" data-feather="user"></i>
+                        <i class="align-middle" data-feather="users"></i>
                         <span class="align-middle">Users</span>
                     </a>
                 </li>
