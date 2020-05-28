@@ -522,7 +522,7 @@
                 "dataType": "json",
                 "type": "POST",
                 "headers": {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                "data":{ "id":"{{ $module_id ?? ''}}"}
+                "data":{ "id":"{{ $module_id ?? ''}}","X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')}
             },
             "columns": [
                 { "data": "*" },
