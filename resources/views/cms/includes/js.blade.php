@@ -781,11 +781,13 @@
     });
    $(document).on('submit','#edit-transaction',function(e){
        e.preventDefault();
+       var dat = JSON.stringify( $(this).serializeArray() );
+       console.log(dat);
        $.ajax({
            type: 'POST',
            url: $(this).attr('action'),
            headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
-           data: JSON.stringify( $(this).serializeArray() ),
+           data: dat,
            success: function (Mess) {
               console.log("success");
            },
@@ -796,7 +798,7 @@
 
 
    });
-  
+
 
 
 </script>
