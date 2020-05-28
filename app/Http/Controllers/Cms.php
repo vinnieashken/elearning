@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Module;
 use App\Models\Level;
 use App\Models\Option;
+use App\Models\Payment;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Subscription;
@@ -28,9 +29,9 @@ class Cms extends Controller
             {
                 $exams      =   Module::count();
                 $subjects   =   Subject::count();
-                $users      =   User::count();
+                $earnings   =   Payment::where('amount_received',">","0")->where("created_at",">=",date("Y-m-d".' 00:00:00'))->count();
                 $customers  =   Customer::count();
-                return view('cms.modules.dashboard',compact('exams','subjects','users','customers'));
+                return view('cms.modules.dashboard',compact('exams','subjects','earnings','customers'));
             }
         public function profile(Request $request)
             {

@@ -62,8 +62,8 @@
             <div class="card-body py-4">
                 <div class="row">
                     <div class="col-8">
-                        <h3 class="mb-2">{{ $users }}</h3>
-                        <div class="mb-0">Users</div>
+                        <h3 class="mb-2">Ksh {{ $earnings }}</h3>
+                        <div class="mb-0">Earnings Today</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
                         <div class="d-inline-block mt-2">
