@@ -782,17 +782,32 @@
    $(document).on('submit','#edit-transaction',function(e){
        e.preventDefault();
        var dat = '{"transaction":"'+ $('#edit-transaction').val()+'","sender_phone":"254'+$('#edit-sender_phone').val().substring(1)+'","mpesa_code":"'+$("#edit-mpesa_code").val()+'","amount":"'+$('#edit-amount').val()+'"}';
-       console.log(dat);
+
        $.ajax({
            type: 'POST',
            url: $(this).attr('action'),
            headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
            data: JSON.parse(dat),
            success: function (Mess) {
-              console.log("success");
+
+               toastr.success("Account Activation Successful", "Account", {
+                       timeOut: 1000,
+                       closeButton: true,
+                       progressBar: true,
+                       newestOnTop: true,
+                       onHidden: function () {
+                           window.location.reload();
+                       }
            },
            error: function (f) {
-               console.log(f);
+                   toastr.success("Account Activation Failed"+f, "Account", {
+                       timeOut: 1000,
+                       closeButton: true,
+                       progressBar: true,
+                       newestOnTop: true,
+                       onHidden: function () {
+                           window.location.reload();
+                       }
            }
        });
 
