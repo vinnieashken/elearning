@@ -514,8 +514,7 @@ class Datatable extends Controller
 
                 if(empty($request->input('search.value')))
                     {
-                        $posts = Payment::where('amount_received',"!=",0)
-                                        ->offset($start)
+                        $posts = Payment::offset($start)
                                         ->limit($limit)
                                         ->orderBy($order,$dir)
                                         ->get();
@@ -526,8 +525,7 @@ class Datatable extends Controller
 
                         //
 
-                        $posts      =   Payment::where('amount_received',"!=",0)
-                                                ->where('transactioncode','LIKE',"%{$search}%")
+                        $posts      =   Payment::where('transactioncode','LIKE',"%{$search}%")
                                                 ->orwhere('amount_received','LIKE',"%{$search}%")
                                                 ->orwhere('phone','LIKE',"%{$search}%")
                                                 ->offset($start)
@@ -535,8 +533,7 @@ class Datatable extends Controller
                                                 ->orderBy($order,$dir)
                                                 ->get();
 
-                        $totalFiltered =  Payment::where('amount_received',"!=",0)
-                                                    ->where('transactioncode','LIKE',"%{$search}%")
+                        $totalFiltered =  Payment::where('transactioncode','LIKE',"%{$search}%")
                                                     ->orwhere('amount_received','LIKE',"%{$search}%")
                                                     ->orwhere('phone','LIKE',"%{$search}%")
                                                     ->count();
