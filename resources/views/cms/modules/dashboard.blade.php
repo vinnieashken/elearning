@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-4 ml-auto text-right">
                         <div class="d-inline-block mt-2">
-                            <i class="feather-lg text-success" data-feather="message-square"></i>
+                            <i class="feather-lg text-success" data-feather="dollar-sign"></i>
                         </div>
                     </div>
                 </div>
