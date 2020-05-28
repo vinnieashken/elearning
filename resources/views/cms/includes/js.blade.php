@@ -797,7 +797,7 @@
                        newestOnTop: true,
                        onHidden: function () {
                            window.location.reload();
-                       }
+                       });
            },
            error: function (f) {
                    toastr.success("Account Activation Failed"+f, "Account", {
@@ -807,7 +807,7 @@
                        newestOnTop: true,
                        onHidden: function () {
                            window.location.reload();
-                       }
+                       });
            }
        });
 
