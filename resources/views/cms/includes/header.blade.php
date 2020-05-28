@@ -7,9 +7,7 @@
     @include('cms.includes.meta')
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-
     <title> @yield('title') </title>
-
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/summernote/summernote-bs4.min.css') }}" rel="stylesheet">
