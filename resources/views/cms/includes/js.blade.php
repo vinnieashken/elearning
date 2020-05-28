@@ -781,7 +781,7 @@
     });
    $(document).on('submit','#edit-transaction',function(e){
        e.preventDefault();
-       var dat = '{"transactioncode":'+ $('#edit-transaction').val()+',"phone":'+$('#edit-sender_phone').val()+',"mpesa_code":'+$("#edit-mpesa_code").val()+',"amount_received":'+$('#edit-amount').val()+'}';
+       var dat = '{"transactioncode":"'+ $('#edit-transaction').val()+'","phone":"'+$('#edit-sender_phone').val()+'","mpesa_code":"'+$("#edit-mpesa_code").val()+'","amount_received":"'+$('#edit-amount').val()+'"}';
        console.log(dat);
        $.ajax({
            type: 'POST',
