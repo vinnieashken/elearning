@@ -521,8 +521,8 @@
                 "url": "{{ url('get_questions') }}",
                 "dataType": "json",
                 "type": "POST",
-                "headers": {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                "data":{ "id":"{{ $module_id ?? ''}}","X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')}
+                "headers": {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')},
+                "data":{ "id":"{{ $module_id ?? ''}}"}
             },
             "columns": [
                 { "data": "*" },
