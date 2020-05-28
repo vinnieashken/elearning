@@ -33,7 +33,7 @@ class LoginController extends Controller
 //            'form_params'=>['email'=> $email, 'password'=>$password],
 //        ];
 
-        $params = ["body"=>json_encode(['username'=> $username, 'password'=>$password])];
+        $params = ["body"=>json_encode(['username'=> $username, 'password'=>$password,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
 
         //return $params;
 
@@ -111,7 +111,7 @@ class LoginController extends Controller
         if($no > 0)
         {
             $phone = '254'.$matches[0][0];
-            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
+            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1 ,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
         }
         else
         {
@@ -120,7 +120,7 @@ class LoginController extends Controller
                 return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
             }
 
-            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
         }
 
         //return ['data'=>$params,'count'=>$no];
@@ -169,7 +169,7 @@ class LoginController extends Controller
         $email = $request->email;
         $url = $request->redirect_url;
 
-        $params = ["body"=>json_encode(['email'=> $email, 'redirect_url'=> $url ])];
+        $params = ["body"=>json_encode(['email'=> $email, 'redirect_url'=> $url ,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk" ])];
 
         //return $params;
 
@@ -210,7 +210,7 @@ class LoginController extends Controller
         if($no > 0)
         {
             $phone = '254'.$matches[0][0];
-            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
+            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
         }
         else{
 
@@ -219,7 +219,7 @@ class LoginController extends Controller
                 return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
             }
 
-            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
         }
 
 
@@ -290,13 +290,13 @@ class LoginController extends Controller
         if($no > 0)
         {
             $phone = '254'.$matches[0][0];
-            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1])];
+            $params =["body"=>json_encode(['name'=> $name,'phone'=>$phone ,'otp'=> 1 ,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
         }
         else {
             if (is_null($password) || is_null($password_confirmation)) {
                 return response()->json(['message' => 'Invalid or missing parameters', 'data' => $request->all()], 400);
             }
-            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation])];
+            $params = ["body"=>json_encode(['name'=> $name,'email'=>$email ,'password'=>$password,'password_confirmation'=>$password_confirmation ,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
         }
         //return $params;
 
@@ -405,7 +405,7 @@ class LoginController extends Controller
         if($no > 0)
             $phone = '254'.$matches[0][0];
 
-        $params =["body"=>json_encode(['phone'=>$phone ])];
+        $params =["body"=>json_encode(['phone'=>$phone ,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk" ])];
 
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
         try {
@@ -441,7 +441,7 @@ class LoginController extends Controller
         if($no > 0)
             $phone = '254'.$matches[0][0];
 
-        $params =["body"=>json_encode(['phone'=>$phone ,'otp'=> $otp])];
+        $params =["body"=>json_encode(['phone'=>$phone ,'otp'=> $otp ,"app_id"=> 5,"app_secret"=>"7Gv2qYEFYQDErPCk"])];
 
         $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ],'verify'=> false,'http_errors'=>false]);
         try {
