@@ -568,7 +568,7 @@
                 "url": "{{ url('cms/get_payments') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ "X-CSRF-TOKEN":"{{csrf_token()}}"}
+                "data":{ "X-CSRF-TOKEN" : "{{csrf_token()}}"}
             },
             "columns": [
                 { "data": "*" },
