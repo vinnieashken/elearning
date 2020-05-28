@@ -63,7 +63,7 @@
                 </li>
             @endif
             <li class="sidebar-item">
-                <a href="{{ url("customers") }}" class="sidebar-link font-weight-bold">
+                <a href="{{ url("cms/customers") }}" class="sidebar-link font-weight-bold">
                     <i class="align-middle" data-feather=""></i>
                     <span class="align-middle">Customers</span>
                 </a>
