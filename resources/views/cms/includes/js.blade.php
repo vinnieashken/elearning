@@ -596,6 +596,14 @@
 
 
     });
+    $(document).on('click','.activate-payment',function(e) {
+        e.preventDefault();
+        var Pay = $(this).data('user');
+        $('#edit-transactions').val(Pay.transaction);
+        $('#edit-sender_phone').val(Pay.sender_phone);
+        $('#edit-amount').val(Pay.amount);
+        $('#activate-payment').modal('toggle');
+    });
     $(document).on('click','.edit-user-roles',function(e){
         e.preventDefault();
         $('#userid').val($(this).data("user").id);
