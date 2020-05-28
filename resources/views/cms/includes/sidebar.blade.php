@@ -62,6 +62,12 @@
                     </a>
                 </li>
             @endif
+            <li class="sidebar-item">
+                <a href="{{ url("customers") }}" class="sidebar-link font-weight-bold">
+                    <i class="align-middle" data-feather=""></i>
+                    <span class="align-middle">Customers</span>
+                </a>
+            </li>
             @if($role["users"]["view"])
                 <li class="sidebar-item">
                     <a class="sidebar-link font-weight-bold" href="{{ url('cms/users') }}">
