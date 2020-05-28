@@ -29,7 +29,7 @@ class Cms extends Controller
             {
                 $exams      =   Module::count();
                 $subjects   =   Subject::count();
-                $earnings   =   Payment::where('amount_received',">","0")->where("created_at",">=",date("Y-m-d".' 00:00:00'))->count();
+                $earnings   =   Payment::where('amount_received',">","0")->where("created_at",">=",date("Y-m-d".' 00:00:00'))->sum('amount_received');
                 $customers  =   Customer::count();
                 return view('cms.modules.dashboard',compact('exams','subjects','earnings','customers'));
             }
