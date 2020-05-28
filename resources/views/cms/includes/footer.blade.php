@@ -13,9 +13,9 @@
 </footer>
 </div>
 </div>
-<script src="{{ asset('assets/summernote/summernote-bs4.min.js') }}"></script>
-<script src="{{ asset('assets/js/app.js') }}"></script>
 
+<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/summernote/summernote-bs4.min.js') }}"></script>
 
 @include('cms.includes.js')
 </body>
