@@ -13,7 +13,7 @@
 </footer>
 </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/summernote/summernote-bs4.min.js') }}"></script>
 @include('cms.includes.js')

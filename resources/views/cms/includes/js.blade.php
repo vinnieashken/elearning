@@ -1,10 +1,8 @@
 <script !src="">
 
-       $(document).on('click','.qbtn',function(){
+        $(document).on('click','.qbtn',function(){
            $(".choices").html("");
-
-       });
-
+        });
         $(document).on('submit', '.create-form', function (e) {
             e.preventDefault();
             var frm = $(this);
