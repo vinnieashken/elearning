@@ -235,7 +235,7 @@
         $.ajax({
             type: 'POST',
             url: '<?=url('subjectfromclass'); ?>',
-            headers: {_token: "{{csrf_token()}}"},
+            headers: { "X-CSRF-TOKEN" : "{{csrf_token()}}" },
             data:{'class_id':str},
             success: function (Mess) {
                 $('.m-subject').html(Mess);
