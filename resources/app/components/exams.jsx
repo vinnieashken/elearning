@@ -34,8 +34,8 @@ export default function (props) {
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
-        dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
-        dispatch(fetchSubscription(user));
+        // dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
+        // dispatch(fetchSubscription(user));
         setLoading(true);
         setUser(props.user)
         // if (props.user && props.user.id) {
