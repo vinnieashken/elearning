@@ -114,4 +114,41 @@
             </div>
         </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="activate-payment">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Activate Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <input type="hidden" name="transaction" id="edit-transaction">
+                        <div class="form-group">
+                            <label for="edit-sender_phone" class="control-label">
+                                Phone No
+                            </label>
+                            <input type="text" name="sender_phone" id="edit-sender_phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-mpesa_code" class="control-label">
+                                Transaction No
+                            </label>
+                            <input type="text" name="mpesa_code" id="edit-mpesa_code">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-amount" class="control-label">
+                                Amount
+                            </label>
+                            <input type="text" name="amount" id="edit-amount">
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
