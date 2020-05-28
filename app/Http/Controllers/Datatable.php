@@ -555,7 +555,7 @@ class Datatable extends Controller
                                 $nestedData['amount']           =   $post->amount;
                                 $nestedData['date']             =   date('dS M Y h:ia',strtotime($post->created_at));
                                 $nestedData['status']           =   ($post->status == 0)?"Payment successful":"Payment Failed";
-                                $nestedData['paymentbtn']       =   ($post->status == 0)?NULL:'<a href="javascript:;" class="activate-payment text-dark" data-userid="'.$post->user_id.'">
+                                $nestedData['paymentbtn']       =   ($post->status == 0)?NULL:'<a href="javascript:;" class="activate-payment text-dark" data-userid="{$post}">
                                                                         Activate Payment
                                                                     </a>';
                                 $data[] = $nestedData;
