@@ -409,17 +409,19 @@ export default function (props) {
                                                                                 return (
                                                                                     <div className="col-lg-3 col-md-6 col-xs-6 col-sm-6">
                                                                                         <div className="featured-box-item">
-                                                                                            <div className="featured-icon">
-                                                                                                <Link to={`${ENV}exams/subjects/${el.id}/modules`}>
-                                                                                                    <img src={images[index]} className="icons" alt={APPNAME} />
-                                                                                                </Link>
-                                                                                            </div>
-                                                                                            <div className="featured-content">
-                                                                                                <Link to={`${ENV}exams/subjects/${el.id}/modules`}>
-                                                                                                    <h4>{el.subject}</h4>
-                                                                                                    <p>Paper 1 Grade 8</p>
-                                                                                                </Link>
-                                                                                            </div>
+                                                                                            <Link to={`${ENV}exams/subjects/${el.subject}/modules`}>
+                                                                                                <div className="featured-icon">
+                                                                                                    <Link to={`${ENV}exams/subjects/${el.subject}/modules`}>
+                                                                                                        <img src={images[index]} className="icons" alt={APPNAME} />
+                                                                                                    </Link>
+                                                                                                </div>
+                                                                                                <div className="featured-content">
+                                                                                                    <Link to={`${ENV}exams/subjects/${el.subject}/modules`}>
+                                                                                                        <h4>{el.subject}</h4>
+                                                                                                        <p>Grade 1-4 Class 5-8</p>
+                                                                                                    </Link>
+                                                                                                </div>
+                                                                                            </Link>
                                                                                         </div>
                                                                                     </div>
                                                                                 )

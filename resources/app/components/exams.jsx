@@ -46,7 +46,9 @@ export default function (props) {
         subjects.forEach(el => {
             subjectArray[`${el.subject}`] = `${el.subject}`
         })
-        classes.forEach(el => {
+        classes.filter(el => {
+            return [2, 6, 7, 8].includes(el.id)
+        }).forEach(el => {
             classArray[el.id] = el.class
         })
         setSubjectOptions(subjectArray)
