@@ -62,12 +62,12 @@
             <div class="card-body py-4">
                 <div class="row">
                     <div class="col-8">
-                        <h3 class="mb-2">{{ $users }}</h3>
-                        <div class="mb-0">Users</div>
+                        <h3 class="mb-2">Ksh {{ $earnings }}</h3>
+                        <div class="mb-0">Earnings Today</div>
                     </div>
                     <div class="col-4 ml-auto text-right">
                         <div class="d-inline-block mt-2">
-                            <i class="feather-lg text-success" data-feather="message-square"></i>
+                            <i class="feather-lg text-success" data-feather="dollar-sign"></i>
                         </div>
                     </div>
                 </div>
@@ -91,6 +91,9 @@
                             <th>Transaction Code</th>
                             <th>Date</th>
                             <th>Amount</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -102,9 +105,54 @@
                             <th>Transaction Code</th>
                             <th>Date</th>
                             <th>Amount</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="activate-payment">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Activate Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('api/payments/mpesa/callback') }}" id="edit-transaction">
+                        <input type="hidden" name="transactioncode" id="edit-transaction">
+                        <div class="form-group">
+                            <label for="edit-sender_phone" class="control-label">
+                                Phone No
+                            </label>
+                            <input type="text" name="sender_phone" id="edit-sender_phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-mpesa_code" class="control-label">
+                                Transaction No
+                            </label>
+                            <input type="text" name="mpesa_code" id="edit-mpesa_code" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-amount" class="control-label">
+                                Amount
+                            </label>
+                            <input type="text" name="amount" id="edit-amount" class="form-control">
+                        </div>
+                        <div class="form-group form-row">
+                            <div class="ml-auto">
+                                <button type="submit" class="btn btn-success">Save changes</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>

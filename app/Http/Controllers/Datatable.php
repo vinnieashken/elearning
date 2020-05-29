@@ -498,7 +498,9 @@ class Datatable extends Controller
                     3   =>  'packageid',
                     4   =>  'transactioncode',
                     5   =>  'created_at',
-                    6   =>  'amount_received'
+                    6   =>  'amount',
+                    7   =>  'amount_received',
+                    8   =>  'status'
 
                 );
 
@@ -514,8 +516,7 @@ class Datatable extends Controller
 
                 if(empty($request->input('search.value')))
                     {
-                        $posts = Payment::where('amount_received',"!=",0)
-                                        ->offset($start)
+                        $posts = Payment::offset($start)
                                         ->limit($limit)
                                         ->orderBy($order,$dir)
                                         ->get();
@@ -526,8 +527,7 @@ class Datatable extends Controller
 
                         //
 
-                        $posts      =   Payment::where('amount_received',"!=",0)
-                                                ->where('transactioncode','LIKE',"%{$search}%")
+                        $posts      =   Payment::where('transactioncode','LIKE',"%{$search}%")
                                                 ->orwhere('amount_received','LIKE',"%{$search}%")
                                                 ->orwhere('phone','LIKE',"%{$search}%")
                                                 ->offset($start)
@@ -535,8 +535,7 @@ class Datatable extends Controller
                                                 ->orderBy($order,$dir)
                                                 ->get();
 
-                        $totalFiltered =  Payment::where('amount_received',"!=",0)
-                                                    ->where('transactioncode','LIKE',"%{$search}%")
+                        $totalFiltered =  Payment::where('transactioncode','LIKE',"%{$search}%")
                                                     ->orwhere('amount_received','LIKE',"%{$search}%")
                                                     ->orwhere('phone','LIKE',"%{$search}%")
                                                     ->count();
@@ -556,8 +555,12 @@ class Datatable extends Controller
                                 $nestedData['institution']      =   is_object($institution)?$institution->name:"Standard Group";
                                 $nestedData["transactioncode"]  =   $post->transactioncode;
                                 $nestedData['amount']           =   $post->amount;
+                                $nestedData['balance']          =   ($post->amount - $post->amount_received);
                                 $nestedData['date']             =   date('dS M Y h:ia',strtotime($post->created_at));
-
+                                $nestedData['status']           =   ($post->status == 0)?"Payment successful":(($post->amount_received > 0)?"Payment Incomplete":"Payment Failed");
+                                $nestedData['paymentbtn']       =   ($post->status == 0)?NULL:'<a href="javascript:;" class="activate-payment text-dark" data-user='.$post.'>
+                                                                        Activate Payment
+                                                                    </a>';
                                 $data[] = $nestedData;
                                 $x++;
                             }

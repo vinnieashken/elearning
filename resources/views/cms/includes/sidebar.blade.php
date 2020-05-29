@@ -62,16 +62,16 @@
                     </a>
                 </li>
             @endif
-            <li class="sidebar-item">
+            {{--<li class="sidebar-item">
                 <a href="{{ url("cms/customers") }}" class="sidebar-link font-weight-bold">
                     <i class="align-middle" data-feather=""></i>
                     <span class="align-middle">Customers</span>
                 </a>
-            </li>
+            </li>--}}
             @if($role["users"]["view"])
                 <li class="sidebar-item">
                     <a class="sidebar-link font-weight-bold" href="{{ url('cms/users') }}">
-                        <i class="align-middle" data-feather="user"></i>
+                        <i class="align-middle" data-feather="users"></i>
                         <span class="align-middle">Users</span>
                     </a>
                 </li>

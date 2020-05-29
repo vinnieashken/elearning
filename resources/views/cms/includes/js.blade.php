@@ -9,7 +9,7 @@
             $.ajax({
                 type: 'POST',
                 url: frm.attr('action'),
-                headers: {_token: "{{csrf_token()}}"},
+                headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
                 data: $(e.target).serialize(),
                 success: function (Mess) {
                     if (Mess.status == true) {
@@ -65,7 +65,7 @@
             $.ajax({
                 type: 'POST',
                 url: frm.attr('action'),
-                headers: {_token: "{{csrf_token()}}"},
+                headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
                 data: frm.serialize(),
                 success: function (Mess) {
                     if (Mess.status == true) {
@@ -157,7 +157,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<?=url('questionanswers'); ?>',
-                headers: {_token: "{{csrf_token()}}"},
+                headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
                 data:{'question_id':question.id},
                 success: function (Mess) {
                   $('.choices').html(Mess).find(".ans-editor").summernote({
@@ -235,7 +235,7 @@
         $.ajax({
             type: 'POST',
             url: '<?=url('subjectfromclass'); ?>',
-            headers: {_token: "{{csrf_token()}}"},
+            headers: { "X-CSRF-TOKEN" : "{{csrf_token()}}" },
             data:{'class_id':str},
             success: function (Mess) {
                 $('.m-subject').html(Mess);
@@ -249,7 +249,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<?=url('subjectfromclass'); ?>',
-                headers: {_token: "{{csrf_token()}}"},
+                headers: {"X-CSRF-TOKEN":"{{csrf_token()}}"},
                 data:{'class_id':str},
                 success: function (Mess) {
                     $('.m-subject').html(Mess);
@@ -269,7 +269,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '<?=url( 'choices' ); ?>',
-                    headers: {_token: "{{csrf_token()}}"},
+                    headers: {"X-CSRF-TOKEN":"{{csrf_token()}}"},
                     data: {'choices': choices,'choicegrp':choicegrp},
                     success: function (Mess) {
                         $('.choices').html(Mess).find(".ans-editor").summernote({
@@ -295,7 +295,7 @@
                                         data: dat,
                                         type: "POST",
                                         url: '<?=url( 'upload' ); ?>',
-                                        headers: {_token: "{{csrf_token()}}"},
+                                        headers: {"X-CSRF-TOKEN":"{{csrf_token()}}"},
                                         cache: false,
                                         contentType: false,
                                         processData: false,
@@ -332,7 +332,7 @@
             $.ajax({
                 type: 'POST',
                 url: '<?=url('cms/usermgt'); ?>',
-                headers: {_token: "{{csrf_token()}}"},
+                headers: {"X-CSRF-TOKEN":"{{csrf_token()}}"},
                 data:{'id':user.id,'type':type},
                 success: function (Mess) {
                     toastr.success('Transaction Successful', 'User Manipulation', {
@@ -389,7 +389,7 @@
                     data: dat,
                     type: "POST",
                     url:  '<?=url('upload'); ?>',
-                    headers: {_token: "{{csrf_token()}}"},
+                    headers: {"X-CSRF-TOKEN":"{{csrf_token()}}"},
                     cache: false,
                     contentType: false,
                     processData: false,
@@ -418,7 +418,7 @@
                 "url": "{{ url('get_classes') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ _token: "{{csrf_token()}}"}
+                "data":{ _token :"{{csrf_token()}}"}
             },
             "columns": [
                             { "data": "id" },
@@ -468,7 +468,7 @@
                 "url": "{{ url('get_modules') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ _token: "{{csrf_token()}}"}
+                "data":{ _token :"{{csrf_token()}}"}
             },
             "columns": [
                 { "data": "id" },
@@ -495,7 +495,7 @@
                 "url": "{{ url('get_subjects') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ _token: "{{csrf_token()}}"}
+                "data":{ _token :"{{csrf_token()}}"}
             },
             "columns": [
                 { "data": "id" },
@@ -519,7 +519,7 @@
                 "url": "{{ url('get_questions') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ "id":"{{ $module_id ?? ''}}",_token: "{{ csrf_token() }}"}
+                "data":{ "id":"{{ $module_id ?? ''}}", _token :"{{ csrf_token() }}"}
             },
             "columns": [
                 { "data": "*" },
@@ -542,7 +542,7 @@
                     "url": "{{ url('get_users') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data":{ _token: "{{csrf_token()}}"}
+                    "data":{ _token :"{{csrf_token()}}"}
                 },
                 "columns": [
                     { "data": "*" },
@@ -568,7 +568,7 @@
                 "url": "{{ url('cms/get_payments') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data":{ _token: "{{csrf_token()}}"}
+                "data":{ _token : "{{csrf_token()}}"}
             },
             "columns": [
                 { "data": "*" },
@@ -577,7 +577,10 @@
                 { "data": "institution" },
                 { "data": "transactioncode" },
                 { "data": "date"},
-                { "data": "amount" }
+                { "data": "amount" },
+                { "data": "balance" },
+                { "data": "status" },
+                { "data": "paymentbtn"}
 
 
             ],
@@ -587,11 +590,21 @@
                 'excelHtml5',
                 'csvHtml5',
                 'pdfHtml5'
-            ]
+            ],
+            "order": [[ 5, "desc" ]]
 
         });
 
 
+    });
+    $(document).on('click','.activate-payment',function(e) {
+        e.preventDefault();
+        Pay = $(this).data('user');
+        $('#edit-transaction').val('ELE'+Pay.id);
+        $('#edit-sender_phone').val(Pay.phone);
+        $("#edit-mpesa_code").val(Pay.mpesa_code);
+        $('#edit-amount').val(Pay.amount - Pay.amount_received);
+        $('#activate-payment').modal('toggle');
     });
     $(document).on('click','.edit-user-roles',function(e){
         e.preventDefault();
@@ -600,7 +613,7 @@
             data: {"userid":$(this).data("user").id},
             type: "POST",
             url:  '{{ url('cms/getuserroles')  }}',
-            headers: {_token: "{{csrf_token()}}" },
+            headers: {"X-CSRF-TOKEN":"{{csrf_token()}}" },
             success: function(data) {
 
 
@@ -642,7 +655,7 @@
         $.ajax({
             type: 'POST',
             url: '{{ url('cms/delete') }}',
-            headers: { _token: "{{ csrf_token() }}"},
+            headers: { "X-CSRF-TOKEN":"{{ csrf_token() }}"},
             data: {"id":$(this).data("id"),"table":$(this).data("table")},
             success: function (Mess) {
                 if (Mess.status == true) {
@@ -695,7 +708,7 @@
            $.ajax({
                type: 'POST',
                url: '{{ url('cms/update') }}',
-               headers: { _token: "{{csrf_token()}}" },
+               headers: { "X-CSRF-TOKEN":"{{csrf_token()}}" },
                data: {"id":$(this).data("id"),"table":$(this).data("table"),"column":$(this).data("column"),"value":$(this).data("value")},
                success: function (Mess) {
                    if (Mess.status == true) {
@@ -766,6 +779,42 @@
         var popoverId = $(event.target).attr("aria-describedby");
         $("#" + popoverId).css("z-index", zIndex);
     });
+   $(document).on('submit','#edit-transaction',function(e){
+       e.preventDefault();
+       var dat = '{"transaction":"'+ $('#edit-transaction').val()+'","sender_phone":"254'+$('#edit-sender_phone').val().substring(1)+'","mpesa_code":"'+$("#edit-mpesa_code").val()+'","amount":"'+$('#edit-amount').val()+'"}';
+
+       $.ajax({
+           type: 'POST',
+           url: $(this).attr('action'),
+           headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
+           data: JSON.parse(dat),
+           success: function (Mess) {
+
+               toastr.success("Account Activation Successful", "Account", {
+                   timeOut: 1000,
+                   closeButton: true,
+                   progressBar: true,
+                   newestOnTop: true,
+                   onHidden: function () {
+                       window.location.reload();
+                   }
+               });
+           },
+           error: function (f) {
+                   toastr.error("Account Activation Failed"+f, "Account", {
+                       timeOut: 1000,
+                       closeButton: true,
+                       progressBar: true,
+                       newestOnTop: true,
+                       onHidden: function () {
+                           window.location.reload();
+                       }
+                   });
+           }
+       });
+
+
+   });
 
 
 
