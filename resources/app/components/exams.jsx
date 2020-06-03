@@ -201,120 +201,135 @@ export default function (props) {
                                                         </div>
                                                     </div>
                                                 </div> :
-                                                <ToolkitProvider
-                                                    keyField="id"
-                                                    data={modules.filter(el => {return parseInt(el.status) === 1}).reverse()}
-                                                    // data={ modules.filter(el => {
-                                                    //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
-                                                    // }) }
-                                                    columns={
-                                                        [
-                                                            {dataField: 'id',      text: 'ID',    sort: true },
-                                                            {
-                                                                dataField: 'module',
-                                                                text: 'Exam',
-                                                                sort: true,
-                                                                style: { textAlign: 'left' }},
-                                                            {
-                                                                dataField: 'class_id',
-                                                                text: 'Class',
-                                                                formatter: cell => classOptions[cell],
-                                                                filter: selectFilter({
-                                                                    options: classOptions,
-                                                                    onFilter: (filterValue) => {
-                                                                        setSelectedClass(filterValue)
-                                                                        // props.history.push({
-                                                                        //     pathname: `${ENV}exams/modules`,
-                                                                        //     state: {user: thisUser},
-                                                                        // });
-                                                                    }
-                                                                })
-                                                            },
-                                                            {
-                                                                dataField: 'subject',
-                                                                text: 'Subject',
-                                                                formatter: cell => subjectOptions[cell],
-                                                                filter: selectFilter({
-                                                                    options: subjectOptions,
-                                                                    onFilter: (filterValue) => {
-                                                                        setSelectedSubject(filterValue)
-                                                                        setLoading(true)
-                                                                        $.ajax({
-                                                                            url: `${API}/modules/subject/name/${filterValue}`,
-                                                                            // url: `${API}/subjects/class/{class_id}`,
-                                                                            method: 'GET',
-                                                                            headers: {
-                                                                                'appkey': 'ELE-2020-XCZ3'
-                                                                            },
-                                                                            error: function (xhr, status, error) {
-                                                                                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                                                                                try {
-                                                                                    response = JSON.parse(xhr['responseText'])['message']
-                                                                                }catch (e) {}                setLoading(false);
-                                                                                setMessage(true);
-                                                                                setMessageType('alert alert-danger');
-                                                                                setResponse(response);
-                                                                            }.bind(this),
-                                                                            success: function (res) {
-                                                                                setModules(res);
-                                                                                setLoading(false);
-                                                                            }.bind(this)
-                                                                        })
-                                                                    }
-                                                                })
-                                                            },
-                                                            {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
-                                                            {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
-                                                        ]
-                                                    } search={true}>
-                                                    {
-                                                        props =>
-                                                            (
-                                                                <React.Fragment>
-                                                                    <div className='row  mb-3'>
-                                                                        <div className='col-md-4'>
-                                                                            <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
-                                                                        </div>
-                                                                        <div className='col-md-8 ' >
-                                                                            {
-                                                                                (user.teacher || user.owner) ?
-                                                                                    subscription.hasOwnProperty('id') ?
-                                                                                        <button onClick={e => {
-                                                                                            let exam = {};
-                                                                                            exam['institution_id'] = user.institution.id
-                                                                                            setSelectedExam(exam);
-                                                                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
-                                                                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
-                                                                                    : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
-                                                                            }
+                                                <React.Fragment>
+                                                    {/*{*/}
+                                                    {/*    modules.filter(el => {return parseInt(el.status) === 1}).reverse().map(el => {*/}
+                                                    {/*        return (*/}
+                                                    {/*            <div className="card">*/}
+                                                    {/*                <div className="card-body">*/}
+                                                    {/*                    <h4 className="card-text">Revision Paper 9: Jesus the light of the world</h4>*/}
+                                                    {/*                    <a href="#" className="btn btn-primary">Take Test</a>*/}
+                                                    {/*                </div>*/}
+                                                    {/*            </div>*/}
+                                                    {/*        )*/}
+                                                    {/*    })*/}
+                                                    {/*}*/}
 
-                                                                        </div>
-                                                                    </div>
-                                                                    {
-                                                                        (user.teacher || user.owner) ?
-                                                                            <BootstrapTable { ...props.baseProps }
-                                                                                            wrapperClasses="table-responsive"
-                                                                                            headerWrapperClasses ="pt-0 shadowtable bg-danger"
-                                                                                            headerClasses="border-0"
-                                                                                            rowClasses="border-0"
-                                                                                            rowStyle={ { borderRadius: '18px' } }
-                                                                                            selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
-                                                                                            pagination={ paginationFactory() }
-                                                                                            filter={ filterFactory() }/>
-                                                                            : <BootstrapTable { ...props.baseProps }
-                                                                                              wrapperClasses="table-responsive"
-                                                                                              headerWrapperClasses ="pt-0 shadowtable bg-danger"
-                                                                                              headerClasses="border-0"
-                                                                                              rowClasses="border-0"
-                                                                                              rowStyle={ { borderRadius: '18px' } }
-                                                                                              pagination={ paginationFactory() }
-                                                                                              filter={ filterFactory() }/>
-                                                                    }
+                                                    <ToolkitProvider
+                                                        keyField="id"
+                                                        data={modules.filter(el => {return parseInt(el.status) === 1}).reverse()}
+                                                        // data={ modules.filter(el => {
+                                                        //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
+                                                        // }) }
+                                                        columns={
+                                                            [
+                                                                {dataField: 'id',      text: 'ID',    sort: true },
+                                                                {
+                                                                    dataField: 'module',
+                                                                    text: 'Exam',
+                                                                    sort: true,
+                                                                    style: { textAlign: 'left' }},
+                                                                {
+                                                                    dataField: 'class_id',
+                                                                    text: 'Class',
+                                                                    formatter: cell => classOptions[cell],
+                                                                    filter: selectFilter({
+                                                                        options: classOptions,
+                                                                        onFilter: (filterValue) => {
+                                                                            setSelectedClass(filterValue)
+                                                                            // props.history.push({
+                                                                            //     pathname: `${ENV}exams/modules`,
+                                                                            //     state: {user: thisUser},
+                                                                            // });
+                                                                        }
+                                                                    })
+                                                                },
+                                                                {
+                                                                    dataField: 'subject',
+                                                                    text: 'Subject',
+                                                                    formatter: cell => subjectOptions[cell],
+                                                                    filter: selectFilter({
+                                                                        options: subjectOptions,
+                                                                        onFilter: (filterValue) => {
+                                                                            setSelectedSubject(filterValue)
+                                                                            setLoading(true)
+                                                                            $.ajax({
+                                                                                url: `${API}/modules/subject/name/${filterValue}`,
+                                                                                // url: `${API}/subjects/class/{class_id}`,
+                                                                                method: 'GET',
+                                                                                headers: {
+                                                                                    'appkey': 'ELE-2020-XCZ3'
+                                                                                },
+                                                                                error: function (xhr, status, error) {
+                                                                                    var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                                                                                    try {
+                                                                                        response = JSON.parse(xhr['responseText'])['message']
+                                                                                    }catch (e) {}                setLoading(false);
+                                                                                    setMessage(true);
+                                                                                    setMessageType('alert alert-danger');
+                                                                                    setResponse(response);
+                                                                                }.bind(this),
+                                                                                success: function (res) {
+                                                                                    setModules(res);
+                                                                                    setLoading(false);
+                                                                                }.bind(this)
+                                                                            })
+                                                                        }
+                                                                    })
+                                                                },
+                                                                {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
+                                                                {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
+                                                            ]
+                                                        } search={true}>
+                                                        {
+                                                            props =>
+                                                                (
+                                                                    <React.Fragment>
+                                                                        <div className='row  mb-3'>
+                                                                            <div className='col-md-4'>
+                                                                                <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
+                                                                            </div>
+                                                                            <div className='col-md-8 ' >
+                                                                                {
+                                                                                    (user.teacher || user.owner) ?
+                                                                                        subscription.hasOwnProperty('id') ?
+                                                                                            <button onClick={e => {
+                                                                                                let exam = {};
+                                                                                                exam['institution_id'] = user.institution.id
+                                                                                                setSelectedExam(exam);
+                                                                                            }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                            : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
+                                                                                        : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
+                                                                                }
 
-                                                                </React.Fragment>
-                                                            )
-                                                    }
-                                                </ToolkitProvider>
+                                                                            </div>
+                                                                        </div>
+                                                                        {
+                                                                            (user.teacher || user.owner) ?
+                                                                                <BootstrapTable { ...props.baseProps }
+                                                                                                wrapperClasses="table-responsive"
+                                                                                                headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                                headerClasses="border-0"
+                                                                                                rowClasses="border-0"
+                                                                                                rowStyle={ { borderRadius: '18px' } }
+                                                                                                selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
+                                                                                                pagination={ paginationFactory() }
+                                                                                                filter={ filterFactory() }/>
+                                                                                : <BootstrapTable { ...props.baseProps }
+                                                                                                  wrapperClasses="table-responsive"
+                                                                                                  headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                                  headerClasses="border-0"
+                                                                                                  rowClasses="border-0"
+                                                                                                  rowStyle={ { borderRadius: '18px' } }
+                                                                                                  pagination={ paginationFactory() }
+                                                                                                  filter={ filterFactory() }/>
+                                                                        }
+
+                                                                    </React.Fragment>
+                                                                )
+                                                        }
+                                                    </ToolkitProvider>
+                                                </React.Fragment>
                                     }
                                 </div>
                             </div>
