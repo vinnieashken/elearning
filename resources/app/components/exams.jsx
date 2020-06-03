@@ -204,210 +204,215 @@ export default function (props) {
                                                     </div>
                                                 </div> :
                                                 <React.Fragment>
-                                                    <div className='row'>
-                                                        <div className='col-md-8'>
-                                                            <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" onChange={event => {
-                                                                let str = event.target.value;
-                                                                let filteredModules = allModules.filter(el => {
-                                                                    return (el.module && el.module.toLowerCase().includes(str.toLowerCase())) || (el.class && el.class.toLowerCase().includes(str.toLowerCase())) || (el.subject && el.subject.toLowerCase().includes(str.toLowerCase()))
-                                                                })
-                                                                setModules(filteredModules)
-                                                            }}/>
-                                                        </div>
-                                                        <div className='col-md-4'>
-                                                            {
-                                                                (user.teacher || user.owner) ?
-                                                                    subscription.hasOwnProperty('id') ?
-                                                                        <button onClick={e => {
-                                                                            let exam = {};
-                                                                            exam['institution_id'] = user.institution.id
-                                                                            setSelectedExam(exam);
-                                                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
-                                                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
-                                                                    : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    {
-                                                        modules.filter(el => {return parseInt(el.status) === 1}).reverse().map(el => {
-                                                            return (
-                                                                <div className="card">
-                                                                    <div className="card-body">
-                                                                        <div className='row'>
-                                                                            <div className='col-md-8' onClick={e=> {
-                                                                                props.history.push({
-                                                                                    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
-                                                                                    state: {
-                                                                                        exam: el
-                                                                                    },
-                                                                                });
-                                                                            }}>
-                                                                                <h1 className={`h3 mb-3`}>{el.module}</h1>
-                                                                                <h6 className="card-subtitle text-muted"><span>{el.subject}</span> - <span>{el.class}</span></h6>
-                                                                                <h6 className="card-subtitle text-muted mt-1"><span>{`Paper #${el.id}`}</span></h6>
-                                                                            </div>
-                                                                            <div className="col-md-4 ">
-                                                                                {
-                                                                                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(el.institution_id))) ?
-                                                                                        <React.Fragment>
-                                                                                            <Link to={{
-                                                                                                pathname: `${ENV}exams/exam/${el.id}/performance`,
-                                                                                                state: {
-                                                                                                    exam: el
-                                                                                                }
-                                                                                            }} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
-                                                                                                Performance <i className="fa fa-graduation-cap" />
-                                                                                            </Link>
-                                                                                            <Link to={{
-                                                                                                pathname: `${ENV}exams/exam/edit/${el.id}`,
-                                                                                                state: {
-                                                                                                    exam: el
-                                                                                                }
-                                                                                            }} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
-                                                                                                Add Question <i className="fa fa-plus" />
-                                                                                            </Link>
-                                                                                            <Link to={'#'} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">
-                                                                                                Edit Paper <i className="fa fa-pencil" />
-                                                                                            </Link>
-                                                                                        </React.Fragment> :
-                                                                                        <Link to={{
-                                                                                            pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
-                                                                                            state: {
-                                                                                                exam: el
-                                                                                            }
-                                                                                        }} className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>
-                                                                                            {el.done ? `Revise Paper` : `Take Test`}
-                                                                                        </Link>
-                                                                                }
-                                                                                {/*<Link className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success mr-3`} to={{*/}
-                                                                                {/*    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
-                                                                                {/*    state: {*/}
-                                                                                {/*        exam: el*/}
-                                                                                {/*    }*/}
-                                                                                {/*}}>{el.done ? `Revise Paper` : `Take Test`}</Link>*/}
-                                                                            </div>
-                                                                            {/*<a href="#" className="btn btn-sm btn-success float-right">Take Test</a>*/}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
-
-                                                    {/*<ToolkitProvider*/}
-                                                    {/*    keyField="id"*/}
-                                                    {/*    data={modules.filter(el => {return parseInt(el.status) === 1}).reverse()}*/}
-                                                    {/*    // data={ modules.filter(el => {*/}
-                                                    {/*    //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))*/}
-                                                    {/*    // }) }*/}
-                                                    {/*    columns={*/}
-                                                    {/*        [*/}
-                                                    {/*            {dataField: 'id',      text: 'ID',    sort: true },*/}
-                                                    {/*            {*/}
-                                                    {/*                dataField: 'module',*/}
-                                                    {/*                text: 'Exam',*/}
-                                                    {/*                sort: true,*/}
-                                                    {/*                style: { textAlign: 'left' }},*/}
-                                                    {/*            {*/}
-                                                    {/*                dataField: 'class_id',*/}
-                                                    {/*                text: 'Class',*/}
-                                                    {/*                formatter: cell => classOptions[cell],*/}
-                                                    {/*                filter: selectFilter({*/}
-                                                    {/*                    options: classOptions,*/}
-                                                    {/*                    onFilter: (filterValue) => {*/}
-                                                    {/*                        setSelectedClass(filterValue)*/}
-                                                    {/*                        // props.history.push({*/}
-                                                    {/*                        //     pathname: `${ENV}exams/modules`,*/}
-                                                    {/*                        //     state: {user: thisUser},*/}
-                                                    {/*                        // });*/}
-                                                    {/*                    }*/}
-                                                    {/*                })*/}
-                                                    {/*            },*/}
-                                                    {/*            {*/}
-                                                    {/*                dataField: 'subject',*/}
-                                                    {/*                text: 'Subject',*/}
-                                                    {/*                formatter: cell => subjectOptions[cell],*/}
-                                                    {/*                filter: selectFilter({*/}
-                                                    {/*                    options: subjectOptions,*/}
-                                                    {/*                    onFilter: (filterValue) => {*/}
-                                                    {/*                        setSelectedSubject(filterValue)*/}
-                                                    {/*                        setLoading(true)*/}
-                                                    {/*                        $.ajax({*/}
-                                                    {/*                            url: `${API}/modules/subject/name/${filterValue}`,*/}
-                                                    {/*                            // url: `${API}/subjects/class/{class_id}`,*/}
-                                                    {/*                            method: 'GET',*/}
-                                                    {/*                            headers: {*/}
-                                                    {/*                                'appkey': 'ELE-2020-XCZ3'*/}
-                                                    {/*                            },*/}
-                                                    {/*                            error: function (xhr, status, error) {*/}
-                                                    {/*                                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;*/}
-                                                    {/*                                try {*/}
-                                                    {/*                                    response = JSON.parse(xhr['responseText'])['message']*/}
-                                                    {/*                                }catch (e) {}                setLoading(false);*/}
-                                                    {/*                                setMessage(true);*/}
-                                                    {/*                                setMessageType('alert alert-danger');*/}
-                                                    {/*                                setResponse(response);*/}
-                                                    {/*                            }.bind(this),*/}
-                                                    {/*                            success: function (res) {*/}
-                                                    {/*                                setModules(res);*/}
-                                                    {/*                                setLoading(false);*/}
-                                                    {/*                            }.bind(this)*/}
-                                                    {/*                        })*/}
-                                                    {/*                    }*/}
-                                                    {/*                })*/}
-                                                    {/*            },*/}
-                                                    {/*            {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},*/}
-                                                    {/*            {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},*/}
-                                                    {/*        ]*/}
-                                                    {/*    } search={true}>*/}
-                                                    {/*    {*/}
-                                                    {/*        props =>*/}
-                                                    {/*            (*/}
-                                                    {/*                <React.Fragment>*/}
-                                                    {/*                    <div className='row  mb-3'>*/}
-                                                    {/*                        <div className='col-md-4'>*/}
-                                                    {/*                            <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />*/}
+                                                    {/*<div className='row'>*/}
+                                                    {/*    <div className='col-md-8'>*/}
+                                                    {/*        <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" onChange={event => {*/}
+                                                    {/*            let str = event.target.value;*/}
+                                                    {/*            let filteredModules = allModules.filter(el => {*/}
+                                                    {/*                return (el.module && el.module.toLowerCase().includes(str.toLowerCase())) || (el.class && el.class.toLowerCase().includes(str.toLowerCase())) || (el.subject && el.subject.toLowerCase().includes(str.toLowerCase()))*/}
+                                                    {/*            })*/}
+                                                    {/*            setModules(filteredModules)*/}
+                                                    {/*        }}/>*/}
+                                                    {/*    </div>*/}
+                                                    {/*    <div className='col-md-4'>*/}
+                                                    {/*        {*/}
+                                                    {/*            (user.teacher || user.owner) ?*/}
+                                                    {/*                subscription.hasOwnProperty('id') ?*/}
+                                                    {/*                    <button onClick={e => {*/}
+                                                    {/*                        let exam = {};*/}
+                                                    {/*                        exam['institution_id'] = user.institution.id*/}
+                                                    {/*                        setSelectedExam(exam);*/}
+                                                    {/*                    }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>*/}
+                                                    {/*                    : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>*/}
+                                                    {/*                : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>*/}
+                                                    {/*        }*/}
+                                                    {/*    </div>*/}
+                                                    {/*</div>*/}
+                                                    {/*{*/}
+                                                    {/*    modules.filter(el => {return parseInt(el.status) === 1}).reverse().map(el => {*/}
+                                                    {/*        return (*/}
+                                                    {/*            <div className="card">*/}
+                                                    {/*                <div className="card-body">*/}
+                                                    {/*                    <div className='row'>*/}
+                                                    {/*                        <div className='col-md-8' onClick={e=> {*/}
+                                                    {/*                            props.history.push({*/}
+                                                    {/*                                pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
+                                                    {/*                                state: {*/}
+                                                    {/*                                    exam: el*/}
+                                                    {/*                                },*/}
+                                                    {/*                            });*/}
+                                                    {/*                        }}>*/}
+                                                    {/*                            <h1 className={`h3 mb-3`}>{el.module}</h1>*/}
+                                                    {/*                            <h6 className="card-subtitle text-muted"><span>{el.subject}</span> - <span>{el.class}</span></h6>*/}
+                                                    {/*                            <h6 className="card-subtitle text-muted mt-1"><span>{`Paper #${el.id}`}</span></h6>*/}
                                                     {/*                        </div>*/}
-                                                    {/*                        <div className='col-md-8 ' >*/}
+                                                    {/*                        <div className="col-md-4 ">*/}
                                                     {/*                            {*/}
-                                                    {/*                                (user.teacher || user.owner) ?*/}
-                                                    {/*                                    subscription.hasOwnProperty('id') ?*/}
-                                                    {/*                                        <button onClick={e => {*/}
-                                                    {/*                                            let exam = {};*/}
-                                                    {/*                                            exam['institution_id'] = user.institution.id*/}
-                                                    {/*                                            setSelectedExam(exam);*/}
-                                                    {/*                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>*/}
-                                                    {/*                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>*/}
-                                                    {/*                                    : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>*/}
+                                                    {/*                                ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(el.institution_id))) ?*/}
+                                                    {/*                                    <React.Fragment>*/}
+                                                    {/*                                        <Link to={{*/}
+                                                    {/*                                            pathname: `${ENV}exams/exam/${el.id}/performance`,*/}
+                                                    {/*                                            state: {*/}
+                                                    {/*                                                exam: el*/}
+                                                    {/*                                            }*/}
+                                                    {/*                                        }} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1'>*/}
+                                                    {/*                                            Performance <i className="fa fa-graduation-cap" />*/}
+                                                    {/*                                        </Link>*/}
+                                                    {/*                                        <Link to={{*/}
+                                                    {/*                                            pathname: `${ENV}exams/exam/edit/${el.id}`,*/}
+                                                    {/*                                            state: {*/}
+                                                    {/*                                                exam: el*/}
+                                                    {/*                                            }*/}
+                                                    {/*                                        }} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1'>*/}
+                                                    {/*                                            Add Question <i className="fa fa-plus" />*/}
+                                                    {/*                                        </Link>*/}
+                                                    {/*                                        <Link to={'#'} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">*/}
+                                                    {/*                                            Edit Paper <i className="fa fa-pencil" />*/}
+                                                    {/*                                        </Link>*/}
+                                                    {/*                                    </React.Fragment> :*/}
+                                                    {/*                                    <Link to={{*/}
+                                                    {/*                                        pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
+                                                    {/*                                        state: {*/}
+                                                    {/*                                            exam: el*/}
+                                                    {/*                                        }*/}
+                                                    {/*                                    }} className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>*/}
+                                                    {/*                                        {el.done ? `Revise Paper` : `Take Test`}*/}
+                                                    {/*                                    </Link>*/}
                                                     {/*                            }*/}
-
+                                                    {/*                            /!*<Link className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success mr-3`} to={{*!/*/}
+                                                    {/*                            /!*    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*!/*/}
+                                                    {/*                            /!*    state: {*!/*/}
+                                                    {/*                            /!*        exam: el*!/*/}
+                                                    {/*                            /!*    }*!/*/}
+                                                    {/*                            /!*}}>{el.done ? `Revise Paper` : `Take Test`}</Link>*!/*/}
                                                     {/*                        </div>*/}
+                                                    {/*                        /!*<a href="#" className="btn btn-sm btn-success float-right">Take Test</a>*!/*/}
                                                     {/*                    </div>*/}
-                                                    {/*                    {*/}
-                                                    {/*                        (user.teacher || user.owner) ?*/}
-                                                    {/*                            <BootstrapTable { ...props.baseProps }*/}
-                                                    {/*                                            wrapperClasses="table-responsive"*/}
-                                                    {/*                                            headerWrapperClasses ="pt-0 shadowtable bg-danger"*/}
-                                                    {/*                                            headerClasses="border-0"*/}
-                                                    {/*                                            rowClasses="border-0"*/}
-                                                    {/*                                            rowStyle={ { borderRadius: '18px' } }*/}
-                                                    {/*                                            selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}*/}
-                                                    {/*                                            pagination={ paginationFactory() }*/}
-                                                    {/*                                            filter={ filterFactory() }/>*/}
-                                                    {/*                            : <BootstrapTable { ...props.baseProps }*/}
-                                                    {/*                                              wrapperClasses="table-responsive"*/}
-                                                    {/*                                              headerWrapperClasses ="pt-0 shadowtable bg-danger"*/}
-                                                    {/*                                              headerClasses="border-0"*/}
-                                                    {/*                                              rowClasses="border-0"*/}
-                                                    {/*                                              rowStyle={ { borderRadius: '18px' } }*/}
-                                                    {/*                                              pagination={ paginationFactory() }*/}
-                                                    {/*                                              filter={ filterFactory() }/>*/}
-                                                    {/*                    }*/}
+                                                    {/*                </div>*/}
+                                                    {/*            </div>*/}
+                                                    {/*        )*/}
+                                                    {/*    })*/}
+                                                    {/*}*/}
 
-                                                    {/*                </React.Fragment>*/}
-                                                    {/*            )*/}
-                                                    {/*    }*/}
-                                                    {/*</ToolkitProvider>*/}
+                                                    <ToolkitProvider
+                                                        keyField="id"
+                                                        data={modules.filter(el => {return parseInt(el.status) === 1}).reverse()}
+                                                        // data={ modules.filter(el => {
+                                                        //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
+                                                        // }) }
+                                                        columns={
+                                                            [
+                                                                // {dataField: 'id',      text: 'ID',    sort: true },
+                                                                {
+                                                                    dataField: 'module',
+                                                                    text: 'Test Papers',
+                                                                    formatter: (cell, row) => {
+                                                                        return (
+                                                                            <span>{row.module}<br />{`${row.class} - ${row.subject}`}</span>
+                                                                        )
+                                                                    },
+                                                                    style: { textAlign: 'left' }
+                                                                },
+                                                                // {
+                                                                //     dataField: 'class_id',
+                                                                //     text: 'Class',
+                                                                //     formatter: cell => classOptions[cell],
+                                                                //     filter: selectFilter({
+                                                                //         options: classOptions,
+                                                                //         onFilter: (filterValue) => {
+                                                                //             setSelectedClass(filterValue)
+                                                                //             // props.history.push({
+                                                                //             //     pathname: `${ENV}exams/modules`,
+                                                                //             //     state: {user: thisUser},
+                                                                //             // });
+                                                                //         }
+                                                                //     })
+                                                                // },
+                                                                // {
+                                                                //     dataField: 'subject',
+                                                                //     text: 'Subject',
+                                                                //     formatter: cell => subjectOptions[cell],
+                                                                //     filter: selectFilter({
+                                                                //         options: subjectOptions,
+                                                                //         onFilter: (filterValue) => {
+                                                                //             setSelectedSubject(filterValue)
+                                                                //             setLoading(true)
+                                                                //             $.ajax({
+                                                                //                 url: `${API}/modules/subject/name/${filterValue}`,
+                                                                //                 // url: `${API}/subjects/class/{class_id}`,
+                                                                //                 method: 'GET',
+                                                                //                 headers: {
+                                                                //                     'appkey': 'ELE-2020-XCZ3'
+                                                                //                 },
+                                                                //                 error: function (xhr, status, error) {
+                                                                //                     var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                                                                //                     try {
+                                                                //                         response = JSON.parse(xhr['responseText'])['message']
+                                                                //                     }catch (e) {}                setLoading(false);
+                                                                //                     setMessage(true);
+                                                                //                     setMessageType('alert alert-danger');
+                                                                //                     setResponse(response);
+                                                                //                 }.bind(this),
+                                                                //                 success: function (res) {
+                                                                //                     setModules(res);
+                                                                //                     setLoading(false);
+                                                                //                 }.bind(this)
+                                                                //             })
+                                                                //         }
+                                                                //     })
+                                                                // },
+                                                                // {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
+                                                                {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
+                                                            ]
+                                                        } search={true}>
+                                                        {
+                                                            props =>
+                                                                (
+                                                                    <React.Fragment>
+                                                                        <div className='row  mb-3'>
+                                                                            <div className='col-md-4'>
+                                                                                <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
+                                                                            </div>
+                                                                            <div className='col-md-8 ' >
+                                                                                {
+                                                                                    (user.teacher || user.owner) ?
+                                                                                        subscription.hasOwnProperty('id') ?
+                                                                                            <button onClick={e => {
+                                                                                                let exam = {};
+                                                                                                exam['institution_id'] = user.institution.id
+                                                                                                setSelectedExam(exam);
+                                                                                            }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                            : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
+                                                                                        : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
+                                                                                }
+
+                                                                            </div>
+                                                                        </div>
+                                                                        {
+                                                                            (user.teacher || user.owner) ?
+                                                                                <BootstrapTable { ...props.baseProps }
+                                                                                                wrapperClasses="table-responsive"
+                                                                                                headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                                headerClasses="border-0"
+                                                                                                rowClasses="border-0"
+                                                                                                rowStyle={ { borderRadius: '18px' } }
+                                                                                                selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
+                                                                                                pagination={ paginationFactory() }
+                                                                                                filter={ filterFactory() }/>
+                                                                                : <BootstrapTable { ...props.baseProps }
+                                                                                                  wrapperClasses="table-responsive"
+                                                                                                  headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                                  headerClasses="border-0"
+                                                                                                  rowClasses="border-0"
+                                                                                                  rowStyle={ { borderRadius: '18px' } }
+                                                                                                  pagination={ paginationFactory() }
+                                                                                                  filter={ filterFactory() }/>
+                                                                        }
+
+                                                                    </React.Fragment>
+                                                                )
+                                                        }
+                                                    </ToolkitProvider>
                                                 </React.Fragment>
                                     }
                                 </div>
