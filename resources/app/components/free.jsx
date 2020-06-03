@@ -18,6 +18,7 @@ export default function (props) {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(true);
+    const [allModules, setAllModules] = useState([]);
     const [modules, setModules] = useState([]);
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
@@ -69,6 +70,7 @@ export default function (props) {
                 setResponse(response);
             }.bind(this),
             success: function (res) {
+                setAllModules(res);
                 setModules(res);
                 setLoading(false);
                 if (classes.length <= 0 || subjects.length <= 0) {
@@ -191,88 +193,137 @@ export default function (props) {
                                                         </div>
                                                     </div>
                                                 </div> :
-                                                <ToolkitProvider
-                                                    keyField="id"
-                                                    data={modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse()}
-                                                    // data={ modules.filter(el => {
-                                                    //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
-                                                    // }) }
-                                                    columns={
-                                                        [
-                                                            {dataField: 'id',      text: 'ID',    sort: true },
-                                                            {
-                                                                dataField: 'module',
-                                                                text: 'Exam',
-                                                                sort: true,
-                                                                style: { textAlign: 'left' }},
-                                                            {
-                                                                dataField: 'class',
-                                                                text: 'Class',
-                                                                formatter: cell => classOptions[cell],
-                                                                filter: selectFilter({
-                                                                    options: classOptions
+                                                <React.Fragment>
+                                                    <div className='row'>
+                                                        <div className='col-md-8'>
+                                                            <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" onChange={event => {
+                                                                let str = (event.target.value).toLowerCase();
+                                                                let filteredModules = allModules.filter(el => {
+                                                                    return el.module.includes(str.toLowerCase()) || el.class.includes(str.toLowerCase()) || el.subject.includes(str.toLowerCase())
                                                                 })
-                                                            },
-                                                            {
-                                                                dataField: 'subject',
-                                                                text: 'Subject',
-                                                                formatter: cell => subjectOptions[cell],
-                                                                filter: selectFilter({
-                                                                    options: subjectOptions
-                                                                })
-                                                            },
-                                                            {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
-                                                            {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
-                                                        ]
-                                                    } search={true}>
+                                                                setModules(filteredModules)
+                                                            }}/>
+                                                        </div>
+                                                        <div className='col-md-4'>
+                                                            <Link to={`${ENV}exams/modules`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >All Exams</Link>
+                                                        </div>
+                                                    </div>
                                                     {
-                                                        props =>
-                                                            (
-                                                                <React.Fragment>
-                                                                    <div className='row  mb-3'>
-                                                                        <div className='col-md-4'>
-                                                                            <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
-                                                                        </div>
-                                                                        <div className='col-md-8 ' >
-                                                                            {
-                                                                                (user.teacher || user.owner) ?
-                                                                                    subscription.hasOwnProperty('id') ?
-                                                                                        <button onClick={e => {
-                                                                                            let exam = {};
-                                                                                            exam['institution_id'] = user.institution.id
-                                                                                            setSelectedExam(exam);
-                                                                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
-                                                                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
-                                                                                    : ''
-                                                                            }
-
+                                                        modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse().map(el => {
+                                                            return (
+                                                                <div className="card" onClick={e=> {
+                                                                    props.history.push({
+                                                                        pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
+                                                                        state: {
+                                                                            exam: el
+                                                                        },
+                                                                    });
+                                                                }}>
+                                                                    <div className="card-body">
+                                                                        <div className='row'>
+                                                                            <div className='col-md-8'>
+                                                                                <h1 className={`h3 mb-3`}>{el.module}</h1>
+                                                                                <h6 className="card-subtitle text-muted"><span>{el.subject}</span> - <span>{el.class}</span></h6>
+                                                                                <h6 className="card-subtitle text-muted mt-1"><span>{`Paper #${el.id}`}</span></h6>
+                                                                            </div>
+                                                                            <div className="col-md-4 ">
+                                                                                <Link className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success mr-3`} to={{
+                                                                                    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
+                                                                                    state: {
+                                                                                        exam: el
+                                                                                    }
+                                                                                }}>{el.done ? `Revise Paper` : `Take Test`}</Link>
+                                                                            </div>
+                                                                            {/*<a href="#" className="btn btn-sm btn-success float-right">Take Test</a>*/}
                                                                         </div>
                                                                     </div>
-                                                                    {
-                                                                        (user.teacher || user.owner) ?
-                                                                            <BootstrapTable { ...props.baseProps }
-                                                                                            wrapperClasses="table-responsive"
-                                                                                            headerWrapperClasses ="pt-0 shadowtable bg-danger"
-                                                                                            headerClasses="border-0"
-                                                                                            rowClasses="border-0"
-                                                                                            rowStyle={ { borderRadius: '18px' } }
-                                                                                            selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
-                                                                                            pagination={ paginationFactory() }
-                                                                                            filter={ filterFactory() }/>
-                                                                            : <BootstrapTable { ...props.baseProps }
-                                                                                              wrapperClasses="table-responsive"
-                                                                                              headerWrapperClasses ="pt-0 shadowtable bg-danger"
-                                                                                              headerClasses="border-0"
-                                                                                              rowClasses="border-0"
-                                                                                              rowStyle={ { borderRadius: '18px' } }
-                                                                                              pagination={ paginationFactory() }
-                                                                                              filter={ filterFactory() }/>
-                                                                    }
-
-                                                                </React.Fragment>
+                                                                </div>
                                                             )
+                                                        })
                                                     }
-                                                </ToolkitProvider>
+                                                    {/*<ToolkitProvider*/}
+                                                    {/*    keyField="id"*/}
+                                                    {/*    data={modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse()}*/}
+                                                    {/*    // data={ modules.filter(el => {*/}
+                                                    {/*    //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))*/}
+                                                    {/*    // }) }*/}
+                                                    {/*    columns={*/}
+                                                    {/*        [*/}
+                                                    {/*            {dataField: 'id',      text: 'ID',    sort: true },*/}
+                                                    {/*            {*/}
+                                                    {/*                dataField: 'module',*/}
+                                                    {/*                text: 'Exam',*/}
+                                                    {/*                sort: true,*/}
+                                                    {/*                style: { textAlign: 'left' }},*/}
+                                                    {/*            {*/}
+                                                    {/*                dataField: 'class',*/}
+                                                    {/*                text: 'Class',*/}
+                                                    {/*                formatter: cell => classOptions[cell],*/}
+                                                    {/*                filter: selectFilter({*/}
+                                                    {/*                    options: classOptions*/}
+                                                    {/*                })*/}
+                                                    {/*            },*/}
+                                                    {/*            {*/}
+                                                    {/*                dataField: 'subject',*/}
+                                                    {/*                text: 'Subject',*/}
+                                                    {/*                formatter: cell => subjectOptions[cell],*/}
+                                                    {/*                filter: selectFilter({*/}
+                                                    {/*                    options: subjectOptions*/}
+                                                    {/*                })*/}
+                                                    {/*            },*/}
+                                                    {/*            {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},*/}
+                                                    {/*            {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},*/}
+                                                    {/*        ]*/}
+                                                    {/*    } search={true}>*/}
+                                                    {/*    {*/}
+                                                    {/*        props =>*/}
+                                                    {/*            (*/}
+                                                    {/*                <React.Fragment>*/}
+                                                    {/*                    <div className='row  mb-3'>*/}
+                                                    {/*                        <div className='col-md-4'>*/}
+                                                    {/*                            <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />*/}
+                                                    {/*                        </div>*/}
+                                                    {/*                        <div className='col-md-8 ' >*/}
+                                                    {/*                            {*/}
+                                                    {/*                                (user.teacher || user.owner) ?*/}
+                                                    {/*                                    subscription.hasOwnProperty('id') ?*/}
+                                                    {/*                                        <button onClick={e => {*/}
+                                                    {/*                                            let exam = {};*/}
+                                                    {/*                                            exam['institution_id'] = user.institution.id*/}
+                                                    {/*                                            setSelectedExam(exam);*/}
+                                                    {/*                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>*/}
+                                                    {/*                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>*/}
+                                                    {/*                                    : ''*/}
+                                                    {/*                            }*/}
+
+                                                    {/*                        </div>*/}
+                                                    {/*                    </div>*/}
+                                                    {/*                    {*/}
+                                                    {/*                        (user.teacher || user.owner) ?*/}
+                                                    {/*                            <BootstrapTable { ...props.baseProps }*/}
+                                                    {/*                                            wrapperClasses="table-responsive"*/}
+                                                    {/*                                            headerWrapperClasses ="pt-0 shadowtable bg-danger"*/}
+                                                    {/*                                            headerClasses="border-0"*/}
+                                                    {/*                                            rowClasses="border-0"*/}
+                                                    {/*                                            rowStyle={ { borderRadius: '18px' } }*/}
+                                                    {/*                                            selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}*/}
+                                                    {/*                                            pagination={ paginationFactory() }*/}
+                                                    {/*                                            filter={ filterFactory() }/>*/}
+                                                    {/*                            : <BootstrapTable { ...props.baseProps }*/}
+                                                    {/*                                              wrapperClasses="table-responsive"*/}
+                                                    {/*                                              headerWrapperClasses ="pt-0 shadowtable bg-danger"*/}
+                                                    {/*                                              headerClasses="border-0"*/}
+                                                    {/*                                              rowClasses="border-0"*/}
+                                                    {/*                                              rowStyle={ { borderRadius: '18px' } }*/}
+                                                    {/*                                              pagination={ paginationFactory() }*/}
+                                                    {/*                                              filter={ filterFactory() }/>*/}
+                                                    {/*                    }*/}
+
+                                                    {/*                </React.Fragment>*/}
+                                                    {/*            )*/}
+                                                    {/*    }*/}
+                                                    {/*</ToolkitProvider>*/}
+                                                </React.Fragment>
                                     }
                                 </div>
                             </div>

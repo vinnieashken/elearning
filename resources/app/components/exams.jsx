@@ -205,41 +205,86 @@ export default function (props) {
                                                 </div> :
                                                 <React.Fragment>
                                                     <div className='row'>
-                                                        <div className='form-group col-md-12'>
+                                                        <div className='col-md-8'>
                                                             <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" onChange={event => {
-                                                                let str = event.target.value;
+                                                                let str = (event.target.value).toLowerCase();
                                                                 let filteredModules = allModules.filter(el => {
-                                                                    return el.module.includes(str) || el.class.includes(str) || el.subject.includes(str)
+                                                                    return el.module.includes(str.toLowerCase()) || el.class.includes(str.toLowerCase()) || el.subject.includes(str.toLowerCase())
                                                                 })
                                                                 setModules(filteredModules)
                                                             }}/>
+                                                        </div>
+                                                        <div className='col-md-4'>
+                                                            {
+                                                                (user.teacher || user.owner) ?
+                                                                    subscription.hasOwnProperty('id') ?
+                                                                        <button onClick={e => {
+                                                                            let exam = {};
+                                                                            exam['institution_id'] = user.institution.id
+                                                                            setSelectedExam(exam);
+                                                                        }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
+                                                                    : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
+                                                            }
                                                         </div>
                                                     </div>
                                                     {
                                                         modules.filter(el => {return parseInt(el.status) === 1}).reverse().map(el => {
                                                             return (
-                                                                <div className="card" onClick={e=> {
-                                                                    props.history.push({
-                                                                        pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
-                                                                        state: {
-                                                                            exam: el
-                                                                        },
-                                                                    });
-                                                                }}>
+                                                                <div className="card">
                                                                     <div className="card-body">
                                                                         <div className='row'>
-                                                                            <div className='col-md-8'>
+                                                                            <div className='col-md-8' onClick={e=> {
+                                                                                props.history.push({
+                                                                                    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
+                                                                                    state: {
+                                                                                        exam: el
+                                                                                    },
+                                                                                });
+                                                                            }}>
                                                                                 <h1 className={`h3 mb-3`}>{el.module}</h1>
                                                                                 <h6 className="card-subtitle text-muted"><span>{el.subject}</span> - <span>{el.class}</span></h6>
                                                                                 <h6 className="card-subtitle text-muted mt-1"><span>{`Paper #${el.id}`}</span></h6>
                                                                             </div>
                                                                             <div className="col-md-4 ">
-                                                                                <Link className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success mr-3`} to={{
-                                                                                    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
-                                                                                    state: {
-                                                                                        exam: el
-                                                                                    }
-                                                                                }}>{el.done ? `Revise Paper` : `Take Test`}</Link>
+                                                                                {
+                                                                                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(el.institution_id))) ?
+                                                                                        <React.Fragment>
+                                                                                            <Link to={{
+                                                                                                pathname: `${ENV}exams/exam/${el.id}/performance`,
+                                                                                                state: {
+                                                                                                    exam: el
+                                                                                                }
+                                                                                            }} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
+                                                                                                Performance <i className="fa fa-graduation-cap" />
+                                                                                            </Link>
+                                                                                            <Link to={{
+                                                                                                pathname: `${ENV}exams/exam/edit/${el.id}`,
+                                                                                                state: {
+                                                                                                    exam: el
+                                                                                                }
+                                                                                            }} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
+                                                                                                Add Question <i className="fa fa-plus" />
+                                                                                            </Link>
+                                                                                            <Link to={'#'} className='float-right btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">
+                                                                                                Edit Paper <i className="fa fa-pencil" />
+                                                                                            </Link>
+                                                                                        </React.Fragment> :
+                                                                                        <Link to={{
+                                                                                            pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,
+                                                                                            state: {
+                                                                                                exam: el
+                                                                                            }
+                                                                                        }} className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success`}>
+                                                                                            {el.done ? `Revise Paper` : `Take Test`}
+                                                                                        </Link>
+                                                                                }
+                                                                                {/*<Link className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success mr-3`} to={{*/}
+                                                                                {/*    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
+                                                                                {/*    state: {*/}
+                                                                                {/*        exam: el*/}
+                                                                                {/*    }*/}
+                                                                                {/*}}>{el.done ? `Revise Paper` : `Take Test`}</Link>*/}
                                                                             </div>
                                                                             {/*<a href="#" className="btn btn-sm btn-success float-right">Take Test</a>*/}
                                                                         </div>
