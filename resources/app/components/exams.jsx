@@ -207,9 +207,9 @@ export default function (props) {
                                                     <div className='row'>
                                                         <div className='col-md-8'>
                                                             <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" onChange={event => {
-                                                                let str = (event.target.value).toLowerCase();
+                                                                let str = event.target.value;
                                                                 let filteredModules = allModules.filter(el => {
-                                                                    return el.module.includes(str.toLowerCase()) || el.class.includes(str.toLowerCase()) || el.subject.includes(str.toLowerCase())
+                                                                    return (el.module && el.module.toLowerCase().includes(str.toLowerCase())) || (el.class && el.class.toLowerCase().includes(str.toLowerCase())) || (el.subject && el.subject.toLowerCase().includes(str.toLowerCase()))
                                                                 })
                                                                 setModules(filteredModules)
                                                             }}/>
