@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import EditExamModal from "./editExamModal";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchSubscription} from "../common/actions";
+import Select from "react-select";
 
 export default function (props) {
     const dispatch = useDispatch();
@@ -24,7 +25,8 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [selectedExam, setSelectedExam] = useState({})
-    const [selectedClass, setSelectedClass] = useState('')
+    const [searchParam, setSearchParam] = useState(null)
+    const [selectedClass, setSelectedClass] = useState(null)
     const classes = useSelector(state => state.classes);
     const [selectedSubject, setSelectedSubject] = useState('')
     const subjects = useSelector(state => state.subjects);
@@ -58,7 +60,7 @@ export default function (props) {
     }, [props.match.params.subject]);
 
     const getModules = () => {
-        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`;
+        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}?institutionid=29${props.user ? `&userid=${props.user.id}`: ''}`;
         // if (props.match.params.hasOwnProperty('subject'))
         //     url = `${API}/modules/subject/name/${filterValue}`;
 
@@ -194,15 +196,15 @@ export default function (props) {
                             <div className='row'>
                                 <div className='col-md-12'>
                                     {
-                                        loading ? <Loading/> :
-                                            message ?
-                                                <div className="text-center mt-2">
-                                                    <div className={messageType} role="alert">
-                                                        <div className="alert-message">
-                                                            {response}
-                                                        </div>
+                                        message ?
+                                            <div className="text-center mt-2">
+                                                <div className={messageType} role="alert">
+                                                    <div className="alert-message">
+                                                        {response}
                                                     </div>
-                                                </div> :
+                                                </div>
+                                            </div> : ''
+                                    }
                                                 <React.Fragment>
                                                     {/*<div className='row'>*/}
                                                     {/*    <div className='col-md-8'>*/}
@@ -369,11 +371,61 @@ export default function (props) {
                                                             props =>
                                                                 (
                                                                     <React.Fragment>
-                                                                        <div className='row  mb-3'>
-                                                                            <div className='col-md-4'>
-                                                                                <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
+                                                                        <div className='row  mt-2'>
+                                                                            <div className='col-md-3 col-sm-6'>
+                                                                                <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" defaultValue={searchParam} onChange={event => {
+                                                                                    let str = event.target.value;
+                                                                                    setSearchParam(str);
+                                                                                }}/>
                                                                             </div>
-                                                                            <div className='col-md-8 ' >
+                                                                            <div className='col-md-3 col-sm-6'>
+                                                                                <Select name="class"
+                                                                                        defaultValue={selectedClass}
+                                                                                        onChange={setSelectedClass}
+                                                                                        options={classes.map(el => {
+                                                                                            return {label: el.class, value: el.id}
+                                                                                        })}
+
+                                                                                />
+                                                                            </div>
+                                                                            <div className='col-md-3 col-sm-6' >
+                                                                                <button onClick={event => {
+                                                                                    event.preventDefault();
+                                                                                    if (!searchParam || searchParam === '') {
+                                                                                        setMessage(true);
+                                                                                        setMessageType('alert alert-danger');
+                                                                                        setResponse("Please type in search");
+                                                                                    } else {
+                                                                                        setLoading(true)
+                                                                                        setMessage(false)
+                                                                                        $.ajax({
+                                                                                            url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}institutionid=29&search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
+                                                                                            // url: `${API}/subjects/class/{class_id}`,
+                                                                                            method: 'GET',
+                                                                                            headers: {
+                                                                                                'appkey': 'ELE-2020-XCZ3'
+                                                                                            },
+                                                                                            error: function (xhr, status, error) {
+                                                                                                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                                                                                                try {
+                                                                                                    response = JSON.parse(xhr['responseText'])['message']
+                                                                                                } catch (e) {
+                                                                                                }
+                                                                                                setLoading(false);
+                                                                                                setMessage(true);
+                                                                                                setMessageType('alert alert-danger');
+                                                                                                setResponse(response);
+                                                                                            }.bind(this),
+                                                                                            success: function (res) {
+                                                                                                setAllModules(res);
+                                                                                                setModules(res);
+                                                                                                setLoading(false);
+                                                                                            }.bind(this)
+                                                                                        })
+                                                                                    }
+                                                                                }} className='float-left btn-sm-block btn btn-sm btn-rounded btn-success' >Search</button>
+                                                                            </div>
+                                                                            <div className='col-md-3 col-sm-6' >
                                                                                 {
                                                                                     (user.teacher || user.owner) ?
                                                                                         subscription.hasOwnProperty('id') ?
@@ -381,32 +433,34 @@ export default function (props) {
                                                                                                 let exam = {};
                                                                                                 exam['institution_id'] = user.institution.id
                                                                                                 setSelectedExam(exam);
-                                                                                            }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
-                                                                                            : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
-                                                                                        : <Link to={`${ENV}free/exams`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Try Free Exams</Link>
+                                                                                            }} className='float-right btn-sm-block btn btn-sm btn-rounded btn-info' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                            : <Link to={`${ENV}subscriptions`} className=' float-right btn-sm-block btn btn-sm btn-rounded btn-info' >Add Exam</Link>
+                                                                                        : <Link to={`${ENV}free/exams`} className='float-right btn-sm-block btn btn-sm btn-rounded btn-info' >Try Free Exams</Link>
                                                                                 }
 
                                                                             </div>
                                                                         </div>
                                                                         {
-                                                                            (user.teacher || user.owner) ?
-                                                                                <BootstrapTable { ...props.baseProps }
-                                                                                                wrapperClasses="table-responsive"
-                                                                                                headerWrapperClasses ="pt-0 shadowtable bg-danger"
-                                                                                                headerClasses="border-0"
-                                                                                                rowClasses="border-0"
-                                                                                                rowStyle={ { borderRadius: '18px' } }
-                                                                                                selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
-                                                                                                pagination={ paginationFactory() }
-                                                                                                filter={ filterFactory() }/>
-                                                                                : <BootstrapTable { ...props.baseProps }
-                                                                                                  wrapperClasses="table-responsive"
-                                                                                                  headerWrapperClasses ="pt-0 shadowtable bg-danger"
-                                                                                                  headerClasses="border-0"
-                                                                                                  rowClasses="border-0"
-                                                                                                  rowStyle={ { borderRadius: '18px' } }
-                                                                                                  pagination={ paginationFactory() }
-                                                                                                  filter={ filterFactory() }/>
+                                                                            loading ? <Loading/> :
+
+                                                                                (user.teacher || user.owner) ?
+                                                                                    <BootstrapTable { ...props.baseProps }
+                                                                                                    wrapperClasses="table-responsive"
+                                                                                                    headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                                    headerClasses="border-0"
+                                                                                                    rowClasses="border-0"
+                                                                                                    rowStyle={ { borderRadius: '18px' } }
+                                                                                                    selectRow={{mode: "radio", clickToSelect: true, onSelect: selected.bind(this)}}
+                                                                                                    pagination={ paginationFactory() }
+                                                                                                    filter={ filterFactory() }/>
+                                                                                    : <BootstrapTable { ...props.baseProps }
+                                                                                                      wrapperClasses="table-responsive"
+                                                                                                      headerWrapperClasses ="pt-0 shadowtable bg-danger"
+                                                                                                      headerClasses="border-0"
+                                                                                                      rowClasses="border-0"
+                                                                                                      rowStyle={ { borderRadius: '18px' } }
+                                                                                                      pagination={ paginationFactory() }
+                                                                                                      filter={ filterFactory() }/>
                                                                         }
 
                                                                     </React.Fragment>
@@ -414,7 +468,7 @@ export default function (props) {
                                                         }
                                                     </ToolkitProvider>
                                                 </React.Fragment>
-                                    }
+
                                 </div>
                             </div>
                         </React.Fragment>

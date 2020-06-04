@@ -12,6 +12,7 @@ const { SearchBar } = Search;
 import { Helmet } from 'react-helmet';
 import EditExamModal from "./editExamModal";
 import {useDispatch, useSelector} from "react-redux";
+import Select from 'react-select';
 import {fetchSubscription} from "../common/actions";
 
 export default function (props) {
@@ -23,12 +24,14 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
-    const [selectedExam, setSelectedExam] = useState({})
+    const [selectedExam, setSelectedExam] = useState({});
+    const [searchParam, setSearchParam] = useState(null);
+    const [selectedClass, setSelectedClass] = useState(null);
     const classes = useSelector(state => state.classes);
     const subjects = useSelector(state => state.subjects);
-    const [subjectOptions, setSubjectOptions] = useState({})
-    const [classOptions, setClassOptions] = useState({})
-    const [user, setUser] = useState(props.user)
+    const [subjectOptions, setSubjectOptions] = useState({});
+    const [classOptions, setClassOptions] = useState({});
+    const [user, setUser] = useState(props.user);
     const subscription = useSelector(state => state.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
@@ -54,7 +57,7 @@ export default function (props) {
 
     const getModules = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}`,
+            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}?institutionid=29`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             headers: {
@@ -184,126 +187,176 @@ export default function (props) {
                             <div className='row'>
                                 <div className='col-md-12'>
                                     {
-                                        loading ? <Loading/> :
-                                            message ?
-                                                <div className="text-center mt-2">
-                                                    <div className={messageType} role="alert">
-                                                        <div className="alert-message">
-                                                            {response}
-                                                        </div>
+                                        message ?
+                                            <div className="text-center mt-2">
+                                                <div className={messageType} role="alert">
+                                                    <div className="alert-message">
+                                                        {response}
                                                     </div>
-                                                </div> :
-                                                <React.Fragment>
-                                                    {/*<div className='row'>*/}
-                                                    {/*    <div className='col-md-8'>*/}
-                                                    {/*        <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" onChange={event => {*/}
-                                                    {/*            let str = (event.target.value).toLowerCase();*/}
-                                                    {/*            let filteredModules = allModules.filter(el => {*/}
-                                                    {/*                return (el.module && el.module.toLowerCase().includes(str.toLowerCase())) || (el.class && el.class.toLowerCase().includes(str.toLowerCase())) || (el.subject && el.subject.toLowerCase().includes(str.toLowerCase()))*/}
-                                                    {/*            })*/}
-                                                    {/*            setModules(filteredModules)*/}
-                                                    {/*        }}/>*/}
-                                                    {/*    </div>*/}
-                                                    {/*    <div className='col-md-4'>*/}
-                                                    {/*        <Link to={`${ENV}exams/modules`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >All Exams</Link>*/}
-                                                    {/*    </div>*/}
-                                                    {/*</div>*/}
-                                                    {/*{*/}
-                                                    {/*    modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse().map(el => {*/}
-                                                    {/*        return (*/}
-                                                    {/*            <div className="card" onClick={e=> {*/}
-                                                    {/*                props.history.push({*/}
-                                                    {/*                    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
-                                                    {/*                    state: {*/}
-                                                    {/*                        exam: el*/}
-                                                    {/*                    },*/}
-                                                    {/*                });*/}
-                                                    {/*            }}>*/}
-                                                    {/*                <div className="card-body">*/}
-                                                    {/*                    <div className='row'>*/}
-                                                    {/*                        <div className='col-md-8'>*/}
-                                                    {/*                            <h1 className={`h3 mb-3`}>{el.module}</h1>*/}
-                                                    {/*                            <h6 className="card-subtitle text-muted"><span>{el.subject}</span> - <span>{el.class}</span></h6>*/}
-                                                    {/*                            <h6 className="card-subtitle text-muted mt-1"><span>{`Paper #${el.id}`}</span></h6>*/}
-                                                    {/*                        </div>*/}
-                                                    {/*                        <div className="col-md-4 ">*/}
-                                                    {/*                            <Link className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success mr-3`} to={{*/}
-                                                    {/*                                pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
-                                                    {/*                                state: {*/}
-                                                    {/*                                    exam: el*/}
-                                                    {/*                                }*/}
-                                                    {/*                            }}>{el.done ? `Revise Paper` : `Take Test`}</Link>*/}
-                                                    {/*                        </div>*/}
-                                                    {/*                        /!*<a href="#" className="btn btn-sm btn-success float-right">Take Test</a>*!/*/}
-                                                    {/*                    </div>*/}
-                                                    {/*                </div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        )*/}
-                                                    {/*    })*/}
-                                                    {/*}*/}
-                                                    <ToolkitProvider
-                                                        keyField="id"
-                                                        data={modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse()}
-                                                        // data={ modules.filter(el => {
-                                                        //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
-                                                        // }) }
-                                                        columns={
-                                                            [
-                                                                // {dataField: 'id',      text: 'ID',    sort: true },
-                                                                {
-                                                                    dataField: 'module',
-                                                                    text: 'Test Papers',
-                                                                    formatter: (cell, row) => {
-                                                                        return (
-                                                                            <span>{row.module}<br />{`${row.class} - ${row.subject}`}</span>
-                                                                        )
-                                                                    },
-                                                                    style: { textAlign: 'left' }
+                                                </div>
+                                            </div> :
+                                            <React.Fragment>
+                                                {/*<div className='row'>*/}
+                                                {/*    <div className='col-md-8'>*/}
+                                                {/*        <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" onChange={event => {*/}
+                                                {/*            let str = (event.target.value).toLowerCase();*/}
+                                                {/*            let filteredModules = allModules.filter(el => {*/}
+                                                {/*                return (el.module && el.module.toLowerCase().includes(str.toLowerCase())) || (el.class && el.class.toLowerCase().includes(str.toLowerCase())) || (el.subject && el.subject.toLowerCase().includes(str.toLowerCase()))*/}
+                                                {/*            })*/}
+                                                {/*            setModules(filteredModules)*/}
+                                                {/*        }}/>*/}
+                                                {/*    </div>*/}
+                                                {/*    <div className='col-md-4'>*/}
+                                                {/*        <Link to={`${ENV}exams/modules`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >All Exams</Link>*/}
+                                                {/*    </div>*/}
+                                                {/*</div>*/}
+                                                {/*{*/}
+                                                {/*    modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse().map(el => {*/}
+                                                {/*        return (*/}
+                                                {/*            <div className="card" onClick={e=> {*/}
+                                                {/*                props.history.push({*/}
+                                                {/*                    pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
+                                                {/*                    state: {*/}
+                                                {/*                        exam: el*/}
+                                                {/*                    },*/}
+                                                {/*                });*/}
+                                                {/*            }}>*/}
+                                                {/*                <div className="card-body">*/}
+                                                {/*                    <div className='row'>*/}
+                                                {/*                        <div className='col-md-8'>*/}
+                                                {/*                            <h1 className={`h3 mb-3`}>{el.module}</h1>*/}
+                                                {/*                            <h6 className="card-subtitle text-muted"><span>{el.subject}</span> - <span>{el.class}</span></h6>*/}
+                                                {/*                            <h6 className="card-subtitle text-muted mt-1"><span>{`Paper #${el.id}`}</span></h6>*/}
+                                                {/*                        </div>*/}
+                                                {/*                        <div className="col-md-4 ">*/}
+                                                {/*                            <Link className={`float-right btn btn-sm btn-rounded ${el.done ? `btn-success-filled` : `btn-outline-success`} btn-success mr-3`} to={{*/}
+                                                {/*                                pathname: parseInt(el.institution_id) === 29 ? `${ENV}free/exam/${el.id}` : `${ENV}exams/exam/${el.id}`,*/}
+                                                {/*                                state: {*/}
+                                                {/*                                    exam: el*/}
+                                                {/*                                }*/}
+                                                {/*                            }}>{el.done ? `Revise Paper` : `Take Test`}</Link>*/}
+                                                {/*                        </div>*/}
+                                                {/*                        /!*<a href="#" className="btn btn-sm btn-success float-right">Take Test</a>*!/*/}
+                                                {/*                    </div>*/}
+                                                {/*                </div>*/}
+                                                {/*            </div>*/}
+                                                {/*        )*/}
+                                                {/*    })*/}
+                                                {/*}*/}
+                                                <ToolkitProvider
+                                                    keyField="id"
+                                                    data={modules.filter(el => {return (parseInt(el.status) === 1 && parseInt(el.institution_id) === 29)}).reverse()}
+                                                    // data={ modules.filter(el => {
+                                                    //     return (el.institution_id === null || parseInt(el.institution_id) === 2 || parseInt(props.user.institution_id) ===  parseInt(el.institution_id))
+                                                    // }) }
+                                                    columns={
+                                                        [
+                                                            // {dataField: 'id',      text: 'ID',    sort: true },
+                                                            {
+                                                                dataField: 'module',
+                                                                text: 'Test Papers',
+                                                                formatter: (cell, row) => {
+                                                                    return (
+                                                                        <span>{row.module}<br />{`${row.class} - ${row.subject}`}</span>
+                                                                    )
                                                                 },
-                                                                // {
-                                                                //     dataField: 'class',
-                                                                //     text: 'Class',
-                                                                //     formatter: cell => classOptions[cell],
-                                                                //     filter: selectFilter({
-                                                                //         options: classOptions
-                                                                //     })
-                                                                // },
-                                                                // {
-                                                                //     dataField: 'subject',
-                                                                //     text: 'Subject',
-                                                                //     formatter: cell => subjectOptions[cell],
-                                                                //     filter: selectFilter({
-                                                                //         options: subjectOptions
-                                                                //     })
-                                                                // },
-                                                                // {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
-                                                                {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
-                                                            ]
-                                                        } search={true}>
-                                                        {
-                                                            props =>
-                                                                (
-                                                                    <React.Fragment>
-                                                                        <div className='row  mb-3'>
-                                                                            <div className='col-md-4'>
-                                                                                <SearchBar className='float-left mb-3 form-control-sm' { ...props.searchProps } />
-                                                                            </div>
-                                                                            <div className='col-md-8 ' >
-                                                                                {
-                                                                                    (user.teacher || user.owner) ?
-                                                                                        subscription.hasOwnProperty('id') ?
-                                                                                            <button onClick={e => {
-                                                                                                let exam = {};
-                                                                                                exam['institution_id'] = user.institution.id
-                                                                                                setSelectedExam(exam);
-                                                                                            }} className='mb-3 float-right btn btn-sm btn-rounded btn-success' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
-                                                                                            : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn btn-sm btn-rounded btn-success' >Add Exam</Link>
-                                                                                        : ''
-                                                                                }
-
-                                                                            </div>
+                                                                style: { textAlign: 'left' }
+                                                            },
+                                                            // {
+                                                            //     dataField: 'class',
+                                                            //     text: 'Class',
+                                                            //     formatter: cell => classOptions[cell],
+                                                            //     filter: selectFilter({
+                                                            //         options: classOptions
+                                                            //     })
+                                                            // },
+                                                            // {
+                                                            //     dataField: 'subject',
+                                                            //     text: 'Subject',
+                                                            //     formatter: cell => subjectOptions[cell],
+                                                            //     filter: selectFilter({
+                                                            //         options: subjectOptions
+                                                            //     })
+                                                            // },
+                                                            // {dataField: 'subject',        text: 'By',      sort: true, formatter: provider},
+                                                            {dataField: 'created_at',   text: 'Select',      sort: true, formatter: actionButton},
+                                                        ]
+                                                    } search={true}>
+                                                    {
+                                                        props =>
+                                                            (
+                                                                <React.Fragment>
+                                                                    <div className='row mt-2'>
+                                                                        <div className='col-md-3 col-sm-6'>
+                                                                            <input type='text' className='form-control form-control-sm rounded' name='search' placeholder="Search" defaultValue={searchParam} onChange={event => {
+                                                                                let str = event.target.value;
+                                                                                setSearchParam(str);
+                                                                            }}/>
                                                                         </div>
-                                                                        {
+                                                                        <div className='col-md-3 col-sm-6'>
+                                                                            <Select name="class"
+                                                                                    defaultValue={selectedClass}
+                                                                                    onChange={setSelectedClass}
+                                                                                    options={classes.map(el => {
+                                                                                        return {label: el.class, value: el.id}
+                                                                                    })}
+
+                                                                            />
+                                                                        </div>
+                                                                        <div className='col-md-3 col-sm-6' >
+                                                                            <button onClick={event => {
+                                                                                event.preventDefault();
+                                                                                if (!searchParam || searchParam === '') {
+                                                                                    setMessage(true);
+                                                                                    setMessageType('alert alert-danger');
+                                                                                    setResponse("Please type in search");
+                                                                                } else {
+                                                                                    setLoading(true)
+                                                                                    setMessage(false)
+                                                                                    $.ajax({
+                                                                                        url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
+                                                                                        // url: `${API}/subjects/class/{class_id}`,
+                                                                                        method: 'GET',
+                                                                                        headers: {
+                                                                                            'appkey': 'ELE-2020-XCZ3'
+                                                                                        },
+                                                                                        error: function (xhr, status, error) {
+                                                                                            var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                                                                                            try {
+                                                                                                response = JSON.parse(xhr['responseText'])['message']
+                                                                                            } catch (e) {
+                                                                                            }
+                                                                                            setLoading(false);
+                                                                                            setMessage(true);
+                                                                                            setMessageType('alert alert-danger');
+                                                                                            setResponse(response);
+                                                                                        }.bind(this),
+                                                                                        success: function (res) {
+                                                                                            setAllModules(res);
+                                                                                            setModules(res);
+                                                                                            setLoading(false);
+                                                                                        }.bind(this)
+                                                                                    })
+                                                                                }
+                                                                            }} className='float-left btn-sm-block btn btn-sm btn-rounded btn-success' >Search</button>
+                                                                        </div>
+                                                                        <div className='col-md-3 ' >
+                                                                            {
+                                                                                (user.teacher || user.owner) ?
+                                                                                    subscription.hasOwnProperty('id') ?
+                                                                                        <button onClick={e => {
+                                                                                            let exam = {};
+                                                                                            exam['institution_id'] = user.institution.id
+                                                                                            setSelectedExam(exam);
+                                                                                        }} className='mb-3 float-right btn-sm-block btn btn-sm btn-rounded btn-info' data-toggle="modal" data-target="#exampleModal">Add Exam</button>
+                                                                                        : <Link to={`${ENV}subscriptions`} className='mb-3 float-right btn-sm-block btn btn-sm btn-rounded btn-info' >Add Exam</Link>
+                                                                                    : ''
+                                                                            }
+
+                                                                        </div>
+                                                                    </div>
+                                                                    {
+                                                                        loading ? <Loading/> :
                                                                             (user.teacher || user.owner) ?
                                                                                 <BootstrapTable { ...props.baseProps }
                                                                                                 wrapperClasses="table-responsive"
@@ -322,13 +375,13 @@ export default function (props) {
                                                                                                   rowStyle={ { borderRadius: '18px' } }
                                                                                                   pagination={ paginationFactory() }
                                                                                                   filter={ filterFactory() }/>
-                                                                        }
+                                                                    }
 
-                                                                    </React.Fragment>
-                                                                )
-                                                        }
-                                                    </ToolkitProvider>
-                                                </React.Fragment>
+                                                                </React.Fragment>
+                                                            )
+                                                    }
+                                                </ToolkitProvider>
+                                            </React.Fragment>
                                     }
                                 </div>
                             </div>
