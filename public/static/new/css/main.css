@@ -5825,3 +5825,26 @@ th, td {
 .toggled{
     width: 250px;
 }
+
+@media (max-width: 580px){
+    #carousel-area .carousel-item .btn-lg {
+        padding: 4px 5px;
+        min-width: 63px;
+        font-size: 12px;
+        margin: 50px 0 0 0;
+    }
+    .pagination {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        border-radius: .25rem;
+        margin: 0 0 0 -42px;
+    }
+    .react-bs-table-sizePerPage-dropdown .btn-secondary {
+        font-size: 13px;
+        padding: 7px 7px;
+        margin: 0 0 0 12px;
+    }
+}
