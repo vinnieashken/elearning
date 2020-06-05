@@ -60,7 +60,7 @@ export default function (props) {
     }, [props.match.params.subject]);
 
     const getModules = () => {
-        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}?institutionid=29${props.user ? `&userid=${props.user.id}`: ''}`;
+        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}`;
         // if (props.match.params.hasOwnProperty('subject'))
         //     url = `${API}/modules/subject/name/${filterValue}`;
 

@@ -57,7 +57,7 @@ export default function (props) {
 
     const getModules = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}?institutionid=29`,
+            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}&institutionid=29`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             headers: {
