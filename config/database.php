@@ -65,7 +65,7 @@ return [
 
         'cms' => [
             'driver' => 'mysql',
-            'url' => env('DATABASE_URL_CMS'),
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST_CMS', '127.0.0.1'),
             'port' => env('DB_PORT_CMS', '3306'),
             'database' => env('DB_DATABASE_CMS', 'forge'),

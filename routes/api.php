@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
-Route::group(['middleware' => ['appkey']], function () {
+//Route::group(['middleware' => ['appkey']], function () {
     //
     Route::post('/app/login','Api\LoginController@login');
     Route::post('/app/register','Api\LoginController@register');
@@ -87,9 +87,9 @@ Route::group(['middleware' => ['appkey']], function () {
 
     Route::prefix('/academy')->group(function () {
         Route::get('/video','Academy\KTNVideoController@filter');
-        Route::get('/video/${id}','Academy\KTNVideoController@get');
+        Route::get('/video/{id}','Academy\KTNVideoController@get');
     });
-});
+//});
 
 //Route::get('marks/{userid}','Api\ModulesController@debug');
 

@@ -10,14 +10,14 @@ class KTNVideoController
 {
     public function get($id) {
         $video = KTNVideo::query()->where('id', $id)->first();
-        if ($video)
-            return response()->json(['message'=>'Video not found']);
+        if (!$video)
+            return response()->json(['message'=>'Video not found'], 400);
 
         return response()->json($video);
     }
 
     public function filter() {
-        $query = KTNVideo::query();
+        $query = KTNVideo::query()->where('categoryid', 187);
 
         return response()->json($query->get());
     }
