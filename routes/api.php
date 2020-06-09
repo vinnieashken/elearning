@@ -85,6 +85,10 @@ Route::group(['middleware' => ['appkey']], function () {
     Route::get('testsub','Api\LoginController@testSubscribe');
 
 
+    Route::prefix('/academy')->group(function () {
+        Route::get('/video','Academy\KTNVideoController@filter');
+        Route::get('/video/${id}','Academy\KTNVideoController@get');
+    });
 });
 
 //Route::get('marks/{userid}','Api\ModulesController@debug');

@@ -9,7 +9,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import moment from "moment";
 import {Helmet} from "react-helmet";
 import EditStudentModal from './editStudentModal';
-import {PUBLIC_URL} from "../../app-old/common/constants";
+import {PUBLIC_URL} from "../common/constants";
 
 export default function (props) {
     const [loading, setLoading] = useState(false);

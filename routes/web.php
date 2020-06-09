@@ -59,9 +59,22 @@ Route::post('cms/delete','Cms@delete');
 Route::post('cms/update','Cms@update');
 Route::post('cms/get_payments','Datatable@get_payments');
 
+Route::get('/academy/login', function () {
+    return view('academy.index');
+});
+
+Route::get('/academy/register', function () {
+    return view('academy.index');
+});
+
 Route::get('{any}', function ($any = null) {
+
+    if (strpos($any, 'academy') === 0)
+        return view('academy.index');
+
     return view('newApp');
 })->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|admin|upload).)*$');
+
 
 
 Auth::routes();

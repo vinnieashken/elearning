@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
 import {Helmet} from "react-helmet";
-import {PUBLIC_URL} from "../../app-old/common/constants";
+import {PUBLIC_URL} from "../common/constants";
 
 export default function (props) {
 

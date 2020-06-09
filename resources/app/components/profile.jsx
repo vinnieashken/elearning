@@ -6,7 +6,7 @@ import moment from "moment";
 import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import Loading from "../common/loading";
-import {PUBLIC_URL} from "../../app-old/common/constants";
+import {PUBLIC_URL} from "../common/constants";
 import filterFactory, {selectFilter} from "react-bootstrap-table2-filter";
 import paginationFactory from "react-bootstrap-table2-paginator";
 const { SearchBar } = Search;

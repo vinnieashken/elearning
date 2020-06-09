@@ -27,6 +27,12 @@ const target_envs = {
             path: path.resolve('./public/static/bundles'),
             chunkFilename: '[name].[chunkhash].js',
             publicPath: '/static/bundles/'
+        },
+        academy: {
+            entry: './resources/app/academy/index',
+            path: path.resolve('./public/static/academy'),
+            chunkFilename: '[name].[chunkhash].js',
+            publicPath: '/static/academy/'
         }
     },
     production : {
@@ -35,6 +41,12 @@ const target_envs = {
             path: path.resolve('./public/static/bundles'),
             chunkFilename: '[name].[chunkhash].js',
             publicPath: '/static/bundles/'
+        },
+        academy: {
+            entry: './resources/app/academy/index',
+            path: path.resolve('./public/static/academy'),
+            chunkFilename: '[name].[chunkhash].js',
+            publicPath: '/static/academy/'
         }
     }
 };

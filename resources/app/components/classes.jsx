@@ -8,7 +8,7 @@ const { SearchBar } = Search;
 import BootstrapTable from "react-bootstrap-table-next";
 import moment from "moment";
 import {Helmet} from "react-helmet";
-import {PUBLIC_URL} from "../../app-old/common/constants";
+import {PUBLIC_URL} from "../common/constants";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);

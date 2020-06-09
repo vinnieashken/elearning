@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Select from "react-select";
-import {PUBLIC_URL} from "../../app-old/common/constants";
+import {PUBLIC_URL} from "../common/constants";
 
 function Row(props) {
     const [data, setData] = useState('');

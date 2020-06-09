@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "start": "webpack --watch --config webpack.config.js --mode development --node app",
-    "build": "webpack --config webpack.config.js --mode production --node app"
+    "start-academy": "webpack --watch --config webpack.config.js --mode development --node academy",
+    "build": "webpack --config webpack.config.js --mode production --node app",
+    "build-academy": "webpack --config webpack.config.js --mode production --node academy"
   },
   "dependencies": {
     "@babel/core": "^7.8.0",

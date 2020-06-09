@@ -10,6 +10,11 @@ import Loading from "../common/loadingWhite";
 import { Provider } from 'react-redux'
 import store from '../common/store'
 
+const Academy = Loadable({
+    loader: () => import('./academy'),
+    loading: Loading
+})
+
 const Menu = Loadable({
     loader: () => import('./menu'),
     loading: Loading
