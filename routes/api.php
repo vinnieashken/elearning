@@ -86,6 +86,8 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
 
     Route::prefix('/academy')->group(function () {
+        Route::get('/plans','Academy\AcSubscriptionController@filter');
+        Route::get('/plans/{id}','Academy\AcSubscriptionController@get');
         Route::get('/video','Academy\KTNVideoController@filter');
         Route::get('/video/{id}','Academy\KTNVideoController@get');
     });

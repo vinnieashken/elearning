@@ -17,7 +17,7 @@ class KTNVideoController
     }
 
     public function filter() {
-        $query = KTNVideo::query()->where('categoryid', 187);
+        $query = KTNVideo::query()->where('categoryid', 187)->where('platform', 'rumble');
 
         return response()->json($query->get());
     }

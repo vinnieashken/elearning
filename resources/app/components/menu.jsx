@@ -130,10 +130,10 @@ export default function (props) {
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
     const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
-    const classes = useSelector(state => state.classes);
-    const subscription = useSelector(state => state.subscription);
-    const subjects = useSelector(state => state.subjects);
-    const loadingSubscription = useSelector(state => state.loadingSubscription);
+    const classes = useSelector(state => state.default.classes);
+    const subscription = useSelector(state => state.default.subscription);
+    const subjects = useSelector(state => state.default.subjects);
+    const loadingSubscription = useSelector(state => state.default.loadingSubscription);
     const [subscriptionShown, setSubscriptionShown] = useState({});
 
     const dispatch = useDispatch();

@@ -21,7 +21,7 @@ export default function (props) {
     const [classes, setClasses] = useState([])
     const [subjects, setSubjects] = useState([])
     const [user, setUser] = useState(props.user)
-    const subscription = useSelector(state => state.subscription);
+    const subscription = useSelector(state => state.default.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {

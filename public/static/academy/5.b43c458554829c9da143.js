@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{54:function(n,e,t){"use strict";t.r(e);var a=t(0),u=t.n(a);e.default=function(n){return u.a.createElement("p",null,"Payment")}}}]);

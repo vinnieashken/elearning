@@ -19,7 +19,7 @@ export default function (props) {
     const oldState = props.history.location.state ? props.history.location.state : {};
 
     const student = (typeof oldState !== "undefined" && oldState.hasOwnProperty('student')) ? oldState.student : props.user
-    const subscription = useSelector(state => state.subscription);
+    const subscription = useSelector(state => state.default.subscription);
     const [exam, setExam] = useState([]);
     const [userAnswers, setUserAnswers] = useState([]);
     const [showAns, setShowAns] = useState(false);
@@ -28,7 +28,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
-    const subjects = useSelector(state => state.subjects);
+    const subjects = useSelector(state => state.default.subjects);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {

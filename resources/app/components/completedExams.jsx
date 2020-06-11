@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {API, DIR, PUBLIC_URL} from "../common/constants";
+import {API, ENV, PUBLIC_URL} from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -47,7 +47,7 @@ export default function (props) {
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${DIR}/exams/exam/${row.id}`} className="action-item mr-2" data-toggle="tooltip" title=""
+                <Link to={`${ENV}/exams/exam/${row.id}`} className="action-item mr-2" data-toggle="tooltip" title=""
                       data-original-title="Take Exam">
                     <i className="fa fa-external-link-alt" />
                 </Link>

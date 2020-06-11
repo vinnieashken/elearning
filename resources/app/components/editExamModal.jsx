@@ -18,8 +18,8 @@ export default function (props) {
     const [messageType, setMessageType] = useState('');
     const [response, setResponse] = useState('');
     const [exam, setExam] = useState({});
-    const classes = useSelector(state => state.classes);
-    const subjects = useSelector(state => state.subjects);
+    const classes = useSelector(state => state.default.classes);
+    const subjects = useSelector(state => state.default.subjects);
     const [selectedClass, setSelectedClass] = useState({});
     const [selectedSubject, setSelectedSubject] = useState({});
     const [complete, setComplete] = useState(false);

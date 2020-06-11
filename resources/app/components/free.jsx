@@ -27,12 +27,12 @@ export default function (props) {
     const [selectedExam, setSelectedExam] = useState({});
     const [searchParam, setSearchParam] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
-    const classes = useSelector(state => state.classes);
-    const subjects = useSelector(state => state.subjects);
+    const classes = useSelector(state => state.default.classes);
+    const subjects = useSelector(state => state.default.subjects);
     const [subjectOptions, setSubjectOptions] = useState({});
     const [classOptions, setClassOptions] = useState({});
     const [user, setUser] = useState(props.user);
-    const subscription = useSelector(state => state.subscription);
+    const subscription = useSelector(state => state.default.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
