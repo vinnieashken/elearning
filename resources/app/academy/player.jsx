@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
+import {API} from "../common/constants";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
