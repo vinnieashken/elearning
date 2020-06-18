@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { fetchSubscription, fetchSubjects, fetchClasses, fetchExams } from "../common/actions";
 import { useDispatch } from "react-redux";
 import {ClipLoader} from "react-spinners";
+import moment from "moment";
 
 const Login = Loadable({
     loader: () => import('./login'),
@@ -233,7 +234,7 @@ export default function (props) {
                             <div className="w-100 d-block d-lg-none d-md-none ml-2">
                                 <a className="nav-link" href="#">
                                     <span style={{fontSize: "20px", cursor:"pointer"}} className="float-right opennav" onClick={toggleSideBar}>&#9776;</span>
-                                    <img className="w-25 float-left logotop" src={`${PUBLIC_URL}/static/new/img/logo.png`} alt={''} />
+                                    <img className="w-25 float-left logotop" src={`${PUBLIC_URL}/static/new/img/logo.png?${moment().format('YYYYMMDDHHmmss')}`} alt={''} />
                                 </a>
                                 <button aria-controls="navbarTogglerDemo02" aria-expanded="false"
                                         aria-label="Toggle navigation"
