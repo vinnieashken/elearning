@@ -34,6 +34,8 @@
     {{--    <meta property="twitter:image" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
     {{--    <meta property="og:image" content="http://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
     {{--    <meta property="og:image:secure_url" content="https://www.standardmedia.co.ke/images/sunday/give_us_our_children5e8a20cfc1f95.jpg" />--}}
+    <meta name="description" content="Get KCPE and KCSE revision materials on Tutorsoma e-learning platform">
+    <meta name="keywords" content="Kenya, KCSE, KCPE, elearning, Primary Schools, Secondary Schools, high schools soma, exams, tests">
 
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset('static/app/images/favicon/apple-icon-57x57.png')}}">
