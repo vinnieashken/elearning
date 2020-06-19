@@ -154,69 +154,87 @@
             $('#edit-id').val(question.id);
             $('#edit-question_no').val(question.listorder);
             $('#edit-question').summernote('code',question.question);
-            $.ajax({
-                type: 'POST',
-                url: '<?=url('questionanswers'); ?>',
-                headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
-                data:{'question_id':question.id},
-                success: function (Mess) {
-                  $('.choices').html(Mess).find(".ans-editor").summernote({
-                        height:100,
-                        tabsize: 2,
-                        lineHeight:1.5,
-                        dialogsInBody: true,
-                        dialogsFade: false,
-                        toolbar: [
-                            ['fontsize', ['fontsize']],
-                            ['para', ['ul', 'ol', 'paragraph']],
-                            ['insert',['picture','table']],
-
-                        ],
-                        callbacks : {
-                            onImageUpload: function(dt) {
-                                var $summernote = $(this);
-                                var image = dt[0];
-                                var dat = new FormData();
-                                dat.append("image",image);
-                                var IMAGE_PATH = '<?=asset('uploads').'/'; ?>';
-                                $.ajax ({
-                                    data: dat,
-                                    type: "POST",
-                                    url:  '<?=url('upload'); ?>',
-                                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false,
-                                    success: function(url) {
-                                        var image = IMAGE_PATH+$.trim(url);
-                                        //editor.insertImage(welEditable, image);
-                                        $summernote.summernote('insertImage', image, function ($image) {
-                                            $image.attr('class', 'img-fluid');
-                                        });
-
-
-                                    },
-                                    error: function(e) {
-                                        toastr.error(e, 'upload', {
-                                            timeOut: 1000,
-                                            closeButton: true,
-                                            progressBar: true,
-                                            newestOnTop: true
-
-                                        });
-                                    }
-                                });
-
-                            }
+            if($('#has_choices').val() == 0)
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?=url('questionoption'); ?>',
+                        headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
+                        data: {'question_id': question.id},
+                        success: function (Mess) {
+                            var opt = Mess
+                            $('#edit-optionid').val(opt.id);
+                            $('#edit-answer').summernote('code',opt.option);
                         }
-                    }).on('summernote.change', function(we, contents, $editable) {
-                        $(this).val(contents);
                     });
-                },
-                error: function (f) {
-                    console.log(f);
                 }
-            });
+            else if($('#has_choices').val() == 1)
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?=url('questionanswers'); ?>',
+                        headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
+                        data:{'question_id':question.id},
+                        success: function (Mess) {
+                            $('.choices').html(Mess).find(".ans-editor").summernote({
+                                height:100,
+                                tabsize: 2,
+                                lineHeight:1.5,
+                                dialogsInBody: true,
+                                dialogsFade: false,
+                                toolbar: [
+                                    ['fontsize', ['fontsize']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['insert',['picture','table']],
+
+                                ],
+                                callbacks : {
+                                    onImageUpload: function(dt) {
+                                        var $summernote = $(this);
+                                        var image = dt[0];
+                                        var dat = new FormData();
+                                        dat.append("image",image);
+                                        var IMAGE_PATH = '<?=asset('uploads').'/'; ?>';
+                                        $.ajax ({
+                                            data: dat,
+                                            type: "POST",
+                                            url:  '<?=url('upload'); ?>',
+                                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                                            cache: false,
+                                            contentType: false,
+                                            processData: false,
+                                            success: function(url) {
+                                                var image = IMAGE_PATH+$.trim(url);
+                                                //editor.insertImage(welEditable, image);
+                                                $summernote.summernote('insertImage', image, function ($image) {
+                                                    $image.attr('class', 'img-fluid');
+                                                });
+
+
+                                            },
+                                            error: function(e) {
+                                                toastr.error(e, 'upload', {
+                                                    timeOut: 1000,
+                                                    closeButton: true,
+                                                    progressBar: true,
+                                                    newestOnTop: true
+
+                                                });
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }).on('summernote.change', function(we, contents, $editable) {
+                                $(this).val(contents);
+                            });
+                        },
+                        error: function (f) {
+                            console.log(f);
+                        }
+                    });
+                }
+
 
             $('#editModal').modal('toggle');
         });

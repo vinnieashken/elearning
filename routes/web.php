@@ -50,6 +50,7 @@ Route::get('/cms/customers','Cms@customers');
 Route::post('/subjectfromclass','Cms@getmodules');
 Route::post('/choices','Cms@choices');
 Route::post('/questionanswers','Cms@questionanswers');
+Route::post('/questionoption','Cms@questionoption');
 Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
     return view('cms.modules.setquestion',['module_id'=>$postId,'title'=>$title]);
 });
@@ -75,7 +76,7 @@ Route::get('{any}', function ($any = null) {
         return view('academy.index');
 
     return view('newApp');
-})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|admin|upload).)*$');
+})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|questionoption|admin|upload).)*$');
 
 
 

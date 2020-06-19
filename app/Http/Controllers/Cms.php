@@ -399,7 +399,7 @@ class Cms extends Controller
         public function editquestion(Request $request)
             {
                 $validatedData = $request->validate([
-                                                        'correctanswer'   =>  'required',
+                                                        
                                                         'module'          =>   'required',
                                                         'option'          =>   'required'
                                                     ]);
@@ -410,34 +410,56 @@ class Cms extends Controller
                         $question->module_id    =   $request->module;
                         $question->question     =   $request->question;
                         $queststatus            =   $question->save();
+
                         if($queststatus)
                             {
-                                $i = 65;
-                                foreach ($request->option as $key => $value)
+                                if(Module::where('id',$request->module)->first()->choices == 1)
                                     {
-                                        $option                 =   Option::find($key);
-                                        $option->question_id    =   $question->id;
-                                        $option->option         =   chr($i).') '.$value;
-                                        $optstatus              =   $option->save();
-
-                                        if($request->correctanswer == $key)
+                                        $i = 65;
+                                        foreach ($request->option as $key => $value)
                                             {
-                                                $correct                =   Answer::find($request->correct_id);
-                                                $correct->question_id   =   $question->id;
-                                                $correct->option_id     =   $option->id;
-                                                $corstatus              =   $correct->save();
-                                            }
-                                        $i++;
-                                    }
+                                                $option                 =   Option::find($key);
+                                                $option->question_id    =   $question->id;
+                                                $option->option         =   chr($i).') '.$value;
+                                                $optstatus              =   $option->save();
 
-                            }
-                        if($queststatus & $optstatus & $corstatus)
-                            {
-                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                                if($request->correctanswer == $key)
+                                                    {
+                                                        $correct                =   Answer::find($request->correct_id);
+                                                        $correct->question_id   =   $question->id;
+                                                        $correct->option_id     =   $option->id;
+                                                        $corstatus              =   $correct->save();
+                                                    }
+                                                $i++;
+                                            }
+                                        if($optstatus & $corstatus)
+                                            {
+                                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                            }
+                                        else
+                                            {
+                                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                            }
+                                    }
+                                else
+                                    {
+                                        $option                 =   Option::find($request->optionid);
+                                        $option->question_id    =   $question->id;
+                                        $option->option         =   $request->option;
+                                        $optstatus              =   $option->save();
+                                        if($optstatus)
+                                            {
+                                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                            }
+                                        else
+                                            {
+                                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                            }
+                                    }
                             }
                         else
                             {
-                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                return array('status'=>FALSE,'msg'=>"question could not be updated");
                             }
                     }
                 else
@@ -449,6 +471,11 @@ class Cms extends Controller
         public function rates()
             {
                 return view('cms/modules/rates');
+            }
+        public function questionoption(Request $request)
+            {
+                return response(Option::where('question_id',$request->question_id)->first(),200)->header('Content-Type', 'application/json');
+
             }
         public function addrates(Request $request)
             {
