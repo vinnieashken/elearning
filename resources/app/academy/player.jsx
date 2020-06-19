@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
-import {API} from "../common/constants";
+import {API, ENV} from "../common/constants";
 
 export default function (props) {
+    const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
+
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(true);
     const [messageType, setMessageType] = useState('');
     const [response, setResponse] = useState('');
-    const [video, setVideo] = useState({});
+    const [video, setVideo] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('video') ? oldState.video : {});
+    const [videoData, setVideoData] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('video') ? oldState.video : {});
+
 
     useEffect((e) => {
-        fetchVideo();
+        // fetchVideo();
     }, [])
 
     const fetchVideo = () => {
@@ -43,7 +47,7 @@ export default function (props) {
                                 <div className="card">
                                     <div className="embed-responsive embed-responsive-16by9">
                                         <iframe className="embed-responsive-item"
-                                                src="https://rumble.com/embed/v6un45/?pub=tith" />
+                                                src={videoData.embed} />
                                     </div>
                                     <div className="card-header">
                                         <h5 className="card-title mb-0">{video.title}</h5>

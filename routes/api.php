@@ -90,6 +90,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
         Route::get('/plans/{id}','Academy\AcSubscriptionController@get');
         Route::get('/video','Academy\KTNVideoController@filter');
         Route::get('/video/{id}','Academy\KTNVideoController@get');
+        Route::get('/rumble/search','Academy\KTNVideoController@rumbleMedia');
     });
 //});
 

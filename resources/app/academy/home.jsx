@@ -5,6 +5,7 @@ import Loading from "../common/loading";
 import {convertToSlug} from "../common/constants/functions";
 import {HOME_VIDEOS_UPDATED} from "../common/constants/academy";
 import {useDispatch, useSelector} from "react-redux";
+import VideoCard from './videoCard';
 
 export default function (props) {
     const dispatch = useDispatch();
@@ -48,14 +49,7 @@ export default function (props) {
                                 videos.map(el => {
                                     return (
                                         <div className='col-md-3'>
-                                            <div className="card">
-                                                <Link to={`/academy/${el.id}/${convertToSlug(el.title)}`}>
-                                                    <img className="card-img-top" src={el.platform === 'youtube' ? `https://img.youtube.com/vi/${el.videoURL}/default.jpg` : "https://img.youtube.com/vi/M4pf76QFY1s/default.jpg"} alt="Unsplash" />
-                                                </Link>
-                                                <div className="card-header">
-                                                    <h5 className="card-title mb-0">{el.title}</h5>
-                                                </div>
-                                            </div>
+                                            <VideoCard {...props} video={el}/>
                                         </div>
                                     )
                                 })
