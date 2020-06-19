@@ -67,15 +67,21 @@
                     <div class="form-group">
                         <label for="add-subject" class="control-label">Subject</label>
                         <select name="subject" id="add-subject" class="custom-select m-subject">
-                           
+
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="add-module" class="control-label">Exam Name</label>
                         <input type="text" name="module" id="add-module" class="form-control">
                     </div>
+                    <div class="form-check">
+                        <label class="control-label mr-2" for="add-choices">
+                            <input class="form-check-input" type="checkbox" value="1" id="add-choices" name="choices">
+                            Has Choices ?
+                        </label>
+                    </div
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -128,8 +134,14 @@
                             <option value="0">Inactive</option>
                         </select>
                     </div>
+                    <div class="form-check">
+                        <label class="form-check-label mr-2" for="edit-choices">
+                        <input class="form-check-input" type="checkbox" value="1" id="edit-choices" name="choices">
+                             Has Choices ?
+                        </label>
+                    </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

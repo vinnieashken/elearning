@@ -49,23 +49,32 @@
                             <label for="add-question" class="control-label">Question</label>
                             <textarea name="question" id="add-question" class="form-control summernote"></textarea>
                         </div>
-                        <div class="form-group form-row">
-                            <div class="col-3">
-                                <label for="noc" class="control-label">No Of Choices</label>
-                                <input type="number" name="noofchoices" id="noc"  class="form-control"  min="1" required>
-                            </div>
-                            <div class="col-3">
-                                <label for="ansgrp" class="control-label">Answer group</label>
-                                <input type="number" name="answergroup" id="ansgrp"  class="form-control" min="1" value="1">
-                            </div>
-                            <div class="col-3">
-                                <a href="Javascript:;" class="btn btn-secondary choicebtn">Select</a>
-                            </div>
+                        @if(App\Models\Module::where('id',$module_id)->first()->choices == 1)
+                            {
+                                <div class="form-group form-row">
+                                    <div class="col-3">
+                                        <label for="noc" class="control-label">No Of Choices</label>
+                                        <input type="number" name="noofchoices" id="noc"  class="form-control"  min="1" required>
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="ansgrp" class="control-label">Answer group</label>
+                                        <input type="number" name="answergroup" id="ansgrp"  class="form-control" min="1" value="1">
+                                    </div>
+                                    <div class="col-3">
+                                        <a href="Javascript:;" class="btn btn-secondary choicebtn">Select</a>
+                                    </div>
 
-                        </div>
-                        <div class="choices">
+                                </div>
 
-                        </div>
+                                <div class="choices">
+
+                                </div>
+                        @else
+                            <div class="form-group">
+                                <label class="control-label w-100" for="add-answer">Correct Answer</label>
+                                <textarea class="form-control summernote w-100" name="option" id="answer"></textarea>
+                            </div>
+                        @endif
 
 
                 </div>
