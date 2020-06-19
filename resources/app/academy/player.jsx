@@ -11,11 +11,12 @@ export default function (props) {
     const [messageType, setMessageType] = useState('');
     const [response, setResponse] = useState('');
     const [video, setVideo] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('video') ? oldState.video : {});
-    const [videoData, setVideoData] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('video') ? oldState.video : {});
+    const [videoData, setVideoData] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('videoData') ? oldState.videoData : {});
 
 
     useEffect((e) => {
         setLoading(false);
+        console.log(videoData);
         // fetchVideo();
     }, [])
 
