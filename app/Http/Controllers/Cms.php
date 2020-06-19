@@ -399,7 +399,7 @@ class Cms extends Controller
         public function editquestion(Request $request)
             {
                 $validatedData = $request->validate([
-                                                        
+
                                                         'module'          =>   'required',
                                                         'option'          =>   'required'
                                                     ]);

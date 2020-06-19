@@ -97,9 +97,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <form action="{{ url('cms/editmodule') }}" method="post" class="form form-horizontal create-form" data-modal="#editModal">
+
                 </div>
                 <div class="modal-body">
+                    <form action="{{ url('cms/editmodule') }}" method="post" class="form form-horizontal create-form" data-modal="#editModal">
                     <input type="hidden" name="id" id="edit-id">
                     <div class="form-group">
                         <label for="edit-publisher" class="control-label">Publisher</label>
@@ -140,12 +141,13 @@
                              Has Choices ?
                         </label>
                     </div>
-                </div>
-                <div class="modal-footer mt-2">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <div class="form-group form-row border-top pt-2 mt-2">
+                        <button type="submit" class="btn btn-primary ml-auto">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
+
             </div>
         </div>
     </div>
