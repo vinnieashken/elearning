@@ -6,7 +6,7 @@ import {API, ENV} from "../common/constants";
 export default function (props) {
     const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState(true);
     const [messageType, setMessageType] = useState('');
     const [response, setResponse] = useState('');
