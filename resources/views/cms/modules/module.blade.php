@@ -67,15 +67,21 @@
                     <div class="form-group">
                         <label for="add-subject" class="control-label">Subject</label>
                         <select name="subject" id="add-subject" class="custom-select m-subject">
-                           
+
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="add-module" class="control-label">Exam Name</label>
                         <input type="text" name="module" id="add-module" class="form-control">
                     </div>
+                    <div class="form-check">
+                        <label class="control-label mr-2" for="add-choices">
+                            <input class="form-check-input" type="checkbox" value="1" id="add-choices" name="choices">
+                            Has Choices ?
+                        </label>
+                    </div
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -91,9 +97,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <form action="{{ url('cms/editmodule') }}" method="post" class="form form-horizontal create-form" data-modal="#editModal">
+
                 </div>
                 <div class="modal-body">
+                    <form action="{{ url('cms/editmodule') }}" method="post" class="form form-horizontal create-form" data-modal="#editModal">
                     <input type="hidden" name="id" id="edit-id">
                     <div class="form-group">
                         <label for="edit-publisher" class="control-label">Publisher</label>
@@ -128,12 +135,19 @@
                             <option value="0">Inactive</option>
                         </select>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <div class="form-check">
+                        <label class="form-check-label mr-2" for="edit-choices">
+                        <input class="form-check-input" type="checkbox" value="1" id="edit-choices" name="choices">
+                             Has Choices ?
+                        </label>
+                    </div>
+                    <div class="form-group form-row border-top pt-2 mt-2">
+                        <button type="submit" class="btn btn-primary ml-auto">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
+
             </div>
         </div>
     </div>

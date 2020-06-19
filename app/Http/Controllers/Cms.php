@@ -60,6 +60,7 @@ class Cms extends Controller
                         $module->institution_id =   $request->publisher_id;
                         $module->creator        =   \Auth::User()->id;
                         $module->status         =   0;
+                        $module->choices        =   (isset($request->choices))?1:0;
                         $req                    =   $module->save();
                         if($req)
                             {
@@ -89,6 +90,7 @@ class Cms extends Controller
                         $module->subject_id     =   $request->subject;
                         $module->institution_id =   $request->publisher_id;
                         // $module->creator        =   \Auth::User()->id;
+                        $module->choices        =   (isset($request->choices))?1:0;
                         $module->status         =   $request->status;
                         $req                    =   $module->save();
                         if($req)
@@ -315,43 +317,69 @@ class Cms extends Controller
             {
 
                 $validatedData = $request->validate([
-                                                        'correctanswer'  =>  'required',
-                                                        'question'       =>  'required',
+                                                        'question'      =>  'required',
                                                         'module'        =>   'required',
                                                         'option'        =>   'required'
                                                     ]);
                 if($validatedData)
                     {
-                        $i = 0;
-                        foreach($request->option as $g => $value)
+                        if(Module::where('id',$request->module)->first()->choices == 1)
+                            {
+                                $i = 0;
+                                foreach($request->option as $g => $value)
+                                    {
+
+                                        $question               =   new Question();
+                                        $question->listorder    =   $request->listorder+$i;
+                                        $question->module_id    =   $request->module;
+                                        $question->question     =   ($i == 0)?$request->question:NULL;
+                                        $queststatus            =   $question->save();
+                                        if($queststatus)
+                                            {
+
+                                                foreach ($value as $key => $check)
+                                                    {
+                                                        $option                 =   new Option();
+                                                        $option->question_id    =   $question->id;
+                                                        $option->option         =   $key . ') ' . $check[0];
+                                                        $optstatus              =   $option->save();
+
+                                                        if ($request->correctanswer[$g] == $key)
+                                                            {
+                                                                $correct                =   new Answer();
+                                                                $correct->question_id   =   $question->id;
+                                                                $correct->option_id     =   $option->id;
+                                                                $corstatus              =   $correct->save();
+                                                            }
+
+                                                    }
+                                            }
+                                        if($queststatus & $optstatus & $corstatus)
+                                            {
+                                                $result = array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                            }
+                                        else
+                                            {
+                                                $result = array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                            }
+                                        $i++;
+                                    }
+                            }
+                        else
                             {
                                 $question               =   new Question();
-                                $question->listorder    =   $request->listorder+$i;
+                                $question->listorder    =   $request->listorder;
                                 $question->module_id    =   $request->module;
-                                $question->question     =   ($i == 0)?$request->question:NULL;
+                                $question->question     =   $request->question;
                                 $queststatus            =   $question->save();
                                 if($queststatus)
                                     {
-                                        foreach($value as $key => $check)
-                                            {
-                                                $option                 =   new Option();
-                                                $option->question_id    =   $question->id;
-                                                $option->option         =   $key.') '.$check[0];
-                                                $optstatus              =   $option->save();
-
-                                                if($request->correctanswer[$g] == $key)
-                                                    {
-                                                        $correct                =   new Answer();
-                                                        $correct->question_id   =   $question->id;
-                                                        $correct->option_id     =   $option->id;
-                                                        $corstatus              =   $correct->save();
-                                                    }
-
-                                            }
-
-
+                                        $option                 =   new Option();
+                                        $option->question_id    =   $question->id;
+                                        $option->option         =   $request->option;
+                                        $optstatus              =   $option->save();
                                     }
-                                if($queststatus & $optstatus & $corstatus)
+                                if($queststatus & $optstatus)
                                     {
                                         $result = array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
                                     }
@@ -359,7 +387,6 @@ class Cms extends Controller
                                     {
                                         $result = array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
                                     }
-                                $i++;
                             }
                         return $result;
                     }
@@ -372,7 +399,7 @@ class Cms extends Controller
         public function editquestion(Request $request)
             {
                 $validatedData = $request->validate([
-                                                        'correctanswer'   =>  'required',
+
                                                         'module'          =>   'required',
                                                         'option'          =>   'required'
                                                     ]);
@@ -383,34 +410,56 @@ class Cms extends Controller
                         $question->module_id    =   $request->module;
                         $question->question     =   $request->question;
                         $queststatus            =   $question->save();
+
                         if($queststatus)
                             {
-                                $i = 65;
-                                foreach ($request->option as $key => $value)
+                                if(Module::where('id',$request->module)->first()->choices == 1)
                                     {
-                                        $option                 =   Option::find($key);
-                                        $option->question_id    =   $question->id;
-                                        $option->option         =   chr($i).') '.$value;
-                                        $optstatus              =   $option->save();
-
-                                        if($request->correctanswer == $key)
+                                        $i = 65;
+                                        foreach ($request->option as $key => $value)
                                             {
-                                                $correct                =   Answer::find($request->correct_id);
-                                                $correct->question_id   =   $question->id;
-                                                $correct->option_id     =   $option->id;
-                                                $corstatus              =   $correct->save();
-                                            }
-                                        $i++;
-                                    }
+                                                $option                 =   Option::find($key);
+                                                $option->question_id    =   $question->id;
+                                                $option->option         =   chr($i).') '.$value;
+                                                $optstatus              =   $option->save();
 
-                            }
-                        if($queststatus & $optstatus & $corstatus)
-                            {
-                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                                if($request->correctanswer == $key)
+                                                    {
+                                                        $correct                =   Answer::find($request->correct_id);
+                                                        $correct->question_id   =   $question->id;
+                                                        $correct->option_id     =   $option->id;
+                                                        $corstatus              =   $correct->save();
+                                                    }
+                                                $i++;
+                                            }
+                                        if($optstatus & $corstatus)
+                                            {
+                                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                            }
+                                        else
+                                            {
+                                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                            }
+                                    }
+                                else
+                                    {
+                                        $option                 =   Option::find($request->optionid);
+                                        $option->question_id    =   $question->id;
+                                        $option->option         =   $request->option;
+                                        $optstatus              =   $option->save();
+                                        if($optstatus)
+                                            {
+                                                return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
+                                            }
+                                        else
+                                            {
+                                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                            }
+                                    }
                             }
                         else
                             {
-                                return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
+                                return array('status'=>FALSE,'msg'=>"question could not be updated");
                             }
                     }
                 else
@@ -422,6 +471,11 @@ class Cms extends Controller
         public function rates()
             {
                 return view('cms/modules/rates');
+            }
+        public function questionoption(Request $request)
+            {
+                return response(Option::where('question_id',$request->question_id)->first(),200)->header('Content-Type', 'application/json');
+
             }
         public function addrates(Request $request)
             {

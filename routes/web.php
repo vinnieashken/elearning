@@ -50,6 +50,7 @@ Route::get('/cms/customers','Cms@customers');
 Route::post('/subjectfromclass','Cms@getmodules');
 Route::post('/choices','Cms@choices');
 Route::post('/questionanswers','Cms@questionanswers');
+Route::post('/questionoption','Cms@questionoption');
 Route::get('/cms/questions/{module}/{title}', function ($postId, $title=NULL) {
     return view('cms.modules.setquestion',['module_id'=>$postId,'title'=>$title]);
 });
@@ -58,6 +59,7 @@ Route::post('cms/edituserroles','Cms@edituserroles');
 Route::post('cms/delete','Cms@delete');
 Route::post('cms/update','Cms@update');
 Route::post('cms/get_payments','Datatable@get_payments');
+/*
 
 Route::get('/academy/login', function () {
     return view('academy.index');
@@ -67,13 +69,14 @@ Route::get('/academy/register', function () {
     return view('academy.index');
 });
 
+*/
 Route::get('{any}', function ($any = null) {
 
     if (strpos($any, 'academy') === 0)
         return view('academy.index');
 
     return view('newApp');
-})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|admin|upload).)*$');
+})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|questionoption|admin|upload).)*$');
 
 
 
