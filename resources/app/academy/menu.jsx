@@ -3,7 +3,8 @@ import {Link, Route, Switch} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import {useDispatch, useSelector} from "react-redux";
-import {API, LOADING_SUBSCRIPTION, SUBSCRIPTION_LOADED} from "../common/constants";
+import {API, LOADING_SUBSCRIPTION, PUBLIC_URL, SUBSCRIPTION_LOADED} from "../common/constants";
+import {HOME_VIDEOS_UPDATED} from "../common/constants/academy";
 
 const Home = Loadable({
     loader: () => import('./home'),
@@ -21,13 +22,14 @@ const Player = Loadable({
 })
 
 export default function (props) {
+    const dispatch = useDispatch();
 
     const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
     const subscription = useSelector(state => state.academy.subscription);
     const [loading, setLoading] = useState(user.hasOwnProperty('name') && props.location.pathname !== `/academy/login` )
-    const dispatch = useDispatch();
 
     useEffect((e) => {
+        fetchVideos();
         if (user.hasOwnProperty('name') && props.location.pathname !== `/academy/login` ) {
             fetchSubscriptionPlan();
         }
@@ -43,125 +45,140 @@ export default function (props) {
             },
             dataType: 'json',
             error: function (xhr, status, error) {
-                setLoading(false)
+                // setLoading(false)
             }.bind(this),
             success: function (res) {
                 dispatch({type: SUBSCRIPTION_LOADED, payload: res});
-                setLoading(false);
+                // setLoading(false);
+            }.bind(this)
+        })
+    }
+
+    const fetchVideos = () => {
+        $.ajax({
+            url: `${API}/academy/video`,
+            method: 'get',
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
+            dataType: 'json',
+            error: function (xhr, status, error) {
+                setLoading(false)
+            }.bind(this),
+            success: function (res) {
+                dispatch({type: HOME_VIDEOS_UPDATED, payload: res})
+                setLoading(false)
             }.bind(this)
         })
     }
 
     return (
-       <div className='wrapper'>
-           {
-               loading ? <Loading /> :
-                   <React.Fragment>
-                       <nav id="sidebar" className="sidebar sidebar-sticky">
-                           <div className="sidebar-content ">
-                               <Link className="sidebar-brand" to={'/academy'}>
-                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                                        className="feather feather-box align-middle">
-                                       <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                       <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                                       <line x1="12" y1="22.08" x2="12" y2="12" />
-                                   </svg>
-                                   <span className="align-middle">TutorSoma Academy</span>
-                               </Link>
+        <React.Fragment>
+            {
+                loading ? <Loading /> :
+                    <div className='container-fluid'>
+                        <div className='row'>
+                            <div className="col-md-2 bg-light">
+                                <nav
+                                    className="navbar navbar-expand-lg navbar-transparent navbar-light bg-light py-4 flex-column">
+                                    <a className="navbar-brand text-dark" href="../">
+                                        <img src={`${PUBLIC_URL}/static/academy/assets/images/videosite/logo.png`}
+                                             className="img-left img-fluid" alt={'VOD'} />
+                                    </a>
+                                    <button className="navbar-toggler" type="button" data-action="offcanvas-open"
+                                            data-target="#navbar_main"
+                                            aria-controls="navbar_main" aria-expanded="false"
+                                            aria-label="Toggle navigation">
+                                       <span className="navbar-toggler-icon">
+                                           <i className="fas fa-align-justify" />
+                                       </span>
+                                    </button>
+                                    <div className="navbar-collapse offcanvas-collapse" id="navbar_main">
+                                        <ul className="nav flex-column navbar-nav">
+                                            <li className="nav-item mt-4">
+                                                <a className="nav-link active text-dark border-formart" href="#">
+                                                    <h6><strong>LATEST</strong></h6>
+                                                </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-dark border-formart" href="#">
+                                                    <h6><strong>TRENDING</strong></h6>
+                                                </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link  text-dark border-formart" href="#">
+                                                    <h6><strong>FEATURED</strong></h6>
+                                                </a>
+                                            </li>
 
-                               <ul className="sidebar-nav">
-                                   {/*<li className="sidebar-header">*/}
-                                   {/*    Pages*/}
-                                   {/*</li>*/}
-                                   <li className="sidebar-item">
-                                       <Link className="sidebar-link" to={'/academy'}>
-                                           {/*<i className='fa fa-eye' />*/}
-                                           <span className="align-middle">Most Viewed</span>
-                                       </Link>
-                                   </li>
-                                   <li className="sidebar-item">
-                                       <Link className="sidebar-link" to={'/academy'}>
-                                           {/*<i className='fa fa-eye' />*/}
-                                           <span className="align-middle">Featured</span>
-                                       </Link>
-                                   </li>
-                                   <li className="sidebar-item">
-                                       <Link className="sidebar-link" to={'/academy'}>
-                                           {/*<i className='fa fa-eye' />*/}
-                                           <span className="align-middle">History</span>
-                                       </Link>
-                                   </li>
-                                   <li className="sidebar-header">
-                                       Categories
-                                   </li>
-                               </ul>
-
-                           </div>
-                       </nav>
-                       <div className='main'>
-                           <nav className="navbar navbar-expand navbar-light bg-white">
-                               <a className="sidebar-toggle d-flex mr-2">
-                                   <i className="hamburger align-self-center" />
-                               </a>
-
-                               <form className="form-inline d-none d-sm-inline-block">
-                                   <input className="form-control form-control-no-border mr-sm-2" type="text"
-                                          placeholder="Search Videos..." aria-label="Search" />
-                               </form>
-
-                               {/*<div className="navbar-collapse collapse">*/}
-                               {/*    <ul className="navbar-nav ml-auto">*/}
-                               {/*        <li className="nav-item dropdown">*/}
-                               {/*            <a className="nav-icon dropdown-toggle" href="#" id="messagesDropdown"*/}
-                               {/*               data-toggle="dropdown">*/}
-                               {/*                <div className="position-relative">*/}
-                               {/*                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"*/}
-                               {/*                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"*/}
-                               {/*                         stroke-linecap="round" stroke-linejoin="round"*/}
-                               {/*                         className="feather feather-message-circle align-middle">*/}
-                               {/*                        <path*/}
-                               {/*                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>*/}
-                               {/*                    </svg>*/}
-                               {/*                    <span className="indicator">4</span>*/}
-                               {/*                </div>*/}
-                               {/*            </a>*/}
-                               {/*        </li>*/}
-
-                               {/*    </ul>*/}
-                               {/*</div>*/}
-                           </nav>
-                           <main className='content'>
-                               <div className='container-fluid p-0'>
-                                   <Switch>
-                                       <Route exact={true} path={props.match.url}
-                                              render={(props) => <Home {...props} />}/>
-                                       <Route exact={true} path={`${props.match.url}/payment`}
-                                              render={(props) => <Payment {...props} />}/>
-                                       <Route exact={true} path={`${props.match.url}/:video/:title`}
-                                              render={(props) =>
-                                                  // user.hasOwnProperty('id') ?
-                                                      // subscription.hasOwnProperty('id') ?
-                                                          <Player {...props} user={user}/>
-                                                          // : props.history.push({
-                                                          //     pathname: `/academy/payment`,
-                                                          //     state: {
-                                                          //         next: props.location.pathname
-                                                          //     },
-                                                          // })
-                                                      // : props.history.push({
-                                                      //     pathname: `/academy/login`,
-                                                      //     state: {
-                                                      //         next: props.location.pathname
-                                                      //     },
-                                                      // })
-                                              }/>
-                                   </Switch>
-                               </div>
-                           </main>
-                       </div>
-                   </React.Fragment>
-           }
-       </div>
+                                            <li className="nav-item mt-5">
+                                                <a href="https://github.com/webpixels/boomerang-ui-kit/archive/master.zip"
+                                                   target="_blank"
+                                                   className="nav-link d-lg-none bg-green text-white">SUBSCRIBE</a>
+                                                <a href="https://github.com/webpixels/boomerang-ui-kit/archive/master.zip"
+                                                   target="_blank"
+                                                   className="btn btn-sm bg-green text-white d-none d-lg-inline-flex">SUBSCRIBE</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link nav-link-icon"
+                                                   href="https://instagram.com/webpixelsofficial/"
+                                                   target="_blank"><i className="fab fa-instagram text-success" /><span
+                                                    className="ml-2 text-green">Instagram</span></a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link nav-link-icon"
+                                                   href="https://web.facebook.com/webpixels" target="_blank"><i
+                                                    className="fab fa-facebook text-success" /><span
+                                                    className="ml-2 text-dark">Facebook</span></a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link nav-link-icon"
+                                                   href="https://dribbble.com/webpixels" target="_blank"><i
+                                                    className="fab fa-linkedin text-success" /><span
+                                                    className="ml-2 text-dark">Linkedin</span></a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link nav-link-icon" href="https://github.com/webpixels"
+                                                   target="_blank">
+                                                    <i className="fab fa-twitter text-success" /><span
+                                                    className="ml-2 text-dark">Twitter</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div className='p-0 col-12 col-md-10'>
+                                <main className='main'>
+                                    <section className="search-area d-block bg-dark pt-4">
+                                        <div className="container">
+                                            <div className="row">
+                                                <div className="col-12 col-md-12">
+                                                    <div className="mx-3 form-group">
+                                                        <div className="input-group mb-4">
+                                                            <div className="input-group-prepend">
+                                                                <span className="input-group-text">
+                                                                    <i className="fas fa-search" /></span>
+                                                            </div>
+                                                            <input type="text" className="form-control"
+                                                                   placeholder="Search ..." aria-label="Search keyword"
+                                                                   aria-describedby="basic-addon1" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                        <Switch>
+                                            <Route exact={true} path={props.match.url}
+                                                   render={(props) => <Home{...props} />}/>
+                                            <Route exact={true} path={`${props.match.url}/:video/:slug`}
+                                                   render={(props) => <Player {...props} setUser={setUser} />}/>
+                                        </Switch>
+                                </main>
+                            </div>
+                        </div>
+                    </div>
+            }
+        </React.Fragment>
     )
 }

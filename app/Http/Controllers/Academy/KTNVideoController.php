@@ -26,7 +26,7 @@ class KTNVideoController
     }
 
     public function rumbleMedia() {
-        $response =  Http::get('https://rumble.com/api/v0/Media.Search.mrss?_p=utith.05zhpcaf2&url=https://rumble.com/v9h511-the-french-beans-export-business-kenya-to-france.html');
+        $response =  Http::get('https://rumble.com/api/v0/Media.Search.mrss?_p=utith.05zhpcaf2&url=https://rumble.com/'.request('video_id').'-the-french-beans-export-business-kenya-to-france.html');
 
         $xml = simplexml_load_string($response->body());
         $item = $xml->channel->item;

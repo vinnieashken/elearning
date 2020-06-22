@@ -58,9 +58,13 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
 
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="{{ asset('static/app/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('static/app/css/academy.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/academy/assets/css/theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/academy/assets/css/demo.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/academy/assets/css/fontawesome/css/all.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/academy/assets/css/fontawesome/css/brands.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/academy/assets/css/fontawesome/css/solid.css') }}" rel="stylesheet">
+{{--    <link rel="stylesheet"--}}
+{{--          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>--}}
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
     <script>
@@ -85,22 +89,22 @@
 
 </body>
 <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register("{{ asset('service-worker.js') }}").then(function(registration) {
-                // Registration was successful
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(err) {
-                // registration failed :(
-                console.log('ServiceWorker registration failed: ', err);
-            }).catch(function(err) {
-                console.log(err)
-            });
-        });
-    } else {
-        console.log('service worker is not supported');
-    }
+    {{--if ('serviceWorker' in navigator) {--}}
+    {{--    window.addEventListener('load', function() {--}}
+    {{--        navigator.serviceWorker.register("{{ asset('service-worker.js') }}").then(function(registration) {--}}
+    {{--            // Registration was successful--}}
+    {{--            console.log('ServiceWorker registration successful with scope: ', registration.scope);--}}
+    {{--        }, function(err) {--}}
+    {{--            // registration failed :(--}}
+    {{--            console.log('ServiceWorker registration failed: ', err);--}}
+    {{--        }).catch(function(err) {--}}
+    {{--            console.log(err)--}}
+    {{--        });--}}
+    {{--    });--}}
+    {{--} else {--}}
+    {{--    console.log('service worker is not supported');--}}
+    {{--}--}}
 </script>
-<script type="text/javascript" src="{{ asset('static/academy/main.js?').date('Ymdhis') }}"></script>
+<script type="text/javascript" src="{{ asset('static/academy/bundles/main.js?').date('Ymdhis') }}"></script>
 
 </html>

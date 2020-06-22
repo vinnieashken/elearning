@@ -30,9 +30,9 @@ const target_envs = {
         },
         academy: {
             entry: './resources/app/academy/index',
-            path: path.resolve('./public/static/academy'),
+            path: path.resolve('./public/static/academy/bundles'),
             chunkFilename: '[name].[chunkhash].js',
-            publicPath: '/static/academy/'
+            publicPath: '/static/academy/bundles/'
         }
     },
     production : {
@@ -44,9 +44,9 @@ const target_envs = {
         },
         academy: {
             entry: './resources/app/academy/index',
-            path: path.resolve('./public/static/academy'),
+            path: path.resolve('./public/static/academy/bundles'),
             chunkFilename: '[name].[chunkhash].js',
-            publicPath: '/static/academy/'
+            publicPath: '/static/academy/bundles/'
         }
     }
 };

@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {convertToSlug} from "../common/constants/functions";
-import {API} from "../common/constants";
-import {HOME_VIDEOS_UPDATED} from "../common/constants/academy";
+import {API, PUBLIC_URL} from "../common/constants";
 
 export default function (props) {
     const [loading, setLoading] = useState(true)
@@ -35,18 +34,53 @@ export default function (props) {
         <React.Fragment>
             {
                 loading ? '' :
-                    <div className="card">
+                    <div className="card border-0">
+                        <button type="button" className="btn btn-danger btn-icon-only rounded-circle round-design"
+                        onClick={e => {
+                            props.history.push({
+                                pathname: `/academy/${video.id}/${convertToSlug(video.title)}`,
+                                state: {
+                                    video: video,
+                                    videoData: videoData
+                                },
+                            });
+                        }}>
+                            <span className="btn-inner--icon">
+                                <i className="fas fa-play" />
+                            </span>
+                        </button>
                         <Link to={{pathname: `/academy/${video.id}/${convertToSlug(video.title)}`,
-                        state: {
-                            video: video,
-                            videoData: videoData
-                        }}}>
-                            <img className="card-img-top" src={videoData.hasOwnProperty('thumbnail') ? videoData.thumbnail : "https://img.youtube.com/vi/M4pf76QFY1s/default.jpg"} alt="Unsplash" />
+                            state: {
+                                video: video,
+                                videoData: videoData
+                            }}}>
+
+                            <img src={videoData.hasOwnProperty('thumbnail') ? videoData.thumbnail : `${PUBLIC_URL}/static/academy/assets/images/lazy.jpg`}
+                                 alt={video.title} className="card-img-top" />
                         </Link>
-                        <div className="card-header">
-                            <h5 className="card-title mb-0">{video.title}</h5>
+                        <div className="card-body text-left">
+                            <h4 className="heading h6 mb-1">
+                                <span className="d-block font-weight-800">{video.title}</span>
+                            </h4>
+                            <div className="d-block">
+                                <small className="text-muted">Views 19.1K</small>
+                                <small className="text-muted float-right">2 months Ago</small>
+                            </div>
+                            <p className="mt-2 text-success font-weight-800">
+
+                                {
+                                    video.keywords.split(';').map(el => {
+                                        return (
+                                            <React.Fragment>
+                                                <i className="far fa-arrow-alt-circle-right" />{` ${el} `}
+                                            </React.Fragment>
+                                        )
+                                    })
+                                }
+                            </p>
                         </div>
                     </div>
+
             }
         </React.Fragment>
     )
