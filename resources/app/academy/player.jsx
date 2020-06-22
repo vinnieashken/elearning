@@ -19,9 +19,9 @@ export default function (props) {
 
     useEffect((e) => {
         setLoading(true)
-        $('html, body').animate({
-            scrollTop: $(".slice").offset().top
-        }, 2000);
+        // $('html, body').animate({
+        //     scrollTop: $(".slice").offset().top
+        // }, 2000);
         setVideoData((props.history.location.state && props.history.location.state.hasOwnProperty('videoData')) ? props.history.location.state.videoData : {})
         setVideo((props.history.location.state && props.history.location.state.hasOwnProperty('video')) ? props.history.location.state.video : {})
         if (videoData.hasOwnProperty('embed'))
