@@ -27,7 +27,8 @@ class ModulesController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results =  $model->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            $results =  $model->where('choices',0)
+                ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                 ->leftJoin('classes','subjects.class_id','=','classes.id')
                 ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                 ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
@@ -38,7 +39,8 @@ class ModulesController extends Controller
             {
                 $query = $request->search;
 
-                $results =  $model->where('modules.module','like','%'.$query.'%')
+                $results =  $model->where('choices',0)
+                    ->where('modules.module','like','%'.$query.'%')
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->leftJoin('institutions','modules.institution_id','=','institutions.id')
@@ -50,13 +52,13 @@ class ModulesController extends Controller
             {
                 $class = $request->class_id;
 
-                $results =  $model->where('classes.id',$class)
+                $results =  $model->where('choices',0)->where('classes.id',$class)
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                     ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
 
-                $totalrecords = $model->where('classes.id',$class)
+                $totalrecords = $model->where('choices',0)->where('classes.id',$class)
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')->count();
             }
@@ -64,13 +66,13 @@ class ModulesController extends Controller
                 $query = $request->search;
                 $class = $request->class_id;
 
-                $results =  $model->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                $results =  $model->where('choices',0)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                     ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
 
-                $totalrecords = $model->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                $totalrecords = $model->where('choices',0)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->count();
@@ -82,23 +84,24 @@ class ModulesController extends Controller
 
             if($request->has('institutionid'))
             {
-                $results =  $model->where('institution_id',$request->institutionid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                $results =  $model->where('choices',0)->where('institution_id',$request->institutionid)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                     ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
 
-                $totalrecords = $model->where('institution_id',$request->institutionid)->count();
+                $totalrecords = $model->where('choices',0)->where('institution_id',$request->institutionid)->count();
 
                 if($request->has('search'))
                 {
                     $query = $request->search;
-                    $results = $model->where('institution_id', $request->institutionid)->where('modules.module','like','%'.$query.'%')
+                    $results = $model->where('choices',0)->where('institution_id', $request->institutionid)->where('modules.module','like','%'.$query.'%')
                         ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
                         ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')
                         ->leftJoin('institutions', 'modules.institution_id', '=', 'institutions.id')
                         ->select('modules.id', 'modules.module', 'modules.subject_id', 'modules.institution_id', 'institutions.name as institution_name', 'subjects.subject', 'classes.class', 'classes.id as class_id', 'modules.status', 'modules.created_at as date')->paginate($size)->items();
 
-                    $totalrecords = $model->where('institution_id',$request->institutionid)
+                    $totalrecords = $model->where('choices',0)->where('institution_id',$request->institutionid)
                         ->where('modules.module','like','%'.$query.'%')
                         ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
                         ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')->count();
@@ -107,13 +110,13 @@ class ModulesController extends Controller
                 if($request->has('class_id'))
                 {
                     $class = $request->class_id;
-                    $results = $model->where('institution_id', $request->institutionid)->where('classes.id',$class)
+                    $results = $model->where('choices',0)->where('institution_id', $request->institutionid)->where('classes.id',$class)
                         ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
                         ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')
                         ->leftJoin('institutions', 'modules.institution_id', '=', 'institutions.id')
                         ->select('modules.id', 'modules.module', 'modules.subject_id', 'modules.institution_id', 'institutions.name as institution_name', 'subjects.subject', 'classes.class', 'classes.id as class_id', 'modules.status', 'modules.created_at as date')->paginate($size)->items();
 
-                    $totalrecords = $model->where('institution_id',$request->institutionid)->where('classes.id',$class)
+                    $totalrecords = $model->where('choices',0)->where('institution_id',$request->institutionid)->where('classes.id',$class)
                         ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
                         ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')->count();
                 }
@@ -122,13 +125,13 @@ class ModulesController extends Controller
                     $query = $request->search;
                     $class = $request->class_id;
 
-                    $results = $model->where('institution_id', $request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                    $results = $model->where('choices',0)->where('institution_id', $request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
                         ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
                         ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')
                         ->leftJoin('institutions', 'modules.institution_id', '=', 'institutions.id')
                         ->select('modules.id', 'modules.module', 'modules.subject_id', 'modules.institution_id', 'institutions.name as institution_name', 'subjects.subject', 'classes.class', 'classes.id as class_id', 'modules.status', 'modules.created_at as date')->paginate($size)->items();
 
-                    $totalrecords = $model->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                    $totalrecords = $model->where('choices',0)->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
                         ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
                         ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')->count();
                 }
@@ -170,7 +173,7 @@ class ModulesController extends Controller
         }
 
         //no pagination
-        $results = $model->leftJoin('subjects','modules.subject_id','=','subjects.id')
+        $results = $model->where('choices',0)->leftJoin('subjects','modules.subject_id','=','subjects.id')
             ->leftJoin('classes','subjects.class_id','=','classes.id')
             ->leftJoin('institutions','modules.institution_id','=','institutions.id')
             ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
@@ -178,7 +181,7 @@ class ModulesController extends Controller
         if($request->has('search'))
         {
             $query = $request->search;
-            $results = $model->where('modules.module','like','%'.$query.'%')->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            $results = $model->where('choices',0)->where('modules.module','like','%'.$query.'%')->leftJoin('subjects','modules.subject_id','=','subjects.id')
                 ->leftJoin('classes','subjects.class_id','=','classes.id')
                 ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                 ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
@@ -188,7 +191,7 @@ class ModulesController extends Controller
         {
             $class = $request->class_id;
 
-            $results = $model->where('classes.id',$class)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            $results = $model->where('choices',0)->where('classes.id',$class)->leftJoin('subjects','modules.subject_id','=','subjects.id')
                 ->leftJoin('classes','subjects.class_id','=','classes.id')
                 ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                 ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
@@ -199,7 +202,7 @@ class ModulesController extends Controller
             $query = $request->search;
             $class = $request->class_id;
 
-            $results = $model->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            $results = $model->where('choices',0)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)->leftJoin('subjects','modules.subject_id','=','subjects.id')
                 ->leftJoin('classes','subjects.class_id','=','classes.id')
                 ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                 ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
@@ -207,7 +210,7 @@ class ModulesController extends Controller
 
         if($request->has('institutionid'))
         {
-            $results = $model->where('institution_id',$request->institutionid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            $results = $model->where('choices',0)->where('institution_id',$request->institutionid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
                 ->leftJoin('classes','subjects.class_id','=','classes.id')
                 ->leftJoin('institutions','modules.institution_id','=','institutions.id')
                 ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
@@ -215,7 +218,7 @@ class ModulesController extends Controller
             if($request->has('search'))
             {
                 $query = $request->search;
-                $results = $model->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')
+                $results = $model->where('choices',0)->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->leftJoin('institutions','modules.institution_id','=','institutions.id')
@@ -225,7 +228,7 @@ class ModulesController extends Controller
             if($request->has('class_id'))
             {
                 $class = $request->class_id;
-                $results = $model->where('institution_id',$request->institutionid)->where('classes.id',$class)
+                $results = $model->where('choices',0)->where('institution_id',$request->institutionid)->where('classes.id',$class)
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->leftJoin('institutions','modules.institution_id','=','institutions.id')
@@ -237,7 +240,7 @@ class ModulesController extends Controller
                 $query = $request->search;
                 $class = $request->class_id;
 
-                $results = $model->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                $results = $model->where('choices',0)->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
                     ->leftJoin('subjects','modules.subject_id','=','subjects.id')
                     ->leftJoin('classes','subjects.class_id','=','classes.id')
                     ->leftJoin('institutions','modules.institution_id','=','institutions.id')
