@@ -44,7 +44,7 @@ export default function (props) {
                     $.ajax({
                         url: `${API}/academy/rumble/search`,
                         data: {
-                            video_id: id
+                            video_id: res.videoURL
                         },
                         method: 'get',
                         dataType: 'json',
