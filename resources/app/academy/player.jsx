@@ -19,12 +19,14 @@ export default function (props) {
 
     useEffect((e) => {
         setLoading(true)
-        // $('html, body').animate({
-        //     scrollTop: $(".slice").offset().top
-        // }, 2000);
-        setVideoData((props.history.location.state && props.history.location.state.hasOwnProperty('videoData')) ? props.history.location.state.videoData : {})
+        if ($(".slice").offset())
+            $('html, body').animate({
+                scrollTop: $(".slice").offset().top
+            }, 500);
+        const newVideoData = (props.history.location.state && props.history.location.state.hasOwnProperty('videoData')) ? props.history.location.state.videoData : {};
+        setVideoData(newVideoData)
         setVideo((props.history.location.state && props.history.location.state.hasOwnProperty('video')) ? props.history.location.state.video : {})
-        if (videoData.hasOwnProperty('embed'))
+        if (newVideoData.hasOwnProperty('embed'))
             setLoading(false);
         else {
             fetchVideo();
@@ -44,21 +46,21 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setVideo(res);
-                    $.ajax({
-                        url: `${API}/academy/rumble/search`,
-                        data: {
-                            video_id: res.videoURL
-                        },
-                        method: 'get',
-                        dataType: 'json',
-                        error: function (xhr, status, error) {
-                            setLoading(false)
-                        }.bind(this),
-                        success: function (res) {
-                            setLoading(false)
-                            setVideoData(res)
-                        }.bind(this)
-                    })
+                $.ajax({
+                    url: `${API}/academy/rumble/search`,
+                    data: {
+                        video_id: res.videoURL
+                    },
+                    method: 'get',
+                    dataType: 'json',
+                    error: function (xhr, status, error) {
+                        setLoading(false)
+                    }.bind(this),
+                    success: function (res) {
+                        setLoading(false)
+                        setVideoData(res)
+                    }.bind(this)
+                })
             }.bind(this)
         })
     }
