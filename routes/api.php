@@ -43,6 +43,8 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/modules/user/{user_id}','Api\ModulesController@getUserModules');
     Route::get('/modules/users/{module_id}','Api\ModulesController@getModuleStudents');
 
+    Route::get('/modules/nochoices/list','Api\ModulesController@nochoicesList');
+
     Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
     Route::post('/questions/module/user/answers','Api\QuestionsController@saveUserAnswers');
 

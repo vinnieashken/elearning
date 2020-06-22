@@ -579,6 +579,265 @@ class ModulesController extends Controller
         return $users;
     }
 
+    public function nochoicesList(Request $request)
+    {
+        $model = new Module();
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results =  $model->where('choices',0)
+                ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
+
+            $totalrecords = $model->count();
+
+            if($request->has('search'))
+            {
+                $query = $request->search;
+
+                $results =  $model->where('choices',0)
+                    ->where('modules.module','like','%'.$query.'%')
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                    ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
+
+                $totalrecords = $model->where('modules.module','like','%'.$query.'%')->count();
+            }
+            if($request->has('class_id'))
+            {
+                $class = $request->class_id;
+
+                $results =  $model->where('choices',0)->where('classes.id',$class)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                    ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
+
+                $totalrecords = $model->where('choices',0)->where('classes.id',$class)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')->count();
+            }
+            if($request->has('search') && $request->has('class_id') ) {
+                $query = $request->search;
+                $class = $request->class_id;
+
+                $results =  $model->where('choices', 0)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                    ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
+
+                $totalrecords = $model->where('choices',0)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->count();
+            }
+
+
+            //$totalrecords = $model->count();
+            $totalpages = ceil($totalrecords / $size);
+
+            if($request->has('institutionid'))
+            {
+                $results =  $model->where('choices', 0)->where('institution_id',$request->institutionid)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                    ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->paginate($size)->items();
+
+                $totalrecords = $model->where('choices', 0)->where('institution_id',$request->institutionid)->count();
+
+                if($request->has('search'))
+                {
+                    $query = $request->search;
+                    $results = $model->where('choices', 0)->where('institution_id', $request->institutionid)->where('modules.module','like','%'.$query.'%')
+                        ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
+                        ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')
+                        ->leftJoin('institutions', 'modules.institution_id', '=', 'institutions.id')
+                        ->select('modules.id', 'modules.module', 'modules.subject_id', 'modules.institution_id', 'institutions.name as institution_name', 'subjects.subject', 'classes.class', 'classes.id as class_id', 'modules.status', 'modules.created_at as date')->paginate($size)->items();
+
+                    $totalrecords = $model->where('choices', 0)->where('institution_id',$request->institutionid)
+                        ->where('modules.module','like','%'.$query.'%')
+                        ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
+                        ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')->count();
+                }
+
+                if($request->has('class_id'))
+                {
+                    $class = $request->class_id;
+                    $results = $model->where('choices', 0)->where('institution_id', $request->institutionid)->where('classes.id',$class)
+                        ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
+                        ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')
+                        ->leftJoin('institutions', 'modules.institution_id', '=', 'institutions.id')
+                        ->select('modules.id', 'modules.module', 'modules.subject_id', 'modules.institution_id', 'institutions.name as institution_name', 'subjects.subject', 'classes.class', 'classes.id as class_id', 'modules.status', 'modules.created_at as date')->paginate($size)->items();
+
+                    $totalrecords = $model->where('choices', 0)->where('institution_id',$request->institutionid)->where('classes.id',$class)
+                        ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
+                        ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')->count();
+                }
+
+                if($request->has('search') && $request->has('class_id') ) {
+                    $query = $request->search;
+                    $class = $request->class_id;
+
+                    $results = $model->where('choices', 0)->where('institution_id', $request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                        ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
+                        ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')
+                        ->leftJoin('institutions', 'modules.institution_id', '=', 'institutions.id')
+                        ->select('modules.id', 'modules.module', 'modules.subject_id', 'modules.institution_id', 'institutions.name as institution_name', 'subjects.subject', 'classes.class', 'classes.id as class_id', 'modules.status', 'modules.created_at as date')->paginate($size)->items();
+
+                    $totalrecords = $model->where('choices', 0)->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                        ->leftJoin('subjects', 'modules.subject_id', '=', 'subjects.id')
+                        ->leftJoin('classes', 'subjects.class_id', '=', 'classes.id')->count();
+                }
+
+                $totalpages = ceil($totalrecords / $size);
+            }
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $temp = [];
+
+            if($request->has('userid'))
+            {
+                $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                foreach ($results as $result)
+                {
+                    $result['done'] = false;
+
+                    foreach ($usermodules as $usermodule)
+                    {
+                        if($result->id === $usermodule->module_id)
+                        {
+                            $result['done'] = true;
+                        }
+                    }
+                    array_push($temp,$result);
+                }
+                $data ["rows"] = $temp;
+            }
+            else
+                $data ["rows"] = $results;
+
+            return $data;
+        }
+
+        //no pagination
+        $results = $model->where('choices', 0)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+            ->leftJoin('classes','subjects.class_id','=','classes.id')
+            ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+            ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+
+        if($request->has('search'))
+        {
+            $query = $request->search;
+            $results = $model->where('choices', 0)->where('modules.module','like','%'.$query.'%')->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+        }
+
+        if($request->has('class_id'))
+        {
+            $class = $request->class_id;
+
+            $results = $model->where('choices', 0)->where('classes.id',$class)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+        }
+
+        if($request->has('search') && $request->has('class_id') )
+        {
+            $query = $request->search;
+            $class = $request->class_id;
+
+            $results = $model->where('choices', 0)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                ->select('modules.id','modules.module','modules.institution_id','modules.subject_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+        }
+
+        if($request->has('institutionid'))
+        {
+            $results = $model->where('choices', 0)->where('institution_id',$request->institutionid)->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                ->leftJoin('classes','subjects.class_id','=','classes.id')
+                ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+
+            if($request->has('search'))
+            {
+                $query = $request->search;
+                $results = $model->where('choices', 0)->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                    ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+            }
+
+            if($request->has('class_id'))
+            {
+                $class = $request->class_id;
+                $results = $model->where('choices', 0)->where('institution_id',$request->institutionid)->where('classes.id',$class)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                    ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+            }
+
+            if($request->has('search') && $request->has('class_id') )
+            {
+                $query = $request->search;
+                $class = $request->class_id;
+
+                $results = $model->where('choices', 0)->where('institution_id',$request->institutionid)->where('modules.module','like','%'.$query.'%')->where('classes.id',$class)
+                    ->leftJoin('subjects','modules.subject_id','=','subjects.id')
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->leftJoin('institutions','modules.institution_id','=','institutions.id')
+                    ->select('modules.id','modules.module','modules.subject_id','modules.institution_id','institutions.name as institution_name','subjects.subject','classes.class','classes.id as class_id','modules.status','modules.created_at as date')->get();
+            }
+
+        }
+
+        $data = [];
+        if($request->has('userid'))
+        {
+            $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+
+
+            foreach ($results as $result)
+            {
+                $result['done'] = false;
+
+                foreach ($usermodules as $usermodule)
+                {
+
+                    if($result->id == $usermodule->module_id)
+                    {
+                        $result['done'] = true;
+                    }
+                }
+
+                array_push($data,$result);
+            }
+        }
+        else
+            $data = $results;
+
+        return $data;
+    }
+
     public function mymodules($userid)
     {
         $usermodules = AnswerSheet::where('user_id',$userid)->select('module_id')->distinct()->get();
