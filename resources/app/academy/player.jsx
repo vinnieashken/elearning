@@ -82,7 +82,7 @@ export default function (props) {
                                         <div className="card border-0">
                                             <div className="embed-responsive embed-responsive-16by9">
                                                 <iframe className="embed-responsive-item"
-                                                        src={videoData.embed ? videoData.embed : `https://rumble.com/embed${video.videoURL}/?pub=tith`}
+                                                        src={videoData.embed ? videoData.embed : `https://rumble.com/embed/${video.videoURL}/?pub=tith`}
                                                         allowFullScreen />
                                             </div>
                                             <div className="card-body text-left">
