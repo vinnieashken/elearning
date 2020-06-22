@@ -36,6 +36,8 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/subjects/distinct','Api\SubjectsController@uniquelist');
     Route::get('/subjects/class/{id}','Api\SubjectsController@getClassSubjects');
 
+    Route::get('/subjects/highschool/distinct','Api\SubjectsController@highschoolclasseslist');
+
     Route::get('/modules/list','Api\ModulesController@list');
     Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
     Route::get('/modules/subject/name/{name}','Api\ModulesController@getModulesBySubjectName');
