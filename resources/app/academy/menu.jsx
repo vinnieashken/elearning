@@ -140,7 +140,7 @@ export default function (props) {
                                               render={(props) => <Payment {...props} />}/>
                                        <Route exact={true} path={`${props.match.url}/:video/:title`}
                                               render={(props) =>
-                                                  user.hasOwnProperty('id') ?
+                                                  // user.hasOwnProperty('id') ?
                                                       // subscription.hasOwnProperty('id') ?
                                                           <Player {...props} user={user}/>
                                                           // : props.history.push({
@@ -149,12 +149,12 @@ export default function (props) {
                                                           //         next: props.location.pathname
                                                           //     },
                                                           // })
-                                                      : props.history.push({
-                                                          pathname: `/academy/login`,
-                                                          state: {
-                                                              next: props.location.pathname
-                                                          },
-                                                      })
+                                                      // : props.history.push({
+                                                      //     pathname: `/academy/login`,
+                                                      //     state: {
+                                                      //         next: props.location.pathname
+                                                      //     },
+                                                      // })
                                               }/>
                                    </Switch>
                                </div>
