@@ -30,6 +30,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/app/user/{id}','Api\LoginController@getUser');
 
     Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
+    Route::get('/classes/highschool/list','Api\ClassesController@highschoolclasseslist');
 
     Route::get('/subjects/list','Api\SubjectsController@list');
     Route::get('/subjects/distinct','Api\SubjectsController@uniquelist');
