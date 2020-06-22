@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Level;
 use App\Models\Module;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -75,13 +76,14 @@ class SubjectsController extends Controller
     public function uniquelist(Request $request)
     {
         $model = new Subject();
+        $primaryids = Level::where('class','like','%class%')->get()->pluck('id');
 
         if($request->has('size') && $request->has('page'))
         {
             $size = $request->size;
             $page = $request->page;
 
-            $results =  $model->distinct('subject')
+            $results =  $model->whereIn('class_id',$primaryids)->distinct('subject')
                 ->select('subjects.subject')->paginate($size)->items();
 
             $totalrecords = $model->count();
@@ -98,9 +100,45 @@ class SubjectsController extends Controller
 
             return $data;
         }
-        return $model->distinct('subject')
+        return $model->whereIn('class_id',$primaryids)->distinct('subject')
             //->leftJoin('classes','subjects.class_id','=','classes.id')
             //->select('subjects.id','subjects.class_id','subjects.subject')
             ->get(['subject']);
     }
+
+    public function uniqueHighschoollist(Request $request)
+    {
+        $model = new Subject();
+        $secondaryids = Level::where('class','like','%Form%')->get()->pluck('id');
+
+        if($request->has('size') && $request->has('page'))
+        {
+            $size = $request->size;
+            $page = $request->page;
+
+            $results =  $model->whereIn('class_id',$secondaryids)->distinct('subject')
+                ->select('subjects.subject')->paginate($size)->items();
+
+            $totalrecords = $model->count();
+            $totalpages = ceil($totalrecords / $size);
+
+            $data ["pagination"] = [
+                "totalRecords" => $totalrecords,
+                "currentRecords" => count($results),
+                "pageCount" => $totalpages,
+                "currentPage" => $page,
+            ];
+
+            $data ["rows"] = $results;
+
+            return $data;
+        }
+        return $model->whereIn('class_id',$secondaryids)->distinct('subject')
+            //->leftJoin('classes','subjects.class_id','=','classes.id')
+            //->select('subjects.id','subjects.class_id','subjects.subject')
+            ->get(['subject']);
+    }
+
+
+
 }
