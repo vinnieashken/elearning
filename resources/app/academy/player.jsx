@@ -18,6 +18,9 @@ export default function (props) {
 
 
     useEffect((e) => {
+        setLoading(true)
+        setVideoData((props.history.location.state && props.history.location.state.hasOwnProperty('videoData')) ? props.history.location.state.videoData : {})
+        setVideo((props.history.location.state && props.history.location.state.hasOwnProperty('video')) ? props.history.location.state.video : {})
         if (videoData.hasOwnProperty('embed'))
             setLoading(false);
         else
