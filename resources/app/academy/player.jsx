@@ -23,8 +23,9 @@ export default function (props) {
         setVideo((props.history.location.state && props.history.location.state.hasOwnProperty('video')) ? props.history.location.state.video : {})
         if (videoData.hasOwnProperty('embed'))
             setLoading(false);
-        else
+        else {
             fetchVideo();
+        }
     }, [props.match.params.video])
 
     const fetchVideo = () => {
@@ -40,7 +41,21 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setVideo(res);
-                setLoading(false)
+                    $.ajax({
+                        url: `${API}/academy/rumble/search`,
+                        data: {
+                            video_id: id
+                        },
+                        method: 'get',
+                        dataType: 'json',
+                        error: function (xhr, status, error) {
+                            setLoading(false)
+                        }.bind(this),
+                        success: function (res) {
+                            setLoading(false)
+                            setVideoData(res)
+                        }.bind(this)
+                    })
             }.bind(this)
         })
     }
