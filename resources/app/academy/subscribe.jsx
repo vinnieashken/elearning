@@ -4,9 +4,10 @@ import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import 'intl-tel-input/build/css/intlTelInput.css';
 import ReactIntlTelInput from "react-intl-tel-input-v2";
-import {API} from "../common/constants";
+import {API, ENV, PUBLIC_URL} from "../common/constants";
 
 export default function (props) {
+    const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
 
     const dispatch = useDispatch();
     const [user, setUser] = useState(localStorage.hasOwnProperty('ac_user') ? JSON.parse(localStorage.getItem('ac_user')) : {});
@@ -18,9 +19,10 @@ export default function (props) {
     const [messageType, setMessageType] = useState('');
     const [response, setResponse] = useState('');
     const [plans, setPlans] = useState([]);
-    const [plan, setPlan] = useState({});
+    const [payment, setPayment] = useState({});
 
     useEffect((e) => {
+        console.log(`${window.origin}${next}`);
         fetchPlans();
     }, [])
 
@@ -44,6 +46,7 @@ export default function (props) {
 
     const handleSubscribe = (e) => {
         e.preventDefault();
+        setProcessing(true)
         $.ajax({
             url: `${API}/academy/subscription/subscribe`,
             method: 'post',
@@ -60,6 +63,7 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 setProcessing(false)
+                setPayment(res);
             }.bind(this)
         })
     }
@@ -138,8 +142,59 @@ export default function (props) {
                                                             }
                                                         </div>
                                                     </div>
+                                                    {
+                                                        payment.hasOwnProperty('id') ?
+                                                            <React.Fragment>
+                                                                <div className='row'>
+                                                                    <div className='col-md-12 text-center'>
+                                                                        <h5>Click <button type='button'  className='btn btn-success'
+                                                                            onClick={(event) => {
+                                                                                event.preventDefault();
+                                                                            location.href=`${window.origin}${next}`;
+                                                                        }
+                                                                        }>Confirm Payment</button> after paying</h5>
+                                                                    </div>
+                                                                    <div className='col-md-12'>
+                                                                        <img className='mt-5 mb-5' style={{display: 'block', margin:'auto', width: '70%'}} src={`${PUBLIC_URL}/static/app/images/lipanampesa.jpg`} alt='Lipa Na M-Pesa'/>
+                                                                    </div>
+                                                                    <div className='col-md-12'>
+                                                                        <b>Pay via MPESA</b><br />
+                                                                        <ol>
+                                                                            <li>Go to M-PESA on your phone.</li>
+                                                                            <li>Select Lipa na MPESA.</li>
+                                                                            <li> Pay Bill.</li>
+                                                                            <li>Enter Business Number:<span
+                                                                                style={{fontSize: "20px"}}><b>505604</b></span>.
+                                                                            </li>
+                                                                            <li>Enter Account Number:<span
+                                                                                style={{fontSize: '20px'}}><b>{payment.payment_ref}</b></span>.
+                                                                            </li>
+                                                                            <li> Enter the Amount. i.e<span
+                                                                                style={{fontSize: "20px"}}><b>Ksh.{payment.amount}</b></span></li>
+                                                                            <li>Enter your M-PESA PIN and Send.</li>
+                                                                            <li>You will receive a confirmation via SMS.</li>
+                                                                            <li>Get Us Payment Ref No.</li>
+                                                                        </ol>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="form-group">
+                                                                    <label className="form-control-label">
+                                                                        Receipt Number
+                                                                    </label>
+                                                                    <input type="text" placeholder="M-Pesa Receipt Number"
+                                                                           className="w-100 mb-4 loginput" />
+                                                                </div>
+                                                            </React.Fragment>: ''
+                                                    }
                                                     <div className="text-center mt-2">
-                                                        <button type="submit" className="btn btn-primary mpesabtn">Pay</button>
+                                                        {
+                                                            processing ? <ClipLoader /> :
+                                                                payment.hasOwnProperty('id') ? <button type="button" className="btn btn-primary mpesabtn" onClick={event => {
+                                                                        location.href=`${window.origin}${next}`;
+                                                                    }
+                                                                    }>Confirm Payment </button>
+                                                                    : <button type='submit' className="btn btn-primary mpesabtn">Pay</button>
+                                                        }
                                                     </div>
                                                 </form>
                                         }

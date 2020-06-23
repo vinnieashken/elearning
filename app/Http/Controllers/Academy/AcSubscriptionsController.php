@@ -22,9 +22,9 @@ class AcSubscriptionsController extends Controller
             ->whereHas('user', function ($q) {
                 if (request()->has('user_id'))
                     $q->where('id', request('user_id'));
-                if (request()->has('user_ref'))
-                    $q->where('user_id', request('user_ref'));
-                return $q->get();
+//                if (request()->has('user_ref'))
+//                    $q->where('user_id', request('user_ref'));
+                return $q;
             })
             ->first();
 

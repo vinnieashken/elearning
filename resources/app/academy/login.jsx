@@ -17,7 +17,7 @@ export default function (props) {
     const [loginType, setLoginType] = useState('email');
 
     useEffect(e => {
-        console.log(next);
+        console.log(props);
     }, [])
 
     const dispatch = useDispatch();
@@ -49,6 +49,7 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 dispatch({type: LOADING_SUBSCRIPTION, payload: true});
+                props.setUser(res);
                 dispatch(fetchSubscription(res));
                 localStorage.setItem('ac_user', JSON.stringify(res));
                 debugger;
@@ -124,9 +125,9 @@ export default function (props) {
                                                         </div>
 
                                                         <div className="text-center">
-                                                            <small className="text-muted text-center mt-5">
-                                                                Don't have an account yet? <Link to='/academy/register'>Register</Link>.
-                                                            </small>
+                                                            {/*<small className="text-muted text-center mt-5">*/}
+                                                            {/*    Don't have an account yet? <Link to='/academy/register'>Register</Link>.*/}
+                                                            {/*</small>*/}
                                                         </div>
                                                     </React.Fragment>
                                             }
