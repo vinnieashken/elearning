@@ -21,6 +21,11 @@ const Payment = Loadable({
     loading: Loading
 });
 
+const Subscribe = Loadable({
+    loader: () => import('./subscribe'),
+    loading: Loading
+})
+
 const Player = Loadable({
     loader: () => import('./player'),
     loading: Loading
@@ -187,7 +192,7 @@ export default function (props) {
                                                    render={(props) => <Login {...props} />}/>
                                             <Route exact={true}
                                                    path={`${props.match.url}/subscribe`}
-                                                   render={(props) => <Payment {...props} />}/>
+                                                   render={(props) => <Subscribe {...props} />}/>
                                             <Route exact={true}
                                                    path={`${props.match.url}/category/:category`}
                                                    render={(props) => <List {...props} />}/>

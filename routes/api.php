@@ -93,11 +93,18 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
 
     Route::prefix('/academy')->group(function () {
-        Route::get('/plans','Academy\AcSubscriptionController@filter');
-        Route::get('/plans/{id}','Academy\AcSubscriptionController@get');
+        Route::post('/login','Academy\AcUsersController@login');
+        Route::post('/register','Academy\AcUsersController@register');
+
+        Route::get('/plans','Academy\AcPackagesController@filter');
+        Route::get('/plans/{id}','Academy\AcPackagesController@get');
+
         Route::get('/video','Academy\KTNVideoController@filter');
         Route::get('/video/{id}','Academy\KTNVideoController@get');
         Route::get('/rumble/search','Academy\KTNVideoController@rumbleMedia');
+
+        Route::post('/subscription/subscribe','Academy\AcSubscriptionsController@subscribe');
+        Route::post('/subscription/confirm','Academy\AcSubscriptionsController@confirm');
     });
 //});
 

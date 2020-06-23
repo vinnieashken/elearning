@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Academy;
 
 use App\Exceptions\ValidationException;
-use App\Models\Academy\AcSubscription;
+use App\Models\Academy\AcPackages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AcSubscriptionController extends Controller
+class AcPackagesController extends Controller
 {
     public function get($id) {
-        $subscription = AcSubscription::query()->where('id', $id)->first();
+        $subscription = AcPackages::query()->where('id', $id)->first();
         if (!$subscription)
             throw new ValidationException("Subscription not found");
 
@@ -18,7 +18,7 @@ class AcSubscriptionController extends Controller
     }
 
     public function filter() {
-        $query = AcSubscription::query();
+        $query = AcPackages::query();
 
         if (count($query->get()) <= 0 )
             $this->seed();
@@ -26,19 +26,19 @@ class AcSubscriptionController extends Controller
     }
 
     public function seed() {
-        $subscription = new AcSubscription();
+        $subscription = new AcPackages();
         $subscription->name = 'Weekly';
         $subscription->days = 7;
         $subscription->cost = 70;
         $subscription->description = '';
         $subscription->save();
-        $subscription = new AcSubscription();
+        $subscription = new AcPackages();
         $subscription->name = 'Monthly';
         $subscription->days = 30;
         $subscription->cost = 300;
         $subscription->description = '';
         $subscription->save();
-        $subscription = new AcSubscription();
+        $subscription = new AcPackages();
         $subscription->name = 'Premium';
         $subscription->days = 365;
         $subscription->cost = 3600;

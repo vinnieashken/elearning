@@ -10,7 +10,7 @@ export default function (props) {
 
     const [processing, setProcessing] = useState(false);
     const [message, setMessage] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('message') ? oldState.message : false);
-    const [next, setNext] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('next') ? oldState.next : `${ENV}academy`);
+    const [next, setNext] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('next') ? oldState.next : `/academy`);
     const [messageType, setMessageType] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('messageType') ? oldState.messageType : '');
     const [response, setResponse] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('response') ? oldState.response : '');
     const [passwordType, setPasswordType] = useState('password');
@@ -27,7 +27,7 @@ export default function (props) {
         setProcessing(true)
         setMessage(false)
         $.ajax({
-            url: `${API}/app/login`,
+            url: `${API}/academy/login`,
             method: 'post',
             data: {
                 username: $('#email').val(),

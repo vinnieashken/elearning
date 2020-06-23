@@ -399,7 +399,7 @@ export default function (props) {
                                                                                         setLoading(true)
                                                                                         setMessage(false)
                                                                                         $.ajax({
-                                                                                            url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}institutionid=29&search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
+                                                                                            url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
                                                                                             // url: `${API}/subjects/class/{class_id}`,
                                                                                             method: 'GET',
                                                                                             headers: {

@@ -15,10 +15,11 @@ class CreateAcSubscriptionsTable extends Migration
     {
         Schema::create('ac_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('days');
-            $table->float('cost');
-            $table->string('description')->nullable();
+            $table->unsignedBigInteger('package_id');
+            $table->foreign('package_id')->references('id')->on('ac_packages');
+            $table->unsignedBigInteger('user_id');
+            $table->dateTime('effective_from')->nullable();
+            $table->dateTime('effective_until')->nullable();
             $table->timestamps();
         });
     }
