@@ -37,6 +37,9 @@ class AcSubscriptionsController extends Controller
                     "transaction_id"=> $subscription->payment_ref
             )
         );
+        Log::info('testing');
+        if ($request->successful())
+            return response()->json($subscription);
 
         throw new ValidationException("".$request->status(), [$subscription, $request->json()]);
     }
