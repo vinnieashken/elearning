@@ -51,6 +51,7 @@ export default function (props) {
                 dispatch({type: LOADING_SUBSCRIPTION, payload: true});
                 dispatch(fetchSubscription(res));
                 localStorage.setItem('user', JSON.stringify(res));
+                debugger;
                 props.history.push({
                     pathname: `${next}`,
                     state: {user: res},
