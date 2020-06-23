@@ -186,6 +186,7 @@ class InstitutionsController extends Controller
             $questionmodel = new Question();
             $questionmodel->module_id = $module;
             $questionmodel->question = $question['question'];
+            $questionmodel->listorder = 1;
             $questionmodel ->save();
 
             foreach ($question['options'] as $option)
@@ -228,6 +229,7 @@ class InstitutionsController extends Controller
             $questionmodel = new Question();
             $questionmodel->module_id = $module;
             $questionmodel->question = $question['question'];
+            $questionmodel->listorder = 1;
             $questionmodel ->save();
 
             $optionmodel = new Option();
