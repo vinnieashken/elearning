@@ -3,7 +3,7 @@ import {Link, Route, Switch} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import {useDispatch, useSelector} from "react-redux";
-import {API, LOADING_SUBSCRIPTION, PUBLIC_URL, SUBSCRIPTION_LOADED} from "../common/constants";
+import {API, ENV, LOADING_SUBSCRIPTION, PUBLIC_URL, SUBSCRIPTION_LOADED} from "../common/constants";
 import {HOME_VIDEOS_UPDATED} from "../common/constants/academy";
 
 const Home = Loadable({
@@ -11,15 +11,25 @@ const Home = Loadable({
     loading: Loading
 });
 
+const Login = Loadable({
+    loader: () => import('./login'),
+    loading: Loading
+});
+
 const Payment = Loadable({
     loader: () => import('./payment'),
     loading: Loading
-})
+});
 
 const Player = Loadable({
     loader: () => import('./player'),
     loading: Loading
-})
+});
+
+const List = Loadable({
+    loader: () => import('./list'),
+    loading: Loading
+});
 
 export default function (props) {
     const dispatch = useDispatch();
@@ -81,10 +91,10 @@ export default function (props) {
                             <div className="col-md-2 bg-light">
                                 <nav
                                     className="navbar navbar-expand-lg navbar-transparent navbar-light bg-light py-4 flex-column">
-                                    <a className="navbar-brand text-dark" href="../">
+                                    <Link className="navbar-brand text-dark" to={`/academy`}>
                                         <img src={`${PUBLIC_URL}/static/academy/assets/images/videosite/logo.png`}
                                              className="img-left img-fluid" alt={'VOD'} />
-                                    </a>
+                                    </Link>
                                     <button className="navbar-toggler" type="button" data-action="offcanvas-open"
                                             data-target="#navbar_main"
                                             aria-controls="navbar_main" aria-expanded="false"
@@ -96,19 +106,19 @@ export default function (props) {
                                     <div className="navbar-collapse offcanvas-collapse" id="navbar_main">
                                         <ul className="nav flex-column navbar-nav">
                                             <li className="nav-item mt-4">
-                                                <a className="nav-link active text-dark border-formart" href="#">
+                                                <Link className="nav-link active text-dark border-formart" to={`/academy/category/latest`}>
                                                     <h6><strong>LATEST</strong></h6>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link text-dark border-formart" href="#">
+                                                <Link className="nav-link text-dark border-formart" to={`/academy/category/trending`}>
                                                     <h6><strong>TRENDING</strong></h6>
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link  text-dark border-formart" href="#">
+                                                <Link className="nav-link  text-dark border-formart" to={`/academy/category/featured`}>
                                                     <h6><strong>FEATURED</strong></h6>
-                                                </a>
+                                                </Link>
                                             </li>
 
                                             <li className="nav-item mt-5">
@@ -169,10 +179,40 @@ export default function (props) {
                                         </div>
                                     </section>
                                         <Switch>
-                                            <Route exact={true} path={props.match.url}
-                                                   render={(props) => <Home{...props} />}/>
-                                            <Route exact={true} path={`${props.match.url}/:video/:slug`}
-                                                   render={(props) => <Player {...props} setUser={setUser} />}/>
+                                            <Route exact={true}
+                                                   path={props.match.url}
+                                                   render={(props) => <Home {...props} />}/>
+                                            <Route exact={true}
+                                                   path={`${props.match.url}/signin`}
+                                                   render={(props) => <Login {...props} />}/>
+                                            <Route exact={true}
+                                                   path={`${props.match.url}/subscribe`}
+                                                   render={(props) => <Payment {...props} />}/>
+                                            <Route exact={true}
+                                                   path={`${props.match.url}/category/:category`}
+                                                   render={(props) => <List {...props} />}/>
+                                            <Route exact={true}  path={`${props.match.url}/:video/:slug`}
+                                                   render={(props) =>
+                                                       user.hasOwnProperty('id') ?
+                                                           subscription.hasOwnProperty('id') ?
+                                                               <Player {...props} />
+                                                               : props.history.push({
+                                                                   pathname: `/academy/subscribe`,
+                                                                   state: {
+                                                                       next: props.location.pathname
+                                                                   },
+                                                               })
+                                                           : props.history.push({
+                                                               pathname: `/academy/signin`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                   }/>
+                                            {/*<Route exact={true}*/}
+                                            {/*       path={`${props.match.url}/:video/:slug`}*/}
+                                            {/*       render={(props) => <Player {...props} />}/>*/}
+
                                         </Switch>
                                 </main>
                             </div>
