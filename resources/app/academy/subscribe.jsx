@@ -46,7 +46,8 @@ export default function (props) {
 
     const handleSubscribe = (e) => {
         e.preventDefault();
-        setProcessing(true)
+        setProcessing(true);
+        setMessage(false);
         $.ajax({
             url: `${API}/academy/subscription/subscribe`,
             method: 'post',
@@ -59,7 +60,14 @@ export default function (props) {
                 user_id: user.id,
             },
             error: function (xhr, status, error) {
-                setProcessing(false)
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
             }.bind(this),
             success: function (res) {
                 setProcessing(false)
@@ -93,6 +101,16 @@ export default function (props) {
                                                className="w-75 text-center" alt="Tutor-Soma" />
                                        </div>
                                         {
+                                            message ?
+                                                <div className="text-center mt-2">
+                                                    <div className={messageType} role="alert">
+                                                        <div className="alert-message">
+                                                            {response}
+                                                        </div>
+                                                    </div>
+                                                </div> : ''
+                                        }
+                                        {
                                             loading ? <div className='text-center'>
                                                     <ClipLoader />
                                                 </div> :
@@ -111,7 +129,10 @@ export default function (props) {
                                                             }}
                                                             // className='input-group'
                                                             value={phone}
-                                                            onChange={setPhone}
+                                                            onChange={value => {
+                                                                setPayment({});
+                                                                setPhone(value);
+                                                            }}
                                                             // onCountryDropdownClose={this.onCountryChanged}
                                                         />
                                                         {/*<input type='number' className='form-control' id='phone' required={true}/>*/}
@@ -128,6 +149,9 @@ export default function (props) {
                                                                         <div className="col-md-4 col-sm-6 ">
                                                                             <div className="custom-control custom-checkbox">
                                                                                 <input type="radio"
+                                                                                       onChange={e=> {
+                                                                                           setPayment({})
+                                                                                       }}
                                                                                        className="custom-control-input"
                                                                                        name="package_id"
                                                                                        id={el.id}

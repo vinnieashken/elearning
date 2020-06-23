@@ -60,7 +60,7 @@ class AcSubscriptionsController extends Controller
         if ($request->successful())
             return response()->json($subscription);
 
-        throw new ValidationException("".$request->status(), [$subscription, $request->json()]);
+        throw new ValidationException("An unspecified error has occurred. Kindly contact Standard Digital for assistance", [$subscription, $request->json()]);
     }
 
     public function confirm() {
