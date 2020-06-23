@@ -16,6 +16,9 @@ export default function (props) {
     const [passwordType, setPasswordType] = useState('password');
     const [loginType, setLoginType] = useState('email');
 
+    useEffect(e => {
+        console.log(next);
+    }, [])
 
     const dispatch = useDispatch();
 
@@ -48,7 +51,6 @@ export default function (props) {
                 dispatch({type: LOADING_SUBSCRIPTION, payload: true});
                 dispatch(fetchSubscription(res));
                 localStorage.setItem('user', JSON.stringify(res));
-                debugger;
                 props.history.push({
                     pathname: `${next}`,
                     state: {user: res},
