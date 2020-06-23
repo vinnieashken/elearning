@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Academy;
 use App\Exceptions\ValidationException;
 use App\Models\Academy\AcPackages;
 use App\Models\Academy\AcSubscriptions;
+use App\Models\Subscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -46,5 +47,16 @@ class AcSubscriptionsController extends Controller
 
     public function confirm() {
         Log::info(json_encode(request()->all()));
+        $now = Carbon::now();
+        $subscription = AcSubscriptions::query()->where('payment_ref', request('transaction'))->first();
+
+        $until = $now->addDays((int)$subscription->package->days);
+        $subscription->effective_from = $now;
+        $subscription->effective_until = $until;
+        $subscription->receipt_no = request('mpesa_code');
+        $subscription->payment_completed_on = $now;
+        $subscription->save();
+
+        return response()->json(['message'=> 'Payment recorded successfully.']);
     }
 }

@@ -108,6 +108,10 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     });
 //});
 
+//Academy Payment Confirmation
+Route::post('/subscription/confirm','Academy\AcSubscriptionsController@confirm');
+
+
 //Route::get('marks/{userid}','Api\ModulesController@debug');
 
 
