@@ -48,9 +48,9 @@ export default function (props) {
 
     useEffect((e) => {
         fetchVideos();
-        if (user.hasOwnProperty('name') && props.location.pathname !== `/academy/login` ) {
+        if (user.hasOwnProperty('id') && props.location.pathname !== `/academy/login` ) {
             fetchSubscriptionPlan();
-        }
+        } else setLoadingS(false);
     }, []);
 
     const fetchSubscriptionPlan = () => {
