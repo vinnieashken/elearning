@@ -9,7 +9,7 @@ import {API} from "../common/constants";
 export default function (props) {
 
     const dispatch = useDispatch();
-    const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
+    const [user, setUser] = useState(localStorage.hasOwnProperty('ac_user') ? JSON.parse(localStorage.getItem('ac_user')) : {});
     const [next, setNext] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('next') ? oldState.next : `/academy`);
     const [phone, setPhone] = useState({iso2: "ke", dialCode: "254", phone: ""})
     const [processing, setProcessing] = useState(false);

@@ -11,9 +11,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use function foo\func;
 
 class AcSubscriptionsController extends Controller
 {
+
+    public function subscription() {
+        $active = AcSubscriptions::query()
+            ->whereDate('effective_until', '>=', Carbon::now())
+            ->whereHas('user', function ($q) {
+                if (request()->has('user_id'))
+                    $q->where('id', request('user_id'));
+                if (request()->has('user_ref'))
+                    $q->where('user_id', request('user_ref'));
+                return $q->get();
+            })
+            ->first();
+
+        if (!$active)
+            throw new ValidationException("User does not have an active subscription");
+        return response()->json($active);
+    }
 
     public function subscribe() {
         $package = AcPackages::query()->where('id', (int)request('plan_id'))->first();
@@ -33,9 +51,9 @@ class AcSubscriptionsController extends Controller
             'https://vas.standardmedia.co.ke/api/mpesa/stk',
             array(
 
-                    "amount"=> $subscription->amount,
-                    "msisdn"=> request('phone'),
-                    "transaction_id"=> $subscription->payment_ref
+                "amount"=> $subscription->amount,
+                "msisdn"=> request('phone'),
+                "transaction_id"=> $subscription->payment_ref
             )
         );
         Log::info('testing');
@@ -47,12 +65,11 @@ class AcSubscriptionsController extends Controller
 
     public function confirm() {
         Log::info(json_encode(request()->all()));
-        $now = Carbon::now();
+        $now = new Carbon();
         $subscription = AcSubscriptions::query()->where('payment_ref', request('transaction'))->first();
 
-        $until = $now->addDays((int)$subscription->package->days);
-        $subscription->effective_from = $now;
-        $subscription->effective_until = $until;
+        $subscription->effective_from = Carbon::now();
+        $subscription->effective_until = Carbon::now()->addDays((int)$subscription->package->days);
         $subscription->receipt_no = request('mpesa_code');
         $subscription->payment_completed_on = $now;
         $subscription->save();

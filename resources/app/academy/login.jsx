@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Link, Route, Switch} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 import {API, ENV, LOADING_SUBSCRIPTION} from "../common/constants";
-import {fetchSubscription} from "../common/actions";
+import { fetchSubscription } from "../common/actions/academy";
 import {useDispatch} from "react-redux";
 
 export default function (props) {
@@ -50,7 +50,7 @@ export default function (props) {
             success: function (res) {
                 dispatch({type: LOADING_SUBSCRIPTION, payload: true});
                 dispatch(fetchSubscription(res));
-                localStorage.setItem('user', JSON.stringify(res));
+                localStorage.setItem('ac_user', JSON.stringify(res));
                 debugger;
                 props.history.push({
                     pathname: `${next}`,

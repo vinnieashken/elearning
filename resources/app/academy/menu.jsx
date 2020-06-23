@@ -4,7 +4,8 @@ import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import {useDispatch, useSelector} from "react-redux";
 import {API, ENV, LOADING_SUBSCRIPTION, PUBLIC_URL, SUBSCRIPTION_LOADED} from "../common/constants";
-import {HOME_VIDEOS_UPDATED} from "../common/constants/academy";
+import { fetchSubscription } from "../common/actions/academy";
+import {HOME_VIDEOS_UPDATED, SUBSCRIPTION_UPDATED} from "../common/constants/academy";
 
 const Home = Loadable({
     loader: () => import('./home'),
@@ -39,7 +40,7 @@ const List = Loadable({
 export default function (props) {
     const dispatch = useDispatch();
 
-    const [user, setUser] = useState(localStorage.hasOwnProperty('user') ? JSON.parse(localStorage.getItem('user')) : {});
+    const [user, setUser] = useState(localStorage.hasOwnProperty('ac_user') ? JSON.parse(localStorage.getItem('ac_user')) : {});
     const subscription = useSelector(state => state.academy.subscription);
     const [loading, setLoading] = useState(user.hasOwnProperty('name') && props.location.pathname !== `/academy/login` )
 
@@ -53,8 +54,11 @@ export default function (props) {
     const fetchSubscriptionPlan = () => {
         $.ajax({
             // url: `${API}/payments/subscription/user/2`,
-            url: `${API}/payments/subscription/user/${user.user_id}`,
+            url: `${API}/academy/subscription/active`,
             method: 'get',
+            data: {
+                user_id: user.user_id
+            },
             headers: {
                 'appkey': 'ELE-2020-XCZ3'
             },
@@ -63,7 +67,7 @@ export default function (props) {
                 // setLoading(false)
             }.bind(this),
             success: function (res) {
-                dispatch({type: SUBSCRIPTION_LOADED, payload: res});
+                dispatch({type: SUBSCRIPTION_UPDATED, payload: res});
                 // setLoading(false);
             }.bind(this)
         })
@@ -183,42 +187,42 @@ export default function (props) {
                                             </div>
                                         </div>
                                     </section>
-                                        <Switch>
-                                            <Route exact={true}
-                                                   path={props.match.url}
-                                                   render={(props) => <Home {...props} />}/>
-                                            <Route exact={true}
-                                                   path={`${props.match.url}/signin`}
-                                                   render={(props) => <Login {...props} />}/>
-                                            <Route exact={true}
-                                                   path={`${props.match.url}/subscribe`}
-                                                   render={(props) => <Subscribe {...props} />}/>
-                                            <Route exact={true}
-                                                   path={`${props.match.url}/category/:category`}
-                                                   render={(props) => <List {...props} />}/>
-                                            <Route exact={true}  path={`${props.match.url}/:video/:slug`}
-                                                   render={(props) =>
-                                                       user.hasOwnProperty('id') ?
-                                                           subscription.hasOwnProperty('id') ?
-                                                               <Player {...props} />
-                                                               : props.history.push({
-                                                                   pathname: `/academy/subscribe`,
-                                                                   state: {
-                                                                       next: props.location.pathname
-                                                                   },
-                                                               })
+                                    <Switch>
+                                        <Route exact={true}
+                                               path={props.match.url}
+                                               render={(props) => <Home {...props} />}/>
+                                        <Route exact={true}
+                                               path={`${props.match.url}/signin`}
+                                               render={(props) => <Login {...props} />}/>
+                                        <Route exact={true}
+                                               path={`${props.match.url}/subscribe`}
+                                               render={(props) => <Subscribe {...props} />}/>
+                                        <Route exact={true}
+                                               path={`${props.match.url}/category/:category`}
+                                               render={(props) => <List {...props} />}/>
+                                        <Route exact={true}  path={`${props.match.url}/:video/:slug`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <Player {...props} />
                                                            : props.history.push({
-                                                               pathname: `/academy/signin`,
+                                                               pathname: `/academy/subscribe`,
                                                                state: {
                                                                    next: props.location.pathname
                                                                },
                                                            })
-                                                   }/>
-                                            {/*<Route exact={true}*/}
-                                            {/*       path={`${props.match.url}/:video/:slug`}*/}
-                                            {/*       render={(props) => <Player {...props} />}/>*/}
+                                                       : props.history.push({
+                                                           pathname: `/academy/signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        {/*<Route exact={true}*/}
+                                        {/*       path={`${props.match.url}/:video/:slug`}*/}
+                                        {/*       render={(props) => <Player {...props} />}/>*/}
 
-                                        </Switch>
+                                    </Switch>
                                 </main>
                             </div>
                         </div>

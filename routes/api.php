@@ -103,6 +103,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
         Route::get('/video/{id}','Academy\KTNVideoController@get');
         Route::get('/rumble/search','Academy\KTNVideoController@rumbleMedia');
 
+        Route::get('/subscription/active','Academy\AcSubscriptionsController@subscription');
         Route::post('/subscription/subscribe','Academy\AcSubscriptionsController@subscribe');
         Route::post('/subscription/confirm','Academy\AcSubscriptionsController@confirm');
     });
