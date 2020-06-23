@@ -228,6 +228,7 @@ class InstitutionsController extends Controller
             $questionmodel = new Question();
             $questionmodel->module_id = $module;
             $questionmodel->question = $question['question'];
+            $questionmodel->listorder = 0;
             $questionmodel ->save();
 
             $optionmodel = new Option();
