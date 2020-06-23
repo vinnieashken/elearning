@@ -77,7 +77,7 @@ export default function (props) {
                                 <div className="card-body">
                                     <div className="m-sm-4">
                                         <div className="text-center">
-                                            <h1 className="h2">TutorSoma Academy</h1>
+                                            <h1 className="h2">TutorSoma Academy..</h1>
                                             <p className="lead">
                                                 Sign in to your account to continue
                                             </p>
