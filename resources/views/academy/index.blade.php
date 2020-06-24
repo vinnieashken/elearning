@@ -58,8 +58,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('static/app/images/favicon/favicon-16x16.png')}}">
 
 
-    <link href="{{ asset('static/academy/assets/css/theme.css') }}" rel="stylesheet">
-    <link href="{{ asset('static/academy/assets/css/demo.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/academy/assets/css/theme.css?').date('Ymdhis') }}" rel="stylesheet">
+    <link href="{{ asset('static/academy/assets/css/demo.css?').date('Ymdhis')}}" rel="stylesheet">
     <link href="{{ asset('static/academy/assets/css/fontawesome/css/all.css') }}" rel="stylesheet">
     <link href="{{ asset('static/academy/assets/css/fontawesome/css/brands.css') }}" rel="stylesheet">
     <link href="{{ asset('static/academy/assets/css/fontawesome/css/solid.css') }}" rel="stylesheet">
