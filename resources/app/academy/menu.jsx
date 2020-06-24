@@ -102,9 +102,9 @@ export default function (props) {
             <div id="mySidenav" className="sidenav">
                 <nav className="navbar navbar-expand-lg navbar-transparent navbar-light bg-light py-4 flex-column">
                     <a href="#" className="closebtn" onClick={toggleSidebar} >&times;</a>
-                    <a className="navbar-brand text-dark" href="#">
+                    <Link className="navbar-brand text-dark" to={'/academy'}>
                         <img src={`${PUBLIC_URL}/static/academy/assets/images/videosite/logo2.png`} className="img-left img-fluid" />
-                    </a>
+                    </Link>
                     <button className="navbar-toggler" type="button" data-action="offcanvas-open"
                             data-target="#navbar_main"
                             aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,6 +125,11 @@ export default function (props) {
                             <li className="nav-item">
                                 <Link className="nav-link  text-dark border-formart" to={`/academy/category/featured`}>
                                     <h6><strong>FEATURED</strong></h6>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link  text-dark border-formart" to={`/academy/signin`}>
+                                    <h6><strong>LOGOUT</strong></h6>
                                 </Link>
                             </li>
                             <li className="nav-item mt-5">
@@ -168,13 +173,15 @@ export default function (props) {
                         <React.Fragment>
                             <span  className="menu-bar" onClick={toggleSidebar}><i className="fa fa-bars" aria-hidden="true" /> MENU</span>
                             <section className="search-area d-block bg-dark pt-4">
+
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-12 col-md-12">
                                             <div className="mx-3 form-group">
                                                 <div className="input-group mb-4">
                                                     <div className="input-group-prepend">
-                                                <span className="input-group-text"><svg
+                                                <span className="input-group-text">
+                                                    <svg
                                                     className="svg-inline--fa fa-search fa-w-16" aria-hidden="true"
                                                     focusable="false" data-prefix="fas" data-icon="search" role="img"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"

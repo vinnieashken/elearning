@@ -17,6 +17,7 @@ export default function (props) {
     const [loginType, setLoginType] = useState('email');
 
     useEffect(e => {
+        localStorage.removeItem('ac_user');
         console.log(props);
     }, [])
 
