@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import Loading from "../common/loading";
-import {API, ENV} from "../common/constants";
+import {API, ENV, PUBLIC_URL} from "../common/constants";
 import {useSelector} from "react-redux";
 import VideoCard from "./videoCard";
+import VideoCardHorizontal from "./videoCardHorizontal";
+import {convertToSlug} from "../common/constants/functions";
 
 export default function (props) {
     const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
@@ -70,38 +72,38 @@ export default function (props) {
             {
                 loading ? <Loading /> :
                     <React.Fragment>
-                        <section className="bg-secondary pt-4">
-                            <div className="container">
-                                <div className="owl-stage-outer">
-                                    <div className="row d-flex my-2">
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success text-uppercase badge-xlg"><strong>Agriculture</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Livestock</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Crop</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase badge-xlg"><strong>Pig Farming</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Farming in Nakuru</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Bee keeping</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase badge-xlg"><strong>Farm Market</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Rice Farming</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Farm Machinery</strong></span>
-                                        <span
-                                            className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Poultry</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+                        {/*<section className="bg-secondary pt-4">*/}
+                        {/*    <div className="container">*/}
+                        {/*        <div className="owl-stage-outer">*/}
+                        {/*            <div className="row d-flex my-2">*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success text-uppercase badge-xlg"><strong>Agriculture</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Livestock</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Crop</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase badge-xlg"><strong>Pig Farming</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Farming in Nakuru</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Bee keeping</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase badge-xlg"><strong>Farm Market</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Rice Farming</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Farm Machinery</strong></span>*/}
+                        {/*                <span*/}
+                        {/*                    className="mb-2 ml-2 badge-xlg badge-pill badge-success  text-uppercase"><strong>Poultry</strong></span>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</section>*/}
                         <section className="slice" data-delimiter="1">
                             <div className="container">
                                 <div className="row">
-                                    <div className="col-12 col-md-12">
+                                    <div className="col-12 col-md-8">
                                         <div className="card border-0">
                                             <div className="embed-responsive embed-responsive-16by9">
                                                 <iframe className="embed-responsive-item"
@@ -129,6 +131,20 @@ export default function (props) {
                                                     }
                                                 </p>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-12 col-md-4">
+                                        <div className="row">
+                                            {
+                                                videos.slice(0, 3).map(el => {
+                                                    return (
+                                                        <VideoCardHorizontal {...props} video={el} />
+                                                    )
+                                                })
+                                            }
+
+
                                         </div>
                                     </div>
 

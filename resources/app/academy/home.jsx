@@ -36,12 +36,20 @@ export default function (props) {
                                         className="row cols-xs-space cols-sm-space cols-md-space align-items-center justify-content-around">
                                         <div className=" mt-5 col-lg-8 text-left">
                                             <p className="heading h1 text-white strong-400">
-                                                What is making wheat Farming boom in Kenya?
+                                                {videos.length > 2 ? videos[2].title : 'What is making wheat Farming boom in Kenya?'}
                                             </p>
 
-                                            <a href="#" target="_blank" className="btn bg-green mt-4">
-                                                <h5><strong className="text-white"> Learn more</strong></h5>
-                                            </a>
+                                            {
+                                                videos.length > 2 ?
+                                                    <Link to={{pathname: `/academy/${videos[2].id}/${convertToSlug(videos[2].title)}`,
+                                                        state: {
+                                                            video: videos[2],
+                                                            // videoData: videoData
+                                                        }}} className="btn bg-green mt-4">
+                                                        <h5><strong className="text-white"> Learn more</strong></h5>
+                                                    </Link> : ''
+                                            }
+
                                         </div>
 
                                     </div>
