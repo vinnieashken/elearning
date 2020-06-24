@@ -96,7 +96,6 @@ export default function (props) {
         $('#mySidenav').toggleClass('toggled');
     };
 
-
     return (
         <React.Fragment>
             <div id="mySidenav" className="sidenav">

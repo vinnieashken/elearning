@@ -59,6 +59,7 @@ export default function (props) {
         getModules();
     }, [props.match.params.subject]);
 
+    console.log(props.match.params.subject);
     const getModules = () => {
         let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}`;
         // if (props.match.params.hasOwnProperty('subject'))

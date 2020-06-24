@@ -140,6 +140,8 @@ export default function (props) {
     const dispatch = useDispatch();
 
     useEffect((e) => {
+        debugger;
+        console.log(API);
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
