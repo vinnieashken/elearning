@@ -13243,6 +13243,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     height: 32%;
 }
 
+.toggled {
+    width: 250px!important;
+}
+
 
 
 
