@@ -15,8 +15,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchSubscription} from "../common/actions";
 import Select from "react-select";
 
+const levels = {
+    primary: 1,
+    secondary: 2
+}
+
 export default function (props) {
     const dispatch = useDispatch();
+    const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
 
     const [loading, setLoading] = useState(true);
     const [allModules, setAllModules] = useState([]);
@@ -24,26 +30,21 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
-    const [selectedExam, setSelectedExam] = useState({})
-    const [searchParam, setSearchParam] = useState(null)
-    const [selectedClass, setSelectedClass] = useState(null)
+    const [selectedExam, setSelectedExam] = useState({});
+    const [searchParam, setSearchParam] = useState(null);
+    const [selectedClass, setSelectedClass] = useState(null);
     const classes = useSelector(state => state.default.classes);
-    const [selectedSubject, setSelectedSubject] = useState('')
+    const [level, setLevel] = useState( oldState && oldState.hasOwnProperty('level') ? oldState.level : props.match.params.level ? levels.hasOwnProperty(props.match.params.level) ? levels[props.match.params.level] : 1 : 1);
     const subjects = useSelector(state => state.default.subjects);
-    const [subjectOptions, setSubjectOptions] = useState({})
-    const [classOptions, setClassOptions] = useState({})
-    const [user, setUser] = useState(props.user)
+    const [subjectOptions, setSubjectOptions] = useState({});
+    const [classOptions, setClassOptions] = useState({});
+    const [user, setUser] = useState(props.user);
     const subscription = useSelector(state => state.default.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
-        // dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
-        // dispatch(fetchSubscription(user));
         setLoading(true);
         setUser(props.user)
-        // if (props.user && props.user.id) {
-        //     dispatch(fetchSubscription(props.user));
-        // }
         const subjectArray = {}
         const classArray = {}
         subjects.forEach(el => {
@@ -59,9 +60,8 @@ export default function (props) {
         getModules();
     }, [props.match.params.subject]);
 
-    console.log(props.match.params.subject);
     const getModules = () => {
-        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}`;
+        let url = level === 1 ? `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}` : `${API}/modules/nochoices/list`;
         // if (props.match.params.hasOwnProperty('subject'))
         //     url = `${API}/modules/subject/name/${filterValue}`;
 

@@ -140,8 +140,6 @@ export default function (props) {
     const dispatch = useDispatch();
 
     useEffect((e) => {
-        debugger;
-        console.log(API);
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
@@ -281,7 +279,37 @@ export default function (props) {
                                         }
                                     </ul>
                                 </div>
-                                <Link to={`${ENV}exams/modules`}>EXAMINATION PAPERS</Link>
+                                <div className="dropdown">
+                                    <a className=" dropdown-toggle" data-toggle="dropdown">EXAMINATION PAPERS
+                                        <span className="caret" />
+                                    </a>
+                                    <ul className="dropdown-menu">
+                                        {/*<li>*/}
+                                        {/*    <Link to={{*/}
+                                        {/*        pathname: `${ENV}exams/subjects/${el.subject}/modules`,*/}
+                                        {/*        state: {*/}
+                                        {/*            level: '0'*/}
+                                        {/*        },*/}
+                                        {/*    }}>CBC</Link>*/}
+                                        {/*</li>*/}
+                                        <li>
+                                            <Link to={{
+                                                pathname: `${ENV}exams/modules/primary`,
+                                                state: {
+                                                    level: '1'
+                                                },
+                                            }}>PRIMARY SCHOOL</Link>
+                                        </li>
+                                        <li>
+                                            <Link to={{
+                                                pathname: `${ENV}exams/modules/secondary`,
+                                                state: {
+                                                    level: '2'
+                                                }
+                                            }}>HIGH SCHOOL</Link>
+                                        </li>
+                                    </ul>
+                                </div>
                                 {
                                     user.hasOwnProperty('id') ?
                                         <React.Fragment>
@@ -356,9 +384,43 @@ export default function (props) {
                                         </div>
                                     </li>
 
-                                    <li className="nav-item mt-4">
-                                        <Link className="nav-link" to={`${ENV}exams/modules`}>EXAMINATION PAPERS </Link>
+                                    <li className="nav-item dropdown mt-4">
+                                        <a aria-expanded="false" aria-haspopup="true"
+                                           className="nav-link dropdown-toggle"
+                                           data-toggle="dropdown" href="http://example.com" id="navbarDropdownMenuLink">
+                                            EXAMINATION PAPERS
+                                        </a>
+                                        <div aria-labelledby="navbarDropdownMenuLink" className="dropdown-menu">
+                                            {/*<Link className="dropdown-item " to={*/}
+                                            {/*    {*/}
+                                            {/*        pathname: `${ENV}exams/modules`,*/}
+                                            {/*        state: {*/}
+                                            {/*            level: 0*/}
+                                            {/*        }*/}
+                                            {/*    }*/}
+                                            {/*}>CBC</Link>*/}
+                                            <Link className="dropdown-item " to={
+                                                {
+                                                    pathname: `${ENV}exams/modules/primary`,
+                                                    state: {
+                                                        level: 1
+                                                    }
+                                                }
+                                            }>PRIMARY SCHOOL</Link>
+                                            {/*<Link className="dropdown-item " to={*/}
+                                            {/*    {*/}
+                                            {/*        pathname: `${ENV}exams/modules/secondary`,*/}
+                                            {/*        // state: {*/}
+                                            {/*        //     level: 2*/}
+                                            {/*        // }*/}
+                                            {/*    }*/}
+                                            {/*}>HIGH SCHOOL</Link>*/}
+                                        </div>
                                     </li>
+
+                                    {/*<li className="nav-item mt-4">*/}
+                                    {/*    <Link className="nav-link" to={`${ENV}exams/modules`}>EXAMINATION PAPERS </Link>*/}
+                                    {/*</li>*/}
                                     {/*<li className="nav-item mt-4">*/}
                                     {/*    <a className="nav-link" href="#">KCSE </a>*/}
                                     {/*</li>*/}
@@ -565,23 +627,34 @@ export default function (props) {
                                                    //     },
                                                    // })
                                                }/>
+                                        <Route exact={true} path={`${props.match.url}exams/modules/:level`}
+                                               render={(props) =>
+                                                   // user.hasOwnProperty('id') ?
+                                                   <Modules {...props} user={user}/>
+                                                   // : props.history.push({
+                                                   //     pathname: `${ENV}signin`,
+                                                   //     state: {
+                                                   //         next: props.location.pathname
+                                                   //     },
+                                                   // })
+                                               }/>
                                         <Route exact={true} path={`${props.match.url}exams/subjects/:subject/modules`}
                                                render={(props) =>
                                                    // user.hasOwnProperty('id') ?
                                                    //     subscription.hasOwnProperty('id') ?
-                                                           <Modules {...props} user={user}/>
-                                                       //     : props.history.push({
-                                                       //         pathname: `${ENV}subscriptions`,
-                                                       //         state: {
-                                                       //             next: props.location.pathname
-                                                       //         },
-                                                       //     })
-                                                       // : props.history.push({
-                                                       //     pathname: `${ENV}signin`,
-                                                       //     state: {
-                                                       //         next: props.location.pathname
-                                                       //     },
-                                                       // })
+                                                   <Modules {...props} user={user}/>
+                                                   //     : props.history.push({
+                                                   //         pathname: `${ENV}subscriptions`,
+                                                   //         state: {
+                                                   //             next: props.location.pathname
+                                                   //         },
+                                                   //     })
+                                                   // : props.history.push({
+                                                   //     pathname: `${ENV}signin`,
+                                                   //     state: {
+                                                   //         next: props.location.pathname
+                                                   //     },
+                                                   // })
                                                }/>
                                         <Route exact={true} path={`${props.match.url}exams/done`}
                                                render={(props) =>
@@ -641,12 +714,12 @@ export default function (props) {
                                                }/>
                                         <Route exact={true} path={`${props.match.url}free/exams`}
                                                render={(props) =>
-                                                       <FreeExams {...props} user={user}/>
+                                                   <FreeExams {...props} user={user}/>
                                                }/>
                                         <Route exact={true} path={`${props.match.url}free/exam/:exam`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
-                                                           <Exam {...props} user={user}/>
+                                                       <Exam {...props} user={user}/>
                                                        : props.history.push({
                                                            pathname: `${ENV}signin`,
                                                            state: {
