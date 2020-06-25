@@ -78,9 +78,11 @@ class QuestionsController extends Controller
             'id'=> $module->id,
             'class' => $class,
             'subject' => $module->subject,
+            'choices' => $module->choices,
             'done' => false,
             'name'=> $module->module,
             'questions'=> $results,
+
 
         ];
 

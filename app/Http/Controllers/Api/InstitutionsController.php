@@ -143,10 +143,15 @@ class InstitutionsController extends Controller
         $modulename = $request->module;
         $institutionid = $request->institutionid;
 
+        $choices = 1;
+        if($request->has('choices'))
+            $choices = $request->choices;
+
         $module = new Module();
         $module->subject_id = $subjectid;
         $module->module = $modulename;
         $module->institution_id = $institutionid;
+        $module->choices = $choices;
         $module->save();
 
         return $module;
