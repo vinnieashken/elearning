@@ -50,7 +50,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
     Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
     Route::post('/questions/module/user/answers','Api\QuestionsController@saveUserAnswers');
-
+    Route::post('/questions/module/user/answers/choiceless','Api\QuestionsController@saveUserAnswerChoicelessperQuestion');
 
     Route::get('/payments/subscriptions','Api\PaymentsController@getSubscriptions');
     Route::get('/payments/institutions/subscriptions','Api\PaymentsController@getInstitutionsPackages');

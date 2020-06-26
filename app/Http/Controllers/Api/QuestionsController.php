@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendResultsEmail;
 use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
+use App\Models\Choiceless;
 use App\Models\Customer;
 use App\Models\Institution;
 use App\Models\Level;
@@ -171,5 +172,21 @@ class QuestionsController extends Controller
 
         return $body;
 
+    }
+
+    public function saveUserAnswerChoicelessperQuestion(Request $request)
+    {
+        $user_id = $request->userid;
+        $module_id = $request->moduleid;
+        $question_id = $request->questionid;
+        $answer = $request->answer;
+        $record = new Choiceless();
+
+        $record->user_id = $user_id;
+        $record->module_id = $module_id;
+        $record->question_id = $question_id;
+        $record->answer = $answer;
+
+        $record->save();
     }
 }
