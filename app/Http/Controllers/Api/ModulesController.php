@@ -748,17 +748,15 @@ class ModulesController extends Controller
 
             if($request->has('userid'))
             {
-                $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                //$usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
                 foreach ($results as $result)
                 {
                     $result['done'] = false;
 
-                    foreach ($usermodules as $usermodule)
+                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                    if(!is_null($choiceless))
                     {
-                        if($result->id === $usermodule->module_id)
-                        {
-                            $result['done'] = true;
-                        }
+                        $result['done'] = true;
                     }
                     array_push($temp,$result);
                 }
@@ -850,20 +848,16 @@ class ModulesController extends Controller
         $data = [];
         if($request->has('userid'))
         {
-            $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
-
+            //$usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
 
             foreach ($results as $result)
             {
                 $result['done'] = false;
 
-                foreach ($usermodules as $usermodule)
+                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                if(!is_null($choiceless))
                 {
-
-                    if($result->id == $usermodule->module_id)
-                    {
-                        $result['done'] = true;
-                    }
+                    $result['done'] = true;
                 }
 
                 array_push($data,$result);
