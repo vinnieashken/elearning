@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
+use App\Models\Choiceless;
 use App\Models\Customer;
 use App\Models\Marks;
 use App\Models\Module;
@@ -162,8 +163,16 @@ class ModulesController extends Controller
                             $result['done'] = true;
                         }
                     }
+
+                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                    if(!is_null($choiceless))
+                    {
+                        $result['done'] = true;
+                    }
                     array_push($temp,$result);
                 }
+
+
                 $data ["rows"] = $temp;
             }
             else
@@ -268,6 +277,12 @@ class ModulesController extends Controller
                     }
                 }
 
+                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                if(!is_null($choiceless))
+                {
+                    $result['done'] = true;
+                }
+
                 array_push($data,$result);
             }
         }
@@ -316,6 +331,12 @@ class ModulesController extends Controller
                             $result['done'] = true;
                         }
                     }
+
+                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                    if(!is_null($choiceless))
+                    {
+                        $result['done'] = true;
+                    }
                     array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
@@ -345,6 +366,11 @@ class ModulesController extends Controller
                         $result['done'] = true;
                     }
 
+                }
+                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                if(!is_null($choiceless))
+                {
+                    $result['done'] = true;
                 }
                 array_push($data,$result);
             }
@@ -398,6 +424,12 @@ class ModulesController extends Controller
                             $result['done'] = true;
                         }
                     }
+
+                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                    if(!is_null($choiceless))
+                    {
+                        $result['done'] = true;
+                    }
                     array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
@@ -427,6 +459,11 @@ class ModulesController extends Controller
                         $result['done'] = true;
                     }
 
+                }
+                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
+                if(!is_null($choiceless))
+                {
+                    $result['done'] = true;
                 }
                 array_push($data,$result);
             }

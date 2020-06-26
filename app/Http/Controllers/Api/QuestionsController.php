@@ -95,12 +95,16 @@ class QuestionsController extends Controller
             if(!is_null($record))
             {
                 $data['done'] = true;
-                if(!is_null($choiceless))
-                {
-                    $data['lastquestion'] = $choiceless->question_id;
-                }
 
             }
+
+            $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$userid)->where('module_id',$moduleid)->first();
+            if(!is_null($choiceless))
+            {
+                $data['done'] = true;
+                $data['lastquestion'] = $choiceless->question_id;
+            }
+
         }
         return $data;
     }
