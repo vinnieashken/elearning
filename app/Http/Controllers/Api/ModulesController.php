@@ -163,12 +163,6 @@ class ModulesController extends Controller
                             $result['done'] = true;
                         }
                     }
-
-                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                    if(!is_null($choiceless))
-                    {
-                        $result['done'] = true;
-                    }
                     array_push($temp,$result);
                 }
 
@@ -277,12 +271,6 @@ class ModulesController extends Controller
                     }
                 }
 
-                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                if(!is_null($choiceless))
-                {
-                    $result['done'] = true;
-                }
-
                 array_push($data,$result);
             }
         }
@@ -320,6 +308,7 @@ class ModulesController extends Controller
             if($request->has('userid'))
             {
                 $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                $choiceless = Choiceless::where('user_id',$request->userid)->select('module_id')->distinct()->get();
                 foreach ($results as $result)
                 {
                     $result['done'] = false;
@@ -332,11 +321,14 @@ class ModulesController extends Controller
                         }
                     }
 
-                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                    if(!is_null($choiceless))
+                    foreach($choiceless as $usermodule)
                     {
-                        $result['done'] = true;
+                        if($result->id === $usermodule->module_id)
+                        {
+                            $result['done'] = true;
+                        }
                     }
+
                     array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
@@ -355,6 +347,7 @@ class ModulesController extends Controller
         if($request->has('userid'))
         {
             $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+            $choiceless = Choiceless::where('user_id',$request->userid)->select('module_id')->distinct()->get();
             foreach ($results as $result)
             {
                 $result['done'] = false;
@@ -367,11 +360,15 @@ class ModulesController extends Controller
                     }
 
                 }
-                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                if(!is_null($choiceless))
+
+                foreach($choiceless as $usermodule)
                 {
-                    $result['done'] = true;
+                    if($result->id === $usermodule->module_id)
+                    {
+                        $result['done'] = true;
+                    }
                 }
+
                 array_push($data,$result);
             }
         }
@@ -413,6 +410,7 @@ class ModulesController extends Controller
             if($request->has('userid'))
             {
                 $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                $choiceless = Choiceless::where('user_id',$request->userid)->select('module_id')->distinct()->get();
                 foreach ($results as $result)
                 {
                     $result['done'] = false;
@@ -425,11 +423,14 @@ class ModulesController extends Controller
                         }
                     }
 
-                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                    if(!is_null($choiceless))
+                    foreach($choiceless as $usermodule)
                     {
-                        $result['done'] = true;
+                        if($result->id === $usermodule->module_id)
+                        {
+                            $result['done'] = true;
+                        }
                     }
+
                     array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
@@ -448,6 +449,8 @@ class ModulesController extends Controller
         if($request->has('userid'))
         {
             $usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+            $choiceless = Choiceless::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+
             foreach ($results as $result)
             {
                 $result['done'] = false;
@@ -460,11 +463,15 @@ class ModulesController extends Controller
                     }
 
                 }
-                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                if(!is_null($choiceless))
+
+                foreach($choiceless as $usermodule)
                 {
-                    $result['done'] = true;
+                    if($result->id === $usermodule->module_id)
+                    {
+                        $result['done'] = true;
+                    }
                 }
+
                 array_push($data,$result);
             }
         }
@@ -749,15 +756,19 @@ class ModulesController extends Controller
             if($request->has('userid'))
             {
                 //$usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+                $choiceless = Choiceless::where('user_id',$request->userid)->select('module_id')->distinct()->get();
                 foreach ($results as $result)
                 {
                     $result['done'] = false;
 
-                    $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                    if(!is_null($choiceless))
+                    foreach($choiceless as $usermodule)
                     {
-                        $result['done'] = true;
+                        if($result->id === $usermodule->module_id)
+                        {
+                            $result['done'] = true;
+                        }
                     }
+
                     array_push($temp,$result);
                 }
                 $data ["rows"] = $temp;
@@ -849,15 +860,17 @@ class ModulesController extends Controller
         if($request->has('userid'))
         {
             //$usermodules = AnswerSheet::where('user_id',$request->userid)->select('module_id')->distinct()->get();
-
+            $choiceless = Choiceless::where('user_id',$request->userid)->select('module_id')->distinct()->get();
             foreach ($results as $result)
             {
                 $result['done'] = false;
 
-                $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$request->userid)->where('module_id',$result->id)->first();
-                if(!is_null($choiceless))
+                foreach($choiceless as $usermodule)
                 {
-                    $result['done'] = true;
+                    if($result->id === $usermodule->module_id)
+                    {
+                        $result['done'] = true;
+                    }
                 }
 
                 array_push($data,$result);
