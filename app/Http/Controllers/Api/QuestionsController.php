@@ -98,7 +98,7 @@ class QuestionsController extends Controller
 
             }
 
-            $choiceless = Choiceless::where('user_id',$userid)->where('module_id',(int)$moduleid)->get();
+            $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$userid)->where('module_id',$moduleid)->first();
             if(!is_null($choiceless))
             {
                 $data['done'] = true;
