@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\Subscription;
@@ -351,6 +352,12 @@ class PaymentsController extends Controller
         {
 
         }
+    }
+
+    public function getActiveCoupon()
+    {
+        $coupon = Coupon::where('active',1)->where('expiry','<=',date('Y-m-d'))->first();
+        return $coupon;
     }
 
     // for debugging purpose
