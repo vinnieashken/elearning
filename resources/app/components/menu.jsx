@@ -125,6 +125,11 @@ const PaymentReport = Loadable({
     loading: Loading
 })
 
+const Question = Loadable({
+    loader: () => import('./questionContainerr'),
+    loading: Loading
+})
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -407,14 +412,14 @@ export default function (props) {
                                                     }
                                                 }
                                             }>PRIMARY SCHOOL</Link>
-                                            {/*<Link className="dropdown-item " to={*/}
-                                            {/*    {*/}
-                                            {/*        pathname: `${ENV}exams/modules/secondary`,*/}
-                                            {/*        // state: {*/}
-                                            {/*        //     level: 2*/}
-                                            {/*        // }*/}
-                                            {/*    }*/}
-                                            {/*}>HIGH SCHOOL</Link>*/}
+                                            <Link className="dropdown-item " to={
+                                                {
+                                                    pathname: `${ENV}exams/modules/secondary`,
+                                                    // state: {
+                                                    //     level: 2
+                                                    // }
+                                                }
+                                            }>HIGH SCHOOL</Link>
                                         </div>
                                     </li>
 
@@ -732,6 +737,24 @@ export default function (props) {
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <Exam {...props} user={user}/>
+                                                           : props.history.push({
+                                                               pathname: `${ENV}subscriptions`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
+                                        <Route exact={true} path={`${props.match.url}exams/exam/:exam/questions/:index`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <Question {...props} user={user}/>
                                                            : props.history.push({
                                                                pathname: `${ENV}subscriptions`,
                                                                state: {

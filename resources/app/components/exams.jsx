@@ -34,7 +34,6 @@ export default function (props) {
     const [searchParam, setSearchParam] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
     const classes = useSelector(state => state.default.classes);
-    const [level, setLevel] = useState( oldState && oldState.hasOwnProperty('level') ? oldState.level : props.match.params.level ? levels.hasOwnProperty(props.match.params.level) ? levels[props.match.params.level] : 1 : 1);
     const subjects = useSelector(state => state.default.subjects);
     const [subjectOptions, setSubjectOptions] = useState({});
     const [classOptions, setClassOptions] = useState({});
@@ -58,10 +57,10 @@ export default function (props) {
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
         getModules();
-    }, [props.match.params.subject]);
+    }, [props.match.params.subject, props.match.params.level]);
 
     const getModules = () => {
-        let url = level === 1 ? `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}` : `${API}/modules/nochoices/list`;
+        let url = props.match.params.level === 'secondary' ? `${API}/modules/nochoices/list` : `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}` ;
         // if (props.match.params.hasOwnProperty('subject'))
         //     url = `${API}/modules/subject/name/${filterValue}`;
 
@@ -114,30 +113,30 @@ export default function (props) {
         return (
             <div className="actions ml-3">
                 {
-                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
-                        <React.Fragment>
-                            <Link to={{
-                                pathname: `${ENV}exams/exam/${row.id}/performance`,
-                                state: {
-                                    exam: row
-                                }
-                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
-                                Performance <i className="fa fa-graduation-cap" />
-                            </Link>
-                            <Link to={{
-                                pathname: `${ENV}exams/exam/edit/${row.id}`,
-                                state: {
-                                    exam: row
-                                }
-                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
-                                Add Question <i className="fa fa-plus" />
-                            </Link>
-                            <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">
-                                Edit Paper <i className="fa fa-pencil" />
-                            </Link>
-                        </React.Fragment> :
+                    // ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
+                    //     <React.Fragment>
+                    //         <Link to={{
+                    //             pathname: `${ENV}exams/exam/${row.id}/performance`,
+                    //             state: {
+                    //                 exam: row
+                    //             }
+                    //         }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
+                    //             Performance <i className="fa fa-graduation-cap" />
+                    //         </Link>
+                    //         <Link to={{
+                    //             pathname: `${ENV}exams/exam/edit/${row.id}`,
+                    //             state: {
+                    //                 exam: row
+                    //             }
+                    //         }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
+                    //             Add Question <i className="fa fa-plus" />
+                    //         </Link>
+                    //         <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">
+                    //             Edit Paper <i className="fa fa-pencil" />
+                    //         </Link>
+                    //     </React.Fragment> :
                         <Link to={{
-                            pathname: parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}` : `${ENV}exams/exam/${row.id}`,
+                            pathname: props.match.params.level === 'secondary' ? `${ENV}exams/exam/${row.id}/questions/1` : parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}` : `${ENV}exams/exam/${row.id}`,
                             state: {
                                 exam: row
                             }

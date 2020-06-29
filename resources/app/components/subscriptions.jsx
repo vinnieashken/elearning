@@ -105,7 +105,7 @@ export default function (props) {
                                                 <h5 className="card-header text-center">{el.subscription}</h5>
                                                 <div className="card-body">
                                                     <h5 className="card-title text-center">Ksh. {el.cost}</h5>
-                                                    <h6 className="card-title text-center">Also Recieve</h6>
+                                                    <h6 className="card-title text-center">Also Receive</h6>
                                                     <p className="card-text text-center">- {el.description}</p>
                                                     <div className="text-center">
                                                         <Link to={{
