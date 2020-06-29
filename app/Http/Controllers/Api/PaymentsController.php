@@ -356,7 +356,7 @@ class PaymentsController extends Controller
 
     public function getActiveCoupon()
     {
-        $coupon = Coupon::where('active',1)->first();
+        $coupon = Coupon::where('active',1)->where('expiry','>=',date('Y-m-d'))->first();
         return $coupon;
     }
 
