@@ -366,6 +366,11 @@ class PaymentsController extends Controller
     public function getActiveCoupon()
     {
         $coupon = Coupon::where('active',1)->where('expiry','>=',date('Y-m-d'))->first();
+
+        if(!is_null($coupon))
+        {
+            return response()->json(["message"=> "No active coupon found"] , 400);
+        }
         return $coupon;
     }
 
