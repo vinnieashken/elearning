@@ -102,7 +102,7 @@ class QuestionsController extends Controller
             if(!is_null($choiceless))
             {
                 $data['done'] = true;
-                $data['lastquestion'] = $moduleid;
+                $data['lastquestion'] = $choiceless;
             }
 
         }
