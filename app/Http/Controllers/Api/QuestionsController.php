@@ -103,6 +103,7 @@ class QuestionsController extends Controller
             {
                 $data['done'] = true;
                 $data['lastquestion'] = $choiceless->question_id;
+                $data['user_answers'] = Choiceless::where('user_id',$userid)->where('module_id',$moduleid)->get(['id','module_id','question_id','answer']);
             }
 
         }
