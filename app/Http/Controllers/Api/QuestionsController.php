@@ -91,7 +91,7 @@ class QuestionsController extends Controller
         {
             $userid = $request->userid;
             $record = AnswerSheet::where('user_id',$userid)->where('module_id',$moduleid)->first();
-            $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$userid)->where('module_id',$moduleid)->first();
+            //$choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$userid)->where('module_id',$moduleid)->first();
             if(!is_null($record))
             {
                 $data['done'] = true;
