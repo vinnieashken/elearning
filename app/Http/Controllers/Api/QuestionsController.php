@@ -98,7 +98,7 @@ class QuestionsController extends Controller
 
             }
 
-            $choiceless = Choiceless::where('user_id',$userid)->get();
+            $choiceless = Choiceless::where('user_id',$userid)->where('module_id',(int)$moduleid)->get();
             if(!is_null($choiceless))
             {
                 $data['done'] = true;
