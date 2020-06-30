@@ -21,7 +21,6 @@ export default function (props) {
     const [activeQuestion, setActiveQuestion] = useState(props.match.params.hasOwnProperty('index') ? parseInt(props.match.params.index) : 1);
     const [showAns, setShowAns] = useState(false);
     const [answers, setAnswers] = useState({})
-    const [userAnswers, setUserAnswers] = useState([]);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(e => {
@@ -53,17 +52,23 @@ export default function (props) {
             success: function (res) {
                 if (subscription.hasOwnProperty('id') || (res.publisher && parseInt(res.publisher.id) === 29)) {
                     setExam(res);
+                    const userAnswers = {};
                     if (res.done) {
-                        getUserAnswers();
                         res.questions.forEach((el, index) => {
-                            if (el.id === res.lastquestion) {
-                                props.history.push({
-                                    pathname: `${ENV}exams/exam/${res.id}/questions/${index + 1}`,
+                            if (res.hasOwnProperty('user_answers') && res.user_answers.length > 0) {
+                                res.user_answers.forEach((ans) => {
+                                    if (parseInt(el.id) === parseInt(ans.question_id)) {
+                                        userAnswers[index] = {};
+                                        userAnswers[index]['answer'] = ans.answer
+                                        userAnswers[index]['isVisible'] = true
+                                    }
                                 });
                             }
                         });
                     }
-                    setLoading(res.done);
+                    debugger;
+                    setAnswers(userAnswers);
+                    setLoading(false);
                 } else {
                     props.history.push({
                         pathname: `${ENV}subscriptions`,
@@ -73,32 +78,6 @@ export default function (props) {
                     })
                 }
 
-            }.bind(this)
-        })
-    };
-
-    const getUserAnswers = () => {
-        $.ajax({
-            url: `${API}/modules/${props.match.params.exam}/user/${student.id}`,
-            // url: `${API}/subjects/class/{class_id}`,
-            method: 'GET',
-            headers: {
-                'appkey': 'ELE-2020-XCZ3'
-            },
-            error: function (xhr, status, error) {
-                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
-                try {
-                    response = JSON.parse(xhr['responseText'])['message']
-                }catch (e) {}
-                setLoading(false);
-                // setMessage(true);
-                setMessageType('alert alert-danger');
-                setResponse(response);
-            }.bind(this),
-            success: function (res) {
-                setUserAnswers(res);
-                setShowAns(res.length > 0 );
-                setLoading(false);
             }.bind(this)
         })
     };
@@ -138,16 +117,45 @@ export default function (props) {
 
     const handleNext = (e) => {
         e.preventDefault();
-        if (activeQuestion === exam.questions.length) {
-            props.history.push({
-                pathname: `${ENV}exams/modules/secondary`,
-            });
-        } else {
-            setShowAns(false);
-            props.history.push({
-                pathname: `${ENV}exams/exam/${exam.id}/questions/${activeQuestion + 1}`,
-            });
-        }
+        setProcessing(true);
+        $.ajax({
+            url: `${API}/questions/module/user/answers/choiceless`,
+            method: 'POST',
+            data: {
+                userid: student['id'],
+                moduleid: exam['id'],
+                questionid: exam.questions[activeQuestion - 1]['id'],
+                answer: answers.hasOwnProperty(activeQuestion - 1) ? answers[activeQuestion - 1]['answer'] : '',
+            },
+            headers: {
+                'appkey': 'ELE-2020-XCZ3'
+            },
+            error: function (xhr, status, error) {
+                var response = `Sorry an error has occurred. We are working on it. (${xhr.status})`;
+                try {
+                    response = JSON.parse(xhr['responseText'])['message']
+                }catch (e) {}
+                setProcessing(false);
+                setMessage(true);
+                setMessageType('alert alert-danger');
+                setResponse(response);
+                setShowAns(true);
+            }.bind(this),
+            success: function (res) {
+                setProcessing(false);
+                if (activeQuestion === exam.questions.length) {
+                    props.history.push({
+                        pathname: `${ENV}exams/modules/secondary`,
+                    });
+                } else {
+                    setShowAns(false);
+                    props.history.push({
+                        pathname: `${ENV}exams/exam/${exam.id}/questions/${activeQuestion + 1}`,
+                    });
+                }
+            }.bind(this)
+        })
+
     }
 
     return (
@@ -346,7 +354,20 @@ export default function (props) {
                                                                                     >Previous Question</button>
                                                                                 }
                                                                                 <button className="btn btn-info sw-btn-next btn-rounded mr-2" type="button"
-                                                                                        onClick={handleNext}>
+                                                                                        onClick={
+                                                                                            event => {
+                                                                                                if (activeQuestion === exam.questions.length) {
+                                                                                                    props.history.push({
+                                                                                                        pathname: `${ENV}exams/modules/secondary`,
+                                                                                                    });
+                                                                                                } else {
+                                                                                                    setShowAns(false);
+                                                                                                    props.history.push({
+                                                                                                        pathname: `${ENV}exams/exam/${exam.id}/questions/${activeQuestion + 1}`,
+                                                                                                    });
+                                                                                                }
+                                                                                            }
+                                                                                        }>
                                                                                     {showAns ? 'Next Question' : 'Skip'}
                                                                                 </button>
                                                                             </div>
@@ -371,10 +392,10 @@ export default function (props) {
                                                                                     </li>
                                                                                     {
                                                                                         <div className='row'>
-                                                                                            <div className={`form-group ${showAns ? 'col-md-6' : 'col-md-12'} mt-2`}>
+                                                                                            <div className={`form-group ${(showAns || (answers.hasOwnProperty(activeQuestion - 1) && answers[activeQuestion - 1]['isVisible'])) ? 'col-md-6' : 'col-md-12'} mt-2`}>
                                                                                                 <CKEditor
                                                                                                     editor={ ClassicEditor }
-                                                                                                    data={answers.hasOwnProperty(activeQuestion - 1) ? answers[activeQuestion - 1] : ''}
+                                                                                                    data={answers.hasOwnProperty(activeQuestion - 1) ? answers[activeQuestion - 1]['answer'] : ''}
                                                                                                     onInit={ editor => {
                                                                                                         // You can store the "editor" and use when it is needed.
                                                                                                         console.log( 'Editor is ready to use!', editor );
@@ -382,13 +403,15 @@ export default function (props) {
                                                                                                     onChange={ ( event, editor ) => {
                                                                                                         const data = editor.getData();
                                                                                                         let choices = answers;
-                                                                                                        choices[activeQuestion - 1] = data;
+                                                                                                        choices[activeQuestion - 1]['answer'] = data;
+                                                                                                        choices[activeQuestion - 1]['isVisible'] = false;
                                                                                                         setAnswers(choices);
+
                                                                                                     } }
                                                                                                 />
                                                                                             </div>
                                                                                             {
-                                                                                                showAns &&
+                                                                                                (showAns || (answers.hasOwnProperty(activeQuestion - 1) && answers[activeQuestion - 1]['isVisible'])) &&
                                                                                                 <div className={'form-group col-md-6 answer'}>
                                                                                                     {
                                                                                                         <span dangerouslySetInnerHTML={ {__html: `${exam.questions[activeQuestion - 1].options[0].option}`} } />
@@ -405,7 +428,7 @@ export default function (props) {
                                                                         {
                                                                             processing ?
                                                                                 <ClipLoader /> :
-                                                                                showAns ?
+                                                                                (showAns || (answers.hasOwnProperty(activeQuestion - 1) && answers[activeQuestion - 1]['isVisible'])) ?
                                                                                     <div className="btn-group mr-2 sw-btn-group" role="group">
                                                                                         {/*<button className="btn btn-info sw-btn-prev disabled btn-rounded mr-2" type="button">Previous</button>*/}
                                                                                         <button className="btn btn-info sw-btn-next btn-rounded mr-2" type="button"
