@@ -61,6 +61,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
     Route::get('/payments/user/{user_id}','Api\PaymentsController@getUserPayments');
     Route::get('/payments/subscriptions/user/{id}','Api\PaymentsController@getUserSubscriptions');
+    Route::get('/payments/coupon','Api\PaymentsController@getActiveCoupon');
 
 //for testing only
     Route::get('/payments/subscriptions/list','Api\PaymentsController@listSubscriptions');

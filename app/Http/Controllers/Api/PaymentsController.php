@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\Subscription;
@@ -40,6 +41,15 @@ class PaymentsController extends Controller
         $phone = $request->mobile;
         $publishers = [];
         $students = 1;
+        $couponcode = null;
+        $discount = 0;
+        if($request->has('couponcode'))
+        {
+            $coupon = Coupon::where('active',1)->where('code',$couponcode)->where('expiry','>=',date('Y-m-d'))->first();
+            $discount = $coupon->discount;
+        }
+
+        $normalizer = (100 - $discount) /100;
 
         if(!is_numeric($userid))
         {
@@ -97,7 +107,7 @@ class PaymentsController extends Controller
                 //$institutionid = $customer->institution_id;
                 //$students = $this->getStudentsCount($institutionid);
                 //Log::info('Students count = '.$students);
-                $cost = ($package->cost * ceil($students/ $package->persons));
+                $cost = ($package->cost * ceil($students/ $package->persons)) * $normalizer;
 
                 if($cost == 0)
                 {
@@ -112,12 +122,12 @@ class PaymentsController extends Controller
                 {
                     return response()->json(["message"=> "Please provide atleast one publisher"] , 400);
                 }
-                $existing->amount = $package->cost * $multiplier;
+                $existing->amount = $package->cost * $multiplier * $normalizer;
             }
             $existing->packageid = $package->id;
             $existing->phone = $phone;
             $existing->save();
-            $this->storePublishers($publishers,$userid,$packageid,$package->cost,"ELE".$existing->id);
+            $this->storePublishers($publishers,$userid,$packageid,$package->cost * $normalizer,"ELE".$existing->id);
 
             $result = $mpesa-> pushStk($package->cost,$phone,$url,'ELE'.$existing->id);
             $transaction = [
@@ -138,7 +148,7 @@ class PaymentsController extends Controller
             //$customer = Customer::where('id',$userid)->get()->first();
             //$institutionid = $customer->institution_id;
             //$students = $this->getStudentsCount($institutionid);
-            $cost = ($package->cost * ceil($students/ $package->persons));
+            $cost = ($package->cost * ceil($students/ $package->persons)) * $normalizer;
 
             if($cost == 0)
             {
@@ -154,11 +164,11 @@ class PaymentsController extends Controller
                 return response()->json(["message"=> "Please provide atleast one publisher"] , 400);
             }
 
-            $payment->amount = $package->cost * $multiplier;
+            $payment->amount = $package->cost * $multiplier * $normalizer;
         }
         $payment->save();
 
-        $this->storePublishers($publishers,$userid,$packageid,$package->cost,"ELE".$payment->id);
+        $this->storePublishers($publishers,$userid,$packageid,$package->cost * $normalizer,"ELE".$payment->id);
 
         $result = $mpesa-> pushStk($package->cost,$phone,$url,"ELE".$payment->id);
 
@@ -351,6 +361,17 @@ class PaymentsController extends Controller
         {
 
         }
+    }
+
+    public function getActiveCoupon()
+    {
+        $coupon = Coupon::where('active',1)->where('expiry','>=',date('Y-m-d'))->first();
+
+        if(!is_null($coupon))
+        {
+            return response()->json(["message"=> "No active coupon found"] , 400);
+        }
+        return $coupon;
     }
 
     // for debugging purpose
