@@ -86,10 +86,9 @@ export default function (props) {
                         thisPub['selected'] = true;
                         selPubs.push(thisPub)
                     }
-                    pubs.push(thisPub)
-
-                })
-                setCost(isNaN(plan.cost) ? 0 : plan.cost * selPubs.length)
+                    pubs.push(thisPub);
+                });
+                setCost(isNaN(plan.cost) ? 0 : plan.cost * selPubs.length);
                 setPublishers(pubs);
                 setSelectedPublishers(selPubs);
                 setLoading(false);
@@ -219,6 +218,51 @@ export default function (props) {
                                                         </label>
                                                         <input type="text" placeholder="Enter Mobile Number" name='mobile' required
                                                                className="w-100 mb-4 loginput" onChange={handleChanged}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label className="form-control-label">
+                                                            <strong>Coupon Code (Optional)</strong>
+                                                        </label>
+                                                        <input type="text" placeholder="Enter Your Coupon Code" id='couponcode' name='couponcode' required
+                                                               className="w-100 mb-4 loginput" onKeyUp={event => {
+                                                            // Clear the timeout if it has already been set.
+                                                            // This will prevent the previous task from executing
+                                                            // if it has been less than <MILLISECONDS>
+                                                            clearTimeout(timeout);
+
+                                                            // Make a new timeout set to go off in 1000ms (1 second)
+                                                            timeout = setTimeout(function () {
+                                                                setProcessing(true)
+                                                                $.ajax({
+                                                                    url: `${PUBLIC_URL}/api/payments/coupon` ,
+                                                                    data: {
+                                                                        couponcode: $('#couponcode').val()
+                                                                    },
+                                                                    method: 'get',
+                                                                    headers: {
+                                                                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                                                                    },
+                                                                    error: function (xhr, status, error) {
+                                                                        var response = JSON.parse(xhr['responseText'])['message'];
+                                                                        setProcessing(false);
+                                                                        setMessage(true);
+                                                                        setMessageType('alert alert-danger');
+                                                                        setResponse(response);
+                                                                        $("html, body").animate({scrollTop: 0}, 200);
+                                                                    }.bind(this),
+                                                                    success: function (res) {
+                                                                        setUsers(res.data);
+                                                                        setCurrentPage(res['current_page']);
+                                                                        setFrom(res['from']);
+                                                                        setTo(res['to']);
+                                                                        setLastPage(res['last_page']);
+                                                                        setNextPage(res['next_page_url']);
+                                                                        setTotal(res['total']);
+                                                                        setProcessing(false);                                                                }.bind(this)
+                                                                })
+                                                            }, 1000);
+                                                        }}
+                                                        />
                                                     </div>
                                                     <div className="form-group">
                                                         <label className="form-control-label">
