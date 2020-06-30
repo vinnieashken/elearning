@@ -92,7 +92,7 @@ export default function (props) {
                 userid: student['id'],
                 moduleid: exam['id'],
                 questionid: exam.questions[activeQuestion - 1]['id'],
-                answer: answers.hasOwnProperty(activeQuestion - 1) ? answers[activeQuestion - 1] : '',
+                answer: answers.hasOwnProperty(activeQuestion - 1) ? answers[activeQuestion - 1]['answer'] : '',
             },
             headers: {
                 'appkey': 'ELE-2020-XCZ3'
@@ -403,6 +403,8 @@ export default function (props) {
                                                                                                     onChange={ ( event, editor ) => {
                                                                                                         const data = editor.getData();
                                                                                                         let choices = answers;
+                                                                                                        if (!choices[activeQuestion -1])
+                                                                                                            choices[activeQuestion - 1] = {};
                                                                                                         choices[activeQuestion - 1]['answer'] = data;
                                                                                                         choices[activeQuestion - 1]['isVisible'] = false;
                                                                                                         setAnswers(choices);
