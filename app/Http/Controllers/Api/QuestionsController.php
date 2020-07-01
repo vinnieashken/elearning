@@ -193,11 +193,20 @@ class QuestionsController extends Controller
         $answer = $request->answer;
         $record = new Choiceless();
 
-        $record->user_id = $user_id;
-        $record->module_id = $module_id;
-        $record->question_id = $question_id;
-        $record->answer = $answer;
+        $existing = Choiceless::where('user_id',$user_id)->where('module_id',$module_id)->where('question_id',$question_id)->first();
+        if(!is_null($existing))
+        {
+            $existing->answer = $answer;
+        }
+        else
+        {
+            $record->user_id = $user_id;
+            $record->module_id = $module_id;
+            $record->question_id = $question_id;
+            $record->answer = $answer;
 
-        $record->save();
+            $record->save();
+        }
+
     }
 }
