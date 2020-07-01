@@ -46,7 +46,8 @@ class PaymentsController extends Controller
         if($request->has('couponcode'))
         {
             $coupon = Coupon::where('active',1)->where('code',$couponcode)->where('expiry','>=',date('Y-m-d'))->first();
-            $discount = $coupon->discount;
+            if(!is_null($coupon))
+                $discount = $coupon->discount;
         }
 
         $normalizer = (100 - $discount) /100;
