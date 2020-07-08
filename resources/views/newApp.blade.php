@@ -125,7 +125,8 @@
 </noscript>
 <script type="text/javascript" src="{{ asset('static/new/js/jquery-min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('static/new/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('static/new/js/popper.min.js') }}"></script>
+<script type="text/javascript" src="https://unpkg.com/@popperjs/core@2"></script>
+{{--<script type="text/javascript" src="{{ asset('static/new/js/popper.min.js') }}"></script>--}}
 {{--<script type="text/javascript" src="{{ asset('static/new/js/main.js') }}"></script>--}}
 
 </body>
