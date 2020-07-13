@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Link, Route, Switch} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
 import {API, ENV, LOADING_SUBSCRIPTION} from "../common/constants";
-import {fetchSubscription} from "../common/actions";
+import { fetchSubscription } from "../common/actions/academy";
 import {useDispatch} from "react-redux";
 
 export default function (props) {
@@ -10,12 +10,16 @@ export default function (props) {
 
     const [processing, setProcessing] = useState(false);
     const [message, setMessage] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('message') ? oldState.message : false);
-    const [next, setNext] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('next') ? oldState.next : `${ENV}academy`);
+    const [next, setNext] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('next') ? oldState.next : `/academy`);
     const [messageType, setMessageType] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('messageType') ? oldState.messageType : '');
     const [response, setResponse] = useState(typeof oldState !== "undefined" && oldState.hasOwnProperty('response') ? oldState.response : '');
     const [passwordType, setPasswordType] = useState('password');
     const [loginType, setLoginType] = useState('email');
 
+    useEffect(e => {
+        localStorage.removeItem('ac_user');
+        console.log(props);
+    }, [])
 
     const dispatch = useDispatch();
 
@@ -24,7 +28,7 @@ export default function (props) {
         setProcessing(true)
         setMessage(false)
         $.ajax({
-            url: `${API}/app/login`,
+            url: `${API}/academy/login`,
             method: 'post',
             data: {
                 username: $('#email').val(),
@@ -46,8 +50,10 @@ export default function (props) {
             }.bind(this),
             success: function (res) {
                 dispatch({type: LOADING_SUBSCRIPTION, payload: true});
+                props.setUser(res);
                 dispatch(fetchSubscription(res));
-                localStorage.setItem('user', JSON.stringify(res));
+                localStorage.setItem('ac_user', JSON.stringify(res));
+                debugger;
                 props.history.push({
                     pathname: `${next}`,
                     state: {user: res},
@@ -74,7 +80,7 @@ export default function (props) {
                                 <div className="card-body">
                                     <div className="m-sm-4">
                                         <div className="text-center">
-                                            <h1 className="h2">TutorSoma Academy</h1>
+                                            <h1 className="h2">TutorSoma Academy..</h1>
                                             <p className="lead">
                                                 Sign in to your account to continue
                                             </p>
@@ -120,9 +126,9 @@ export default function (props) {
                                                         </div>
 
                                                         <div className="text-center">
-                                                            <small className="text-muted text-center mt-5">
-                                                                Don't have an account yet? <Link to='/academy/register'>Register</Link>.
-                                                            </small>
+                                                            {/*<small className="text-muted text-center mt-5">*/}
+                                                            {/*    Don't have an account yet? <Link to='/academy/register'>Register</Link>.*/}
+                                                            {/*</small>*/}
                                                         </div>
                                                     </React.Fragment>
                                             }

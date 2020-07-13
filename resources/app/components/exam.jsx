@@ -5,6 +5,8 @@ import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
 import { useSelector } from 'react-redux'
 import {Helmet} from "react-helmet";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const images = [
     `${PUBLIC_URL}/static/app/images/math.png`,
@@ -28,6 +30,7 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
+    const [answers, setAnswers] = useState({})
     const subjects = useSelector(state => state.default.subjects);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
@@ -153,6 +156,11 @@ export default function (props) {
             }.bind(this)
         })
     };
+
+    const handleReview = (e) => {
+        e.preventDefault();
+        setShowAns(true)
+    }
 
     return (
         <React.Fragment>
@@ -303,7 +311,7 @@ export default function (props) {
                                         {
                                             loading ? <Loading/> :
                                                 <div className='col-md-12'>
-                                                    <form onSubmit={handleSubmit}>
+                                                    <form onSubmit={exam.choices ? handleSubmit : handleReview}>
                                                         {
                                                             message ?
                                                                 <div className='row'>
@@ -346,25 +354,52 @@ export default function (props) {
 
                                                                                                 </li>
                                                                                                 {
-                                                                                                    el.options.map((ans) => {
-                                                                                                        const isAns = parseInt(el.answer) === parseInt(ans.id);
-                                                                                                        const selected = answer.hasOwnProperty('user_option') && answer.user_option === ans.id
-                                                                                                        return (
-                                                                                                            <React.Fragment>
-                                                                                                                <li className="list-group-item ">
-                                                                                                                    <input type="radio" id={`${ans.id}`} required={true}
-                                                                                                                           defaultChecked={selected}
-                                                                                                                           disabled={answer.hasOwnProperty('user_option')}
-                                                                                                                           value={ans.id} name={el.id} />
-                                                                                                                    <label htmlFor={`${ans.id}`}>
-                                                                                                                        {/*<span dangerouslySetInnerHTML={ {__html: `${ans.option.replace(/(<br>\s*)+$/)}`} } className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />*/}
-                                                                                                                        <span className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} > {removeTags(ans.option)} </span>
-                                                                                                                        {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
-                                                                                                                    </label>
-                                                                                                                </li>
-                                                                                                            </React.Fragment>
-                                                                                                        )
-                                                                                                    })
+                                                                                                    !exam.choices ?
+                                                                                                        <div className='row'>
+                                                                                                            <div className={`form-group ${showAns ? 'col-md-6' : 'col-md-12'} mt-2`}>
+                                                                                                                <CKEditor
+                                                                                                                    editor={ ClassicEditor }
+                                                                                                                    data={answer.hasOwnProperty(el.id) ? answer[el.id] : ''}
+                                                                                                                    onInit={ editor => {
+                                                                                                                        // You can store the "editor" and use when it is needed.
+                                                                                                                        console.log( 'Editor is ready to use!', editor );
+                                                                                                                    } }
+                                                                                                                    onChange={ ( event, editor ) => {
+                                                                                                                        const data = editor.getData();
+                                                                                                                        let choices = answers;
+                                                                                                                        choices[el.id] = data;
+                                                                                                                        setAnswers(choices);
+                                                                                                                    } }
+                                                                                                                />
+                                                                                                            </div>
+                                                                                                            {
+                                                                                                                showAns &&
+                                                                                                                <div className={'form-group col-md-6 answer'}>
+                                                                                                                    {
+                                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${el.options[0].option}`} } />
+                                                                                                                    }
+                                                                                                                </div>
+                                                                                                            }
+                                                                                                        </div>:
+                                                                                                        el.options.map((ans) => {
+                                                                                                            const isAns = parseInt(el.answer) === parseInt(ans.id);
+                                                                                                            const selected = answer.hasOwnProperty('user_option') && answer.user_option === ans.id
+                                                                                                            return (
+                                                                                                                <React.Fragment>
+                                                                                                                    <li className="list-group-item ">
+                                                                                                                        <input type="radio" id={`${ans.id}`} required={true}
+                                                                                                                               defaultChecked={selected}
+                                                                                                                               disabled={answer.hasOwnProperty('user_option')}
+                                                                                                                               value={ans.id} name={el.id} />
+                                                                                                                        <label htmlFor={`${ans.id}`}>
+                                                                                                                            {/*<span dangerouslySetInnerHTML={ {__html: `${ans.option.replace(/(<br>\s*)+$/)}`} } className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} />*/}
+                                                                                                                            <span className={selected ? isAns ? 'answer' : 'wrong-answer' : ''} > {removeTags(ans.option)} </span>
+                                                                                                                            {(isAns && showAns) ? <span className='fa fa-check alert-success'/>: '' }
+                                                                                                                        </label>
+                                                                                                                    </li>
+                                                                                                                </React.Fragment>
+                                                                                                            )
+                                                                                                        })
                                                                                                 }
                                                                                             </ul>
                                                                                         </div>
@@ -378,7 +413,7 @@ export default function (props) {
                                                                         processing ? <ClipLoader /> : showAns ? '' :
                                                                             <div className='row'>
                                                                                 <div className="col-md-12">
-                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">Submit For Marking</button>
+                                                                                    <button type='submit' className="text-center float-right btn btn-success btn-rounded">{exam.choices ? 'Submit For Marking' : 'Review'}</button>
                                                                                 </div>
                                                                             </div>
                                                                     }

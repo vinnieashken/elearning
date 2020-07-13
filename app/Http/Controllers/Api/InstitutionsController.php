@@ -143,10 +143,15 @@ class InstitutionsController extends Controller
         $modulename = $request->module;
         $institutionid = $request->institutionid;
 
+        $choices = 1;
+        if($request->has('choices'))
+            $choices = $request->choices;
+
         $module = new Module();
         $module->subject_id = $subjectid;
         $module->module = $modulename;
         $module->institution_id = $institutionid;
+        $module->choices = $choices;
         $module->save();
 
         return $module;
@@ -186,6 +191,7 @@ class InstitutionsController extends Controller
             $questionmodel = new Question();
             $questionmodel->module_id = $module;
             $questionmodel->question = $question['question'];
+            $questionmodel->listorder = 1;
             $questionmodel ->save();
 
             foreach ($question['options'] as $option)
@@ -209,6 +215,38 @@ class InstitutionsController extends Controller
         $questions = Question::orderBy('listorder','ASC')->with('options')->where('questions.module_id',$module)
             ->leftJoin('answers','answers.question_id','=','questions.id')
             ->select('questions.id','questions.module_id','questions.question','answers.option_id as answer')
+            ->get();
+        $data = [];
+        $data['moduleid'] = $module;
+        $data['questions'] = $questions;
+
+        return $data;
+    }
+
+    public function addChoicelessModuleQuestions(Request $request)
+    {
+        $module = $request->moduleid;
+        $questions = $request->questions;
+
+        foreach ($questions as $question)
+        {
+
+            $questionmodel = new Question();
+            $questionmodel->module_id = $module;
+            $questionmodel->question = $question['question'];
+            $questionmodel->listorder = 1;
+            $questionmodel ->save();
+
+            $optionmodel = new Option();
+            $optionmodel->question_id = $questionmodel->id;
+            $optionmodel->option = $question['answer'];
+            $optionmodel->save();
+
+        }
+
+        $questions = Question::orderBy('listorder','ASC')->with('options')->where('questions.module_id',$module)
+            //->leftJoin('answers','answers.question_id','=','questions.id')
+            ->select('questions.id','questions.module_id','questions.question')
             ->get();
         $data = [];
         $data['moduleid'] = $module;

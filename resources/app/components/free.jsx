@@ -53,11 +53,11 @@ export default function (props) {
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
         getModules();
-    }, [props.match.params.subject]);
+    }, [props.match.params.subject, props.match.params.level]);
 
     const getModules = () => {
         $.ajax({
-            url: `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}&institutionid=29`,
+            url: props.match.params.level === 'secondary' ? `${API}/modules/nochoices/list?institutionid=29` : `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/${props.match.params.subject}` : 'list'}?userid=${props.user.id}&institutionid=29`,
             // url: `${API}/subjects/class/{class_id}`,
             method: 'GET',
             headers: {
@@ -127,7 +127,7 @@ export default function (props) {
                             </Link>
                         </React.Fragment> :
                         <Link to={{
-                            pathname: parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}` : `${ENV}exams/exam/${row.id}`,
+                            pathname: props.match.params.level === 'secondary' ?  `${ENV}exams/exam/${row.id}/questions/1` : parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}` : `${ENV}exams/exam/${row.id}`,
                             state: {
                                 exam: row
                             }
@@ -314,7 +314,7 @@ export default function (props) {
                                                                                     setLoading(true)
                                                                                     setMessage(false)
                                                                                     $.ajax({
-                                                                                        url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
+                                                                                        url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}institutionid=29&search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
                                                                                         // url: `${API}/subjects/class/{class_id}`,
                                                                                         method: 'GET',
                                                                                         headers: {

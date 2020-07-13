@@ -50,7 +50,7 @@ export default function (props) {
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
-                <Link to={`${ENV}exams/subjects/${row.id}/modules`} className="btn btn-sm btn-rounded btn-success-filled" >
+                <Link to={{pathname: `${ENV}exams/subjects/${row.subject}/modules`}} className="btn btn-sm btn-rounded btn-success-filled" >
                     Select Exam
                 </Link>
             </div>

@@ -2,7 +2,9 @@
 export const APPNAME = `Tutor-Soma`;
 
 export const ENV = '/';
-export const PUBLIC_URL  = `${window.origin}`;
+// export const PUBLIC_URL  = `${window.origin}`;
+export const PUBLIC_URL  = `https://tutorsoma.standardmedia.co.ke`;
+// export const PUBLIC_URL  = `${window.origin}`;
 export const PORTAL = `${PUBLIC_URL}/app`;
 export const API = `${PUBLIC_URL}/api`;
 

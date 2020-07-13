@@ -30,10 +30,13 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/app/user/{id}','Api\LoginController@getUser');
 
     Route::get('/classes/list','Api\ClassesController@list');//->middleware('appkey');
+    Route::get('/classes/highschool/list','Api\ClassesController@highschoolclasseslist');
 
     Route::get('/subjects/list','Api\SubjectsController@list');
     Route::get('/subjects/distinct','Api\SubjectsController@uniquelist');
     Route::get('/subjects/class/{id}','Api\SubjectsController@getClassSubjects');
+
+    Route::get('/subjects/highschool/distinct','Api\SubjectsController@uniqueHighschoollist');
 
     Route::get('/modules/list','Api\ModulesController@list');
     Route::get('/modules/subject/{id}','Api\ModulesController@getSubjectModules');
@@ -43,9 +46,11 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/modules/user/{user_id}','Api\ModulesController@getUserModules');
     Route::get('/modules/users/{module_id}','Api\ModulesController@getModuleStudents');
 
+    Route::get('/modules/nochoices/list','Api\ModulesController@nochoicesList');
+
     Route::get('/questions/module/{id}','Api\QuestionsController@getModuleQuestions');
     Route::post('/questions/module/user/answers','Api\QuestionsController@saveUserAnswers');
-
+    Route::post('/questions/module/user/answers/choiceless','Api\QuestionsController@saveUserAnswerChoicelessperQuestion');
 
     Route::get('/payments/subscriptions','Api\PaymentsController@getSubscriptions');
     Route::get('/payments/institutions/subscriptions','Api\PaymentsController@getInstitutionsPackages');
@@ -56,6 +61,7 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
     Route::get('/payments/user/{user_id}','Api\PaymentsController@getUserPayments');
     Route::get('/payments/subscriptions/user/{id}','Api\PaymentsController@getUserSubscriptions');
+    Route::get('/payments/coupon','Api\PaymentsController@getActiveCoupon');
 
 //for testing only
     Route::get('/payments/subscriptions/list','Api\PaymentsController@listSubscriptions');
@@ -76,6 +82,8 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/institution/teachers/list/{id}','Api\InstitutionsController@teachersList');
 
     Route::post('/institution/modules/add','Api\InstitutionsController@addModule');
+    Route::post('/institution/modules/nochoices/add','Api\InstitutionsController@addChoicelessModuleQuestions');
+
     Route::post('/institution/modules/edit','Api\InstitutionsController@editModule');
     Route::post('/institution/modules/questions/add','Api\InstitutionsController@addModuleQuestions');
     Route::post('/institution/modules/questions/edit','Api\InstitutionsController@editModuleQuestions');
@@ -86,12 +94,25 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
 
 
     Route::prefix('/academy')->group(function () {
-        Route::get('/plans','Academy\AcSubscriptionController@filter');
-        Route::get('/plans/{id}','Academy\AcSubscriptionController@get');
+        Route::post('/login','Academy\AcUsersController@login');
+        Route::post('/register','Academy\AcUsersController@register');
+
+        Route::get('/plans','Academy\AcPackagesController@filter');
+        Route::get('/plans/{id}','Academy\AcPackagesController@get');
+
         Route::get('/video','Academy\KTNVideoController@filter');
         Route::get('/video/{id}','Academy\KTNVideoController@get');
+        Route::get('/rumble/search','Academy\KTNVideoController@rumbleMedia');
+
+        Route::get('/subscription/active','Academy\AcSubscriptionsController@subscription');
+        Route::post('/subscription/subscribe','Academy\AcSubscriptionsController@subscribe');
+        Route::post('/subscription/confirm','Academy\AcSubscriptionsController@confirm');
     });
 //});
+
+//Academy Payment Confirmation
+Route::post('/subscription/confirm','Academy\AcSubscriptionsController@confirm');
+
 
 //Route::get('marks/{userid}','Api\ModulesController@debug');
 

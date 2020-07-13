@@ -15,8 +15,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchSubscription} from "../common/actions";
 import Select from "react-select";
 
+const levels = {
+    primary: 1,
+    secondary: 2
+}
+
 export default function (props) {
     const dispatch = useDispatch();
+    const oldState = typeof props.history.location.state !== 'undefined' ? props.history.location.state : {};
 
     const [loading, setLoading] = useState(true);
     const [allModules, setAllModules] = useState([]);
@@ -24,26 +30,20 @@ export default function (props) {
     const [message, setMessage] = useState(false);
     const [messageType, setMessageType] = useState( '');
     const [response, setResponse] = useState('');
-    const [selectedExam, setSelectedExam] = useState({})
-    const [searchParam, setSearchParam] = useState(null)
-    const [selectedClass, setSelectedClass] = useState(null)
+    const [selectedExam, setSelectedExam] = useState({});
+    const [searchParam, setSearchParam] = useState(null);
+    const [selectedClass, setSelectedClass] = useState(null);
     const classes = useSelector(state => state.default.classes);
-    const [selectedSubject, setSelectedSubject] = useState('')
     const subjects = useSelector(state => state.default.subjects);
-    const [subjectOptions, setSubjectOptions] = useState({})
-    const [classOptions, setClassOptions] = useState({})
-    const [user, setUser] = useState(props.user)
+    const [subjectOptions, setSubjectOptions] = useState({});
+    const [classOptions, setClassOptions] = useState({});
+    const [user, setUser] = useState(props.user);
     const subscription = useSelector(state => state.default.subscription);
     const pathname = `${window.origin}${props.history.location.pathname}`;
 
     useEffect(() => {
-        // dispatch({ type: LOADING_SUBSCRIPTION, payload: true });
-        // dispatch(fetchSubscription(user));
         setLoading(true);
         setUser(props.user)
-        // if (props.user && props.user.id) {
-        //     dispatch(fetchSubscription(props.user));
-        // }
         const subjectArray = {}
         const classArray = {}
         subjects.forEach(el => {
@@ -57,10 +57,10 @@ export default function (props) {
         setSubjectOptions(subjectArray)
         setClassOptions(classArray)
         getModules();
-    }, [props.match.params.subject]);
+    }, [props.match.params.subject, props.match.params.level]);
 
     const getModules = () => {
-        let url = `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}`;
+        let url = props.match.params.level === 'secondary' ? `${API}/modules/nochoices/list` : `${API}/modules/${props.match.params.hasOwnProperty('subject') ? `subject/name/${props.match.params.subject}` : 'list'}${props.user ? `?userid=${props.user.id}`: ''}` ;
         // if (props.match.params.hasOwnProperty('subject'))
         //     url = `${API}/modules/subject/name/${filterValue}`;
 
@@ -113,30 +113,30 @@ export default function (props) {
         return (
             <div className="actions ml-3">
                 {
-                    ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
-                        <React.Fragment>
-                            <Link to={{
-                                pathname: `${ENV}exams/exam/${row.id}/performance`,
-                                state: {
-                                    exam: row
-                                }
-                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
-                                Performance <i className="fa fa-graduation-cap" />
-                            </Link>
-                            <Link to={{
-                                pathname: `${ENV}exams/exam/edit/${row.id}`,
-                                state: {
-                                    exam: row
-                                }
-                            }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
-                                Add Question <i className="fa fa-plus" />
-                            </Link>
-                            <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">
-                                Edit Paper <i className="fa fa-pencil" />
-                            </Link>
-                        </React.Fragment> :
+                    // ((user.teacher || user.owner) && (parseInt(user.institution_id) === parseInt(row.institution_id))) ?
+                    //     <React.Fragment>
+                    //         <Link to={{
+                    //             pathname: `${ENV}exams/exam/${row.id}/performance`,
+                    //             state: {
+                    //                 exam: row
+                    //             }
+                    //         }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
+                    //             Performance <i className="fa fa-graduation-cap" />
+                    //         </Link>
+                    //         <Link to={{
+                    //             pathname: `${ENV}exams/exam/edit/${row.id}`,
+                    //             state: {
+                    //                 exam: row
+                    //             }
+                    //         }} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1'>
+                    //             Add Question <i className="fa fa-plus" />
+                    //         </Link>
+                    //         <Link to={'#'} className='btn btn-sm btn-rounded btn-outline-success btn-success m-1' data-toggle="modal" data-target="#exampleModal">
+                    //             Edit Paper <i className="fa fa-pencil" />
+                    //         </Link>
+                    //     </React.Fragment> :
                         <Link to={{
-                            pathname: parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}` : `${ENV}exams/exam/${row.id}`,
+                            pathname: props.match.params.level === 'secondary' ? `${ENV}exams/exam/${row.id}/questions/1` : parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}` : `${ENV}exams/exam/${row.id}`,
                             state: {
                                 exam: row
                             }
@@ -399,7 +399,7 @@ export default function (props) {
                                                                                         setLoading(true)
                                                                                         setMessage(false)
                                                                                         $.ajax({
-                                                                                            url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}institutionid=29&search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
+                                                                                            url: `${API}/modules/list?${props.user ? `userid${props.user.id}&`:''}search=${searchParam}&${selectedClass ? `class_id=${selectedClass.value}` : ''}`,
                                                                                             // url: `${API}/subjects/class/{class_id}`,
                                                                                             method: 'GET',
                                                                                             headers: {

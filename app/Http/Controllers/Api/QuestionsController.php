@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendResultsEmail;
 use App\Mail\ResultSent;
 use App\Models\AnswerSheet;
+use App\Models\Choiceless;
 use App\Models\Customer;
 use App\Models\Institution;
 use App\Models\Level;
@@ -78,9 +79,11 @@ class QuestionsController extends Controller
             'id'=> $module->id,
             'class' => $class,
             'subject' => $module->subject,
+            'choices' => $module->choices,
             'done' => false,
             'name'=> $module->module,
             'questions'=> $results,
+
 
         ];
 
@@ -88,10 +91,21 @@ class QuestionsController extends Controller
         {
             $userid = $request->userid;
             $record = AnswerSheet::where('user_id',$userid)->where('module_id',$moduleid)->first();
+            //$choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$userid)->where('module_id',$moduleid)->first();
             if(!is_null($record))
             {
                 $data['done'] = true;
+
             }
+
+            $choiceless = Choiceless::orderBy('id','DESC')->where('user_id',$userid)->where('module_id',$moduleid)->first();
+            if(!is_null($choiceless))
+            {
+                $data['done'] = true;
+                $data['lastquestion'] = $choiceless->question_id;
+                $data['user_answers'] = Choiceless::where('user_id',$userid)->where('module_id',$moduleid)->get(['id','module_id','question_id','answer']);
+            }
+
         }
         return $data;
     }
@@ -168,6 +182,31 @@ class QuestionsController extends Controller
         //return (new ResultSent((object)$data))->render();
 
         return $body;
+
+    }
+
+    public function saveUserAnswerChoicelessperQuestion(Request $request)
+    {
+        $user_id = $request->userid;
+        $module_id = $request->moduleid;
+        $question_id = $request->questionid;
+        $answer = $request->answer;
+        $record = new Choiceless();
+
+        $existing = Choiceless::where('user_id',$user_id)->where('module_id',$module_id)->where('question_id',$question_id)->first();
+        if(!is_null($existing))
+        {
+            $existing->answer = $answer;
+        }
+        else
+        {
+            $record->user_id = $user_id;
+            $record->module_id = $module_id;
+            $record->question_id = $question_id;
+            $record->answer = $answer;
+
+            $record->save();
+        }
 
     }
 }
