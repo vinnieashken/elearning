@@ -115,6 +115,39 @@
 
 </head>
 <body>
+<div class="container fixed-bottom">
+    @include('cookieConsent::index')
+
+{{--    <div class="alert bg-black js-cookie-consent cookie-consent text-center">--}}
+{{--        <span class="text-white cookie-consent__message">--}}
+{{--            To personalise content, tailor ads and provide best user experience, we use cookies. By using our site, you agree to use our cookies.--}}
+{{--        </span>--}}
+{{--        <button class="btn cookie-btn js-cookie-consent-agree cookie-consent__agree ">--}}
+{{--            Accept &amp; Continue--}}
+{{--        </button>--}}
+{{--    </div>--}}
+</div>
+<style>
+    .cookie-btn {
+        color: #fff!important;
+        background: #ee2e24;
+    }
+</style>
+
+<style>
+
+    .bg-black, .copyright {
+        background: #272626;
+        color: #fff!important;
+        width: 100%;
+        display: table;
+        z-index: 99999999
+    }
+
+</style>
+<?php
+@include('cookieConsent::index')
+?>
 <div class="main h-100 w-100" id="app" >
 </div>
 <noscript>
