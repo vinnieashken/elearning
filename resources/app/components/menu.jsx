@@ -437,6 +437,21 @@ export default function (props) {
                                                         <React.Fragment>
                                                             {
                                                                 parseInt(user.owner) || parseInt(user.teacher)  ?
+                                                                    <React.Fragment>
+                                                                        <li className="nav-item dropdown mt-4">
+                                                                            <Link className="nav-link dropdown-toggle"
+                                                                                  to={`${ENV}profile`} id="registrations"
+                                                                                  data-toggle="dropdown" aria-haspopup="true"
+                                                                                  aria-expanded="false">
+                                                                                REGISTRATION
+                                                                            </Link>
+                                                                            <div className="dropdown-menu"
+                                                                                 aria-labelledby="reports">
+                                                                                <Link className="dropdown-item" to={`${ENV}students`}>Students </Link>
+                                                                                <Link className="dropdown-item" to={`${ENV}teachers`}>Teachers </Link>
+                                                                                {/*<Link className="dropdown-item" to={`${ENV}exams/performance`}>Student Performance </Link>*/}
+                                                                            </div>
+                                                                        </li>
                                                                     <li className="nav-item dropdown mt-4">
                                                                         <Link className="nav-link dropdown-toggle"
                                                                               to={`${ENV}profile`} id="reports"
@@ -452,7 +467,8 @@ export default function (props) {
                                                                             <Link className="dropdown-item" to={`${ENV}exams/mine`}>My Papers</Link>
                                                                             <Link className="dropdown-item" to={`${ENV}report/payments`}>Payments</Link>
                                                                         </div>
-                                                                    </li> : ''
+                                                                    </li>
+                                                                    </React.Fragment>: ''
                                                             }
 
                                                             {/*{*/}

@@ -62,7 +62,7 @@ export default function (props) {
     }
 
     return (
-        <div className="modal fade" id="studentModal" tabIndex="-1" role="dialog"
+        <div className="modal fade" id="studentModal" tabIndex="-1" role="dialog" style={{zIndex: 9999999}}
              aria-labelledby="studentModalLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
@@ -96,7 +96,7 @@ export default function (props) {
                                                     <div className='row'>
                                                         <div className='form-group col-md-12'>
                                                             <label>Admission Number</label>
-                                                            <input type='text' name='adm_no' className='form-control' defaultValue={student.adm_no}/>
+                                                            <input type='text' name='adm_no' className='form-control' defaultValue={student.adm_no} required/>
                                                         </div>
                                                         <div className='form-group col-md-12'>
                                                             <label>Name</label>
@@ -107,16 +107,16 @@ export default function (props) {
                                                             <label>Email</label>
                                                             <input type='email' name='email' className='form-control' defaultValue={student.email}/>
                                                         </div>
-                                                        {
-                                                            props.user.teacher || props.user.owner ?
-                                                                <div className='form-group col-md-12'>
-                                                                    <label>Convert To Teacher</label>
-                                                                    <select name='convert' className='form-control' defaultValue={0}>
-                                                                        <option value={0}>No</option>
-                                                                        <option value='1'>Yes</option>
-                                                                    </select>
-                                                                </div> : ''
-                                                        }
+                                                        {/*{*/}
+                                                        {/*    props.user.teacher || props.user.owner ?*/}
+                                                        {/*        <div className='form-group col-md-12'>*/}
+                                                        {/*            <label>Convert To Teacher</label>*/}
+                                                        {/*            <select name='convert' className='form-control' defaultValue={0}>*/}
+                                                        {/*                <option value={0}>No</option>*/}
+                                                        {/*                <option value='1'>Yes</option>*/}
+                                                        {/*            </select>*/}
+                                                        {/*        </div> : ''*/}
+                                                        {/*}*/}
                                                     </div>
                                                     <div className='row'>
                                                         <div className='col-md-12'>

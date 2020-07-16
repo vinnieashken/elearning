@@ -66,7 +66,6 @@ export default function (props) {
                             }
                         });
                     }
-                    debugger;
                     setAnswers(userAnswers);
                     setLoading(false);
                 } else {
@@ -393,6 +392,7 @@ export default function (props) {
                                                                                     {
                                                                                         <div className='row'>
                                                                                             <div className={`form-group ${(showAns || (answers.hasOwnProperty(activeQuestion - 1) && answers[activeQuestion - 1]['isVisible'])) ? 'col-md-6' : 'col-md-12'} mt-2`}>
+                                                                                                <label className='qLabel bold mt-2'>Enter your answer here</label>
                                                                                                 <CKEditor
                                                                                                     editor={ ClassicEditor }
                                                                                                     data={answers.hasOwnProperty(activeQuestion - 1) ? answers[activeQuestion - 1]['answer'] : ''}
@@ -414,11 +414,21 @@ export default function (props) {
                                                                                             </div>
                                                                                             {
                                                                                                 (showAns || (answers.hasOwnProperty(activeQuestion - 1) && answers[activeQuestion - 1]['isVisible'])) &&
-                                                                                                <div className={'form-group col-md-6 answer'}>
+                                                                                                <React.Fragment>
                                                                                                     {
-                                                                                                        <span dangerouslySetInnerHTML={ {__html: `${exam.questions[activeQuestion - 1].options[0].option}`} } />
+                                                                                                        (exam.questions[activeQuestion - 1].hasOwnProperty('options') && exam.questions[activeQuestion -1]["options"].length > 0) ?
+                                                                                                        <div className={'form-group col-md-6 answer mt-2'}>
+                                                                                                            <label className='qLabel bold mb-3'>Correct Answer</label>
+                                                                                                            {
+                                                                                                                <span  dangerouslySetInnerHTML={ {__html: `${exam.questions[activeQuestion - 1].options[0].option}`} } />
+                                                                                                            }
+                                                                                                        </div> : <div className={'form-group col-md-6 answer '} style={{marginTop: '50px'}}>
+                                                                                                                {
+                                                                                                                    <span className='qLabel'>Sorry, The answer to this question is unavailable at this time.</span>
+                                                                                                                }
+                                                                                                            </div>
                                                                                                     }
-                                                                                                </div>
+                                                                                                </React.Fragment>
                                                                                             }
                                                                                         </div>
                                                                                     }

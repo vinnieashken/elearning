@@ -62,7 +62,7 @@ export default function (props) {
     }
 
     return (
-        <div className="modal fade" id="teacherModal" tabIndex="-1" role="dialog"
+        <div className="modal fade" id="teacherModal" tabIndex="-1" role="dialog" style={{zIndex: 9999999}}
              aria-labelledby="teacherModalLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">

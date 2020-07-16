@@ -5647,7 +5647,7 @@ button.close {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1050;
+    z-index: 105050;
     display: none;
     overflow: hidden;
     outline: 0
@@ -5712,7 +5712,7 @@ button.close {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1040;
+    z-index: 104040;
     background-color: #000
 }
 
