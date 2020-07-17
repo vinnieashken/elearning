@@ -22,9 +22,9 @@ class InstitutionsController extends Controller
             $size = $request->size;
             $page = $request->page;
 
-            $results = $list->where('institution_id',$id)->where('teacher',0)->paginate($size)->items();
+            $results = $list->where('institution_id',$id)->where('owner',0)->where('teacher',0)->paginate($size)->items();
 
-            $totalrecords = $list->where('institution_id',$id)->where('teacher',0)->count();
+            $totalrecords = $list->where('institution_id',$id)->where('owner',0)->where('teacher',0)->count();
 
             $totalpages = ceil($totalrecords / $size);
 
@@ -38,7 +38,7 @@ class InstitutionsController extends Controller
             return $data;
         }
 
-        $students = $list->where('institution_id',$id)->where('teacher',0)->get();
+        $students = $list->where('institution_id',$id)->where('owner',0)->where('teacher',0)->get();
 
         return $students;
     }
