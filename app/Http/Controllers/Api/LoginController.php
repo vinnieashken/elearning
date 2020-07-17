@@ -342,18 +342,18 @@ class LoginController extends Controller
     public function registerStudent(Request $request)
     {
         $institution = $request->institutionid;
-        $teacher = $request->teacherid;
+        $teacher = ($request->has('teacherid') ? $request->teacherid : '');
         $name = $request->name;
         $adm_no = $request->adm_no;
-        $email = $request->email;
+        $email = ($request->has('email') ? $request->email : '');
 
-        if(is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no) || is_null($email))
+        if(is_null($institution) || is_null($name) || is_null($adm_no) )
         {
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
 
         $student = new Customer();
-        $existing  = $student->where('institution_id',$institution)->where('teacher_id',$teacher)->where('adm_no',$adm_no)->first();
+        $existing  = $student->where('institution_id',$institution)->where('adm_no',$adm_no)->first();
         if(is_null($existing))
         {
             $student->institution_id = $institution;
