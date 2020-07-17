@@ -5,11 +5,6 @@ import {API, APPNAME, ENV} from "../common/constants";
 import Loading from "../common/loading";
 import Select from "react-select";
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-    debugger
-};
-
 export default function (props) {
     const [complete, setComplete] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -122,7 +117,7 @@ export default function (props) {
                                                         <div className='col-md-12'>
                                                             {
                                                                 processing ? <ClipLoader  /> :
-                                                                    <button type="submit" className="btn btn-sm btn-success btn-rounded float-right">Save changes</button>
+                                                                    <button type="submit" className="btn btn-sm btn-success btn-rounded float-right">Save</button>
                                                             }
                                                         </div>
                                                     </div>

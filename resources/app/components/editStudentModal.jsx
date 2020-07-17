@@ -122,7 +122,7 @@ export default function (props) {
                                                         <div className='col-md-12'>
                                                             {
                                                                 processing ? <ClipLoader  /> :
-                                                                    <button type="submit" className="btn btn-sm btn-success btn-rounded float-right">Save changes</button>
+                                                                    <button type="submit" className="btn btn-sm btn-success btn-rounded float-right">Save </button>
                                                             }
                                                         </div>
                                                     </div>
