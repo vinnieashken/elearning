@@ -357,7 +357,7 @@ class LoginController extends Controller
         if(is_null($existing))
         {
             $student->institution_id = $institution;
-            $student->teacher_id = $teacher;
+            //$student->teacher_id = $teacher;
             $student->email = $email;
             $student->name = $name;
             $student->adm_no = $adm_no;
@@ -368,7 +368,7 @@ class LoginController extends Controller
         }
         else{
 
-            $existing->teacher_id = $teacher;
+            //$existing->teacher_id = $teacher;
             $existing->email = $email;
             $existing->name = $name;
             $existing->adm_no = $adm_no;
