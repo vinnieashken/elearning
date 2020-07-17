@@ -353,7 +353,7 @@ class LoginController extends Controller
         }
 
         $student = new Customer();
-        $existing  = $student->where('institution_id',$institution)->where('teacher_id',$teacher)->where('adm_no',$adm_no)->first();
+        $existing  = $student->where('institution_id',$institution)->where('adm_no',$adm_no)->first();
         if(is_null($existing))
         {
             $student->institution_id = $institution;
