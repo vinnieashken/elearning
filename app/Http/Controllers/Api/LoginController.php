@@ -345,7 +345,7 @@ class LoginController extends Controller
         $teacher = $request->teacherid;
         $name = $request->name;
         $adm_no = $request->adm_no;
-        $email = $request->email;
+        $email = ($request->has('email') ? $request->email : '');
 
         if(is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no) )
         {
