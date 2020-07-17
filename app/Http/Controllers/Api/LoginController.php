@@ -347,7 +347,7 @@ class LoginController extends Controller
         $adm_no = $request->adm_no;
         $email = $request->email;
 
-        if(is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no) || is_null($email))
+        if(is_null($institution) || is_null($teacher) || is_null($name) || is_null($adm_no) )
         {
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
