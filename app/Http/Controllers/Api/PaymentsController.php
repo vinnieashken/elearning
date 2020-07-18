@@ -267,9 +267,8 @@ class PaymentsController extends Controller
         if($request->has('institutionid'))
         {
             $owner = Customer::where('institution_id',$request->institutionid)->where('owner',1)->first();
-            return $owner;
-
-            $useridl = $owner->user_id;
+            if(!is_null($owner))
+                $useridl = $owner->user_id;
         }
         $subscription = $subscription->orderby('user_subscriptions.id','DESC')->where('user_id',$useridl)->where('status',1 )->where('enddate','>=',date_create('now'))
             ->leftJoin('subscriptions','subscriptions.id','=','user_subscriptions.package_id')
