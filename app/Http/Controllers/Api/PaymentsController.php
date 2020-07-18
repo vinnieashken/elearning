@@ -267,6 +267,7 @@ class PaymentsController extends Controller
         if($request->has('institutionid'))
         {
             $owner = Customer::where('institution_id',$request->institutionid)->where('owner',1)->first();
+            return $owner;
 
             $useridl = $owner->user_id;
         }
