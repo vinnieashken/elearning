@@ -13,13 +13,11 @@ export function fetchSubscription(user) {
             dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
         } else if(parseInt(user.institution_id) === 11 && (parseInt(user.owner) === 1 || parseInt(user.teacher) === 1)) {
             dispatch({type: SUBSCRIPTION_LOADED, payload: {id: 1}});
-        } else if (parseInt(user.institution_id) === 51) {
-            dispatch ({ type: SUBSCRIPTION_LOADED, payload: {id: 1} });
         } else {
             dispatch({type: LOADING_SUBSCRIPTION, payload: true});
             return $.ajax({
                 // url: `${API}/payments/subscription/user/2`,
-                url: `${API}/payments/subscription/user/${user.user_id}`,
+                url: `${API}/payments/subscription/user/${user.user_id}${user.login_code ? `?institutionid=${user.institution_id}` : ''}`,
                 method: 'get',
                 headers: {
                     'appkey': 'ELE-2020-XCZ3'
