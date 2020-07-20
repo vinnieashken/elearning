@@ -426,7 +426,7 @@ class Cms extends Controller
                                                 if($request->correctanswer == $key)
                                                     {
                                                         $correct                =   Answer::find($request->correct_id);
-                                                        $correct->question_id   =   $request->id;
+                                                        $correct->question_id   =   $question->id;
                                                         $correct->option_id     =   $option->id;
                                                         $corstatus              =   $correct->save();
                                                     }
@@ -443,8 +443,9 @@ class Cms extends Controller
                                     }
                                 else
                                     {
+                                        dd($question->id);
                                         $option                 =   Option::find($request->optionid);
-                                        $option->question_id    =   $request->id;
+                                        $option->question_id    =   $question->id;
                                         $option->option         =   $request->option;
                                         $optstatus              =   $option->save();
                                         if($optstatus)
