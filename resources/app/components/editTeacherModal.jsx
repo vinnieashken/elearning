@@ -28,7 +28,7 @@ export default function (props) {
         if (teacher.hasOwnProperty('id'))
             formData.append('id', student.id)
         $.ajax({
-            url: `${API}/institution/student/${teacher.hasOwnProperty('id') ? 'edit' : 'register'}`,
+            url: `${API}/institution/teacher/${teacher.hasOwnProperty('id') ? 'edit' : 'register'}`,
             method: 'post',
             processData: false,
             contentType: false,
