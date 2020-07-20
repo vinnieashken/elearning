@@ -603,7 +603,7 @@ class ModulesController extends Controller
             ->get();
 
         $choiceless = Choiceless::where('user_id',$userid)->select('module_id')->distinct()->get()->pluck('module_id')->toArray();
-//        $choiceless = Module::whereIn('id',$choiceless)
+        $choiceless = Module::whereIn('id',$choiceless)->get();
 //            ->leftJoin('subjects','subjects.id','=','modules.subject_id')
 //            ->leftJoin('classes','classes.id','=','subjects.class_id')
 //            ->select('modules.id','modules.module','user_answers_choiceless.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
