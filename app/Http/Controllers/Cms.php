@@ -443,10 +443,10 @@ class Cms extends Controller
                                     }
                                 else
                                     {
-                                        dd(Option::where('question_id',$question->id)->first());
-                                        $option                 =   Option::find(Option::where('question_id',$question->id)->first()->id);
-                                        $option->question_id    =   $question->id;
-                                        $option->option         =   $request->option;
+                                        $option                 =   Option::firstOrNew(['question_id'   =>  $question->id],
+                                                                                       ['option'        =>  $request->option]
+                                                                                       );
+
                                         $optstatus              =   $option->save();
                                         if($optstatus)
                                             {
