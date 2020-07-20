@@ -610,11 +610,10 @@ class ModulesController extends Controller
 
             ->get();
 
-        foreach ($choiceless as $item)
-        {
-            $sheets->push($item);
-
-        }
+//        foreach ($choiceless as $item)
+//        {
+//            $sheets->push($item);
+//        }
 //        foreach ($sheets as $module)
 //        {
 //            $this->RedoMarks($module->id,$userid);
