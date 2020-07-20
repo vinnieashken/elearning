@@ -606,8 +606,8 @@ class ModulesController extends Controller
             ->leftJoin('modules','modules.id','=','user_answers_choiceless.module_id')
             ->leftJoin('subjects','subjects.id','=','modules.subject_id')
             ->leftJoin('classes','classes.id','=','subjects.class_id')
-//            ->select('modules.id','modules.module','user_answers_choiceless.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
-            ->get(['modules.id','modules.module','user_answers_choiceless.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class']);
+            ->select('modules.id','modules.module','user_answers_choiceless.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
+            ->get();
 
         foreach ($choiceless as $item)
         {
