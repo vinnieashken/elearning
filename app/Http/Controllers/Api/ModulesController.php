@@ -609,10 +609,10 @@ class ModulesController extends Controller
             ->select('modules.id','modules.module','user_answers_choiceless.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
             ->get();
 
-//        foreach ($choiceless as $item)
-//        {
-//            $sheets->push($item);
-//        }
+        foreach ($choiceless as $item)
+        {
+            $sheets->push($item);
+        }
 //        foreach ($sheets as $module)
 //        {
 //            $this->RedoMarks($module->id,$userid);
