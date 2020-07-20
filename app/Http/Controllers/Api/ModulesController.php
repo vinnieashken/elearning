@@ -603,7 +603,7 @@ class ModulesController extends Controller
             ->get();
 
         $choiceless = Choiceless::where('user_id',$userid)->select('module_id')->distinct()->get()->pluck('module_id')->toArray();
-        $dates = Choiceless::where('user_id',$userid)->whereIn('module_id',$choiceless)->get(['id','created_at']);
+        $dates = Choiceless::where('user_id',$userid)->whereIn('module_id',$choiceless)->get(['module_id','created_at']);
         $choiceless = Module::leftJoin('subjects','subjects.id','=','modules.subject_id')
             ->leftJoin('classes','classes.id','=','subjects.class_id')
             ->whereIn('modules.id',$choiceless)
@@ -614,7 +614,10 @@ class ModulesController extends Controller
         {
             foreach ($dates as $date)
             {
-
+                if($date->module_id == $item->id)
+                {
+                    $item->date = $date->created_at;
+                }
             }
             $sheets->push($item);
         }
