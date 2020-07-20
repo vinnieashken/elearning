@@ -418,14 +418,14 @@ class Cms extends Controller
                                         $i = 65;
                                         foreach ($request->option as $key => $value)
                                             {
-                                                $option                 =   Option::where(id,$key);
+                                                $option                 =   Option::find($key);
                                                 $option->question_id    =   $question->id;
                                                 $option->option         =   chr($i).') '.$value;
                                                 $optstatus              =   $option->save();
 
                                                 if($request->correctanswer == $key)
                                                     {
-                                                        $correct                =   Answer::where('id',$request->correct_id);
+                                                        $correct                =   Answer::find($request->correct_id);
                                                         $correct->question_id   =   $question->id;
                                                         $correct->option_id     =   $option->id;
                                                         $corstatus              =   $correct->save();
@@ -443,7 +443,7 @@ class Cms extends Controller
                                     }
                                 else
                                     {
-                                        $option                 =   Option::where('id',$request->optionid);
+                                        $option                 =   Option::find($request->optionid);
                                         $option->question_id    =   $question->id;
                                         $option->option         =   $request->option;
                                         $optstatus              =   $option->save();
