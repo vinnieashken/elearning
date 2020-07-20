@@ -448,8 +448,8 @@ class Cms extends Controller
                                                                                        );
 
 
-                                        $optstatus              =   $option->save();
-                                        dd($optstatus);
+                                        //$optstatus              =   $option->save();
+                                        dd($option);
                                         /*if($optstatus)
                                             {
                                                 return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
