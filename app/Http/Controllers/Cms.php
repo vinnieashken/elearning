@@ -449,15 +449,15 @@ class Cms extends Controller
 
 
                                         //$optstatus              =   $option->save();
-                                        dd($option);
-                                        /*if($optstatus)
+
+                                        if($option)
                                             {
                                                 return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
                                             }
                                         else
                                             {
                                                 return array('status'=>False,'msg'=>'Question addition failed','header'=>'Question');
-                                            }*/
+                                            }
                                     }
                             }
                         else
