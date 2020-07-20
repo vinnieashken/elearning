@@ -447,7 +447,7 @@ class Cms extends Controller
                                                                                        ['option'        =>  $request->option]
                                                                                        );
 
-                                        $optstatus              =   $option->save();
+                                        //$optstatus              =   $option->save();
                                         if($optstatus)
                                             {
                                                 return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
