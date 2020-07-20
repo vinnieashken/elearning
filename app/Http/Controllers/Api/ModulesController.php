@@ -606,7 +606,7 @@ class ModulesController extends Controller
         $choiceless = Module::whereIn('id',$choiceless)
             ->leftJoin('subjects','subjects.id','=','modules.subject_id')
             //->leftJoin('classes','classes.id','=','subjects.class_id')
-            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject')
+            //->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject')
             ->get();
 
         foreach ($choiceless as $item)
