@@ -603,10 +603,10 @@ class ModulesController extends Controller
             ->get();
 
         $choiceless = Choiceless::where('user_id',$userid)->select('module_id')->distinct()->get()->pluck('module_id')->toArray();
-        $choiceless = Module::whereIn('id',$choiceless)
-            ->join('subjects','subjects.id','=','modules.subject_id')
-            //->leftJoin('classes','classes.id','=','subjects.class_id')
-            //->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject')
+        $choiceless = Module::whereIn('id',$choiceless)->distinct()
+            ->leftJoin('subjects','subjects.id','=','modules.subject_id')
+            ->leftJoin('classes','classes.id','=','subjects.class_id')
+            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
             ->get();
 
         foreach ($choiceless as $item)
