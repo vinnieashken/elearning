@@ -446,9 +446,10 @@ class Cms extends Controller
                                         $option                 =   Option::firstOrNew(['question_id'   =>  $question->id],
                                                                                        ['option'        =>  $request->option]
                                                                                        );
-                                        dd($option);
 
-                                        //$optstatus              =   $option->save();
+
+                                        $optstatus              =   $option->save();
+                                        dd($optstatus);
                                         /*if($optstatus)
                                             {
                                                 return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
