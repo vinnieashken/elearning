@@ -602,7 +602,7 @@ class ModulesController extends Controller
             ->select('modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
-        $choiceless = Choiceless::where('user_id',$userid)->distinct('module_id')
+        $choiceless = Choiceless::where('user_id',$userid)->select('module_id')->distinct()
             ->leftJoin('modules','modules.id','=','user_answers_choiceless.module_id')
             ->leftJoin('subjects','subjects.id','=','modules.subject_id')
             ->leftJoin('classes','classes.id','=','subjects.class_id')
