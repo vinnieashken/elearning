@@ -443,8 +443,8 @@ class Cms extends Controller
                                     }
                                 else
                                     {
-                                        $option                 =   Option::updateOrCreate(['question_id'   =>  $question->id,'option'        =>  $request->option]
-
+                                        $option                 =   Option::updateOrCreate(['question_id'   =>  $question->id],
+                                                                                           ['option'        =>  $request->option]
                                                                                        );
 
 
