@@ -602,12 +602,12 @@ class ModulesController extends Controller
             ->select('modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
-        $choiceless = Choiceless::where('user_id',$userid)->distinct('module_id')
-            ->leftJoin('modules','modules.id','=','user_answers_choiceless.module_id')
-            ->leftJoin('subjects','subjects.id','=','modules.subject_id')
-            ->leftJoin('classes','classes.id','=','subjects.class_id')
-            ->select('modules.id','modules.module','user_answers_choiceless.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
-            ->get();
+        $choiceless = Choiceless::where('user_id',$request->userid)->select('module_id')->distinct()->get();
+//            ->leftJoin('modules','modules.id','=','user_answers_choiceless.module_id')
+//            ->leftJoin('subjects','subjects.id','=','modules.subject_id')
+//            ->leftJoin('classes','classes.id','=','subjects.class_id')
+//            ->select('modules.id','modules.module','user_answers_choiceless.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
+//            ->get();
 
         foreach ($choiceless as $item)
         {
