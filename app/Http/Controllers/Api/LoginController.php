@@ -352,6 +352,13 @@ class LoginController extends Controller
             return response()->json(['message'=>'Invalid or missing parameters','data'=> $request->all()] , 400);
         }
 
+        $emailcustomer = Customer::where('email',$email)->first();
+
+        if(!is_null($emailcustomer))
+        {
+            return response()->json(['message'=>'The email address is already taken. Use another one.','data'=> $request->all()] , 400);
+        }
+
         $student = new Customer();
         $existing  = $student->where('institution_id',$institution)->where('adm_no',$adm_no)->first();
         if(is_null($existing))
@@ -369,7 +376,7 @@ class LoginController extends Controller
         else{
 
             //$existing->teacher_id = $teacher;
-            //$existing->email = $email;
+            $existing->email = $email;
             $existing->name = $name;
             $existing->adm_no = $adm_no;
             $existing->login_code = $existing->institution_id.'-'.$existing->adm_no;
