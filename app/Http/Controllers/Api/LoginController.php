@@ -369,7 +369,7 @@ class LoginController extends Controller
         else{
 
             //$existing->teacher_id = $teacher;
-            $existing->email = $email;
+            //$existing->email = $email;
             $existing->name = $name;
             $existing->adm_no = $adm_no;
             $existing->login_code = $existing->institution_id.'-'.$existing->adm_no;
