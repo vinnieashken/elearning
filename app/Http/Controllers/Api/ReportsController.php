@@ -25,7 +25,7 @@ class ReportsController extends Controller
 
             foreach ($subjects as $subject)
             {
-                $count = Module::where('subject_id',$subject->id)->where('active',1)->count();
+                $count = Module::where('subject_id',$subject->id)->where('status',1)->count();
                 $sub = [
                     'subject' => $subject->subject,
                     'modules' => $count
