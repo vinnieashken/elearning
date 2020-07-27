@@ -6,7 +6,7 @@
 <body>
     <div>
         <div>
-
+            {{ dd($data) }}
             @foreach($data as $Key => $value)
                 <div>
                     <p>{{ $key }}</p>
