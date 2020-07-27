@@ -28,7 +28,7 @@ class ReportsController extends Controller
                 $count = Module::where('subject_id',$subject->id)->where('status',1)->count();
                 $sub = [
                     'subject' => $subject->subject,
-                    'modules' => 0
+                    'modules' => $count
                 ];
                 array_push($subdata, $sub);
             }
