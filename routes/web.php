@@ -82,4 +82,6 @@ Route::get('{any}', function ($any = null) {
 
 Auth::routes();
 
+Route::get('/stats','Api\ReportsController@getStats');
+
 
