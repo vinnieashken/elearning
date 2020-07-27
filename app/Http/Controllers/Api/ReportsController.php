@@ -22,16 +22,17 @@ class ReportsController extends Controller
         {
 
             $subjects = Subject::where('class_id',$level->id)->get();
-            $sub = [];
+
             foreach ($subjects as $subject)
             {
-                $count = Module::where('subject_id',$subject->id)->where('status',1)->count();
+                //$count = Module::where('subject_id',$subject->id)->where('status',1)->count();
                 $sub = [
                     'subject' => $subject->subject,
-                    'modules' => $count
+                    'modules' => 0
                 ];
+                array_push($subdata, $sub);
             }
-            array_push($subdata, $sub);
+
 
             $data[$level->class] = $subdata;
         }
