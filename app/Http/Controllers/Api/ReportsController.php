@@ -34,7 +34,7 @@ class ReportsController extends Controller
             }
 
 
-            $data[$level->class] = $subdata;
+            $data[$level->class] = $subjects->toArray();
         }
 
         return view('reports.statistics',['data' => $data]);
