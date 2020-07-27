@@ -18,14 +18,14 @@ class ReportsController extends Controller
 
         $subdata = [];
 
-        foreach (Level::get() as $level)
+        foreach (Level::where('active',1)->get() as $level)
         {
 
-            $subjects = Subject::where('class_id',$level->id)->get();
+            $subjects = Subject::where('class_id',$level->id)->where('active',1)->get();
 
             foreach ($subjects as $subject)
             {
-                $count = Module::where('subject_id',$subject->id)->count();
+                $count = Module::where('subject_id',$subject->id)->where('active',1)->count();
                 $sub = [
                     'subject' => $subject->subject,
                     'modules' => $count
