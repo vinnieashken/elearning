@@ -16,16 +16,16 @@ class ReportsController extends Controller
     {
         $data = [];
 
-        $subdata = [];
+
 
         foreach (Level::get() as $level)
         {
-
+            $subdata = [];
             $subjects = Subject::where('class_id',$level->id)->get();
 
             foreach ($subjects as $subject)
             {
-                //$count = Module::where('subject_id',$subject->id)->where('status',1)->count();
+                $count = Module::where('subject_id',$subject->id)->where('status',1)->count();
                 $sub = [
                     'subject' => $subject->subject,
                     'modules' => 0
@@ -34,7 +34,7 @@ class ReportsController extends Controller
             }
 
 
-            $data[$level->class] = $subjects->toArray();
+            $data[$level->class] = $subdata;
         }
 
         return view('reports.statistics',['data' => $data]);
