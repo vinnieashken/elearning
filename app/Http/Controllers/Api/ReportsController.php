@@ -18,10 +18,10 @@ class ReportsController extends Controller
 
         $subdata = [];
 
-        foreach (Level::where('active',1)->get() as $level)
+        foreach (Level::get() as $level)
         {
 
-            $subjects = Subject::where('class_id',$level->id)->where('active',1)->get();
+            $subjects = Subject::where('class_id',$level->id)->get();
 
             foreach ($subjects as $subject)
             {
