@@ -13,7 +13,7 @@
                     <p>{{ 'hello '}}</p>
                     <ul>
                     @foreach($value as $Keys=>$values)
-                       <li>{{ '' }}  {{ $values }}</li>
+                       <li>{{ $values['subject'] }}  {{ $values['modules'] }}</li>
                     @endforeach
                     </ul>
                 </div>
