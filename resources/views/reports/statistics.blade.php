@@ -10,7 +10,7 @@
 
             @foreach($data as $Key=>$value)
                 <div>
-                    <p>{{ $key }}</p>
+                    <p>{{ 'hello '}}</p>
                     <ul>
                     @foreach($value as $Keys=>$values)
                        <li>{{ $values[0] }}  {{ $values[1] }}</li>
