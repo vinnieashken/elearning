@@ -59,6 +59,8 @@ Route::post('cms/edituserroles','Cms@edituserroles');
 Route::post('cms/delete','Cms@delete');
 Route::post('cms/update','Cms@update');
 Route::post('cms/get_payments','Datatable@get_payments');
+
+Route::get('/stats','Api\ReportsController@getStats');
 /*
 
 Route::get('/academy/login', function () {
@@ -70,6 +72,7 @@ Route::get('/academy/register', function () {
 });
 
 */
+
 Route::get('{any}', function ($any = null) {
 
     if (strpos($any, 'academy') === 0)
@@ -82,6 +85,6 @@ Route::get('{any}', function ($any = null) {
 
 Auth::routes();
 
-Route::get('/stats','Api\ReportsController@getStats');
+
 
 
