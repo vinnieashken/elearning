@@ -18,7 +18,7 @@ class ReportsController extends Controller
 
 
 
-        foreach (Level::get() as $level)
+        foreach (Level::orderBy('class','ASC')->get() as $level)
         {
             $subdata = [];
             $subjects = Subject::where('class_id',$level->id)->get();
