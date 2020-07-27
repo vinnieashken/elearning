@@ -7,9 +7,9 @@
     <div>
         <div>
 
-            @foreach($data as $Key=>$value)
+            @foreach($data as $key=>$value)
                 <div>
-                    <p>{{ 'hello '}}</p>
+                    <p>{{ $key}}</p>
                     <ul>
                     @foreach($value as $Keys=>$values)
                        <li>{{ $values['subject'] }}  {{ $values['modules'] }}</li>
