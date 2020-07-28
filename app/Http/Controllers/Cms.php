@@ -443,11 +443,14 @@ class Cms extends Controller
                                     }
                                 else
                                     {
-                                        $option                 =   Option::find($request->optionid);
-                                        $option->question_id    =   $question->id;
-                                        $option->option         =   $request->option;
-                                        $optstatus              =   $option->save();
-                                        if($optstatus)
+                                        $option                 =   Option::updateOrCreate(['question_id'   =>  $question->id],
+                                                                                           ['option'        =>  $request->option]
+                                                                                       );
+
+
+                                        //$optstatus              =   $option->save();
+
+                                        if($option)
                                             {
                                                 return array('status'=>TRUE,'msg'=>'Question added successful','header'=>'Question');
                                             }

@@ -8,4 +8,5 @@ class Level extends Model
 {
     //
     protected $table = "classes";
+
 }

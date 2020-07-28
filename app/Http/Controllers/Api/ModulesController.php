@@ -602,6 +602,25 @@ class ModulesController extends Controller
             ->select('modules.id','modules.module','user_answers.created_at as date','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class','marks.score','marks.questions','marks.percentage')
             ->get();
 
+        $choiceless = Choiceless::where('user_id',$userid)->select('module_id')->distinct()->get()->pluck('module_id')->toArray();
+        $dates = Choiceless::where('user_id',$userid)->whereIn('module_id',$choiceless)->get(['module_id','created_at']);
+        $choiceless = Module::leftJoin('subjects','subjects.id','=','modules.subject_id')
+            ->leftJoin('classes','classes.id','=','subjects.class_id')
+            ->whereIn('modules.id',$choiceless)
+            ->select('modules.id','modules.module','subjects.id as subject_id','subjects.subject','classes.id as class_id','classes.class')
+            ->get();
+
+        foreach ($choiceless as $item)
+        {
+            foreach ($dates as $date)
+            {
+                if($date->module_id == $item->id)
+                {
+                    $item->date = $date->created_at;
+                }
+            }
+            $sheets->push($item);
+        }
 //        foreach ($sheets as $module)
 //        {
 //            $this->RedoMarks($module->id,$userid);
