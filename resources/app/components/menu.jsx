@@ -261,7 +261,7 @@ export default function (props) {
 
                                         {
                                             classes.filter(el => {
-                                                return [2, 6, 7, 8].includes(el.id)
+                                                return [2, 6, 7, 8, 9, 11, 12, 13].includes(el.id)
                                             }).map(el => {
                                                 return (
                                                     <li><Link to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link></li>
@@ -363,7 +363,7 @@ export default function (props) {
 
                                             {
                                                 classes.filter(el => {
-                                                    return [2, 6, 7, 8].includes(el.id)
+                                                    return [2, 6, 7, 8, 9, 11, 12, 13].includes(el.id)
                                                 }).map(el => {
                                                     return (
                                                         <Link className="dropdown-item" to={`${ENV}exams/classes/${el.id}/subjects`}>{el.class}</Link>
@@ -737,7 +737,7 @@ export default function (props) {
                                                render={(props) =>
                                                    <FreeExams {...props} user={user}/>
                                                }/>
-                                        <Route exact={true} path={`${props.match.url}free/exam/:exam`}
+                                        <Route exact={true} path={`${props.match.url}free/exam/:exam/:slug`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        <Exam {...props} user={user}/>
@@ -748,7 +748,7 @@ export default function (props) {
                                                            },
                                                        })
                                                }/>
-                                        <Route exact={true} path={`${props.match.url}exams/exam/:exam`}
+                                        <Route exact={true} path={`${props.match.url}exams/exam/:exam/:slug`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
@@ -766,7 +766,7 @@ export default function (props) {
                                                            },
                                                        })
                                                }/>
-                                        <Route exact={true} path={`${props.match.url}exams/exam/:exam/questions/:index`}
+                                        <Route exact={true} path={`${props.match.url}exams/exam/:exam/:slug/questions/:index`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?

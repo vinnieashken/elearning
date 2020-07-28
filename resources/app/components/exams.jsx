@@ -109,6 +109,14 @@ export default function (props) {
         )
     }
 
+    const convertToSlug = (Text) => {
+        return Text
+            .toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace(/ +/g,'-')
+            ;
+    }
+
     const actionButton = (cell, row) => {
         return (
             <div className="actions ml-3">
@@ -136,7 +144,7 @@ export default function (props) {
                     //         </Link>
                     //     </React.Fragment> :
                         <Link to={{
-                            pathname: props.match.params.level === 'secondary' ? `${ENV}exams/exam/${row.id}/questions/1` : parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}` : `${ENV}exams/exam/${row.id}`,
+                            pathname: props.match.params.level === 'secondary' ? `${ENV}exams/exam/${row.id}/${convertToSlug(row.module)}/questions/1` : parseInt(row.institution_id) === 29 ? `${ENV}free/exam/${row.id}/${convertToSlug(row.module)}` : `${ENV}exams/exam/${row.id}/${convertToSlug(row.module)}`,
                             state: {
                                 exam: row
                             }

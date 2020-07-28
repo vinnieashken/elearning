@@ -114,6 +114,14 @@ export default function (props) {
         })
     }
 
+    const convertToSlug = (Text) => {
+        return Text
+            .toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace(/ +/g,'-')
+            ;
+    }
+
     const handleNext = (e) => {
         e.preventDefault();
         setProcessing(true);
@@ -149,7 +157,7 @@ export default function (props) {
                 } else {
                     setShowAns(false);
                     props.history.push({
-                        pathname: `${ENV}exams/exam/${exam.id}/questions/${activeQuestion + 1}`,
+                        pathname: `${ENV}exams/exam/${exam.id}/${convertToSlug(exam.name)}/questions/${activeQuestion + 1}`,
                     });
                 }
             }.bind(this)
@@ -331,7 +339,7 @@ export default function (props) {
                                                         <div className='card-header'>
                                                             <div className="row">
                                                                 <div className="col-6">
-                                                                    <h1 className="h3 mb-3">{`Question ${activeQuestion}`}</h1>
+                                                                    <h1 className="h3 mb-3">{`Question ${activeQuestion} of ${exam.questions.length}`}</h1>
                                                                     {/*<h6 className="card-subtitle text-muted">Question Details</h6>*/}
                                                                 </div>
                                                                 <div className="col-6 ">
@@ -346,7 +354,7 @@ export default function (props) {
                                                                                                 event => {
                                                                                                     setShowAns(false);
                                                                                                     props.history.push({
-                                                                                                        pathname: `${ENV}exams/exam/${exam.id}/questions/${activeQuestion - 1}`,
+                                                                                                        pathname: `${ENV}exams/exam/${exam.id}/${convertToSlug(exam.name)}/questions/${activeQuestion - 1}`,
                                                                                                     });
                                                                                                 }
                                                                                             }
@@ -362,7 +370,7 @@ export default function (props) {
                                                                                                 } else {
                                                                                                     setShowAns(false);
                                                                                                     props.history.push({
-                                                                                                        pathname: `${ENV}exams/exam/${exam.id}/questions/${activeQuestion + 1}`,
+                                                                                                        pathname: `${ENV}exams/exam/${exam.id}/${convertToSlug(exam.name)}/questions/${activeQuestion + 1}`,
                                                                                                     });
                                                                                                 }
                                                                                             }

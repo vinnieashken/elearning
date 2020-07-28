@@ -45,6 +45,7 @@ export function fetchSubjects() {
             },
             dataType: 'json',
             success: function (res) {
+                console.log(res)
                 dispatch ({ type: SUBJECTS_LOADED, payload: res });
             }.bind(this)
         })
@@ -61,6 +62,7 @@ export function fetchClasses() {
             },
             dataType: 'json',
             success: function (res) {
+                console.log(res);
                 dispatch ({ type: CLASSES_LOADED, payload: res });
             }.bind(this)
         })
