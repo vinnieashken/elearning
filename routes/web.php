@@ -61,6 +61,10 @@ Route::post('cms/update','Cms@update');
 Route::post('cms/get_payments','Datatable@get_payments');
 
 Route::get('/stats','Api\ReportsController@getStats');
+Route::get('/lesson','Api\ReportsController@getUploadpage');
+Route::post('/lesson/add','Api\ReportsController@ProcessUpload');
+
+
 /*
 
 Route::get('/academy/login', function () {

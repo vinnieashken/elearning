@@ -7,6 +7,7 @@ use App\Models\Level;
 use App\Models\Module;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Madnest\Madzipper\Madzipper;
 
 class ReportsController extends Controller
 {
@@ -38,5 +39,18 @@ class ReportsController extends Controller
         }
 
         return view('reports.statistics',['data' => $data]);
+    }
+
+
+    public function getUploadpage()
+    {
+        return view('reports.uploadform');
+    }
+
+    public function ProcessUpload(Request $request)
+    {
+        $path = $request->file('lessons')->storeAs('lessons');
+        //$zipper = new Madzipper();
+        //$zipper->make($path)->extractTo('foo');
     }
 }
