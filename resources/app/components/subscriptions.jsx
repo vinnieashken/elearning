@@ -98,7 +98,11 @@ export default function (props) {
                             loading ?
                                 <div className='col-md-12'>
                                     <Loading/>
-                                </div> : subscriptions.map(el => {
+                                </div> : subscriptions.sort(function(a, b) {
+                                    if (a.cost < b.cost) return -1;
+                                    if (a.cost > b.cost) return 1;
+                                    return 0;
+                                }).map(el => {
                                     return (
                                         <div className="col-lg-4 col-md-6 col-sm-12">
                                             <div className="card daily">
@@ -106,7 +110,9 @@ export default function (props) {
                                                 <div className="card-body">
                                                     <h5 className="card-title text-center">Ksh. {el.cost}</h5>
                                                     <h6 className="card-title text-center">Also Receive</h6>
-                                                    <p className="card-text text-center">- {el.description}</p>
+                                                    <p className="card-text text-center">
+                                                        <span dangerouslySetInnerHTML={ {__html: el.description} } />
+                                                    </p>
                                                     <div className="text-center">
                                                         <Link to={{
                                                             pathname: `${ENV}subscription/payment`,
