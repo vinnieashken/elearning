@@ -50,6 +50,9 @@ class LessonsController extends Controller
                 $units = Unit::where('subject',$subject)->paginate($size)->items();
                 return $units;
             }
+
+            $units = Unit::paginate($size)->items();
+            return $units;
         }
 
         if($request->has('class') && $request->has('subject'))
