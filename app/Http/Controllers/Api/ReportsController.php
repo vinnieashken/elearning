@@ -103,11 +103,10 @@ class ReportsController extends Controller
         else
             $contents = $json;
         $unit = new Unit();
-        $unit->unit = "Whole Numbers";
-        $unit->class = 6;
-        $unit->subject = "Mathematics";
+        $unit->unit = $request->unit;
+        $unit->class = $request->class;
+        $unit->subject = $request->subject;
         $unit->save();
-
 
         foreach ($contents->Super as $item)
         {
