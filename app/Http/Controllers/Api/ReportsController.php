@@ -132,6 +132,7 @@ class ReportsController extends Controller
                 $question = new LessonQuestion();
                 $question->unit_id = $unit->id;
                 $question->number = $item->Number;
+
                 $replace = 'src="lessons/'.$unit->id.'/images';
                 $content = str_replace('src="images',$replace,$item->Question);
                 $replace = 'src="lessons/'.$unit->id.'/multimedia';
@@ -143,7 +144,12 @@ class ReportsController extends Controller
                 $question->D = $item->OptionD;
                 $question->answer = $item->Answer;
                 $question->category = $item->Category;
-                $question->explanation = $item->Qsatp;
+
+                $replace = 'src="lessons/'.$unit->id.'/images';
+                $content = str_replace('src="images',$replace,$item->Qsatp);
+                $replace = 'src="lessons/'.$unit->id.'/multimedia';
+                $content = str_replace('src="multimedia',$replace,$content);
+                $question->explanation = $content;
                 $question->save();
             }
         }
