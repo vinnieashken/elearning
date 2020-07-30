@@ -86,7 +86,10 @@ class LessonsController extends Controller
         $unit = Unit::with('lessons','questions')->where('units.id',$id)->first();
         if(is_null($unit))
             return response()->json(['message'=>'unit not found'],400);
+        $json = json_encode($unit);
+        $json = str_replace('src=\"lessons','src=\"'.url('/lessons'),$json);
 
+        $unit = json_decode($json);
         return $unit;
     }
 }
