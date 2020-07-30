@@ -54,6 +54,8 @@ class ReportsController extends Controller
 
     public function ProcessUpload(Request $request)
     {
+        set_time_limit ( 3600 );
+
         $path = $request->file('lessons')->store('lessons');
 
         $workdir = Storage::disk('local')->path('lessons');
