@@ -90,6 +90,12 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/publishers/list','Api\InstitutionsController@getPublishers');
     Route::get('/publishers/payments/{publisherid}','Api\InstitutionsController@getPublishersPayments');
 
+    //Lseeons
+    Route::get('/lessons/classes','Api\LessonsController@getClasses');
+    Route::get('/lessons/subjects','Api\LessonsController@getSubjects');
+    Route::get('/lessons/units','Api\LessonsController@getUnits');
+    Route::get('/lessons/unit/{id}','Api\LessonsController@getUnitNotes');
+
     Route::get('testsub','Api\LoginController@testSubscribe');
 
 
