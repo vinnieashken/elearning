@@ -87,8 +87,7 @@ class LessonsController extends Controller
         if(is_null($unit))
             return response()->json(['message'=>'unit not found'],400);
         $json = json_encode($unit);
-        $json = str_replace('src="lessons','src="'.url('/lessons'),$json);
-
+        $json = str_replace('src=\"lessons','src=\"'.url('/lessons'),$json);
         $unit = json_decode($json,true);
         return $unit;
     }
