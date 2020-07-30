@@ -13,6 +13,8 @@ class CreateCouponsTable extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('coupons'))
+            return;
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
