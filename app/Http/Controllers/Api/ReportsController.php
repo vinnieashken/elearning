@@ -80,7 +80,7 @@ class ReportsController extends Controller
         $target = $directories[0];
 
         $srcpath = Storage::disk('local')->path($target);
-        $contents = File::get($srcpath.'\data.js');
+        $contents = File::get($srcpath.'/data.js');
 
         $contents = trim($contents);
         $contents = str_replace("var json = ",'',$contents);
