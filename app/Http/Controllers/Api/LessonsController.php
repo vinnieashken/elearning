@@ -89,7 +89,7 @@ class LessonsController extends Controller
         $json = json_encode($unit);
         $json = str_replace('src="lessons','src="'.url('/lessons'),$json);
 
-        $unit = json_decode($json);
+        $unit = json_decode($json,true);
         return $unit;
     }
 }
