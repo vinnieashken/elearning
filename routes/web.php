@@ -62,7 +62,9 @@ Route::post('cms/get_payments','Datatable@get_payments');
 
 Route::get('/stats','Api\ReportsController@getStats');
 Route::get('/lesson','Api\ReportsController@getUploadpage');
+Route::get('/lesson/{id}','Api\ReportsController@getLessons');
 Route::post('/lesson/add','Api\ReportsController@ProcessUpload');
+
 
 
 /*
@@ -83,7 +85,7 @@ Route::get('{any}', function ($any = null) {
         return view('academy.index');
 
     return view('newApp');
-})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|questionoption|admin|upload).)*$');
+})->where('any', '^((?!cms|assets|static|get_users|get_classes|get_subjects|get_modules|get_questions|subjectfromclass|choices|get_rates|admin|register|login|api|questionanswers|questionoption|admin|upload|lesson).)*$');
 
 
 
