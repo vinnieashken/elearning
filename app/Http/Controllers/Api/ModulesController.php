@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ResultSent;
+use App\Models\Answer;
 use App\Models\AnswerSheet;
 use App\Models\Choiceless;
 use App\Models\Customer;
@@ -952,10 +953,13 @@ class ModulesController extends Controller
             $page = $request->page;
             $size = $request->size;
             $modules = Module::paginate($size)->items();
-            $scores = AnswerSheet::where('user_answers.module_id',10)
-                ->leftjoin('answers','user_answers.question_id','=','answers.option_id')
-                ->select('user_answers.question_id','answers.option_id as answer')
-                ->get();
+
+            $modulequestions = Question::where('module_id',10)->get(['id'])->toArray();
+            $moduleanswers = Answer::whereIn('question_id',$modulequestions)->get(['option_id'])->toArray();
+
+            $totaldone = AnswerSheet::where('module_id',10)->count();
+
+            $scores = AnswerSheet::where('module_id',10)->whereIn('option_id',$moduleanswers);
 
             return $scores;
         }
