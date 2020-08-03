@@ -953,7 +953,7 @@ class ModulesController extends Controller
             $size = $request->size;
             $modules = Module::paginate($size)->items();
             $scores = AnswerSheet::where('user_answers.module_id',10)
-                ->leftjoin('user_answers','user_answers.question_id','=','answers.option_id')
+                ->leftjoin('answers','user_answers.question_id','=','answers.option_id')
                 ->select('user_answers.question_id','answers.option_id as answer')
                 ->get();
 
