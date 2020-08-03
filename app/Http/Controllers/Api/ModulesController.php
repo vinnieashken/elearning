@@ -963,7 +963,7 @@ class ModulesController extends Controller
             $data = [
                 'totaldone'=>$totaldone,
                 'scores'=> $scores,
-                'average score' => $scores/$totaldone
+                'average score' => $scores/$totaldone * 100
             ];
             return $data;
         }
