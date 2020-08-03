@@ -959,9 +959,12 @@ class ModulesController extends Controller
 
             $totaldone = AnswerSheet::where('module_id',10)->count();
 
-            $scores = AnswerSheet::where('module_id',10)->whereIn('option_id',$moduleanswers);
-
-            return $scores;
+            $scores = AnswerSheet::where('module_id',10)->whereIn('option_id',$moduleanswers)->count();
+            $data = [
+                'totaldone'=>$totaldone,
+                'scores'=> $scores
+            ];
+            return $data;
         }
 
     }
