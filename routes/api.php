@@ -96,6 +96,8 @@ Route::post('/payments/mpesa/callback','Api\PaymentsController@mpesaCallback');
     Route::get('/lessons/units','Api\LessonsController@getUnits');
     Route::get('/lessons/unit/{id}','Api\LessonsController@getUnitNotes');
 
+    Route::get('/report/modules/average','ModulesController@ModulesAverage');
+
     Route::get('testsub','Api\LoginController@testSubscribe');
 
 

@@ -945,6 +945,19 @@ class ModulesController extends Controller
 
     }
 
+    public function ModulesAverage(Request $request)
+    {
+        if($request->has('page') && $request->has('size'))
+        {
+            $page = $request->page;
+            $size = $request->size;
+            $modules = Module::with('options')->paginate($size)->items();
+
+            return $modules;
+        }
+
+    }
+
     public function debug($userid)
     {
         foreach(Customer::get() as $customer) {
