@@ -955,7 +955,7 @@ class ModulesController extends Controller
             $scores = AnswerSheet::where('module_id',10)
                 ->leftjoin('user_answers','user_answers.question_id','=','answers.option_id')
                 ->select('user_answers.question_id','answers.option_id as answer')
-                ->count();
+                ->get();
 
             return $scores;
         }
