@@ -962,7 +962,8 @@ class ModulesController extends Controller
             $scores = AnswerSheet::where('module_id',10)->whereIn('option_id',$moduleanswers)->count();
             $data = [
                 'totaldone'=>$totaldone,
-                'scores'=> $scores
+                'scores'=> $scores,
+                'average score' => $scores/$totaldone
             ];
             return $data;
         }
