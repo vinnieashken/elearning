@@ -981,16 +981,35 @@ class ModulesController extends Controller
                 array_push($results,$data);
             }
 
-
-
-
-
             return $results;
         }
 
         return response()->json(['message'=>'please provide paging parameters'],400);
 
     }
+
+    public function ModuleStatistics(Request $request,$moduleid)
+    {
+        $module = Module::where('id',$moduleid)->first();
+        if(is_null($module))
+            return response()->json(['message'=>'Module not found'],400);
+
+        $questions = Question::where('module_id',$moduleid)->get();
+
+        $results = [];
+
+        foreach ($questions as $question)
+        {
+            $students = AnswerSheet::where('question_id',$question->id)->count();
+
+            $question->students = $students;
+
+            array_push($results,$question);
+        }
+
+        return $results;
+    }
+
 
     public function debug($userid)
     {
