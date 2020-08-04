@@ -1005,8 +1005,11 @@ class ModulesController extends Controller
         foreach ($questions as $question)
         {
             $students = AnswerSheet::where('question_id',$question->id)->count();
+            $answer = Answer::where('question_id',$question->id)->first();
+            $right = AnswerSheet::where('question_id',$question->id)->where('option_id',$answer->option_id)->count();
 
             $question->students = $students;
+            $question->right = $right;
 
             array_push($results,$question);
         }
