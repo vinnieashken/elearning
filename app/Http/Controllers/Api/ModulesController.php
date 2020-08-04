@@ -988,6 +988,8 @@ class ModulesController extends Controller
             return $results;
         }
 
+        return response()->json(['message'=>'please provide paging parameters'],400);
+
     }
 
     public function debug($userid)
