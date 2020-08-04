@@ -952,20 +952,34 @@ class ModulesController extends Controller
         {
             $page = $request->page;
             $size = $request->size;
+            $results = [];
             $modules = Module::paginate($size)->items();
 
-            $modulequestions = Question::where('module_id',10)->get(['id'])->toArray();
-            $moduleanswers = Answer::whereIn('question_id',$modulequestions)->get(['option_id'])->toArray();
+            foreach ($modules as $module)
+            {
+                $modulequestions = Question::where('module_id',$module->id)->get(['id'])->toArray();
+                $moduleanswers = Answer::whereIn('question_id',$modulequestions)->get(['option_id'])->toArray();
 
-            $totaldone = AnswerSheet::where('module_id',10)->count();
+                $totaldone = AnswerSheet::where('module_id',$module->id)->count();
 
-            $scores = AnswerSheet::where('module_id',10)->whereIn('option_id',$moduleanswers)->count();
-            $data = [
-                'totaldone'=>$totaldone,
-                'scores'=> $scores,
-                'average score' => $scores/$totaldone * 100
-            ];
-            return $data;
+                $scores = AnswerSheet::where('module_id',$module->id)->whereIn('option_id',$moduleanswers)->count();
+
+                $data = [
+                    'moduleId' => $module->id,
+                    'moduleName' => $module->module,
+                    'totaldone'=>$totaldone,
+                    'scores'=> $scores,
+                    'average score' => ($scores/$totaldone * 100) .' %'
+                ];
+
+                array_push($results,$data);
+            }
+
+
+
+
+
+            return $results;
         }
 
     }
