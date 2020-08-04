@@ -1008,8 +1008,8 @@ class ModulesController extends Controller
             $answer = Answer::where('question_id',$question->id)->first();
             $right = AnswerSheet::where('question_id',$question->id)->where('option_id',$answer->option_id)->count();
 
-            $question->students = $students;
-            $question->right = $right;
+            $question->totalstudents = $students;
+            $question->rightstudents = $right;
 
             array_push($results,$question);
         }
