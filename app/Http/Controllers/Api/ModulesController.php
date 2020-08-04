@@ -969,7 +969,7 @@ class ModulesController extends Controller
                     'moduleName' => $module->module,
                     'totaldone'=>$totaldone,
                     'scores'=> $scores,
-                    'average score' => ($scores/$totaldone * 100) .' %'
+                    //'average score' => ($scores/$totaldone * 100) .' %'
                 ];
 
                 array_push($results,$data);
