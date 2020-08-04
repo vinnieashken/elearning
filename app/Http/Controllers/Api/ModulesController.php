@@ -996,6 +996,10 @@ class ModulesController extends Controller
 
         $questions = Question::where('module_id',$moduleid)->get();
 
+        $subject = Subject::where('subjects.id',$module->subject_id)
+            ->leftJoin('classes','subjects.class_id','=','classes.id')
+            ->select('subjects.subject','classes.class')->first();
+
         $results = [];
 
         foreach ($questions as $question)
@@ -1007,6 +1011,8 @@ class ModulesController extends Controller
             array_push($results,$question);
         }
 
+        $module->subject = $subject->subject;
+        $module->class = $subject->class;
         $module->statistics = $results;
 
         return $module;
