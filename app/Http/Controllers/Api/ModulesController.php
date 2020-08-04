@@ -975,7 +975,7 @@ class ModulesController extends Controller
                     'class' => $subject->class,
                     'totaldone'=>$totaldone,
                     'scores'=> $scores,
-                    'average score' => (int)($scores == 0 || $totaldone == 0 ? 0 : ($scores/$totaldone) * 100) .' %'
+                    'average score' => (int)($scores == 0 || $totaldone == 0 ? 0 : ($scores/$totaldone) * 100) .'%'
                 ];
 
                 array_push($results,$data);
