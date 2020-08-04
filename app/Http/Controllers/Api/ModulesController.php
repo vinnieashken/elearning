@@ -1007,7 +1007,9 @@ class ModulesController extends Controller
             array_push($results,$question);
         }
 
-        return $results;
+        $module->statistics = $results;
+
+        return $module;
     }
 
 
