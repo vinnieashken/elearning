@@ -957,6 +957,10 @@ class ModulesController extends Controller
 
             foreach ($modules as $module)
             {
+                $subject = Subject::where('subjects.id',$module->subject_id)
+                    ->leftJoin('classes','subjects.class_id','=','classes.id')
+                    ->select('subjects.subject','classes.class')->get();
+
                 $modulequestions = Question::where('module_id',$module->id)->get(['id'])->toArray();
                 $moduleanswers = Answer::whereIn('question_id',$modulequestions)->get(['option_id'])->toArray();
 
@@ -967,6 +971,8 @@ class ModulesController extends Controller
                 $data = [
                     'moduleId' => $module->id,
                     'moduleName' => $module->module,
+                    'subject' => $subject->subject,
+                    'class' => $subject->class,
                     'totaldone'=>$totaldone,
                     'scores'=> $scores,
                     //'average score' => ($scores/$totaldone * 100) .' %'
