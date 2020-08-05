@@ -7,7 +7,7 @@ import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED, 
 import { useSelector } from 'react-redux'
 import { fetchSubscription, fetchSubjects, fetchClasses, fetchExams } from "../common/actions";
 import { useDispatch } from "react-redux";
-// import ReactGA from 'react-ga';
+import ReactGA from 'react-ga';
 import moment from "moment";
 
 const Login = Loadable({
@@ -165,7 +165,7 @@ export default function (props) {
     const dispatch = useDispatch();
 
     useEffect((e) => {
-        // ReactGA.initialize(TRACKING_ID);
+        ReactGA.initialize(TRACKING_ID);
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
@@ -176,8 +176,8 @@ export default function (props) {
     }, []);
 
     props.history.listen(location => {
-        // ReactGA.set({ page: location.pathname }); // Update the user's current page
-        // ReactGA.pageview(location.pathname); // Record a pageview for the given page
+        ReactGA.set({ page: location.pathname }); // Update the user's current page
+        ReactGA.pageview(location.pathname); // Record a pageview for the given page
     });
 
     const getSubscriptions = () => {
