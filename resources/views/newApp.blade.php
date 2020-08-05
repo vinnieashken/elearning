@@ -69,14 +69,14 @@
     <link href="{{ asset('static/new/css/extras.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="">
-{{--    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>--}}
-{{--    <script>--}}
-{{--        window.dataLayer = window.dataLayer || [];--}}
-{{--        function gtag(){dataLayer.push(arguments);}--}}
-{{--        gtag('js', new Date());--}}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-{{--        gtag('config', 'UA-9511843-21');--}}
-{{--    </script>--}}
+        gtag('config', 'UA-9511843-21');
+    </script>
     <style>
         /*.btn-sm {*/
         /*    font-size: 12px;*/
