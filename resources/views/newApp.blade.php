@@ -59,24 +59,24 @@
 
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="{{ asset('static/new/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/new/css/bootstrap.min.css?').date('Ymdhis') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('static/new/css/main.css?').date('Ymdhis') }}" rel="stylesheet">
+    <link href="{{ asset('static/new/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/new/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('static/new/css/extras.css?').date('Ymdhis') }}" rel="stylesheet">
+    <link href="{{ asset('static/new/css/extras.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+{{--    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9511843-21"></script>--}}
+{{--    <script>--}}
+{{--        window.dataLayer = window.dataLayer || [];--}}
+{{--        function gtag(){dataLayer.push(arguments);}--}}
+{{--        gtag('js', new Date());--}}
 
-        gtag('config', 'UA-9511843-21');
-    </script>
+{{--        gtag('config', 'UA-9511843-21');--}}
+{{--    </script>--}}
     <style>
         /*.btn-sm {*/
         /*    font-size: 12px;*/
@@ -150,6 +150,7 @@
 ?>
 <div class="main h-100 w-100" id="app" >
 </div>
+{{--<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd8995stk8B6HyTML2FDaEf4OovSF7PVDENCyOBtBu1wT5hcg/viewform?embedded=true" width="640" height="1775" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>--}}
 <noscript>
     <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
         Your web browser must have JavaScript enabled

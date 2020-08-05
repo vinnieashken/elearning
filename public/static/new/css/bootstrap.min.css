@@ -3026,7 +3026,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-success:hover {
     color: #fff;
-    background-color: #28a745;
+    background-color: #28a745 !important;
     border-color: #28a745
 }
 
@@ -4711,7 +4711,7 @@ tbody.collapse.show {
 .card-header {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
-    background-color: rgba(0, 0, 0, .03);
+    background-color: #ffffff;
     border-bottom: 1px solid rgba(0, 0, 0, .125)
 }
 
@@ -5163,7 +5163,7 @@ tbody.collapse.show {
 .jumbotron {
     padding: 2rem 1rem;
     margin-bottom: 2rem;
-    background-color: #e9ecef;
+    background-color: #fffacd !important;
     border-radius: .3rem
 }
 

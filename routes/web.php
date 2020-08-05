@@ -79,6 +79,14 @@ Route::get('/academy/register', function () {
 
 */
 
+//Route::get('/lessons/{any?}', function () {
+//    return view('newApp');
+//})->where('any', '.*');
+
+Route::get('/lessons/{path?}', function(){
+    return view('newApp');
+})->where('path', '.*');
+
 Route::get('{any}', function ($any = null) {
 
     if (strpos($any, 'academy') === 0)

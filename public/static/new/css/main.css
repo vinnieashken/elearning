@@ -4,11 +4,11 @@ Author: UIdeck
 Website: https://uideck.com
 More Info: https://uideck.com/products/helium-ui-kit
 */
-@import url("https://fonts.googleapis.com/css?family=Rubik:400,700|Montserrat:700");
+/*@import url("https://fonts.googleapis.com/css?family=Rubik:400,700|Montserrat:700");*/
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
     color: #444;
-    font-family: "Montserrat", sans-serif;
+    /*font-family: "Montserrat", sans-serif;*/
     font-weight: 700;
     letter-spacing: 0px;
     margin-top: 0;
@@ -5855,4 +5855,10 @@ th, td {
 
 .qLabel {
     font-size: 18px;
+}
+
+.lesson-tab {
+    margin-bottom: 3px;
+    background-color: #fffacd !important;
+    font-weight: bold;
 }

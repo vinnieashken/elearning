@@ -7,7 +7,7 @@ import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED, 
 import { useSelector } from 'react-redux'
 import { fetchSubscription, fetchSubjects, fetchClasses, fetchExams } from "../common/actions";
 import { useDispatch } from "react-redux";
-import ReactGA from 'react-ga';
+// import ReactGA from 'react-ga';
 import moment from "moment";
 
 const Login = Loadable({
@@ -130,6 +130,21 @@ const Question = Loadable({
     loading: Loading
 });
 
+const VirtualEssenceHome = Loadable({
+    loader: () => import('./virtualEssence/home'),
+    loading: Loading
+});
+
+const VirtualEssenceLessons = Loadable({
+    loader: () =>import('./virtualEssence/lessons'),
+    loading: Loading
+});
+
+const VirtualEssenceQuestions = Loadable({
+    loader: () =>import('./virtualEssence/questions'),
+    loading: Loading
+});
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -145,7 +160,7 @@ export default function (props) {
     const dispatch = useDispatch();
 
     useEffect((e) => {
-        ReactGA.initialize(TRACKING_ID);
+        // ReactGA.initialize(TRACKING_ID);
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
@@ -156,8 +171,8 @@ export default function (props) {
     }, []);
 
     props.history.listen(location => {
-        ReactGA.set({ page: location.pathname }); // Update the user's current page
-        ReactGA.pageview(location.pathname); // Record a pageview for the given page
+        // ReactGA.set({ page: location.pathname }); // Update the user's current page
+        // ReactGA.pageview(location.pathname); // Record a pageview for the given page
     });
 
     const getSubscriptions = () => {
@@ -458,22 +473,22 @@ export default function (props) {
                                                                                 {/*<Link className="dropdown-item" to={`${ENV}exams/performance`}>Student Performance </Link>*/}
                                                                             </div>
                                                                         </li>
-                                                                    <li className="nav-item dropdown mt-4">
-                                                                        <Link className="nav-link dropdown-toggle"
-                                                                              to={`${ENV}profile`} id="reports"
-                                                                              data-toggle="dropdown" aria-haspopup="true"
-                                                                              aria-expanded="false">
-                                                                            REPORTS
-                                                                        </Link>
-                                                                        <div className="dropdown-menu"
-                                                                             aria-labelledby="reports">
-                                                                            <Link className="dropdown-item" to={`${ENV}students`}>Registered Students </Link>
-                                                                            <Link className="dropdown-item" to={`${ENV}teachers`}>Registered Teachers </Link>
-                                                                            {/*<Link className="dropdown-item" to={`${ENV}exams/performance`}>Student Performance </Link>*/}
-                                                                            <Link className="dropdown-item" to={`${ENV}exams/mine`}>My Papers</Link>
-                                                                            <Link className="dropdown-item" to={`${ENV}report/payments`}>Payments</Link>
-                                                                        </div>
-                                                                    </li>
+                                                                        <li className="nav-item dropdown mt-4">
+                                                                            <Link className="nav-link dropdown-toggle"
+                                                                                  to={`${ENV}profile`} id="reports"
+                                                                                  data-toggle="dropdown" aria-haspopup="true"
+                                                                                  aria-expanded="false">
+                                                                                REPORTS
+                                                                            </Link>
+                                                                            <div className="dropdown-menu"
+                                                                                 aria-labelledby="reports">
+                                                                                <Link className="dropdown-item" to={`${ENV}students`}>Registered Students </Link>
+                                                                                <Link className="dropdown-item" to={`${ENV}teachers`}>Registered Teachers </Link>
+                                                                                {/*<Link className="dropdown-item" to={`${ENV}exams/performance`}>Student Performance </Link>*/}
+                                                                                <Link className="dropdown-item" to={`${ENV}exams/mine`}>My Papers</Link>
+                                                                                <Link className="dropdown-item" to={`${ENV}report/payments`}>Payments</Link>
+                                                                            </div>
+                                                                        </li>
                                                                     </React.Fragment>: ''
                                                             }
 
@@ -920,6 +935,15 @@ export default function (props) {
                                                            },
                                                        })
                                                }/>
+
+                                        <Route exact={true} path={`${props.match.url}lessons`}
+                                               render={(props) => <VirtualEssenceHome {...props} user={user} />}/>
+
+                                        <Route exact={false} path={`${props.match.url}lessons/units/:unit/lessons`}
+                                               render={(props) => <VirtualEssenceLessons {...props} user={user} />}/>
+
+                                        <Route exact={false} path={`${props.match.url}lessons/units/:unit/questions`}
+                                               render={(props) => <VirtualEssenceQuestions {...props} user={user} />}/>
 
                                         <Route exact={true} path={`${props.match.url}*`}
                                                render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>
