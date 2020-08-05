@@ -1,3 +1,4 @@
+import ReactGA from "react-ga";
 
 export const APPNAME = `Tutor-Soma`;
 
@@ -16,3 +17,5 @@ export const SUBJECTS_LOADED = "SUBJECTS_LOADED";
 export const CLASSES_LOADED = "CLASSES_LOADED";
 export const EXAMS_LOADED = "EXAMS_LOADED";
 export const USER_UPDATED = "USER_UPDATED";
+
+export const TRACKING_ID = "UA-9511843-21";

@@ -3,11 +3,11 @@ import {Link, Switch, Route} from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "../common/loading";
 import LoadingWhite from "../common/loadingWhite";
-import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED} from "../common/constants";
+import {API, DIR, ENV, APPNAME, PUBLIC_URL, ISPRODUCTION, SUBSCRIPTION_DELETED, TRACKING_ID} from "../common/constants";
 import { useSelector } from 'react-redux'
 import { fetchSubscription, fetchSubjects, fetchClasses, fetchExams } from "../common/actions";
 import { useDispatch } from "react-redux";
-import {ClipLoader} from "react-spinners";
+import ReactGA from 'react-ga';
 import moment from "moment";
 
 const Login = Loadable({
@@ -93,42 +93,42 @@ const Payment = Loadable({
 const ExamQuestions = Loadable({
     loader: () => import('./examQuestions'),
     loading: Loading
-})
+});
 
 const Teachers = Loadable({
     loader: () => import('./teachers'),
     loading: Loading
-})
+});
 
 const Students = Loadable({
     loader: () => import('./students'),
     loading: Loading
-})
+});
 
 const EditQuestion = Loadable({
     loader: () => import('./editQuestion'),
     loading: Loading
-})
+});
 
 const MyPapers = Loadable({
     loader: () => import('./myPapers'),
     loading: Loading
-})
+});
 
 const ExamPerformance = Loadable({
     loader: () => import('./examPerformance'),
     loading: Loading
-})
+});
 
 const PaymentReport = Loadable({
     loader: () => import('./paymentReport'),
     loading: Loading
-})
+});
 
 const Question = Loadable({
     loader: () => import('./questionContainerr'),
     loading: Loading
-})
+});
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -145,6 +145,7 @@ export default function (props) {
     const dispatch = useDispatch();
 
     useEffect((e) => {
+        ReactGA.initialize(TRACKING_ID);
         if (user.hasOwnProperty('name') && props.location.pathname !== `${ENV}signin` && props.location.pathname !== `${ENV}signup` ) {
             dispatch(fetchSubscription(user));
         }
@@ -153,6 +154,11 @@ export default function (props) {
         dispatch(fetchSubjects());
         getSubscriptions();
     }, []);
+
+    props.history.listen(location => {
+        ReactGA.set({ page: location.pathname }); // Update the user's current page
+        ReactGA.pageview(location.pathname); // Record a pageview for the given page
+    });
 
     const getSubscriptions = () => {
         $.ajax({
