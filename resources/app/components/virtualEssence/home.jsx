@@ -127,9 +127,14 @@ export default function (props) {
                                                 {
                                                     <ToolkitProvider
                                                         keyField="id"
-                                                        data={units}
+                                                        data={units.reverse()}
                                                         columns={
                                                             [
+                                                                {dataField: 'id', text: '#', sort: true,
+                                                                    formatter: (cell, row, rowIndex) => {
+                                                                    return rowIndex + 1
+                                                            }
+                                                                },
                                                                 {dataField: 'class', text: 'Class', sort: true},
                                                                 {dataField: 'subject', text: 'Subject', sort: true},
                                                                 {dataField: 'unit', text: 'Unit', sort: true},
@@ -140,8 +145,8 @@ export default function (props) {
                                                                     formatter: (cell, row) => {
                                                                         return (
                                                                             <div className='button-group'>
-                                                                                <Link to={`/lessons/units/${row.id}/lessons/${sluggify(row.unit)}`} className='btn btn-sm btn-success mr-2'>Open Lessons</Link>
-                                                                                <Link to={`/lessons/units/${row.id}/questions/${sluggify(row.unit)}`} className='btn btn-sm btn-success'>Open Question</Link>
+                                                                                <Link to={`/lessons/units/${row.id}/lessons/${sluggify(row.unit)}`} className='btn btn-sm btn-success mr-2'>Open Lesson</Link>
+                                                                                <Link to={`/lessons/units/${row.id}/questions/${sluggify(row.unit)}`} className='btn btn-sm btn-success'>Open Questions</Link>
                                                                             </div>
                                                                         )
                                                                     }

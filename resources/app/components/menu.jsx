@@ -145,6 +145,11 @@ const VirtualEssenceQuestions = Loadable({
     loading: Loading
 });
 
+const VirtualEssencePayment = Loadable({
+    loader: () =>import('./virtualEssence/payment'),
+    loading: Loading
+});
+
 export default function (props) {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(false);
@@ -940,10 +945,54 @@ export default function (props) {
                                                render={(props) => <VirtualEssenceHome {...props} user={user} />}/>
 
                                         <Route exact={false} path={`${props.match.url}lessons/units/:unit/lessons`}
-                                               render={(props) => <VirtualEssenceLessons {...props} user={user} />}/>
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <VirtualEssenceLessons {...props} user={user} />
+                                                           : props.history.push({
+                                                               pathname: `${ENV}lessons/payment`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               },
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           },
+                                                       })
+                                               }/>
 
                                         <Route exact={false} path={`${props.match.url}lessons/units/:unit/questions`}
-                                               render={(props) => <VirtualEssenceQuestions {...props} user={user} />}/>
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       subscription.hasOwnProperty('id') ?
+                                                           <VirtualEssenceQuestions {...props} user={user} />
+                                                           : props.history.push({
+                                                               pathname: `${ENV}lessons/payment`,
+                                                               state: {
+                                                                   next: props.location.pathname
+                                                               }
+                                                           })
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           }
+                                                       })
+                                               }/>
+
+                                        <Route exact={true} path={`${props.match.url}lessons/payment`}
+                                               render={(props) =>
+                                                   user.hasOwnProperty('id') ?
+                                                       <VirtualEssencePayment {...props} user={user} />
+                                                       : props.history.push({
+                                                           pathname: `${ENV}signin`,
+                                                           state: {
+                                                               next: props.location.pathname
+                                                           }
+                                                       })
+                                               }/>
 
                                         <Route exact={true} path={`${props.match.url}*`}
                                                render={(props) => <Home{...props} user={user} subjects={subjects}/>}/>

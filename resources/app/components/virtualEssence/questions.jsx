@@ -102,7 +102,7 @@ export default function (props) {
                                                         <div className='btn-group float-right'>
                                                             <button type='button' className='btn btn-outline-success mr-2 btn-sm btn-rounded' onClick={e => {
                                                                 if (questionIndex + 1 === unit.questions.length) {
-                                                                    props.history.push(`/`);
+                                                                    props.history.push(`/lessons`);
                                                                 } else {
                                                                     setAnswerVisible(false);
                                                                     setQuestionIndex(questionIndex + 1)
@@ -113,7 +113,7 @@ export default function (props) {
                                                                 answerVisible ?
                                                                     <button className='btn btn-success bt-sm btn-rounded' onClick={e => {
                                                                         if (questionIndex + 1 === unit.questions.length) {
-                                                                            props.history.push(`/`);
+                                                                            props.history.push(`/lessons`);
                                                                         } else {
                                                                             setAnswerVisible(false);
                                                                             setQuestionIndex(questionIndex + 1)
