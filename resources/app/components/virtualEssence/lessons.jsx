@@ -114,7 +114,7 @@ export default function (props) {
                                                             <h5>Squares of numbers</h5>
                                                         </div>
                                                         <div className='col-md-3'>
-                                                            <Link to={`/lessons/units/${props.match.params.unit}/questions/${sluggify(unit.unit)}`} className='btn btn-success btn-sm btn-rounded'>Attempt Questions</Link>
+                                                            <Link to={`/school/units/${props.match.params.unit}/questions/${sluggify(unit.unit)}`} className='btn btn-success btn-sm btn-rounded'>Attempt Questions</Link>
                                                         </div>
                                                     </div>
                                                 </div>

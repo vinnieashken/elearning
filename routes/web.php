@@ -83,7 +83,7 @@ Route::get('/academy/register', function () {
 //    return view('newApp');
 //})->where('any', '.*');
 
-Route::get('/lessons/{path?}', function(){
+Route::get('/school/{path?}', function(){
     return view('newApp');
 })->where('path', '.*');
 

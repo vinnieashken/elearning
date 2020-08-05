@@ -590,7 +590,7 @@ export default function (props) {
                                                render={(props) => <Login{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}otp`}
                                                render={(props) => <VerifyOtp{...props} setUser={setUser} />}/>
-                                        <Route exact={true} path={`${props.match.url}school`}
+                                        <Route exact={true} path={`${props.match.url}school-login`}
                                                render={(props) => <SchoolLogin{...props} setUser={setUser} />}/>
                                         <Route exact={true} path={`${props.match.url}reset`}
                                                render={(props) => <ResetPassword {...props}  />}/>
@@ -941,16 +941,16 @@ export default function (props) {
                                                        })
                                                }/>
 
-                                        <Route exact={true} path={`${props.match.url}lessons`}
+                                        <Route exact={true} path={`${props.match.url}school`}
                                                render={(props) => <VirtualEssenceHome {...props} user={user} />}/>
 
-                                        <Route exact={false} path={`${props.match.url}lessons/units/:unit/lessons`}
+                                        <Route exact={false} path={`${props.match.url}school/units/:unit/lessons`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <VirtualEssenceLessons {...props} user={user} />
                                                            : props.history.push({
-                                                               pathname: `${ENV}lessons/payment`,
+                                                               pathname: `${ENV}school/payment`,
                                                                state: {
                                                                    next: props.location.pathname
                                                                },
@@ -963,13 +963,13 @@ export default function (props) {
                                                        })
                                                }/>
 
-                                        <Route exact={false} path={`${props.match.url}lessons/units/:unit/questions`}
+                                        <Route exact={false} path={`${props.match.url}school/units/:unit/questions`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        subscription.hasOwnProperty('id') ?
                                                            <VirtualEssenceQuestions {...props} user={user} />
                                                            : props.history.push({
-                                                               pathname: `${ENV}lessons/payment`,
+                                                               pathname: `${ENV}school/payment`,
                                                                state: {
                                                                    next: props.location.pathname
                                                                }
@@ -982,7 +982,7 @@ export default function (props) {
                                                        })
                                                }/>
 
-                                        <Route exact={true} path={`${props.match.url}lessons/payment`}
+                                        <Route exact={true} path={`${props.match.url}school/payment`}
                                                render={(props) =>
                                                    user.hasOwnProperty('id') ?
                                                        <VirtualEssencePayment {...props} user={user} />

@@ -197,7 +197,7 @@ export default function Login(props) {
                                                     }
                                                     <h6 className="card-title text-center mt-4">
                                                         Login To Your
-                                                        <Link class="green" to={`${ENV}school`}> Student Account</Link>
+                                                        <Link class="green" to={`${ENV}school-login`}> Student Account</Link>
                                                     </h6>
                                                     <h6 className="card-title text-center mt-4">
                                                         Forgot Password?

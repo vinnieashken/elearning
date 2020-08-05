@@ -145,8 +145,8 @@ export default function (props) {
                                                                     formatter: (cell, row) => {
                                                                         return (
                                                                             <div className='button-group'>
-                                                                                <Link to={`/lessons/units/${row.id}/lessons/${sluggify(row.unit)}`} className='btn btn-sm btn-success mr-2'>Open Lesson</Link>
-                                                                                <Link to={`/lessons/units/${row.id}/questions/${sluggify(row.unit)}`} className='btn btn-sm btn-success'>Open Questions</Link>
+                                                                                <Link to={`/school/units/${row.id}/lessons/${sluggify(row.unit)}`} className='btn btn-sm btn-success mr-2'>Open Lesson</Link>
+                                                                                <Link to={`/school/units/${row.id}/questions/${sluggify(row.unit)}`} className='btn btn-sm btn-success'>Open Questions</Link>
                                                                             </div>
                                                                         )
                                                                     }
