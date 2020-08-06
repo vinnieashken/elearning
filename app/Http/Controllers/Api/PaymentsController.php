@@ -280,6 +280,7 @@ class PaymentsController extends Controller
         }
 
         $publisher = UserPublisher::where('user_id',$userid)->where('transactionid',$subscription->ordernumber)->first();
+
         $subscription->publisher = $publisher->publisher_id;
 
         return $subscription;

@@ -19,7 +19,14 @@ class LessonsController extends Controller
     public function getSubjects()
     {
         $subjects = Unit::distinct('subject')->get(['subject']);
-        return $subjects;
+        $data = [];
+        foreach ($subjects as $subject)
+        {
+            $units = Unit::where('subject',$subject->subject)->count();
+            $subject->units = $units;
+            array_push($data,$subject);
+        }
+        return $data;
     }
 
     public function getUnits(Request $request)
