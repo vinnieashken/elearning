@@ -242,7 +242,7 @@ export default function (props) {
         if (localStorage.hasOwnProperty('user')) {
             const user = JSON.parse(localStorage.getItem('user'))
             ReactGA.event({
-                category: `User ID: ${user.id}, User Name: ${user.name}, Next Page: ${next}`,
+                category: `User ID: ${user.id}, User Name: ${user.name}`,
                 action: `User Logged Out`
             });
         }
