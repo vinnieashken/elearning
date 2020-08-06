@@ -239,6 +239,13 @@ export default function (props) {
     };
 
     const logout = (e) => {
+        if (localStorage.hasOwnProperty('user')) {
+            const user = JSON.parse(localStorage.getItem('user'))
+            ReactGA.event({
+                category: `User ID: ${user.id}, User Name: ${user.name}, Next Page: ${next}`,
+                action: `User Logged Out`
+            });
+        }
         localStorage.clear();
         setUser({});
         dispatch ({ type: SUBSCRIPTION_DELETED, payload: [] });

@@ -2,9 +2,11 @@ import React, {useState, useEffect} from "react";
 import {API, PUBLIC_URL} from "../../common/constants";
 import {Helmet} from "react-helmet";
 import Loading from "../../common/loading";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+const { SearchBar } = Search;
 import BootstrapTable from "react-bootstrap-table-next";
 import {Link} from "react-router-dom";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
 export default function (props) {
     const [loading, setLoading] = useState(true);
@@ -88,7 +90,7 @@ export default function (props) {
                             <div className="row">
                                 <div className="col-md-12">
                                     <h2 className="section-title wow fadeInDown animated text-center mt-5"
-                                        data-wow-delay="0.3s">Units</h2>
+                                        data-wow-delay="0.3s">Lessons</h2>
                                 </div>
 
                             </div>
@@ -159,14 +161,15 @@ export default function (props) {
                                                                     <React.Fragment>
                                                                         <div className='row  mb-3'>
                                                                             <div className='col-md-12'>
-                                                                                {/*<SearchBar*/}
-                                                                                {/*    className='col-md-4 float-right mb-3' {...props.searchProps} />*/}
+                                                                                <SearchBar
+                                                                                    className='col-md-4 float-right mb-3' {...props.searchProps} />
                                                                             </div>
                                                                         </div>
                                                                         <BootstrapTable {...props.baseProps}
                                                                                         headerWrapperClasses ="pt-0 shadowtable bg-danger"
                                                                                         headerClasses="border-0" rowClasses="border-0"
                                                                                         rowStyle={ { borderRadius: '18px' } }
+                                                                                        pagination={ paginationFactory() }
                                                                                         wrapperClasses="table-responsive"/>
 
                                                                     </React.Fragment>

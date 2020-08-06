@@ -11,7 +11,7 @@ import {
 } from "../common/constants";
 import {ClipLoader} from "react-spinners";
 import {Link} from "react-router-dom";
-import Loading from "../common/loading";
+import ReactGA from 'react-ga';
 import { fetchSubscription } from "../common/actions";
 import { useDispatch } from "react-redux";
 
@@ -76,7 +76,10 @@ export default function Login(props) {
                     dispatch(fetchSubscription(thisUser));
                     props.setUser(thisUser);
                     localStorage.setItem('user', JSON.stringify(res));
-                    console.log(next);
+                    ReactGA.event({
+                        category: `User ID: ${thisUser.id}, User Name: ${thisUser.name}, Next Page: ${next}`,
+                        action: `User Login`
+                    });
                     props.history.push({
                         pathname: `${next}`,
                         state: {user: thisUser},
