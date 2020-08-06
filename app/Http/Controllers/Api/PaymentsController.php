@@ -278,6 +278,10 @@ class PaymentsController extends Controller
         {
             return response()->json(["message"=>"No valid subscriptions found"] , 400);
         }
+
+        $publisher = UserPublisher::where('user_id',$userid)->where('transactionid',$subscription->ordernumber)->first();
+        $subscription->publisher = $publisher->publisher_id;
+
         return $subscription;
     }
 
